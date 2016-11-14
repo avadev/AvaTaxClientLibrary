@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{917BDECA-BE80-4B2E-B69E-7F5E67AE84C3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Avalara.AvaTax.RestClient</RootNamespace>
+    <AssemblyName>Avalara.AvaTax.RestClient</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AvaTaxApi.cs" />
+    <Compile Include="AvaTaxEnvironment.cs" />
+    <Compile Include="AvaTaxError.cs" />
+    <Compile Include="AvaTaxPath.cs" />
+    <Compile Include="FetchResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AvaTaxClient.cs" />
+    <Compile Include="model\AccountModel.cs" />
+    <Compile Include="model\AddressInfo.cs" />
+    <Compile Include="model\AddressResolutionModel.cs" />
+    <Compile Include="model\AdjustTransactionModel.cs" />
+    <Compile Include="model\AvaTaxMessage.cs" />
+    <Compile Include="model\BatchFileModel.cs" />
+    <Compile Include="model\BatchModel.cs" />
+    <Compile Include="model\ChangeTransactionCodeModel.cs" />
+    <Compile Include="model\CommitTransactionModel.cs" />
+    <Compile Include="model\CompanyInitializationModel.cs" />
+    <Compile Include="model\CompanyModel.cs" />
+    <Compile Include="model\ContactModel.cs" />
+    <Compile Include="model\CoordinateInfo.cs" />
+    <Compile Include="model\CreateTransactionModel.cs" />
+    <Compile Include="model\CreateTransactionModelAddresses.cs" />
+    <Compile Include="model\ErrorDetail.cs" />
+    <Compile Include="model\ErrorInfo.cs" />
+    <Compile Include="model\ErrorResult.cs" />
+    <Compile Include="model\FetchResultAccountModel.cs" />
+    <Compile Include="model\FetchResultBatchModel.cs" />
+    <Compile Include="model\FetchResultCompanyModel.cs" />
+    <Compile Include="model\FetchResultContactModel.cs" />
+    <Compile Include="model\FetchResultItemModel.cs" />
+    <Compile Include="model\FetchResultLocationModel.cs" />
+    <Compile Include="model\FetchResultLocationQuestionModel.cs" />
+    <Compile Include="model\FetchResultNexusModel.cs" />
+    <Compile Include="model\FetchResultParameterModel.cs" />
+    <Compile Include="model\FetchResultSecurityRoleModel.cs" />
+    <Compile Include="model\FetchResultSettingModel.cs" />
+    <Compile Include="model\FetchResultString.cs" />
+    <Compile Include="model\FetchResultSubscriptionModel.cs" />
+    <Compile Include="model\FetchResultSubscriptionTypeModel.cs" />
+    <Compile Include="model\FetchResultTaxAuthorityFormModel.cs" />
+    <Compile Include="model\FetchResultTaxAuthorityModel.cs" />
+    <Compile Include="model\FetchResultTaxCodeModel.cs" />
+    <Compile Include="model\FetchResultTaxRuleModel.cs" />
+    <Compile Include="model\FetchResultTransactionModel.cs" />
+    <Compile Include="model\FetchResultUPCModel.cs" />
+    <Compile Include="model\FetchResultUserModel.cs" />
+    <Compile Include="model\ItemModel.cs" />
+    <Compile Include="model\LicenseKeyModel.cs" />
+    <Compile Include="model\LineItemModel.cs" />
+    <Compile Include="model\LineItemModelAddresses.cs" />
+    <Compile Include="model\LocationModel.cs" />
+    <Compile Include="model\LocationQuestionModel.cs" />
+    <Compile Include="model\LocationSettingModel.cs" />
+    <Compile Include="model\LocationValidationModel.cs" />
+    <Compile Include="model\NexusModel.cs" />
+    <Compile Include="model\ParameterModel.cs" />
+    <Compile Include="model\PasswordChangeModel.cs" />
+    <Compile Include="model\PingResultModel.cs" />
+    <Compile Include="model\RateModel.cs" />
+    <Compile Include="model\ResetLicenseKeyModel.cs" />
+    <Compile Include="model\SecurityRoleModel.cs" />
+    <Compile Include="model\SetPasswordModel.cs" />
+    <Compile Include="model\SettingModel.cs" />
+    <Compile Include="model\SettleTransactionModel.cs" />
+    <Compile Include="model\SubscriptionModel.cs" />
+    <Compile Include="model\SubscriptionTypeModel.cs" />
+    <Compile Include="model\TaxAuthorityFormModel.cs" />
+    <Compile Include="model\TaxAuthorityInfo.cs" />
+    <Compile Include="model\TaxAuthorityModel.cs" />
+    <Compile Include="model\TaxCodeModel.cs" />
+    <Compile Include="model\TaxCodeTypesModel.cs" />
+    <Compile Include="model\TaxOverrideModel.cs" />
+    <Compile Include="model\TaxRateModel.cs" />
+    <Compile Include="model\TaxRuleModel.cs" />
+    <Compile Include="model\TransactionAddressModel.cs" />
+    <Compile Include="model\TransactionLineDetailModel.cs" />
+    <Compile Include="model\TransactionLineModel.cs" />
+    <Compile Include="model\TransactionModel.cs" />
+    <Compile Include="model\TransactionSummary.cs" />
+    <Compile Include="model\UPCModel.cs" />
+    <Compile Include="model\UserEntitlementModel.cs" />
+    <Compile Include="model\UserModel.cs" />
+    <Compile Include="model\VerifyTransactionModel.cs" />
+    <Compile Include="model\VoidTransactionModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Rest.ClientRuntime.2.3.3\lib\netstandard1.1\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

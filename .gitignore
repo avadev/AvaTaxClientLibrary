@@ -1,0 +1,11 @@
+.vs/
+*.user
+*.suo
+*.pdb
+*.lock.*
+bin
+obj
+logs
+packages
+scripts/swagger-codegen-cli.jar
+scripts/Avalara.AvaTax.RestProxy.json
