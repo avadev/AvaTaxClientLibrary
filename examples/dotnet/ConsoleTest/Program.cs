@@ -25,12 +25,12 @@ namespace ConsoleTest
             client.WithSecurity(args[0], args[1]);
 
             // Call Ping
-            var pingResult = await client.UtilitiesPingGet();
+            var pingResult = await client.Ping();
             Console.WriteLine(pingResult.Version);
 
             // Call fetch
             try {
-                var companies = await client.CompaniesGet(null, null, 0, 0, null);
+                var companies = await client.QueryCompanies(null, null, 0, 0, null);
                 Console.WriteLine(companies.ToString());
             } catch (AvaTaxError ex) {
                 Console.WriteLine(ex.error.ToString());

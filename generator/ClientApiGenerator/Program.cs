@@ -43,7 +43,7 @@ namespace ClientApiGenerator
                             {
                                 Comment = parameter.description ?? "",
                                 ParamName = parameter.name,
-                                TypeName = ResolveBaseType(parameter.type)
+                                TypeName = ResolveType(parameter)
                             });
 
                         // URL Path parameters
@@ -52,7 +52,7 @@ namespace ClientApiGenerator
                             {
                                 Comment = parameter.description ?? "",
                                 ParamName = parameter.name,
-                                TypeName = ResolveBaseType(parameter.type)
+                                TypeName = ResolveType(parameter)
                             });
 
                         // Body parameters
@@ -111,21 +111,50 @@ namespace Avalara.AvaTax.RestClient
         }
 
         #region Type Helpers
-        private static string ResolveBaseType(string rawtype)
+        private static string ResolveType(SwaggerParam param)
         {
-            return rawtype
-                .Replace("integer", "Int32")
-                .Replace("number", "Decimal");
+            StringBuilder typename = new StringBuilder();
+
+            // Basic types
+            bool isValueType = false;
+            if (param.type == "integer") {
+                typename.Append("Int32");
+                isValueType = true;
+            } else if (param.type == "number") {
+                typename.Append("Decimal");
+                isValueType = true;
+            } else if (param.type == "boolean") {
+                typename.Append("Bool");
+                isValueType = true;
+            } else if (param.format == "date-time" && param.type == "string") {
+                typename.Append("DateTime");
+                isValueType = true;
+            } else {
+                typename.Append(param.type);
+            }
+
+            // Is it nullable?
+            if (!param.required && isValueType) typename.Append("?");
+
+            // Here's your typename
+            return typename.ToString();
         }
 
         private static string ResolveType(SwaggerSchemaRef schema)
         {
+            if (schema == null) {
+                return "void";
+            }
+
+            // Okay, it's not void
             string basetype = schema.schemaName;
             string responsetype = schema.type ?? "";
 
             // If this is recursion
             if (responsetype == "array") {
                 basetype = ResolveType(schema.items);
+            } else if (responsetype == "string") {
+                return "String";
             }
 
             // Cleanup the type

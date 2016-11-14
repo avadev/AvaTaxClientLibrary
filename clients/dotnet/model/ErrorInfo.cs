@@ -54,6 +54,18 @@ namespace Avalara.AvaTax.RestClient.Model
             ServerConfiguration,
             
             /// <summary>
+            /// Enum AccountInvalidException for "AccountInvalidException"
+            /// </summary>
+            [EnumMember(Value = "AccountInvalidException")]
+            AccountInvalidException,
+            
+            /// <summary>
+            /// Enum CompanyInvalidException for "CompanyInvalidException"
+            /// </summary>
+            [EnumMember(Value = "CompanyInvalidException")]
+            CompanyInvalidException,
+            
+            /// <summary>
             /// Enum EntityNotFoundError for "EntityNotFoundError"
             /// </summary>
             [EnumMember(Value = "EntityNotFoundError")]
@@ -90,10 +102,16 @@ namespace Avalara.AvaTax.RestClient.Model
             TaxpayerNumberRequired,
             
             /// <summary>
-            /// Enum PasswordMinComplexityError for "PasswordMinComplexityError"
+            /// Enum CommonPassword for "CommonPassword"
             /// </summary>
-            [EnumMember(Value = "PasswordMinComplexityError")]
-            PasswordMinComplexityError,
+            [EnumMember(Value = "CommonPassword")]
+            CommonPassword,
+            
+            /// <summary>
+            /// Enum WeakPassword for "WeakPassword"
+            /// </summary>
+            [EnumMember(Value = "WeakPassword")]
+            WeakPassword,
             
             /// <summary>
             /// Enum StringLengthError for "StringLengthError"
@@ -478,6 +496,12 @@ namespace Avalara.AvaTax.RestClient.Model
             /// </summary>
             [EnumMember(Value = "InvalidTaxCodeType")]
             InvalidTaxCodeType,
+            
+            /// <summary>
+            /// Enum CannotActivateCompany for "CannotActivateCompany"
+            /// </summary>
+            [EnumMember(Value = "CannotActivateCompany")]
+            CannotActivateCompany,
             
             /// <summary>
             /// Enum BatchSalesAuditMustBeZippedError for "BatchSalesAuditMustBeZippedError"

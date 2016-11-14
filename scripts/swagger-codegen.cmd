@@ -16,7 +16,7 @@ java -jar swagger-codegen-cli.jar generate -i Avalara.AvaTax.RestProxy.json --la
 
 ECHO Updating code with latest models...
 del /f/s/q generated\fetchresult*
-copy generated\src\Avalara.AvaTax.RestClient\Model\* ..\clients\dotnet\model
+copy /y generated\src\Avalara.AvaTax.RestClient\Model\* ..\clients\dotnet\model
 
 ECHO Regenerate user interface from the swagger JSON
 "..\generator\ClientApiGenerator\bin\debug\ClientApiGenerator.exe" .\Avalara.AvaTax.RestProxy.json ..\clients\dotnet\AvaTaxApi.cs

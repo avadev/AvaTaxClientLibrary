@@ -210,12 +210,13 @@ namespace Avalara.AvaTax.RestClient.Model
         /// Initializes a new instance of the <see cref="BatchModel" /> class.
         /// </summary>
         /// <param name="Name">The user-friendly readable name for this batch. (required).</param>
+        /// <param name="AccountId">The Account ID number of the account that owns this batch..</param>
+        /// <param name="CompanyId">The Company ID number of the company that owns this batch..</param>
         /// <param name="Type">The type of this batch. (required).</param>
-        /// <param name="Status">This batch&#39;s current processing status.</param>
         /// <param name="Options">Any optional flags provided for this batch.</param>
         /// <param name="BatchAgent">The agent used to create this batch.</param>
         /// <param name="Files">The list of files contained in this batch..</param>
-        public BatchModel(string Name = null, TypeEnum? Type = null, StatusEnum? Status = null, string Options = null, string BatchAgent = null, List<BatchFileModel> Files = null)
+        public BatchModel(string Name = null, int? AccountId = null, int? CompanyId = null, TypeEnum? Type = null, string Options = null, string BatchAgent = null, List<BatchFileModel> Files = null)
         {
             // to ensure "Name" is required (not null)
             if (Name == null)
@@ -235,7 +236,8 @@ namespace Avalara.AvaTax.RestClient.Model
             {
                 this.Type = Type;
             }
-            this.Status = Status;
+            this.AccountId = AccountId;
+            this.CompanyId = CompanyId;
             this.Options = Options;
             this.BatchAgent = BatchAgent;
             this.Files = Files;
@@ -258,13 +260,13 @@ namespace Avalara.AvaTax.RestClient.Model
         /// </summary>
         /// <value>The Account ID number of the account that owns this batch.</value>
         [DataMember(Name="accountId", EmitDefaultValue=false)]
-        public int? AccountId { get; private set; }
+        public int? AccountId { get; set; }
         /// <summary>
         /// The Company ID number of the company that owns this batch.
         /// </summary>
         /// <value>The Company ID number of the company that owns this batch.</value>
         [DataMember(Name="companyId", EmitDefaultValue=false)]
-        public int? CompanyId { get; private set; }
+        public int? CompanyId { get; set; }
         /// <summary>
         /// Any optional flags provided for this batch
         /// </summary>

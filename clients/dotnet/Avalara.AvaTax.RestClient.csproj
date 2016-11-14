@@ -39,6 +39,8 @@
     <Compile Include="AvaTaxError.cs" />
     <Compile Include="AvaTaxPath.cs" />
     <Compile Include="FetchResult.cs" />
+    <Compile Include="model\IsoCountryModel.cs" />
+    <Compile Include="model\IsoRegionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AvaTaxClient.cs" />
     <Compile Include="model\AccountModel.cs" />

@@ -9,3 +9,4 @@ logs
 packages
 scripts/swagger-codegen-cli.jar
 scripts/Avalara.AvaTax.RestProxy.json
+scripts/generated/
