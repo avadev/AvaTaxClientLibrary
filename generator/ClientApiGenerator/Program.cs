@@ -106,7 +106,7 @@ namespace Avalara.AvaTax.RestClient
     }
 }
 ");
-            File.WriteAllText("headers.cs", sb.ToString());
+            File.WriteAllText(args[1], sb.ToString());
             Console.WriteLine(sb.ToString());
         }
 
