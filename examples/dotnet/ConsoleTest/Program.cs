@@ -1,4 +1,5 @@
 ﻿using Avalara.AvaTax.RestClient;
+using Avalara.AvaTax.RestClient.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,35 @@ namespace ConsoleTest
             try {
                 var companies = await client.QueryCompanies(null, null, 0, 0, null);
                 Console.WriteLine(companies.ToString());
+
+                // Initialize a company and fetch it back
+                var init = await client.CompanyInitialize(new CompanyInitializationModel()
+                {
+                    City = "Bainbridge Island",
+                    CompanyCode = Guid.NewGuid().ToString("N"),
+                    Country = "US",
+                    Email = "bob@example.org",
+                    FaxNumber = null,
+                    FirstName = "Bob",
+                    LastName = "Example",
+                    Line1 = "100 Ravine Lane",
+                    Line2 = null,
+                    Line3 = null,
+                    MobileNumber = null,
+                    Name = "Bob Example",
+                    PhoneNumber = "206 555 1212",
+                    PostalCode = "98110",
+                    Region = "WA",
+                    TaxpayerIdNumber = "123456789",
+                    Title = "Owner",
+                    VatRegistrationId = null
+                });
+                Console.WriteLine(init.ToString());
+
+                // Fetch it back
+                var fetchBack = await client.GetCompany(init.Id.Value, "Locations");
+                Console.WriteLine(fetchBack.ToString());
+
             } catch (AvaTaxError ex) {
                 Console.WriteLine(ex.error.ToString());
             }

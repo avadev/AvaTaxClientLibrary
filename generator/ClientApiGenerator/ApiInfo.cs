@@ -16,7 +16,7 @@ namespace ClientApiGenerator
         public async Task<@@TYPENAME@@> @@APINAME@@(@@PARAMS@@)
         {
             var path = new AvaTaxPath(""@@URI@@"");@@PARAMBUILDER@@
-            return await RestCall<@@TYPENAME@@>(""@@HTTPVERB@@"", path);
+            return await RestCall<@@TYPENAME@@>(""@@HTTPVERB@@"", path, @@PAYLOAD@@);
         }
 ";
 
@@ -66,7 +66,8 @@ namespace ClientApiGenerator
                 .Replace("@@PARAMCOMMENTS@@", paramcomments.ToString())
                 .Replace("@@PARAMBUILDER@@", parambuilder.ToString())
                 .Replace("@@PARAMS@@", paramlist.ToString())
-                .Replace("@@URI@@", URI);
+                .Replace("@@URI@@", URI)
+                .Replace("@@PAYLOAD@@", BodyParam == null ? "null" : "model");
         }
     }
 }
