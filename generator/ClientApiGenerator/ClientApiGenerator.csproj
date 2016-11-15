@@ -54,7 +54,6 @@
     <Compile Include="Swagger\SwaggerDefinition.cs" />
     <Compile Include="Swagger\SwaggerMethod.cs" />
     <Compile Include="Swagger\SwaggerModel.cs" />
-    <Compile Include="Swagger\SwaggerParam.cs" />
     <Compile Include="Swagger\SwaggerProperty.cs" />
     <Compile Include="Swagger\SwaggerResult.cs" />
     <Compile Include="Swagger\SwaggerSchemaRef.cs" />

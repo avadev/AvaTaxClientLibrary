@@ -9,12 +9,22 @@ namespace ClientApiGenerator.Swagger
 {
     public class SwaggerProperty
     {
-        public string format { get; set; }
+        public string name { get; set; }
         public string description { get; set; }
+        public bool required { get; set; }
         public string type { get; set; }
+        public string format { get; set; }
         public bool readOnly { get; set; }
         public object example { get; set; }
+
         public SwaggerSchemaRef schema { get; set; }
+
+        [JsonProperty("in")]
+        public string paramIn { get; set; }
+
+        [JsonProperty("default")]
+        public string defaultValue { get; set; }
+
 
         [JsonProperty("enum")]
         public List<string> enumValues { get; set; }

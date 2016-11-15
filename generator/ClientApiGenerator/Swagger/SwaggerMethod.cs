@@ -14,7 +14,7 @@ namespace ClientApiGenerator.Swagger
         public string operationId { get; set; }
         public List<string> consumes { get; set; }
         public List<string> produces { get; set; }
-        public List<SwaggerParam> parameters { get; set; }
+        public List<SwaggerProperty> parameters { get; set; }
         public Dictionary<string, SwaggerResult> responses { get; set; }
         public bool deprecated { get; set; }
         public List<Dictionary<string, object>> security { get; set; }
