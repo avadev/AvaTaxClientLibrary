@@ -37,7 +37,7 @@ namespace ConsoleTest
                 var init = await client.CompanyInitialize(new CompanyInitializationModel()
                 {
                     city = "Bainbridge Island",
-                    companyCode = Guid.NewGuid().ToString("N"),
+                    companyCode = Guid.NewGuid().ToString("N").Substring(0, 25),
                     country = "US",
                     email = "bob@example.org",
                     faxNumber = null,

@@ -136,10 +136,10 @@ namespace Avalara.AvaTax.RestClient
                 result = await _client.GetAsync(uri.ToString());
             } else if (verb == "post") {
                 json = JsonConvert.SerializeObject(payload);
-                result = await _client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8));
+                result = await _client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
             } else if (verb == "put") {
                 json = JsonConvert.SerializeObject(payload);
-                result = await _client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8));
+                result = await _client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
             } else if (verb == "delete") {
                 result = await _client.DeleteAsync(uri.ToString());
             }

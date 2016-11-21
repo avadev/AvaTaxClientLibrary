@@ -37,7 +37,6 @@ namespace ClientApiGenerator
             if (BodyParam != null) {
                 paramcomments.AppendFormat("        /// <param name=\"{0}\">{1}</param>\r\n", BodyParam.CSharpParamName, BodyParam.Comment);
                 paramlist.AppendFormat("{0} {1}, ", BodyParam.TypeName, BodyParam.ParamName.Replace("$", ""));
-                parambuilder.AppendFormat("\r\n            path.AddQuery(\"{0}\", {1});", BodyParam.ParamName, BodyParam.CSharpParamName);
             }
             paramcomments.Append("        /// <returns></returns>");
             if (paramlist.Length > 0) paramlist.Length -= 2;
