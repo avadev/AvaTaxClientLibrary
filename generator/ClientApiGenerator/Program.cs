@@ -79,22 +79,32 @@ namespace ClientApiGenerator
                 }
             }
 
+            // Loop through all the schemas
+            List<ModelInfo> models = new List<ModelInfo>();
+            foreach (var def in obj.definitions) {
+                var m = new ModelInfo()
+                {
+                    SchemaName = def.Key,
+                    Comment = def.Value.description,
+                    Properties = new List<ParameterInfo>()
+                };
+                foreach (var prop in def.Value.properties) {
+                    if (!prop.Value.required && def.Value.required != null) {
+                        prop.Value.required = def.Value.required.Contains(prop.Key);
+                    }
+                    m.Properties.Add(new ParameterInfo()
+                    {
+                        Comment = prop.Value.description,
+                        ParamName = prop.Key,
+                        TypeName = ResolveType(prop.Value, null)
+                    });
+                }
+
+                models.Add(m);
+            }
+
             // Now spit out a coherent API structure
             StringBuilder sb = new StringBuilder();
-            sb.Append(@"using Avalara.AvaTax.RestClient.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-namespace Avalara.AvaTax.RestClient
-{
-    public partial class AvaTaxClient
-    {
-");
             string currentRegion = null;
             foreach (var api in (from a in apis orderby a.Category, a.OperationId select a)) {
                 if (currentRegion != api.Category) {
@@ -104,40 +114,71 @@ namespace Avalara.AvaTax.RestClient
                     sb.AppendLine("        #region " + api.Category);
                     currentRegion = api.Category;
                 }
-                sb.Append(api.ToString());
+                sb.AppendLine(api.ToString());
             }
             if (currentRegion != null) {
-                sb.Append("        #endregion");
+                sb.AppendLine("        #endregion");
             }
-            sb.Append(@"    
-    }
-}
-");
-            File.WriteAllText(args[1], sb.ToString());
-            Console.WriteLine(sb.ToString());
+
+            // Next let's assemble the api file
+            string filetext = Resource1.api_class_template_csharp
+                .Replace("@@APILIST@@", sb.ToString());
+            File.WriteAllText(Path.Combine(args[1], "AvaTaxApi.cs"), filetext);
+
+            // Next let's assemble the model files
+            foreach (var m in models) {
+                File.WriteAllText(Path.Combine(args[1], m.SchemaName + ".cs"), m.ToString());
+            }
         }
 
         #region Type Helpers
         private static string ResolveType(SwaggerProperty prop, SwaggerSchemaRef schema)
         {
             // First, is this a simple property?
+            string responsetype = null;
+            string basetype = null;
             if (prop != null) {
                 var rawtype = ResolveValueType(prop.type, prop.format, prop.required);
                 if (rawtype != null) return rawtype;
+                if (schema == null) schema = prop.items;
+                if (schema == null) schema = prop.schema;
+
+                // See if we have a custom schema in the extended properties
+                if (schema == null && prop.schemaref != null) schema = new SwaggerSchemaRef()
+                {
+                     schemaName = prop.schemaref.Substring(prop.schemaref.LastIndexOf('/')+1),
+                     type = prop.type
+                };
+
+                // Is this an array?
+                if (prop.type == "array") {
+                    responsetype = prop.type;
+                }
             }
 
             // Okay, this is a complex object
             if (schema != null) {
 
                 // Okay, it's not void
-                string basetype = schema.schemaName;
-                string responsetype = schema.type ?? "";
+                if (responsetype == null) responsetype = schema.type ?? "";
+                if (basetype == null) basetype = schema.schemaName;
 
                 // If this is recursion
                 if (responsetype == "array") {
-                    basetype = ResolveType(null, schema.items);
+                    if (prop != null && prop.items != null) {
+                        basetype = ResolveType(null, prop.items);
+                    } else {
+                        basetype = ResolveType(null, schema.items);
+                    }
                 } else if (responsetype == "string") {
                     return "String";
+                } else if (responsetype == "integer") {
+                    return "Int32";
+                }
+
+                // If there's no base type, try resolving it as a value
+                if (basetype == null && prop != null) {
+                    basetype = ResolveValueType(schema.type, prop.format, prop.required);
                 }
 
                 // Cleanup the type
@@ -156,8 +197,14 @@ namespace Avalara.AvaTax.RestClient
                 return basetype;
             }
 
-            // No hope left
-            return null;
+            // No hope left - just describe it as an anonymous object
+            if (prop != null && prop.Extended.Count != 0) {
+                if (prop.description == "Default addresses for all lines in this document" ||
+                    prop.description == "Specify any differences for addresses between this line and the rest of the document") {
+                    return "Dictionary<string, AddressInfo>";
+                }
+            }
+            return "Dictionary<string, string>";
         }
 
         private static string ResolveValueType(string type, string format, bool required)

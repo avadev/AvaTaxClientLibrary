@@ -8,20 +8,6 @@ namespace ClientApiGenerator
 {
     public class ApiInfo
     {
-        public const string API_TEMPLATE = @"
-        /// <summary>
-        /// @@COMMENT@@
-        /// </summary>
-@@PARAMCOMMENTS@@
-        public async Task<@@TYPENAME@@> @@APINAME@@(@@PARAMS@@)
-        {
-            var path = new AvaTaxPath(""@@URI@@"");@@PARAMBUILDER@@
-            return await RestCall<@@TYPENAME@@>(""@@HTTPVERB@@"", path, @@PAYLOAD@@);
-        }
-";
-
-
-
         public string URI { get; set; }
         public string Comment { get; set; }
         public string Category { get; set; }
@@ -57,7 +43,7 @@ namespace ClientApiGenerator
             if (paramlist.Length > 0) paramlist.Length -= 2;
 
             // Here's your template
-            return API_TEMPLATE
+            return Resource1.api_template_csharp
                 .Replace("@@CATEGORY@@", Category)
                 .Replace("@@COMMENT@@", Comment)
                 .Replace("@@TYPENAME@@", TypeName)

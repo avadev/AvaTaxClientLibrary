@@ -18,6 +18,10 @@ namespace ClientApiGenerator.Swagger
         public object example { get; set; }
 
         public SwaggerSchemaRef schema { get; set; }
+        public SwaggerSchemaRef items { get; set; }
+
+        [JsonProperty("$ref")]
+        public string schemaref { get; set; }
 
         [JsonProperty("in")]
         public string paramIn { get; set; }

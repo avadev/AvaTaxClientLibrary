@@ -1,0 +1,4 @@
+        /// <summary>
+        /// @@COMMENT@@
+        /// </summary>
+        public @@PROPERTYTYPE@@ @@PROPERTYNAME@@ { get; set; }
