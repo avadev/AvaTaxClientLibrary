@@ -93,11 +93,52 @@ namespace ClientApiGenerator {
         ///        {
         ///            var path = new AvaTaxPath(&quot;&quot;@@URI@@&quot;&quot;);@@PARAMBUILDER@@
         ///            return await RestCall&lt;@@TYPENAME@@&gt;(&quot;&quot;@@HTTPVERB@@&quot;&quot;, path, @@PAYLOAD@@);
-        ///        }.
+        ///        }
+        ///.
         /// </summary>
         internal static string api_template_csharp {
             get {
                 return ResourceManager.GetString("api_template_csharp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///using System.Net.Http;
+        ///using System.Text;
+        ///using System.Threading.Tasks;
+        ///using Newtonsoft.Json;
+        ///
+        ///namespace Avalara.AvaTax.RestClient
+        ///{
+        ///    /// &lt;summary&gt;
+        ///    /// @@COMMENT@@
+        ///    /// &lt;/summary&gt;
+        ///    public class @@ENUMCLASS@@
+        ///    {
+        ///@@VALUELIST@@
+        ///    }
+        ///}
+        ///.
+        /// </summary>
+        internal static string enum_class_template_csharp {
+            get {
+                return ResourceManager.GetString("enum_class_template_csharp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to         /// &lt;summary&gt;
+        ///        /// @@COMMENT@@
+        ///        /// &lt;/summary&gt;
+        ///        @@VALUE@@
+        ///.
+        /// </summary>
+        internal static string enum_value_template_csharp {
+            get {
+                return ResourceManager.GetString("enum_value_template_csharp", resourceCulture);
             }
         }
         

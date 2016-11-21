@@ -124,6 +124,12 @@
   <data name="api_template_csharp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\api_template_csharp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="enum_class_template_csharp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\enum_class_template_csharp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="enum_value_template_csharp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\enum_value_template_csharp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="model_class_template_csharp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\model_class_template_csharp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

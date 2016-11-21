@@ -102,6 +102,22 @@ namespace ClientApiGenerator
 
                     // Is this property an enum?
                     if (prop.Value.EnumDataType != null) {
+                        var enumType = (from e in enums where e.EnumDataType == prop.Value.EnumDataType select e).FirstOrDefault();
+                        if (enumType == null) {
+                            enumType = new EnumInfo()
+                            {
+                                EnumDataType = prop.Value.EnumDataType,
+                                Items = new List<EnumItem>()
+                            };
+                            enums.Add(enumType);
+                        }
+
+                        // Add values if they are known
+                        if (prop.Value.enumValues != null) {
+                            foreach (var s in prop.Value.enumValues) {
+                                enumType.Items.Add(new EnumItem() { Value = s });
+                            }
+                        }
                     }
                 }
 
@@ -135,6 +151,11 @@ namespace ClientApiGenerator
                 if (!m.SchemaName.StartsWith("FetchResult")) {
                     File.WriteAllText(Path.Combine(args[1], "models\\" + m.SchemaName + ".cs"), m.ToString());
                 }
+            }
+
+            // Finally assemble the enums
+            foreach (var e in enums) {
+                File.WriteAllText(Path.Combine(args[1], "enums\\" + e.EnumDataType + ".cs"), e.ToString());
             }
         }
 

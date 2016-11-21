@@ -1,0 +1,4 @@
+        /// <summary>
+        /// @@COMMENT@@
+        /// </summary>
+        @@VALUE@@,

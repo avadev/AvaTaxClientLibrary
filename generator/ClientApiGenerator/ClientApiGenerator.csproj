@@ -88,6 +88,12 @@
   <ItemGroup>
     <None Include="Resources\model_property_template_csharp.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\enum_class_template_csharp.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\enum_value_template_csharp.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
