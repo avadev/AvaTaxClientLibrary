@@ -17,13 +17,13 @@ namespace ClientApiGenerator
             StringBuilder sb = new StringBuilder();
             foreach (var i in Items) {
                 sb.AppendLine(Resource1.enum_value_template_csharp
-                    .Replace("@@COMMENT@@", i.Comment)
+                    .Replace("@@COMMENT@@", Fixups.Comment(i.Comment))
                     .Replace("@@VALUE@@", i.Value));
             }
 
             return Resource1.enum_class_template_csharp
                 .Replace("@@ENUMCLASS@@", EnumDataType)
-                .Replace("@@COMMENT@@", Comment)
+                .Replace("@@COMMENT@@", Fixups.Comment(Comment))
                 .Replace("@@VALUELIST@@", sb.ToString());
         }
     }

@@ -9,10 +9,15 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// @@COMMENT@@
+    /// Set Password Model
     /// </summary>
-    public enum @@ENUMCLASS@@
+    public class SetPasswordModel
     {
-@@VALUELIST@@
+        /// <summary>
+        /// New Password
+        /// </summary>
+        public String newPassword { get; set; }
+
+
     }
 }

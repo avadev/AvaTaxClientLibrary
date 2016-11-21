@@ -115,7 +115,9 @@ namespace ClientApiGenerator
                         // Add values if they are known
                         if (prop.Value.enumValues != null) {
                             foreach (var s in prop.Value.enumValues) {
-                                enumType.Items.Add(new EnumItem() { Value = s });
+                                if (!enumType.Items.Any(i => i.Value == s)) {
+                                    enumType.Items.Add(new EnumItem() { Value = s });
+                                }
                             }
                         }
                     }
@@ -209,6 +211,8 @@ namespace ClientApiGenerator
                 // If there's no base type, try resolving it as a value
                 if (basetype == null && prop != null) {
                     basetype = ResolveValueType(schema.type, prop.format, prop.EnumDataType, prop.required);
+                } else if (basetype == null) {
+                    basetype = ResolveValueType(schema.type, null, null, false);
                 }
 
                 // Cleanup the type
@@ -228,7 +232,7 @@ namespace ClientApiGenerator
             }
 
             // No hope left - just describe it as an anonymous object
-            if (prop != null && prop.Extended.Count != 0) {
+            if (prop != null && prop.Extended != null && prop.Extended.Count != 0) {
                 if (prop.description == "Default addresses for all lines in this document" ||
                     prop.description == "Specify any differences for addresses between this line and the rest of the document") {
                     return "Dictionary<string, AddressInfo>";
@@ -248,16 +252,17 @@ namespace ClientApiGenerator
                 typename.Append("Decimal");
                 isValueType = true;
             } else if (type == "boolean") {
-                typename.Append("Bool");
+                typename.Append("Boolean");
                 isValueType = true;
             } else if (format == "date-time" && type == "string") {
                 typename.Append("DateTime");
                 isValueType = true;
             } else if (type == "string") {
-                if (enumdatatype != null) {
-                    return enumdatatype;
-                } else {
+                if (enumdatatype == null) {
                     return "String";
+                } else {
+                    typename.Append(enumdatatype);
+                    isValueType = true;
                 }
             }
 

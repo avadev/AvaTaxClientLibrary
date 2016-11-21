@@ -4,6 +4,6 @@
 @@PARAMCOMMENTS@@
         public async Task<@@TYPENAME@@> @@APINAME@@(@@PARAMS@@)
         {
-            var path = new AvaTaxPath(""@@URI@@"");@@PARAMBUILDER@@
-            return await RestCall<@@TYPENAME@@>(""@@HTTPVERB@@"", path, @@PAYLOAD@@);
+            var path = new AvaTaxPath("@@URI@@");@@PARAMBUILDER@@
+            return await RestCall<@@TYPENAME@@>("@@HTTPVERB@@", path, @@PAYLOAD@@);
         }

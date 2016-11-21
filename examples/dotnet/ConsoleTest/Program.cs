@@ -1,5 +1,4 @@
 ﻿using Avalara.AvaTax.RestClient;
-using Avalara.AvaTax.RestClient.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +26,7 @@ namespace ConsoleTest
 
             // Call Ping
             var pingResult = await client.Ping();
-            Console.WriteLine(pingResult.Version);
+            Console.WriteLine(pingResult.version);
 
             // Call fetch
             try {
@@ -37,29 +36,29 @@ namespace ConsoleTest
                 // Initialize a company and fetch it back
                 var init = await client.CompanyInitialize(new CompanyInitializationModel()
                 {
-                    City = "Bainbridge Island",
-                    CompanyCode = Guid.NewGuid().ToString("N"),
-                    Country = "US",
-                    Email = "bob@example.org",
-                    FaxNumber = null,
-                    FirstName = "Bob",
-                    LastName = "Example",
-                    Line1 = "100 Ravine Lane",
-                    Line2 = null,
-                    Line3 = null,
-                    MobileNumber = null,
-                    Name = "Bob Example",
-                    PhoneNumber = "206 555 1212",
-                    PostalCode = "98110",
-                    Region = "WA",
-                    TaxpayerIdNumber = "123456789",
-                    Title = "Owner",
-                    VatRegistrationId = null
+                    city = "Bainbridge Island",
+                    companyCode = Guid.NewGuid().ToString("N"),
+                    country = "US",
+                    email = "bob@example.org",
+                    faxNumber = null,
+                    firstName = "Bob",
+                    lastName = "Example",
+                    line1 = "100 Ravine Lane",
+                    line2 = null,
+                    line3 = null,
+                    mobileNumber = null,
+                    name = "Bob Example",
+                    phoneNumber = "206 555 1212",
+                    postalCode = "98110",
+                    region = "WA",
+                    taxpayerIdNumber = "123456789",
+                    title = "Owner",
+                    vatRegistrationId = null
                 });
                 Console.WriteLine(init.ToString());
 
                 // Fetch it back
-                var fetchBack = await client.GetCompany(init.Id.Value, "Locations");
+                var fetchBack = await client.GetCompany(init.id, "Locations");
                 Console.WriteLine(fetchBack.ToString());
 
             } catch (AvaTaxError ex) {

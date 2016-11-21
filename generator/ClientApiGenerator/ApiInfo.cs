@@ -45,7 +45,7 @@ namespace ClientApiGenerator
             // Here's your template
             return Resource1.api_template_csharp
                 .Replace("@@CATEGORY@@", Category)
-                .Replace("@@COMMENT@@", Comment)
+                .Replace("@@COMMENT@@", Fixups.Comment(Comment))
                 .Replace("@@TYPENAME@@", TypeName)
                 .Replace("@@APINAME@@", OperationId)
                 .Replace("@@HTTPVERB@@", HttpVerb)

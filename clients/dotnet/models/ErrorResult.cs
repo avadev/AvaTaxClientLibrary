@@ -9,10 +9,15 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// @@COMMENT@@
+    /// Helper function for throwing known error response
     /// </summary>
-    public enum @@ENUMCLASS@@
+    public class ErrorResult
     {
-@@VALUELIST@@
+        /// <summary>
+        /// Information about the error(s)
+        /// </summary>
+        public ErrorInfo error { get; set; }
+
+
     }
 }

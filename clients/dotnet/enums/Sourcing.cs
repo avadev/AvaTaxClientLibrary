@@ -9,10 +9,20 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// @@COMMENT@@
+    /// 
     /// </summary>
-    public enum @@ENUMCLASS@@
+    public enum Sourcing
     {
-@@VALUELIST@@
+        /// <summary>
+        /// 
+        /// </summary>
+        Origin,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Destination,
+
+
     }
 }

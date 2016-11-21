@@ -1,5 +1,4 @@
 ﻿using System;
-using Avalara.AvaTax.RestClient.Model;
 
 namespace Avalara.AvaTax.RestClient
 {

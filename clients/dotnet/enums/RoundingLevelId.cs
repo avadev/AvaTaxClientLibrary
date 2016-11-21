@@ -9,10 +9,20 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// @@COMMENT@@
+    /// 
     /// </summary>
-    public enum @@ENUMCLASS@@
+    public enum RoundingLevelId
     {
-@@VALUELIST@@
+        /// <summary>
+        /// 
+        /// </summary>
+        Line,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Document,
+
+
     }
 }
