@@ -48,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiInfo.cs" />
+    <Compile Include="EnumInfo.cs" />
+    <Compile Include="EnumItem.cs" />
     <Compile Include="ModelInfo.cs" />
     <Compile Include="ParameterInfo.cs" />
     <Compile Include="Program.cs" />

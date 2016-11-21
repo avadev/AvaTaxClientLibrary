@@ -81,6 +81,7 @@ namespace ClientApiGenerator
 
             // Loop through all the schemas
             List<ModelInfo> models = new List<ModelInfo>();
+            List<EnumInfo> enums = new List<EnumInfo>();
             foreach (var def in obj.definitions) {
                 var m = new ModelInfo()
                 {
@@ -98,6 +99,10 @@ namespace ClientApiGenerator
                         ParamName = prop.Key,
                         TypeName = ResolveType(prop.Value, null)
                     });
+
+                    // Is this property an enum?
+                    if (prop.Value.EnumDataType != null) {
+                    }
                 }
 
                 models.Add(m);
@@ -127,7 +132,9 @@ namespace ClientApiGenerator
 
             // Next let's assemble the model files
             foreach (var m in models) {
-                File.WriteAllText(Path.Combine(args[1], m.SchemaName + ".cs"), m.ToString());
+                if (!m.SchemaName.StartsWith("FetchResult")) {
+                    File.WriteAllText(Path.Combine(args[1], "models\\" + m.SchemaName + ".cs"), m.ToString());
+                }
             }
         }
 
@@ -138,7 +145,7 @@ namespace ClientApiGenerator
             string responsetype = null;
             string basetype = null;
             if (prop != null) {
-                var rawtype = ResolveValueType(prop.type, prop.format, prop.required);
+                var rawtype = ResolveValueType(prop.type, prop.format, prop.EnumDataType, prop.required);
                 if (rawtype != null) return rawtype;
                 if (schema == null) schema = prop.items;
                 if (schema == null) schema = prop.schema;
@@ -159,6 +166,12 @@ namespace ClientApiGenerator
             // Okay, this is a complex object
             if (schema != null) {
 
+                // Try to resolve it as a value type
+                var rawtype = ResolveValueType(schema.type, null, null, false);
+                if (rawtype != null) {
+                    return rawtype;
+                }
+
                 // Okay, it's not void
                 if (responsetype == null) responsetype = schema.type ?? "";
                 if (basetype == null) basetype = schema.schemaName;
@@ -170,15 +183,11 @@ namespace ClientApiGenerator
                     } else {
                         basetype = ResolveType(null, schema.items);
                     }
-                } else if (responsetype == "string") {
-                    return "String";
-                } else if (responsetype == "integer") {
-                    return "Int32";
                 }
 
                 // If there's no base type, try resolving it as a value
                 if (basetype == null && prop != null) {
-                    basetype = ResolveValueType(schema.type, prop.format, prop.required);
+                    basetype = ResolveValueType(schema.type, prop.format, prop.EnumDataType, prop.required);
                 }
 
                 // Cleanup the type
@@ -207,7 +216,7 @@ namespace ClientApiGenerator
             return "Dictionary<string, string>";
         }
 
-        private static string ResolveValueType(string type, string format, bool required)
+        private static string ResolveValueType(string type, string format, string enumdatatype, bool required)
         {
             StringBuilder typename = new StringBuilder();
             bool isValueType = false;
@@ -224,7 +233,11 @@ namespace ClientApiGenerator
                 typename.Append("DateTime");
                 isValueType = true;
             } else if (type == "string") {
-                return "String";
+                if (enumdatatype != null) {
+                    return enumdatatype;
+                } else {
+                    return "String";
+                }
             }
 
             // Is this a basic value type?

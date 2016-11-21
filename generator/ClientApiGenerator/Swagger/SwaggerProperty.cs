@@ -14,6 +14,7 @@ namespace ClientApiGenerator.Swagger
         public bool required { get; set; }
         public string type { get; set; }
         public string format { get; set; }
+        public string EnumDataType { get; set; }
         public bool readOnly { get; set; }
         public object example { get; set; }
 
