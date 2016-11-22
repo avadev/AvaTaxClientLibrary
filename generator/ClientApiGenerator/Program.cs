@@ -21,7 +21,7 @@ namespace ClientApiGenerator
 
             // Loop through all paths and spit them out to the console
             List<ApiInfo> apis = new List<ApiInfo>();
-            foreach (var path in obj.paths) {
+            foreach (var path in (from p in obj.paths orderby p.Key select p)) {
                 foreach (var verb in path.Value) {
 
                     // Set up our API
