@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-#if PORTABLE
-using System.Net;
-#else
-using System.Web;
-#endif
 using System.Text;
 
 namespace Avalara.AvaTax.RestClient
@@ -61,9 +56,9 @@ namespace Avalara.AvaTax.RestClient
                 _path.Append("?");
                 foreach (var kvp in _query) {
 #if PORTABLE
-                    _path.AppendFormat("{0}={1}&", WebUtility.UrlEncode(kvp.Key), WebUtility.UrlEncode(kvp.Value));
+                    _path.AppendFormat("{0}={1}&", System.Net.WebUtility.UrlEncode(kvp.Key), System.Net.WebUtility.UrlEncode(kvp.Value));
 #else
-                    _path.AppendFormat("{0}={1}&", HttpUtility.UrlEncode(kvp.Key), HttpUtility.UrlEncode(kvp.Value));
+                    _path.AppendFormat("{0}={1}&", System.Web.HttpUtility.UrlEncode(kvp.Key), System.Web.HttpUtility.UrlEncode(kvp.Value));
 #endif
                 }
                 _path.Length -= 1;
