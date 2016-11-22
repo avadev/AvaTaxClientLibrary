@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+#if PORTABLE
 using System.Net;
+#else
+using System.Web;
+#endif
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -56,9 +58,11 @@ namespace Avalara.AvaTax.RestClient
         public override string ToString()
         {
             if (_query.Count > 0) {
-                var array = (from kvp in _query select string.Format("{0}={1}", WebUtility.UrlEncode(kvp.Key), WebUtility.UrlEncode(kvp.Value))).ToArray();
                 _path.Append("?");
-                _path.Append(String.Join("&", array));
+                foreach (var kvp in _query) {
+                    _path.AppendFormat("{0}={1}&", HttpUtility.UrlEncode(kvp.Key), HttpUtility.UrlEncode(kvp.Value));
+                }
+                _path.Length -= 1;
             }
             return _path.ToString();
         }
