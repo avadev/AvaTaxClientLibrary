@@ -12,6 +12,10 @@ namespace ClientApiGenerator
         public string Comment { get; set; }
         public List<EnumItem> Items { get; set; }
 
+        /// <summary>
+        /// Convert this object to a JSON string of itself
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
