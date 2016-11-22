@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+#if PORTABLE
+using System.Threading.Tasks;
+#endif
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -291,7 +294,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public async Task<TransactionModel> Create()
+        public async Task<TransactionModel> CreateAsync()
         {
             return await _client.CreateTransactionAsync(_model);
         }
@@ -303,7 +306,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionModel Create()
         {
-            return _client.CreateTransaction(_model).Result;
+            return _client.CreateTransaction(_model);
         }
 #else
         /// <summary>

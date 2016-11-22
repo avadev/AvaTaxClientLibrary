@@ -60,7 +60,11 @@ namespace Avalara.AvaTax.RestClient
             if (_query.Count > 0) {
                 _path.Append("?");
                 foreach (var kvp in _query) {
+#if PORTABLE
+                    _path.AppendFormat("{0}={1}&", WebUtility.UrlEncode(kvp.Key), WebUtility.UrlEncode(kvp.Value));
+#else
                     _path.AppendFormat("{0}={1}&", HttpUtility.UrlEncode(kvp.Key), HttpUtility.UrlEncode(kvp.Value));
+#endif
                 }
                 _path.Length -= 1;
             }

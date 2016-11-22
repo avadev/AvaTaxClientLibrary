@@ -61,7 +61,7 @@ namespace ConsoleTest
                     .WithAddress(TransactionAddressType.SingleLocation, "123 Main Street", "Irvine", "CA", "92615", "US")
                     .WithLine(100.0m)
                     .WithExemptLine(50.0m, "NT")
-                    .Create().Result;
+                    .Create();
                 Console.WriteLine(t.ToString());
 
             } catch (AvaTaxError ex) {

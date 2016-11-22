@@ -51,9 +51,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\clients\dotnet\Avalara.AvaTax.RestClient.csproj">
+    <ProjectReference Include="..\..\..\clients\dotnet\Avalara.AvaTax.RestClient.netstandard.csproj">
       <Project>{917bdeca-be80-4b2e-b69e-7f5e67ae84c3}</Project>
-      <Name>Avalara.AvaTax.RestClient</Name>
+      <Name>Avalara.AvaTax.RestClient.netstandard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

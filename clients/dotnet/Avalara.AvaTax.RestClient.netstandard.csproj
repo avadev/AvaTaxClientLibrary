@@ -42,6 +42,7 @@
     <Compile Include="AvaTaxEnvironment.cs" />
     <Compile Include="AvaTaxError.cs" />
     <Compile Include="AvaTaxPath.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="enums\AccountStatusId.cs" />
     <Compile Include="enums\AddressCategoryId.cs" />
     <Compile Include="enums\AddressTypeId.cs" />
