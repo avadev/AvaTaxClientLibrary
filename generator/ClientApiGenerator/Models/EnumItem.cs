@@ -1,4 +1,4 @@
-﻿namespace ClientApiGenerator
+﻿namespace ClientApiGenerator.Models
 {
     public class EnumItem
     {
