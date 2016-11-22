@@ -120,14 +120,14 @@ namespace Avalara.AvaTax.RestClient
 
         #region Implementation
         /// <summary>
-        /// Implementation of GET-based APIs
+        /// Implementation of asynchronous client APIs
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="verb"></param>
         /// <param name="uri"></param>
         /// <param name="payload"></param>
         /// <returns></returns>
-        private async Task<T> RestCall<T>(string verb, AvaTaxPath uri, object payload = null)
+        private async Task<T> RestCallAsync<T>(string verb, AvaTaxPath uri, object payload = null)
         {
             // Make the request
             HttpResponseMessage result = null;
@@ -152,6 +152,19 @@ namespace Avalara.AvaTax.RestClient
                 var err = JsonConvert.DeserializeObject<ErrorResult>(s);
                 throw new AvaTaxError(err);
             }
+        }
+
+        /// <summary>
+        /// Direct implementation of client APIs
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="verb"></param>
+        /// <param name="uri"></param>
+        /// <param name="payload"></param>
+        /// <returns></returns>
+        private T RestCall<T>(string verb, AvaTaxPath uri, object payload = null)
+        {
+            return RestCallAsync<T>(verb, uri, payload).Result;
         }
         #endregion
     }

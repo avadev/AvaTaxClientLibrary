@@ -294,7 +294,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public async Task<TransactionModel> Create()
         {
-            return await _client.CreateTransaction(_model);
+            return await _client.CreateTransactionAsync(_model);
         }
 
 
