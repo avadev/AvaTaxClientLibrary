@@ -9,24 +9,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Rate Model
+    /// 
     /// </summary>
-    public class RateModel
+    public enum TaxOverrideType
     {
         /// <summary>
-        /// Rate
+        /// 
         /// </summary>
-        public Decimal? rate { get; set; }
+        None,
 
         /// <summary>
-        /// Name
+        /// 
         /// </summary>
-        public String name { get; set; }
+        TaxAmount,
 
         /// <summary>
-        /// Type
+        /// 
         /// </summary>
-        public JurisdictionType? type { get; set; }
+        Exemption,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxDate,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AccruedTaxAmount,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DeriveTaxable,
 
 
     }

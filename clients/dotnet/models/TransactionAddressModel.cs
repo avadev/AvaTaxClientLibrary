@@ -26,7 +26,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The boundary level at which this address was validated.
         /// </summary>
-        public String boundaryLevel { get; set; }
+        public BoundaryLevel? boundaryLevel { get; set; }
 
         /// <summary>
         /// The first line of the address.

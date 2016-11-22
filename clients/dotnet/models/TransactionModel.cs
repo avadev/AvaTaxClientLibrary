@@ -49,7 +49,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The status of the transaction.
         /// </summary>
-        public String status { get; set; }
+        public DocumentStatus? status { get; set; }
 
         /// <summary>
         /// The type of the transaction.  For Returns customers, a transaction type of "Invoice" will be reported to the tax authorities.
@@ -57,7 +57,7 @@ namespace Avalara.AvaTax.RestClient
         ///             A return transaction represents a customer who decided to request a refund after purchasing a product from the company.  An inventory 
         ///             transfer transaction represents goods that were moved from one location of the company to another location without changing ownership.
         /// </summary>
-        public String type { get; set; }
+        public DocumentType? type { get; set; }
 
         /// <summary>
         /// If this transaction was created as part of a batch, this code indicates which batch.
@@ -153,7 +153,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// If this transaction was adjusted, indicates the unique ID number of the reason why the transaction was adjusted.
         /// </summary>
-        public String adjustmentReason { get; set; }
+        public AdjustmentReason? adjustmentReason { get; set; }
 
         /// <summary>
         /// If this transaction was adjusted, indicates a description of the reason why the transaction was adjusted.
@@ -234,22 +234,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Optional: A list of line items in this transaction.  To fetch this list, add the query string "?$include=Lines" or "?$include=Details" to your URL.
         /// </summary>
-        public TransactionLineModel[] lines { get; set; }
+        public List<TransactionLineModel> lines { get; set; }
 
         /// <summary>
         /// Optional: A list of line items in this transaction.  To fetch this list, add the query string "?$include=Addresses" to your URL.
         /// </summary>
-        public TransactionAddressModel[] addresses { get; set; }
+        public List<TransactionAddressModel> addresses { get; set; }
 
         /// <summary>
         /// If this transaction has been adjusted, this list contains all the previous versions of the document.
         /// </summary>
-        public TransactionModel[] history { get; set; }
+        public List<TransactionModel> history { get; set; }
 
         /// <summary>
         /// Contains a summary of tax on this transaction.
         /// </summary>
-        public TransactionSummary[] summary { get; set; }
+        public List<TransactionSummary> summary { get; set; }
 
         /// <summary>
         /// Contains a list of extra parameters that were set when the transaction was created.
@@ -259,7 +259,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// List of informational and warning messages regarding this API call.  These messages are only relevant to the current API call.
         /// </summary>
-        public AvaTaxMessage[] messages { get; set; }
+        public List<AvaTaxMessage> messages { get; set; }
 
 
     }

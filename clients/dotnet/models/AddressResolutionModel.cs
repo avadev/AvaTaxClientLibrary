@@ -21,7 +21,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The validated address or addresses
         /// </summary>
-        public AddressInfo[] validatedAddresses { get; set; }
+        public List<AddressInfo> validatedAddresses { get; set; }
 
         /// <summary>
         /// The geospatial coordinates of this address
@@ -31,17 +31,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The resolution quality of the geospatial coordinates
         /// </summary>
-        public String resolutionQuality { get; set; }
+        public ResolutionQuality? resolutionQuality { get; set; }
 
         /// <summary>
         /// List of informational and warning messages regarding this address
         /// </summary>
-        public TaxAuthorityInfo[] taxAuthorities { get; set; }
+        public List<TaxAuthorityInfo> taxAuthorities { get; set; }
 
         /// <summary>
         /// List of informational and warning messages regarding this address
         /// </summary>
-        public AvaTaxMessage[] messages { get; set; }
+        public List<AvaTaxMessage> messages { get; set; }
 
 
     }

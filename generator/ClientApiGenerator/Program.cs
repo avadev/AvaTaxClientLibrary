@@ -13,6 +13,10 @@ namespace ClientApiGenerator
     {
         static void Main(string[] args)
         {
+            List<ApiInfo> apis = new List<ApiInfo>();
+            List<ModelInfo> models = new List<ModelInfo>();
+            List<EnumInfo> enums = new List<EnumInfo>();
+
             // Read in the swagger object
             var json = File.ReadAllText(args[0]);
             var settings = new JsonSerializerSettings();
@@ -20,7 +24,6 @@ namespace ClientApiGenerator
             var obj = JsonConvert.DeserializeObject<Swagger.SwaggerModel>(json, settings);
 
             // Loop through all paths and spit them out to the console
-            List<ApiInfo> apis = new List<ApiInfo>();
             foreach (var path in (from p in obj.paths orderby p.Key select p)) {
                 foreach (var verb in path.Value) {
 
@@ -64,6 +67,11 @@ namespace ClientApiGenerator
                                 TypeName = ResolveType(parameter, parameter.schema)
                             };
                         }
+
+                        // Is this property an enum?
+                        if (parameter.EnumDataType != null) {
+                            ExtractEnum(enums, parameter);
+                        }
                     }
 
                     // Now figure out the response type
@@ -80,8 +88,6 @@ namespace ClientApiGenerator
             }
 
             // Loop through all the schemas
-            List<ModelInfo> models = new List<ModelInfo>();
-            List<EnumInfo> enums = new List<EnumInfo>();
             foreach (var def in obj.definitions) {
                 var m = new ModelInfo()
                 {
@@ -102,29 +108,25 @@ namespace ClientApiGenerator
 
                     // Is this property an enum?
                     if (prop.Value.EnumDataType != null) {
-                        var enumType = (from e in enums where e.EnumDataType == prop.Value.EnumDataType select e).FirstOrDefault();
-                        if (enumType == null) {
-                            enumType = new EnumInfo()
-                            {
-                                EnumDataType = prop.Value.EnumDataType,
-                                Items = new List<EnumItem>()
-                            };
-                            enums.Add(enumType);
-                        }
-
-                        // Add values if they are known
-                        if (prop.Value.enumValues != null) {
-                            foreach (var s in prop.Value.enumValues) {
-                                if (!enumType.Items.Any(i => i.Value == s)) {
-                                    enumType.Items.Add(new EnumItem() { Value = s });
-                                }
-                            }
-                        }
+                        ExtractEnum(enums, prop.Value);
                     }
                 }
 
                 models.Add(m);
             }
+
+            // Now add the enums we know we need
+            var tat = new EnumInfo()
+            {
+                EnumDataType = "TransactionAddressType",
+                Items = new List<EnumItem>()
+            };
+            tat.AddItem("ShipFrom", "This is the location from which the product was shipped");
+            tat.AddItem("ShipTo", "This is the location to which the product was shipped");
+            tat.AddItem("PointOfOrderAcceptance", "Location where the order was accepted; typically the call center, business office where purchase orders are accepted, server locations where orders are processed and accepted");
+            tat.AddItem("PointOfOrderOrigin", "Location from which the order was placed; typically the customer's home or business location");
+            tat.AddItem("SingleLocation", "Only used if all addresses for this transaction were identical; e.g. if this was a point-of-sale physical transaction");
+            enums.Add(tat);
 
             // Now spit out a coherent API structure
             StringBuilder sb = new StringBuilder();
@@ -158,6 +160,28 @@ namespace ClientApiGenerator
             // Finally assemble the enums
             foreach (var e in enums) {
                 File.WriteAllText(Path.Combine(args[1], "enums\\" + e.EnumDataType + ".cs"), e.ToString());
+            }
+        }
+
+        private static void ExtractEnum(List<EnumInfo> enums, SwaggerProperty prop)
+        {
+            var enumType = (from e in enums where e.EnumDataType == prop.EnumDataType select e).FirstOrDefault();
+            if (enumType == null) {
+                enumType = new EnumInfo()
+                {
+                    EnumDataType = prop.EnumDataType,
+                    Items = new List<EnumItem>()
+                };
+                enums.Add(enumType);
+            }
+
+            // Add values if they are known
+            if (prop.enumValues != null) {
+                foreach (var s in prop.enumValues) {
+                    if (!enumType.Items.Any(i => i.Value == s)) {
+                        enumType.Items.Add(new EnumItem() { Value = s });
+                    }
+                }
             }
         }
 
@@ -226,7 +250,7 @@ namespace ClientApiGenerator
                     Console.WriteLine("Something");
                 }
                 if (responsetype == "array") {
-                    basetype = basetype + "[]";
+                    basetype = "List<" + basetype + ">";
                 }
                 return basetype;
             }
@@ -235,7 +259,7 @@ namespace ClientApiGenerator
             if (prop != null && prop.Extended != null && prop.Extended.Count != 0) {
                 if (prop.description == "Default addresses for all lines in this document" ||
                     prop.description == "Specify any differences for addresses between this line and the rest of the document") {
-                    return "Dictionary<string, AddressInfo>";
+                    return "Dictionary<TransactionAddressType, AddressInfo>";
                 }
             }
             return "Dictionary<string, string>";

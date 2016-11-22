@@ -61,6 +61,14 @@ namespace ConsoleTest
                 var fetchBack = await client.GetCompany(init.id, "Locations");
                 Console.WriteLine(fetchBack.ToString());
 
+                // Execute a transaction
+                var t = await new TransactionBuilder(client, init.companyCode, DocumentType.SalesInvoice, "ABC")
+                    .WithAddress(TransactionAddressType.SingleLocation, "123 Main Street", "Irvine", "CA", "92615", "US")
+                    .WithLine(100.0m)
+                    .WithExemptLine(50.0m, "NT")
+                    .Create();
+                Console.WriteLine(t.ToString());
+
             } catch (AvaTaxError ex) {
                 Console.WriteLine(ex.error.ToString());
             }

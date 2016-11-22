@@ -36,7 +36,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The jurisdiction type of the jurisdiction in which this company declared nexus.
         /// </summary>
-        public String jurisTypeId { get; set; }
+        public JurisTypeId? jurisTypeId { get; set; }
 
         /// <summary>
         /// The code identifying the jurisdiction in which this company declared nexus.
@@ -76,7 +76,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The type of nexus that this company is declaring.
         /// </summary>
-        public String nexusTypeId { get; set; }
+        public NexusTypeId? nexusTypeId { get; set; }
 
         /// <summary>
         /// Indicates whether this nexus is defined as origin or destination nexus.

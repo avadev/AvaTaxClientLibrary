@@ -37,12 +37,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Indicates whether this location is a physical place of business or a temporary salesperson location.
         /// </summary>
-        public String addressTypeId { get; set; }
+        public AddressTypeId addressTypeId { get; set; }
 
         /// <summary>
         /// Indicates the type of place of business represented by this location.
         /// </summary>
-        public String addressCategoryId { get; set; }
+        public AddressCategoryId addressCategoryId { get; set; }
 
         /// <summary>
         /// The first line of the physical address of this location.
@@ -149,7 +149,7 @@ namespace Avalara.AvaTax.RestClient
         ///             For a list of settings recognized by Avalara, query the endpoint "/api/v2/definitions/locationquestions". 
         ///             To determine the list of settings required for this location, query the endpoint "/api/v2/companies/(id)/locations/(id)/validate".
         /// </summary>
-        public LocationSettingModel[] settings { get; set; }
+        public List<LocationSettingModel> settings { get; set; }
 
 
     }

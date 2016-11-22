@@ -9,24 +9,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Rate Model
+    /// 
     /// </summary>
-    public class RateModel
+    public enum JurisdictionType
     {
         /// <summary>
-        /// Rate
+        /// 
         /// </summary>
-        public Decimal? rate { get; set; }
+        Country,
 
         /// <summary>
-        /// Name
+        /// 
         /// </summary>
-        public String name { get; set; }
+        Composite,
 
         /// <summary>
-        /// Type
+        /// 
         /// </summary>
-        public JurisdictionType? type { get; set; }
+        State,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        County,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        City,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Special,
 
 
     }

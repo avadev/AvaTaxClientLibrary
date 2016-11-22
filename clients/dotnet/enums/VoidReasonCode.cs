@@ -9,24 +9,34 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Rate Model
+    /// 
     /// </summary>
-    public class RateModel
+    public enum VoidReasonCode
     {
         /// <summary>
-        /// Rate
+        /// 
         /// </summary>
-        public Decimal? rate { get; set; }
+        Unspecified,
 
         /// <summary>
-        /// Name
+        /// 
         /// </summary>
-        public String name { get; set; }
+        PostFailed,
 
         /// <summary>
-        /// Type
+        /// 
         /// </summary>
-        public JurisdictionType? type { get; set; }
+        DocDeleted,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DocVoided,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdjustmentCancelled,
 
 
     }

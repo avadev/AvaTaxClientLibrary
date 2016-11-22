@@ -26,5 +26,15 @@ namespace ClientApiGenerator
                 .Replace("@@COMMENT@@", Fixups.Comment(Comment))
                 .Replace("@@VALUELIST@@", sb.ToString());
         }
+
+        public void AddItem(string value, string comment)
+        {
+            if (this.Items == null) this.Items = new List<EnumItem>();
+            Items.Add(new EnumItem()
+            {
+                Value = value,
+                Comment = comment
+            });
+        }
     }
 }

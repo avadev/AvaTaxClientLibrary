@@ -53,7 +53,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The type of the jurisdiction to which this tax rule applies.
         /// </summary>
-        public String jurisTypeId { get; set; }
+        public JurisTypeId? jurisTypeId { get; set; }
 
         /// <summary>
         /// The type of customer usage to which this rule applies.
@@ -63,7 +63,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Indicates which tax types to which this rule applies.
         /// </summary>
-        public String taxTypeId { get; set; }
+        public MatchingTaxType? taxTypeId { get; set; }
 
         /// <summary>
         /// Indicates the rate type to which this rule applies.
@@ -76,7 +76,7 @@ namespace Avalara.AvaTax.RestClient
         ///             (for example, if you have been granted an official ruling for your product's rate that differs from the official rate), 
         ///             or other types of behavior.
         /// </summary>
-        public String taxRuleTypeId { get; set; }
+        public TaxRuleTypeId? taxRuleTypeId { get; set; }
 
         /// <summary>
         /// Set this value to true if this tax rule applies in all jurisdictions.

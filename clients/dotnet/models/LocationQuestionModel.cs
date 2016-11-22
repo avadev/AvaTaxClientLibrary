@@ -47,7 +47,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Indicates which type of jurisdiction requires this question
         /// </summary>
-        public String jurisdictionType { get; set; }
+        public JurisdictionType? jurisdictionType { get; set; }
 
         /// <summary>
         /// Indicates the country that this jurisdiction belongs to

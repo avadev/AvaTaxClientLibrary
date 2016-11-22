@@ -16,7 +16,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Name of the error.
         /// </summary>
-        public String code { get; set; }
+        public ErrorCodeId? code { get; set; }
 
         /// <summary>
         /// Error message identifier
@@ -51,7 +51,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Severity of the message
         /// </summary>
-        public String severity { get; set; }
+        public SeverityLevel? severity { get; set; }
 
 
     }

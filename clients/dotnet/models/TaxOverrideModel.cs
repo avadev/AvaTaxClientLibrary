@@ -16,7 +16,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Identifies the type of tax override
         /// </summary>
-        public String type { get; set; }
+        public TaxOverrideType? type { get; set; }
 
         /// <summary>
         /// Indicates a total override of the calculated tax on the document.  AvaTax will distribute

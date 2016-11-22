@@ -16,7 +16,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Please specify the reason for voiding or cancelling this transaction
         /// </summary>
-        public String code { get; set; }
+        public VoidReasonCode code { get; set; }
 
 
     }

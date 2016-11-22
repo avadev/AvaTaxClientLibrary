@@ -9,19 +9,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Tax Rate Model
+    /// 
     /// </summary>
-    public class TaxRateModel
+    public enum AddressTypeId
     {
         /// <summary>
-        /// Total Rate
+        /// 
         /// </summary>
-        public Decimal? totalRate { get; set; }
+        Location,
 
         /// <summary>
-        /// Rates
+        /// 
         /// </summary>
-        public List<RateModel> rates { get; set; }
+        Salesperson,
 
 
     }

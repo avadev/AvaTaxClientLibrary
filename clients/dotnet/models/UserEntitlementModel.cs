@@ -21,7 +21,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// What access privileges does the current user have to see companies?
         /// </summary>
-        public String accessLevel { get; set; }
+        public CompanyAccessLevel? accessLevel { get; set; }
 
         /// <summary>
         /// The identities of all companies this user is permitted to access

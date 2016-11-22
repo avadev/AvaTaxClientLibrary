@@ -195,7 +195,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Optional: A list of tax details for this line item.  To fetch this list, add the query string "?$include=Details" to your URL.
         /// </summary>
-        public TransactionLineDetailModel[] details { get; set; }
+        public List<TransactionLineDetailModel> details { get; set; }
 
         /// <summary>
         /// Contains a list of extra parameters that were set when the transaction was created.

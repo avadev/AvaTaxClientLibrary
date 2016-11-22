@@ -25,29 +25,6 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
-        /// Create a new account
-        /// </summary>
-        /// <param name="model">The account you wish to create.</param>
-        /// <returns></returns>
-        public async Task<AccountModel> CreateAccount(AccountModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts");
-            return await RestCall<AccountModel>("post", path, model);
-        }
-
-        /// <summary>
-        /// Delete a single account
-        /// </summary>
-        /// <param name="id">The ID of the account you wish to delete.</param>
-        /// <returns></returns>
-        public async Task<ErrorResult> DeleteAccount(Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts/{id}");
-            path.ApplyField("id", id);
-            return await RestCall<ErrorResult>("delete", path, null);
-        }
-
-        /// <summary>
         /// Retrieve a single account
         /// </summary>
         /// <param name="id">The ID of the account to retrieve</param>
@@ -59,39 +36,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
             return await RestCall<AccountModel>("get", path, null);
-        }
-
-        /// <summary>
-        /// Retrieve all accounts
-        /// </summary>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <returns></returns>
-        public async Task<FetchResult<AccountModel>> QueryAccounts(String include, String filter, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts");
-            path.AddQuery("$include", include);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return await RestCall<FetchResult<AccountModel>>("get", path, null);
-        }
-
-        /// <summary>
-        /// Update a single account
-        /// </summary>
-        /// <param name="id">The ID of the account you wish to update.</param>
-        /// <param name="model">The account object you wish to update.</param>
-        /// <returns></returns>
-        public async Task<AccountModel> UpdateAccount(Int32 id, AccountModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts/{id}");
-            path.ApplyField("id", id);
-            return await RestCall<AccountModel>("put", path, model);
         }
 
         #endregion
@@ -117,11 +61,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this batch.</param>
         /// <param name="model">The batch you wish to create.</param>
         /// <returns></returns>
-        public async Task<BatchModel[]> CreateBatches(Int32 companyId, BatchModel[] model)
+        public async Task<List<BatchModel>> CreateBatches(Int32 companyId, List<BatchModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
-            return await RestCall<BatchModel[]>("post", path, model);
+            return await RestCall<List<BatchModel>>("post", path, model);
         }
 
         /// <summary>
@@ -224,10 +168,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="model">Either a single company object or an array of companies to create</param>
         /// <returns></returns>
-        public async Task<CompanyModel[]> CreateCompanies(CompanyModel[] model)
+        public async Task<List<CompanyModel>> CreateCompanies(List<CompanyModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies");
-            return await RestCall<CompanyModel[]>("post", path, model);
+            return await RestCall<List<CompanyModel>>("post", path, model);
         }
 
         /// <summary>
@@ -298,11 +242,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this contact.</param>
         /// <param name="model">The contacts you wish to create.</param>
         /// <returns></returns>
-        public async Task<ContactModel[]> CreateContacts(Int32 companyId, ContactModel[] model)
+        public async Task<List<ContactModel>> CreateContacts(Int32 companyId, List<ContactModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
-            return await RestCall<ContactModel[]>("post", path, model);
+            return await RestCall<List<ContactModel>>("post", path, model);
         }
 
         /// <summary>
@@ -598,11 +542,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="model">The item you wish to create.</param>
         /// <returns></returns>
-        public async Task<ItemModel[]> CreateItems(Int32 companyId, ItemModel[] model)
+        public async Task<List<ItemModel>> CreateItems(Int32 companyId, List<ItemModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
-            return await RestCall<ItemModel[]>("post", path, model);
+            return await RestCall<List<ItemModel>>("post", path, model);
         }
 
         /// <summary>
@@ -695,11 +639,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this location.</param>
         /// <param name="model">The location you wish to create.</param>
         /// <returns></returns>
-        public async Task<LocationModel[]> CreateLocations(Int32 companyId, LocationModel[] model)
+        public async Task<List<LocationModel>> CreateLocations(Int32 companyId, List<LocationModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
-            return await RestCall<LocationModel[]>("post", path, model);
+            return await RestCall<List<LocationModel>>("post", path, model);
         }
 
         /// <summary>
@@ -806,11 +750,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="model">The nexus you wish to create.</param>
         /// <returns></returns>
-        public async Task<NexusModel[]> CreateNexus(Int32 companyId, NexusModel[] model)
+        public async Task<List<NexusModel>> CreateNexus(Int32 companyId, List<NexusModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
-            return await RestCall<NexusModel[]>("post", path, model);
+            return await RestCall<List<NexusModel>>("post", path, model);
         }
 
         /// <summary>
@@ -896,33 +840,6 @@ namespace Avalara.AvaTax.RestClient
 
         #endregion
 
-        #region Passwords
-        /// <summary>
-        /// Change Password
-        /// </summary>
-        /// <param name="model">An object containing your current password and the new password.</param>
-        /// <returns></returns>
-        public async Task<String> ChangePassword(PasswordChangeModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/passwords");
-            return await RestCall<String>("put", path, model);
-        }
-
-        /// <summary>
-        /// Reset a user's password programmatically
-        /// </summary>
-        /// <param name="userId">The unique ID of the user whose password will be changed</param>
-        /// <param name="model">The new password for this user</param>
-        /// <returns></returns>
-        public async Task<String> ResetPassword(Int32 userId, SetPasswordModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
-            path.ApplyField("userId", userId);
-            return await RestCall<String>("post", path, model);
-        }
-
-        #endregion
-
         #region Settings
         /// <summary>
         /// Create a new setting
@@ -930,11 +847,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this setting.</param>
         /// <param name="model">The setting you wish to create.</param>
         /// <returns></returns>
-        public async Task<SettingModel[]> CreateSettings(Int32 companyId, SettingModel[] model)
+        public async Task<List<SettingModel>> CreateSettings(Int32 companyId, List<SettingModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
-            return await RestCall<SettingModel[]>("post", path, model);
+            return await RestCall<List<SettingModel>>("post", path, model);
         }
 
         /// <summary>
@@ -1022,33 +939,6 @@ namespace Avalara.AvaTax.RestClient
 
         #region Subscriptions
         /// <summary>
-        /// Create a new subscription
-        /// </summary>
-        /// <param name="accountId">The ID of the account that owns this subscription.</param>
-        /// <param name="model">The subscription you wish to create.</param>
-        /// <returns></returns>
-        public async Task<SubscriptionModel[]> CreateSubscriptions(Int32 accountId, SubscriptionModel[] model)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
-            path.ApplyField("accountId", accountId);
-            return await RestCall<SubscriptionModel[]>("post", path, model);
-        }
-
-        /// <summary>
-        /// Delete a single subscription
-        /// </summary>
-        /// <param name="accountId">The ID of the account that owns this subscription.</param>
-        /// <param name="id">The ID of the subscription you wish to delete.</param>
-        /// <returns></returns>
-        public async Task<ErrorResult> DeleteSubscription(Int32 accountId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
-            path.ApplyField("accountId", accountId);
-            path.ApplyField("id", id);
-            return await RestCall<ErrorResult>("delete", path, null);
-        }
-
-        /// <summary>
         /// Retrieve a single subscription
         /// </summary>
         /// <param name="accountId">The ID of the account that owns this subscription</param>
@@ -1100,21 +990,6 @@ namespace Avalara.AvaTax.RestClient
             return await RestCall<FetchResult<SubscriptionModel>>("get", path, null);
         }
 
-        /// <summary>
-        /// Update a single subscription
-        /// </summary>
-        /// <param name="accountId">The ID of the account that this subscription belongs to.</param>
-        /// <param name="id">The ID of the subscription you wish to update</param>
-        /// <param name="model">The subscription you wish to update.</param>
-        /// <returns></returns>
-        public async Task<SubscriptionModel> UpdateSubscription(Int32 accountId, Int32 id, SubscriptionModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
-            path.ApplyField("accountId", accountId);
-            path.ApplyField("id", id);
-            return await RestCall<SubscriptionModel>("put", path, model);
-        }
-
         #endregion
 
         #region TaxCodes
@@ -1124,11 +999,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this tax code.</param>
         /// <param name="model">The tax code you wish to create.</param>
         /// <returns></returns>
-        public async Task<TaxCodeModel[]> CreateTaxCodes(Int32 companyId, TaxCodeModel[] model)
+        public async Task<List<TaxCodeModel>> CreateTaxCodes(Int32 companyId, List<TaxCodeModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
-            return await RestCall<TaxCodeModel[]>("post", path, model);
+            return await RestCall<List<TaxCodeModel>>("post", path, model);
         }
 
         /// <summary>
@@ -1262,11 +1137,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this tax rule.</param>
         /// <param name="model">The tax rule you wish to create.</param>
         /// <returns></returns>
-        public async Task<TaxRuleModel[]> CreateTaxRules(Int32 companyId, TaxRuleModel[] model)
+        public async Task<List<TaxRuleModel>> CreateTaxRules(Int32 companyId, List<TaxRuleModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
-            return await RestCall<TaxRuleModel[]>("post", path, model);
+            return await RestCall<List<TaxRuleModel>>("post", path, model);
         }
 
         /// <summary>
@@ -1515,11 +1390,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this UPC.</param>
         /// <param name="model">The UPC you wish to create.</param>
         /// <returns></returns>
-        public async Task<UPCModel[]> CreateUPCs(Int32 companyId, UPCModel[] model)
+        public async Task<List<UPCModel>> CreateUPCs(Int32 companyId, List<UPCModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
-            return await RestCall<UPCModel[]>("post", path, model);
+            return await RestCall<List<UPCModel>>("post", path, model);
         }
 
         /// <summary>
@@ -1606,33 +1481,6 @@ namespace Avalara.AvaTax.RestClient
         #endregion
 
         #region Users
-        /// <summary>
-        /// Create new users
-        /// </summary>
-        /// <param name="accountId">The unique ID number of the account where these users will be created.</param>
-        /// <param name="model">The user or array of users you wish to create.</param>
-        /// <returns></returns>
-        public async Task<UserModel[]> CreateUsers(Int32 accountId, UserModel[] model)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
-            path.ApplyField("accountId", accountId);
-            return await RestCall<UserModel[]>("post", path, model);
-        }
-
-        /// <summary>
-        /// Delete a single user
-        /// </summary>
-        /// <param name="id">The ID of the user you wish to delete.</param>
-        /// <param name="accountId">The accountID of the user you wish to delete.</param>
-        /// <returns></returns>
-        public async Task<ErrorResult> DeleteUser(Int32 id, Int32 accountId)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
-            path.ApplyField("id", id);
-            path.ApplyField("accountId", accountId);
-            return await RestCall<ErrorResult>("delete", path, null);
-        }
-
         /// <summary>
         /// Retrieve a single user
         /// </summary>

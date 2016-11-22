@@ -56,12 +56,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The security level for this user.
         /// </summary>
-        public String securityRoleId { get; set; }
+        public SecurityRoleId securityRoleId { get; set; }
 
         /// <summary>
         /// The status of the user's password.
         /// </summary>
-        public String passwordStatus { get; set; }
+        public PasswordStatusId? passwordStatus { get; set; }
 
         /// <summary>
         /// True if this user is currently active.

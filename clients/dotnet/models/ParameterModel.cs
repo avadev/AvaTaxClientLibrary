@@ -31,7 +31,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The data type of the property.
         /// </summary>
-        public String dataType { get; set; }
+        public ParameterBagDataType? dataType { get; set; }
 
         /// <summary>
         /// A full description of this property.

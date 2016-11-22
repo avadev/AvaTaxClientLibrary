@@ -26,7 +26,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Jurisdiction Type
         /// </summary>
-        public String jurisdictionType { get; set; }
+        public JurisdictionType? jurisdictionType { get; set; }
 
         /// <summary>
         /// Signature Code

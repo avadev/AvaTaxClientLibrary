@@ -16,7 +16,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Document Type
         /// </summary>
-        public String type { get; set; }
+        public DocumentType? type { get; set; }
 
         /// <summary>
         /// Transaction Code - the internal reference code used by the client application.  This is used for operations such as
@@ -68,12 +68,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Default addresses for all lines in this document
         /// </summary>
-        public Dictionary<string, AddressInfo> addresses { get; set; }
+        public Dictionary<TransactionAddressType, AddressInfo> addresses { get; set; }
 
         /// <summary>
         /// Document line items list
         /// </summary>
-        public LineItemModel[] lines { get; set; }
+        public List<LineItemModel> lines { get; set; }
 
         /// <summary>
         /// Special parameters for this transaction.

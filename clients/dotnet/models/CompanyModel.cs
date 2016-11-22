@@ -148,42 +148,42 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Optional: A list of contacts defined for this company.  To fetch this list, add the query string "?$include=Contacts" to your URL.
         /// </summary>
-        public ContactModel[] contacts { get; set; }
+        public List<ContactModel> contacts { get; set; }
 
         /// <summary>
         /// Optional: A list of items defined for this company.  To fetch this list, add the query string "?$include=Items" to your URL.
         /// </summary>
-        public ItemModel[] items { get; set; }
+        public List<ItemModel> items { get; set; }
 
         /// <summary>
         /// Optional: A list of locations defined for this company.  To fetch this list, add the query string "?$include=Locations" to your URL.
         /// </summary>
-        public LocationModel[] locations { get; set; }
+        public List<LocationModel> locations { get; set; }
 
         /// <summary>
         /// Optional: A list of nexus defined for this company.  To fetch this list, add the query string "?$include=Nexus" to your URL.
         /// </summary>
-        public NexusModel[] nexus { get; set; }
+        public List<NexusModel> nexus { get; set; }
 
         /// <summary>
         /// Optional: A list of settings defined for this company.  To fetch this list, add the query string "?$include=Settings" to your URL.
         /// </summary>
-        public SettingModel[] settings { get; set; }
+        public List<SettingModel> settings { get; set; }
 
         /// <summary>
         /// Optional: A list of tax codes defined for this company.  To fetch this list, add the query string "?$include=TaxCodes" to your URL.
         /// </summary>
-        public TaxCodeModel[] taxCodes { get; set; }
+        public List<TaxCodeModel> taxCodes { get; set; }
 
         /// <summary>
         /// Optional: A list of tax rules defined for this company.  To fetch this list, add the query string "?$include=TaxRules" to your URL.
         /// </summary>
-        public TaxRuleModel[] taxRules { get; set; }
+        public List<TaxRuleModel> taxRules { get; set; }
 
         /// <summary>
         /// Optional: A list of UPCs defined for this company.  To fetch this list, add the query string "?$include=UPCs" to your URL.
         /// </summary>
-        public UPCModel[] upcs { get; set; }
+        public List<UPCModel> upcs { get; set; }
 
 
     }

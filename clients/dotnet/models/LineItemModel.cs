@@ -31,7 +31,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Specify any differences for addresses between this line and the rest of the document
         /// </summary>
-        public Dictionary<string, AddressInfo> addresses { get; set; }
+        public Dictionary<TransactionAddressType, AddressInfo> addresses { get; set; }
 
         /// <summary>
         /// Tax Code - System or Custom Tax Code.

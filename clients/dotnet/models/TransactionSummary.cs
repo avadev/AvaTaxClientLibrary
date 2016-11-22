@@ -26,7 +26,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The type of jurisdiction that collects this tax.
         /// </summary>
-        public String jurisType { get; set; }
+        public JurisdictionType? jurisType { get; set; }
 
         /// <summary>
         /// Jurisdiction Code for the taxing jurisdiction
@@ -51,7 +51,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The tax type of this tax.
         /// </summary>
-        public String taxType { get; set; }
+        public TaxType? taxType { get; set; }
 
         /// <summary>
         /// The name of the tax.
