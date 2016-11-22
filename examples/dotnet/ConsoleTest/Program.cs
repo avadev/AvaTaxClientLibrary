@@ -15,26 +15,21 @@ namespace ConsoleTest
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            MainAsync(args).Wait();
-        }
-
-        public async static Task MainAsync(string[] args)
-        {
             // Connect to the server
             var client = new AvaTaxClient("ConsoleTest", "1.0", Environment.MachineName, AvaTaxEnvironment.Sandbox);
             client.WithSecurity(args[0], args[1]);
 
             // Call Ping
-            var pingResult = await client.Ping();
+            var pingResult = client.Ping();
             Console.WriteLine(pingResult.version);
 
             // Call fetch
             try {
-                var companies = await client.QueryCompanies(null, null, 0, 0, null);
+                var companies = client.QueryCompanies(null, null, 0, 0, null);
                 Console.WriteLine(companies.ToString());
 
                 // Initialize a company and fetch it back
-                var init = await client.CompanyInitialize(new CompanyInitializationModel()
+                var init = client.CompanyInitialize(new CompanyInitializationModel()
                 {
                     city = "Bainbridge Island",
                     companyCode = Guid.NewGuid().ToString("N").Substring(0, 25),
@@ -58,11 +53,11 @@ namespace ConsoleTest
                 Console.WriteLine(init.ToString());
 
                 // Fetch it back
-                var fetchBack = await client.GetCompany(init.id, "Locations");
+                var fetchBack = client.GetCompany(init.id, "Locations");
                 Console.WriteLine(fetchBack.ToString());
 
                 // Execute a transaction
-                var t = await new TransactionBuilder(client, init.companyCode, DocumentType.SalesInvoice, "ABC")
+                var t = new TransactionBuilder(client, init.companyCode, DocumentType.SalesInvoice, "ABC")
                     .WithAddress(TransactionAddressType.SingleLocation, "123 Main Street", "Irvine", "CA", "92615", "US")
                     .WithLine(100.0m)
                     .WithExemptLine(50.0m, "NT")
@@ -71,6 +66,8 @@ namespace ConsoleTest
 
             } catch (AvaTaxError ex) {
                 Console.WriteLine(ex.error.ToString());
+            } catch (Exception ex2) {
+                Console.WriteLine(ex2.ToString());
             }
 
             // Finished

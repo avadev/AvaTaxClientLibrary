@@ -1,6 +1,6 @@
 @echo off
 pushd .
-cd ..\clients\dotnet 
-dotnet build -c release
+cd ..\clients\dotnet
 ..\..\..\..\nuget.exe pack Avalara.AvaTax.RestClient.nuspec
 popd
+pause

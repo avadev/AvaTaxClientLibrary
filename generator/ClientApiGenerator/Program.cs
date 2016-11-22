@@ -1,4 +1,6 @@
-﻿using ClientApiGenerator.Swagger;
+﻿using ClientApiGenerator.Models;
+using ClientApiGenerator.Render;
+using ClientApiGenerator.Swagger;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -13,15 +15,49 @@ namespace ClientApiGenerator
     {
         static void Main(string[] args)
         {
-            List<ApiInfo> apis = new List<ApiInfo>();
-            List<ModelInfo> models = new List<ModelInfo>();
-            List<EnumInfo> enums = new List<EnumInfo>();
+            ProcessSwagger(args[0], args[1]);
+        }
+
+        public static void ProcessSwagger(string swaggerFile, string clientPath)
+        {
+            if (!File.Exists(swaggerFile) || !Directory.Exists(clientPath)) {
+                Console.WriteLine(@"ClientApiGenerator.exe {swaggerFile} {clientPath}
+
+Arguments:
+    {swaggerFile} - The path to the Avalara.AvaTax.RestClient.json file
+    {clientPath}  - The path to the clients folder where the structure will be created
+
+");
+                return;
+            }
 
             // Read in the swagger object
-            var json = File.ReadAllText(args[0]);
+            Console.WriteLine("***** Parsing file {0}", swaggerFile);
+            var json = File.ReadAllText(swaggerFile);
             var settings = new JsonSerializerSettings();
             settings.MetadataPropertyHandling = MetadataPropertyHandling.Ignore;
             var obj = JsonConvert.DeserializeObject<Swagger.SwaggerModel>(json, settings);
+            var api = ParseSwagger(obj);
+
+            // Render each target
+            foreach (var type in typeof(Program).Assembly.GetTypes()) {
+                if (type.IsSubclassOf(typeof(BaseRenderTarget))) {
+                    var target = Activator.CreateInstance(type) as BaseRenderTarget;
+                    if (target != null) {
+                        Console.WriteLine("***** Rendering {0}", type.Name);
+                        target.Render(api, clientPath);
+                    }
+                }
+            }
+
+            // Done
+            Console.WriteLine("***** Done");
+        }
+
+        #region Parsing
+        private static ApiModel ParseSwagger(SwaggerModel obj)
+        {
+            ApiModel result = new ApiModel();
 
             // Loop through all paths and spit them out to the console
             foreach (var path in (from p in obj.paths orderby p.Key select p)) {
@@ -35,7 +71,7 @@ namespace ClientApiGenerator
                     api.Params = new List<ParameterInfo>();
                     api.QueryParams = new List<ParameterInfo>();
                     api.Category = verb.Value.tags.FirstOrDefault();
-                    api.OperationId = verb.Value.operationId.Replace("ApiV2","");
+                    api.OperationId = verb.Value.operationId.Replace("ApiV2", "");
 
                     // Now figure out all the URL parameters
                     foreach (var parameter in verb.Value.parameters) {
@@ -49,7 +85,7 @@ namespace ClientApiGenerator
                                 TypeName = ResolveType(parameter, parameter.schema)
                             });
 
-                        // URL Path parameters
+                            // URL Path parameters
                         } else if (parameter.paramIn == "path") {
                             api.Params.Add(new ParameterInfo()
                             {
@@ -58,7 +94,7 @@ namespace ClientApiGenerator
                                 TypeName = ResolveType(parameter, parameter.schema)
                             });
 
-                        // Body parameters
+                            // Body parameters
                         } else if (parameter.paramIn == "body") {
                             api.BodyParam = new ParameterInfo()
                             {
@@ -70,7 +106,7 @@ namespace ClientApiGenerator
 
                         // Is this property an enum?
                         if (parameter.EnumDataType != null) {
-                            ExtractEnum(enums, parameter);
+                            ExtractEnum(result.Enums, parameter);
                         }
                     }
 
@@ -83,7 +119,7 @@ namespace ClientApiGenerator
                     }
 
                     // Done with this API
-                    apis.Add(api);
+                    result.Methods.Add(api);
                 }
             }
 
@@ -108,14 +144,15 @@ namespace ClientApiGenerator
 
                     // Is this property an enum?
                     if (prop.Value.EnumDataType != null) {
-                        ExtractEnum(enums, prop.Value);
+                        ExtractEnum(result.Enums, prop.Value);
                     }
                 }
 
-                models.Add(m);
+                result.Models.Add(m);
             }
 
-            // Now add the enums we know we need
+            // Now add the enums we know we need.
+            // Because of the complex way this Dictionary<> is rendered in Swagger, it's hard to pick up the correct values.
             var tat = new EnumInfo()
             {
                 EnumDataType = "TransactionAddressType",
@@ -126,41 +163,10 @@ namespace ClientApiGenerator
             tat.AddItem("PointOfOrderAcceptance", "Location where the order was accepted; typically the call center, business office where purchase orders are accepted, server locations where orders are processed and accepted");
             tat.AddItem("PointOfOrderOrigin", "Location from which the order was placed; typically the customer's home or business location");
             tat.AddItem("SingleLocation", "Only used if all addresses for this transaction were identical; e.g. if this was a point-of-sale physical transaction");
-            enums.Add(tat);
+            result.Enums.Add(tat);
 
-            // Now spit out a coherent API structure
-            StringBuilder sb = new StringBuilder();
-            string currentRegion = null;
-            foreach (var api in (from a in apis orderby a.Category, a.OperationId select a)) {
-                if (currentRegion != api.Category) {
-                    if (currentRegion != null) {
-                        sb.AppendLine("        #endregion\r\n");
-                    }
-                    sb.AppendLine("        #region " + api.Category);
-                    currentRegion = api.Category;
-                }
-                sb.AppendLine(api.ToString());
-            }
-            if (currentRegion != null) {
-                sb.AppendLine("        #endregion");
-            }
-
-            // Next let's assemble the api file
-            string filetext = Resource1.api_class_template_csharp
-                .Replace("@@APILIST@@", sb.ToString());
-            File.WriteAllText(Path.Combine(args[1], "AvaTaxApi.cs"), filetext);
-
-            // Next let's assemble the model files
-            foreach (var m in models) {
-                if (!m.SchemaName.StartsWith("FetchResult")) {
-                    File.WriteAllText(Path.Combine(args[1], "models\\" + m.SchemaName + ".cs"), m.ToString());
-                }
-            }
-
-            // Finally assemble the enums
-            foreach (var e in enums) {
-                File.WriteAllText(Path.Combine(args[1], "enums\\" + e.EnumDataType + ".cs"), e.ToString());
-            }
+            // Here's your processed API
+            return result;
         }
 
         private static void ExtractEnum(List<EnumInfo> enums, SwaggerProperty prop)
@@ -185,7 +191,6 @@ namespace ClientApiGenerator
             }
         }
 
-        #region Type Helpers
         private static string ResolveType(SwaggerProperty prop, SwaggerSchemaRef schema)
         {
             // First, is this a simple property?

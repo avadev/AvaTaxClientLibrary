@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+#if PORTABLE
 using System.Threading.Tasks;
+#endif
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -287,16 +288,37 @@ namespace Avalara.AvaTax.RestClient
         #endregion
 
         #region Create 
+#if PORTABLE
         /// <summary>
         /// Create this transaction
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public async Task<TransactionModel> Create()
+        public async Task<TransactionModel> CreateAsync()
         {
-            return await _client.CreateTransaction(_model);
+            return await _client.CreateTransactionAsync(_model);
         }
 
+        /// <summary>
+        /// Create this transaction
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
+        public TransactionModel Create()
+        {
+            return _client.CreateTransaction(_model);
+        }
+#else
+        /// <summary>
+        /// Create this transaction
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
+        public TransactionModel Create()
+        {
+            return _client.CreateTransaction(_model);
+        }
+#endif
 
         /// <summary>
         /// For using this with an adjustment
