@@ -72,6 +72,9 @@ namespace ConsoleTest
             } catch (AvaTaxError ex) {
                 Console.WriteLine(ex.error.ToString());
             }
+
+            // Finished
+            Console.WriteLine("Done");
         }
     }
 }

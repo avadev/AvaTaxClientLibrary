@@ -10,3 +10,4 @@ packages
 scripts/swagger-codegen-cli.jar
 scripts/generated/
 scripts/Avalara.AvaTax.RestClient.json
+*.nupkg
