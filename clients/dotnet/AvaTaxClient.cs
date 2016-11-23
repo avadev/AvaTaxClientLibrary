@@ -198,11 +198,10 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private T RestCall<T>(string verb, AvaTaxPath uri, object payload = null)
         {
-            string path = _envUri.ToString() + uri.ToString();
+            string path = CombinePath(_envUri.ToString(), uri.ToString());
 
             // Use HttpWebRequest so we can get a decent response
             var wr = (HttpWebRequest)WebRequest.Create(path);
-            wr.Timeout = 0;
             wr.Proxy = null;
 
             // Construct the basic auth, if required
@@ -261,7 +260,20 @@ namespace Avalara.AvaTax.RestClient
                 throw webex;
             }
         }
+
+        private string CombinePath(string url1, string url2)
+        {
+            var endslash = url1.EndsWith("/");
+            var startslash = url2.StartsWith("/");
+            if (endslash && startslash) {
+                return url1 + url2.Substring(1);
+            } else if (!endslash && !startslash) {
+                return url1 + "/" + url2;
+            } else {
+                return url1 + url2;
+            }
+        }
 #endif
-#endregion
+        #endregion
     }
 }

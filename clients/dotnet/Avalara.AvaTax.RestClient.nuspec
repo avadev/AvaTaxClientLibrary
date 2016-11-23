@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
-        <id>Avalara.AvaTax.RestClient</id>
+        <id>Avalara.AvaTax</id>
         <version>2.16.12-beta2</version>
         <title>AvaTaxClient</title>
         <description>Client library for Avalara's AvaTax suite of business tax calculation and processing services.</description>
@@ -21,7 +21,7 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Release\net20\*" target="lib\net20" />
-        <file src="bin\Release\dotnet\*" target="lib\dotnet" />
+        <file src="bin\Release\net20\Avalara*" target="lib\net20" />
+        <file src="bin\Release\dotnet\Avalara*" target="lib\dotnet" />
     </files>
 </package>
