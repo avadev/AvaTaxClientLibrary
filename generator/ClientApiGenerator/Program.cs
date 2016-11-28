@@ -113,7 +113,11 @@ Arguments:
                     // Now figure out the response type
                     SwaggerResult ok = null;
                     if (verb.Value.responses.TryGetValue("200", out ok)) {
-                        api.TypeName = ResolveType(null, ok.schema);
+                        if (ok.schema == null) {
+                            api.TypeName = "String";
+                        } else {
+                            api.TypeName = ResolveType(null, ok.schema);
+                        }
                     } else if (verb.Value.responses.TryGetValue("201", out ok)) {
                         api.TypeName = ResolveType(null, ok.schema);
                     }

@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Avalara.AvaTax</id>
-        <version>2.16.12-beta2</version>
+        <version>2.16.12.3</version>
         <title>AvaTaxClient</title>
         <description>Client library for Avalara's AvaTax suite of business tax calculation and processing services.</description>
         <authors>Ted Spence, Zhenya Frolov</authors>
         <language>en-US</language>
         <projectUrl>https://developer.avalara.com</projectUrl>
-        <iconUrl>https://developer.avalara.com/favicon.ico</iconUrl>
+        <iconUrl>https://developer.avalara.com/public/images/favicon/A-Check-RGB.png</iconUrl>
         <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
 		<copyright>(C) 2004-2016, Avalara, Inc.</copyright>
         <tags>tax Avalara AvaTax</tags>

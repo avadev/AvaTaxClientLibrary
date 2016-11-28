@@ -1320,6 +1320,52 @@ namespace Avalara.AvaTax.RestClient
         #region Locations
 #if PORTABLE
         /// <summary>
+        /// Point of sale data file generation
+        /// </summary>
+        /// <param name="companyId">The ID number of the company that owns this location.</param>
+        /// <param name="id">The ID number of the location to retrieve point-of-sale data.</param>
+        /// <param name="date">The date for which point-of-sale data would be calculated (today by default)</param>
+        /// <param name="format">The format of the file (JSON by default)</param>
+        /// <param name="partnerId">If specified, requests a custom partner-formatted version of the file.</param>
+        /// <param name="includeJurisCodes">When true, the file will include jurisdiction codes in the result.</param>
+        /// <returns></returns>
+        public async Task<String> BuildPointOfSaleDataForLocationAsync(Int32 companyId, Int32 id, DateTime? date, String format, Int32? partnerId, Boolean? includeJurisCodes)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/pointofsaledata");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.AddQuery("date", date);
+            path.AddQuery("format", format);
+            path.AddQuery("partnerId", partnerId);
+            path.AddQuery("includeJurisCodes", includeJurisCodes);
+            return await RestCallAsync<String>("get", path, null);
+        }
+#endif
+
+        /// <summary>
+        /// Point of sale data file generation
+        /// </summary>
+        /// <param name="companyId">The ID number of the company that owns this location.</param>
+        /// <param name="id">The ID number of the location to retrieve point-of-sale data.</param>
+        /// <param name="date">The date for which point-of-sale data would be calculated (today by default)</param>
+        /// <param name="format">The format of the file (JSON by default)</param>
+        /// <param name="partnerId">If specified, requests a custom partner-formatted version of the file.</param>
+        /// <param name="includeJurisCodes">When true, the file will include jurisdiction codes in the result.</param>
+        /// <returns></returns>
+        public String BuildPointOfSaleDataForLocation(Int32 companyId, Int32 id, DateTime? date, String format, Int32? partnerId, Boolean? includeJurisCodes)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/pointofsaledata");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.AddQuery("date", date);
+            path.AddQuery("format", format);
+            path.AddQuery("partnerId", partnerId);
+            path.AddQuery("includeJurisCodes", includeJurisCodes);
+            return RestCall<String>("get", path, null);
+        }
+
+#if PORTABLE
+        /// <summary>
         /// Create a new location
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this location.</param>
@@ -1749,6 +1795,33 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<NexusModel>("put", path, model);
+        }
+
+        #endregion
+
+        #region PointOfSale
+#if PORTABLE
+        /// <summary>
+        /// Point of sale data file generation
+        /// </summary>
+        /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
+        /// <returns></returns>
+        public async Task<String> BuildPointOfSaleDataFileAsync(PointOfSaleDataRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
+            return await RestCallAsync<String>("post", path, model);
+        }
+#endif
+
+        /// <summary>
+        /// Point of sale data file generation
+        /// </summary>
+        /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
+        /// <returns></returns>
+        public String BuildPointOfSaleDataFile(PointOfSaleDataRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
+            return RestCall<String>("post", path, model);
         }
 
         #endregion

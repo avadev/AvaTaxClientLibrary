@@ -64,10 +64,29 @@ namespace ConsoleTest
                     .Create();
                 Console.WriteLine(t.ToString());
 
+                // Define a location
+                var locations = client.CreateLocations(init.id, new List<LocationModel>()
+                {
+                    new LocationModel() {
+                        companyId = init.id,
+                        locationCode = "FIELD",
+                        line1 = "123 Main Street",
+                        city = "Irvine",
+                        region = "CA",
+                        postalCode = "92615",
+                        country = "US",
+                        addressCategoryId = AddressCategoryId.Storefront,
+                        addressTypeId = AddressTypeId.Location
+                    }
+                });
+                Console.WriteLine(locations[0].ToString());
+
+                // Now create a point-of-sale file for this location
+                var contents = client.BuildPointOfSaleDataForLocation(init.id, locations[0].id, null, null, null, null);
+                Console.WriteLine(contents);
+
             } catch (AvaTaxError ex) {
                 Console.WriteLine(ex.error.ToString());
-            } catch (Exception ex2) {
-                Console.WriteLine(ex2.ToString());
             }
 
             // Finished

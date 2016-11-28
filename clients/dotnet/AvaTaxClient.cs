@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using System.IO;
+using Newtonsoft.Json.Converters;
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -136,9 +137,26 @@ namespace Avalara.AvaTax.RestClient
 #endif
             return this;
         }
-#endregion
+        #endregion
 
-#region Implementation
+        #region Implementation
+        private JsonSerializerSettings _serializer_settings = null;
+        private JsonSerializerSettings SerializerSettings
+        {
+            get
+            {
+                if (_serializer_settings == null) {
+                    lock (this) {
+                        _serializer_settings = new JsonSerializerSettings();
+                        _serializer_settings.NullValueHandling = NullValueHandling.Ignore;
+                        _serializer_settings.Converters.Add(new StringEnumConverter());
+                    }
+                }
+                return _serializer_settings;
+            }
+        }
+
+
 #if PORTABLE
         /// <summary>
         /// Implementation of asynchronous client APIs
@@ -156,10 +174,10 @@ namespace Avalara.AvaTax.RestClient
             if (verb == "get") {
                 result = await _client.GetAsync(uri.ToString());
             } else if (verb == "post") {
-                json = JsonConvert.SerializeObject(payload);
+                json = JsonConvert.SerializeObject(payload, SerializerSettings);
                 result = await _client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
             } else if (verb == "put") {
-                json = JsonConvert.SerializeObject(payload);
+                json = JsonConvert.SerializeObject(payload, SerializerSettings);
                 result = await _client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
             } else if (verb == "delete") {
                 result = await _client.DeleteAsync(uri.ToString());
@@ -185,7 +203,16 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private T RestCall<T>(string verb, AvaTaxPath uri, object payload = null)
         {
-            return RestCallAsync<T>(verb, uri, payload).Result;
+            try {
+                return RestCallAsync<T>(verb, uri, payload).Result;
+
+            // Unroll single-exception aggregates for ease of use
+            } catch (AggregateException ex) {
+                if (ex.InnerExceptions.Count == 1) {
+                    throw ex.InnerException;
+                }
+                throw ex;
+            }
         }
 #else
         /// <summary>
@@ -219,7 +246,7 @@ namespace Avalara.AvaTax.RestClient
                 wr.ServicePoint.Expect100Continue = false;
 
                 // Encode the payload
-                var json = JsonConvert.SerializeObject(payload);
+                var json = JsonConvert.SerializeObject(payload, SerializerSettings);
                 var encoding = new UTF8Encoding();
                 byte[] data = encoding.GetBytes(json);
                 wr.ContentLength = data.Length;
