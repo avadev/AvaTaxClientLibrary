@@ -66,6 +66,7 @@
     <Compile Include="enums\NexusTypeId.cs" />
     <Compile Include="enums\ParameterBagDataType.cs" />
     <Compile Include="enums\PasswordStatusId.cs" />
+    <Compile Include="enums\PointOfSaleFileType.cs" />
     <Compile Include="enums\RateType.cs" />
     <Compile Include="enums\ResolutionQuality.cs" />
     <Compile Include="enums\RoundingLevelId.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="models\ParameterModel.cs" />
     <Compile Include="models\PasswordChangeModel.cs" />
     <Compile Include="models\PingResultModel.cs" />
+    <Compile Include="models\PointOfSaleDataRequestModel.cs" />
     <Compile Include="models\RateModel.cs" />
     <Compile Include="models\ResetLicenseKeyModel.cs" />
     <Compile Include="models\SecurityRoleModel.cs" />

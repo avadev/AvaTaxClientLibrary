@@ -246,7 +246,7 @@ namespace Avalara.AvaTax.RestClient
                 wr.ServicePoint.Expect100Continue = false;
 
                 // Encode the payload
-                var json = JsonConvert.SerializeObject(payload);
+                var json = JsonConvert.SerializeObject(payload, SerializerSettings);
                 var encoding = new UTF8Encoding();
                 byte[] data = encoding.GetBytes(json);
                 wr.ContentLength = data.Length;
