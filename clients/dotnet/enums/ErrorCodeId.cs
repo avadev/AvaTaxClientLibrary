@@ -390,6 +390,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        DuplicateEntityProperty,
+
+        /// <summary>
+        /// 
+        /// </summary>
         BatchSalesAuditMustBeZippedError,
 
         /// <summary>
@@ -401,6 +406,16 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         BatchInvalidFileTypeError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        PointOfSaleFileSize,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        PointOfSaleSetup,
 
         /// <summary>
         /// 
