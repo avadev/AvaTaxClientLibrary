@@ -9,20 +9,21 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class IsoCountryModel
     {
-	    /// <summary>
+        /// <summary>
         /// The two character ISO 3166 country code
         /// </summary>
         public String code { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The full name of this country as it is known in US English
         /// </summary>
         public String name { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// True if this country is a member of the European Union
         /// </summary>
         public Boolean? isEuropeanUnion { get; set; }
+
 
 
         /// <summary>

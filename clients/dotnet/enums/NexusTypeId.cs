@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// NexusTypeId
+    /// 
     /// </summary>
     public enum NexusTypeId
     {
@@ -31,6 +31,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         SSTNonVolunteer,
+
 
     }
 }

@@ -9,91 +9,92 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class LineItemModel
     {
-	    /// <summary>
+        /// <summary>
         /// Line number within this document
         /// </summary>
         public String number { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Quantity of items in this line
         /// </summary>
         public Decimal quantity { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Total amount for this line
         /// </summary>
         public Decimal amount { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Specify any differences for addresses between this line and the rest of the document
         /// </summary>
         public Dictionary<TransactionAddressType, AddressInfo> addresses { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Tax Code - System or Custom Tax Code.
         /// </summary>
         public String taxCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Customer Usage Type - The client application customer or usage type.
         /// </summary>
         public String customerUsageType { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Item Code (SKU)
         /// </summary>
         public String itemCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Exemption number for this line
         /// </summary>
         public String exemptionCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// True if the document discount should be applied to this line
         /// </summary>
         public Boolean? discounted { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Indicates if line has Tax Included; defaults to false
         /// </summary>
         public Boolean? taxIncluded { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Revenue Account
         /// </summary>
         public String revenueAccount { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Reference 1 - Client specific reference field
         /// </summary>
         public String ref1 { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Reference 2 - Client specific reference field
         /// </summary>
         public String ref2 { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Item description.  This is required for SST transactions if an unmapped ItemCode is used.
         /// </summary>
         public String description { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// BusinessIdentificationNo
         /// </summary>
         public String businessIdentificationNo { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Specifies a tax override for this line
         /// </summary>
         public TaxOverrideModel taxOverride { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Special parameters that apply to this line within this transaction.
         ///                 To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
         /// </summary>
         public Dictionary<string, string> parameters { get; set; }
+
 
 
         /// <summary>

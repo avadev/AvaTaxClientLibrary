@@ -9,15 +9,16 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class TaxAuthorityFormModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of the tax authority.
         /// </summary>
         public Int32 taxAuthorityId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The form name of the form for this tax authority.
         /// </summary>
         public String formName { get; set; }
+
 
 
         /// <summary>

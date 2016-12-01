@@ -9,15 +9,16 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class SecurityRoleModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of this security role.
         /// </summary>
         public String id { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// A description of this security role
         /// </summary>
         public String description { get; set; }
+
 
 
         /// <summary>

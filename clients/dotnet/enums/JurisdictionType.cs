@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// JurisdictionType
+    /// 
     /// </summary>
     public enum JurisdictionType
     {
@@ -36,6 +36,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Special,
+
 
     }
 }

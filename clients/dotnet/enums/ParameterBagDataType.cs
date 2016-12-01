@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// ParameterBagDataType
+    /// 
     /// </summary>
     public enum ParameterBagDataType
     {
@@ -21,6 +21,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Numeric,
+
 
     }
 }

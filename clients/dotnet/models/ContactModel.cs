@@ -9,115 +9,116 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class ContactModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of this contact.
         /// </summary>
         public Int32 id { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of the company to which this contact belongs.
         /// </summary>
         public Int32 companyId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// A unique code for this contact.
         /// </summary>
         public String contactCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The first or given name of this contact.
         /// </summary>
         public String firstName { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The middle name of this contact.
         /// </summary>
         public String middleName { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The last or family name of this contact.
         /// </summary>
         public String lastName { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Professional title of this contact.
         /// </summary>
         public String title { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The first line of the postal mailing address of this contact.
         /// </summary>
         public String line1 { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The second line of the postal mailing address of this contact.
         /// </summary>
         public String line2 { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The third line of the postal mailing address of this contact.
         /// </summary>
         public String line3 { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The city of the postal mailing address of this contact.
         /// </summary>
         public String city { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The state, region, or province of the postal mailing address of this contact.
         /// </summary>
         public String region { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The postal code or zip code of the postal mailing address of this contact.
         /// </summary>
         public String postalCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The ISO 3166 two-character country code of the postal mailing address of this contact.
         /// </summary>
         public String country { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The email address of this contact.
         /// </summary>
         public String email { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The main phone number for this contact.
         /// </summary>
         public String phone { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The mobile phone number for this contact.
         /// </summary>
         public String mobile { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The facsimile phone number for this contact.
         /// </summary>
         public String fax { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The User ID of the user who created this record.
         /// </summary>
         public Int32? createdUserId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The date/time when this record was last modified.
         /// </summary>
         public DateTime? modifiedDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
+
 
 
         /// <summary>

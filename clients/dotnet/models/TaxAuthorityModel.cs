@@ -9,25 +9,26 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class TaxAuthorityModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of this tax authority.
         /// </summary>
         public Int32 id { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The friendly name of this tax authority.
         /// </summary>
         public String name { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The type of this tax authority.
         /// </summary>
         public Int32? taxAuthorityTypeId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of the jurisdiction for this tax authority.
         /// </summary>
         public Int32? jurisdictionId { get; set; }
+
 
 
         /// <summary>

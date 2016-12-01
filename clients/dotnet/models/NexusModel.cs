@@ -9,117 +9,118 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class NexusModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of this declaration of nexus.
         /// </summary>
         public Int32 id { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of the company that declared nexus.
         /// </summary>
         public Int32 companyId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The two character ISO-3166 country code of the country in which this company declared nexus.
         /// </summary>
         public String country { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The two or three character ISO region code of the region, state, or province in which this company declared nexus.
         /// </summary>
         public String region { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The jurisdiction type of the jurisdiction in which this company declared nexus.
         /// </summary>
         public JurisTypeId? jurisTypeId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The code identifying the jurisdiction in which this company declared nexus.
         /// </summary>
         public String jurisCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The common name of the jurisdiction in which this company declared nexus.
         /// </summary>
         public String jurisName { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The date when this nexus began.  If not known, set to null.
         /// </summary>
         public DateTime? effectiveDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// If this nexus will end or has ended on a specific date, set this to the date when this nexus ends.
         /// </summary>
         public DateTime? endDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The short name of the jurisdiction.
         /// </summary>
         public String shortName { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The signature code of the boundary region as defined by Avalara.
         /// </summary>
         public String signatureCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The state assigned number of this jurisdiction.
         /// </summary>
         public String stateAssignedNo { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The type of nexus that this company is declaring.
         /// </summary>
         public NexusTypeId? nexusTypeId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Indicates whether this nexus is defined as origin or destination nexus.
         /// </summary>
         public Sourcing? sourcing { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// True if you are also declaring local nexus within this jurisdiction.
         ///             Many U.S. states have options for declaring nexus in local jurisdictions as well as within the state.
         /// </summary>
         public Boolean? hasLocalNexus { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// If you are declaring local nexus within this jurisdiction, this indicates whether you are declaring only 
         ///             a specified list of local jurisdictions, all state-administered local jurisdictions, or all local jurisdictions.
         /// </summary>
         public LocalNexusTypeId? localNexusTypeId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Set this value to true if your company has a permanent establishment within this jurisdiction.
         /// </summary>
         public Boolean? hasPermanentEstablishment { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Optional - the tax identification number under which you declared nexus.
         /// </summary>
         public String taxId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The User ID of the user who created this record.
         /// </summary>
         public Int32? createdUserId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The date/time when this record was last modified.
         /// </summary>
         public DateTime? modifiedDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
+
 
 
         /// <summary>

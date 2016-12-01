@@ -12,30 +12,31 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class SettingModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of this setting.
         /// </summary>
         public Int32 id { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of the company this setting refers to.
         /// </summary>
         public Int32 companyId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// A user-defined "set" containing this name-value pair.
         /// </summary>
         public String set { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// A user-defined "name" for this name-value pair.
         /// </summary>
         public String name { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The value of this name-value pair.
         /// </summary>
         public String value { get; set; }
+
 
 
         /// <summary>

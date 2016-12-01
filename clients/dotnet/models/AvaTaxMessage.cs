@@ -9,30 +9,31 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class AvaTaxMessage
     {
-	    /// <summary>
+        /// <summary>
         /// A brief summary of what this message tells us
         /// </summary>
         public String summary { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Detailed information that explains what the summary provided
         /// </summary>
         public String details { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Information about what object in your request this message refers to
         /// </summary>
         public String refersTo { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// A category that indicates how severely this message affects the results
         /// </summary>
         public String severity { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The name of the code or service that generated this message
         /// </summary>
         public String source { get; set; }
+
 
 
         /// <summary>

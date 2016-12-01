@@ -9,10 +9,11 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class VoidTransactionModel
     {
-	    /// <summary>
+        /// <summary>
         /// Please specify the reason for voiding or cancelling this transaction
         /// </summary>
         public VoidReasonCode code { get; set; }
+
 
 
         /// <summary>

@@ -9,153 +9,154 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class CreateTransactionModel
     {
-	    /// <summary>
+        /// <summary>
         /// Document Type
         /// </summary>
         public DocumentType? type { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Transaction Code - the internal reference code used by the client application.  This is used for operations such as
         ///                 Get, Adjust, Settle, and Void.  If you leave the transaction code blank, a GUID will be assigned to each transaction.
         /// </summary>
         public String code { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Company Code - If you are posting to /api/v2/transactions/create, you must specify the company code value here.
         ///                 If you are posting to /api/v2/companies/(companyCode)/transactions/create, this value must be null.
         /// </summary>
         public String companyCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Transaction Date - The date on the invoice, purchase order, etc.
         /// </summary>
         public DateTime date { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Salesperson Code - The client application salesperson reference code.
         /// </summary>
         public String salespersonCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Customer Code - The client application customer reference code.
         /// </summary>
         public String customerCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Customer Usage Type - The client application customer or usage type.
         /// </summary>
         public String customerUsageType { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Discount - The discount amount to apply to the document.
         /// </summary>
         public Decimal? discount { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Purchase Order Number for this document
         /// </summary>
         public String purchaseOrderNo { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Exemption Number for this document
         /// </summary>
         public String exemptionNo { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Default addresses for all lines in this document
         /// </summary>
         public Dictionary<TransactionAddressType, AddressInfo> addresses { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Document line items list
         /// </summary>
         public List<LineItemModel> lines { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Special parameters for this transaction.
         ///                 To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
         /// </summary>
         public Dictionary<string, string> parameters { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Reference Code used to reference the original document for a return invoice
         /// </summary>
         public String referenceCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Sets the sale location code (Outlet ID) for reporting this document to the tax authority.
         /// </summary>
         public String reportingLocationCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Causes the document to be committed if true.
         /// </summary>
         public Boolean? commit { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// BatchCode for batch operations.
         /// </summary>
         public String batchCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Specifies a tax override for the entire document
         /// </summary>
         public TaxOverrideModel taxOverride { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Indicates the tax effectivity override date for the entire document.
         /// </summary>
         public DateTime? taxDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// 3 character ISO 4217 currency code.
         /// </summary>
         public String currencyCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Specifies whether the tax calculation is handled Local, Remote, or Automatic (default)
         /// </summary>
         public ServiceMode? serviceMode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Currency exchange rate from this transaction to the company base currency.
         /// </summary>
         public Decimal? exchangeRate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Effective date of the exchange rate.
         /// </summary>
         public DateTime? exchangeRateEffectiveDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Sets the POS Lane Code sent by the User for this document.
         /// </summary>
         public String posLaneCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// BusinessIdentificationNo
         /// </summary>
         public String businessIdentificationNo { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Specifies if the Transaction has the seller as IsSellerImporterOfRecord
         /// </summary>
         public Boolean? isSellerImporterOfRecord { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Description
         /// </summary>
         public String description { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Email
         /// </summary>
         public String email { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// If the user wishes to request additional debug information from this transaction, specify a level higher than 'normal'
         /// </summary>
         public TaxDebugLevel? debugLevel { get; set; }
+
 
 
         /// <summary>

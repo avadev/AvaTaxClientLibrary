@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// BatchStatus
+    /// 
     /// </summary>
     public enum BatchStatus
     {
@@ -51,6 +51,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Processing,
+
 
     }
 }

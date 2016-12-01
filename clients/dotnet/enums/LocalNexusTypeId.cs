@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// LocalNexusTypeId
+    /// 
     /// </summary>
     public enum LocalNexusTypeId
     {
@@ -21,6 +21,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         All,
+
 
     }
 }

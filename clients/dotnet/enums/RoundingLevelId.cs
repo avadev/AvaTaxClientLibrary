@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// RoundingLevelId
+    /// 
     /// </summary>
     public enum RoundingLevelId
     {
@@ -16,6 +16,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Document,
+
 
     }
 }

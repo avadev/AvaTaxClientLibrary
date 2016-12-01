@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// DocumentType
+    /// 
     /// </summary>
     public enum DocumentType
     {
@@ -61,6 +61,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Any,
+
 
     }
 }

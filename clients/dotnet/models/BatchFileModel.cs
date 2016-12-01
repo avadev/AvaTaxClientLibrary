@@ -9,45 +9,46 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class BatchFileModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number assigned to this batch file.
         /// </summary>
         public Int32? id { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of the batch that this file belongs to.
         /// </summary>
         public Int32? batchId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Logical Name of file (e.g. "Input" or "Error").
         /// </summary>
         public String name { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Content of the batch file.
         /// </summary>
         public String content { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Size of content, in bytes.
         /// </summary>
         public Int32? contentLength { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Content mime type (e.g. text/csv).  This is used for HTTP downloading.
         /// </summary>
         public String contentType { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// File extension (e.g. CSV).
         /// </summary>
         public String fileExtension { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Number of errors that occurred when processing this file.
         /// </summary>
         public Int32? errorCount { get; set; }
+
 
 
         /// <summary>

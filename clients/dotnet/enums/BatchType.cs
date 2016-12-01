@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// BatchType
+    /// 
     /// </summary>
     public enum BatchType
     {
@@ -71,6 +71,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         UPCValidationImport,
+
 
     }
 }

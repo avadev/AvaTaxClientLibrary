@@ -9,20 +9,21 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class VerifyTransactionModel
     {
-	    /// <summary>
+        /// <summary>
         /// Transaction Date - The date on the invoice, purchase order, etc.
         /// </summary>
         public DateTime? verifyTransactionDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Total Amount - The total amount (not including tax) for the document.
         /// </summary>
         public Decimal? verifyTotalAmount { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Total Tax - The total tax for the document.
         /// </summary>
         public Decimal? verifyTotalTax { get; set; }
+
 
 
         /// <summary>

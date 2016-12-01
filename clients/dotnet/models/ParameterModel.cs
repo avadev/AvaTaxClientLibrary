@@ -9,30 +9,31 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class ParameterModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of this property.
         /// </summary>
         public Int32? id { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The service category of this property.  Some properties may require that you subscribe to certain features of avatax before they can be used.
         /// </summary>
         public String category { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The name of the property.  To use this property, add a field on the "properties" object of a /api/v2/companies/(code)/transactions/create call.
         /// </summary>
         public String name { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The data type of the property.
         /// </summary>
         public ParameterBagDataType? dataType { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// A full description of this property.
         /// </summary>
         public String description { get; set; }
+
 
 
         /// <summary>

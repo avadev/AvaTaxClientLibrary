@@ -9,51 +9,52 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class LocationQuestionModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of this location setting type
         /// </summary>
         public Int32 id { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// This is the prompt for this question
         /// </summary>
         public String question { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// If additional information is available about the location setting, this contains descriptive text to help
         ///             you identify the correct value to provide in this setting.
         /// </summary>
         public String description { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// If available, this regular expression will verify that the input from the user is in the expected format.
         /// </summary>
         public String regularExpression { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// If available, this is an example value that you can demonstrate to the user to show what is expected.
         /// </summary>
         public String exampleValue { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Indicates which jurisdiction requires this question
         /// </summary>
         public String jurisdictionName { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Indicates which type of jurisdiction requires this question
         /// </summary>
         public JurisdictionType? jurisdictionType { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Indicates the country that this jurisdiction belongs to
         /// </summary>
         public String jurisdictionCountry { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Indicates the state, region, or province that this jurisdiction belongs to
         /// </summary>
         public String jurisdictionRegion { get; set; }
+
 
 
         /// <summary>

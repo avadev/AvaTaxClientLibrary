@@ -9,10 +9,11 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class SetPasswordModel
     {
-	    /// <summary>
+        /// <summary>
         /// New Password
         /// </summary>
         public String newPassword { get; set; }
+
 
 
         /// <summary>

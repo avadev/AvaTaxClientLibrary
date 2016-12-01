@@ -9,15 +9,16 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class SubscriptionTypeModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of this subscription type.
         /// </summary>
         public Int32? id { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The friendly name of the service this subscription type represents.
         /// </summary>
         public String description { get; set; }
+
 
 
         /// <summary>

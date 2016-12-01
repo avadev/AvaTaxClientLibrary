@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// DocumentStatus
+    /// 
     /// </summary>
     public enum DocumentStatus
     {
@@ -51,6 +51,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Any,
+
 
     }
 }

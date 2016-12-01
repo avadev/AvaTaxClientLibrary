@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// SecurityRoleId
+    /// 
     /// </summary>
     public enum SecurityRoleId
     {
@@ -121,6 +121,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         SSTAdmin,
+
 
     }
 }

@@ -9,23 +9,24 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class LicenseKeyModel
     {
-	    /// <summary>
+        /// <summary>
         /// The primary key of the account
         /// </summary>
         public Int32? accountId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// This is your private license key.  You must record this license key for safekeeping.
         ///             If you lose this key, you must contact the ResetLicenseKey API in order to request a new one.
         ///             Each account can only have one license key at a time.
         /// </summary>
         public String privateLicenseKey { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// If your software allows you to specify the HTTP Authorization header directly, this is the header string you 
         ///             should use when contacting Avalara to make API calls with this license key.
         /// </summary>
         public String httpRequestHeader { get; set; }
+
 
 
         /// <summary>

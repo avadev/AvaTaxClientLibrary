@@ -9,15 +9,16 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class LocationSettingModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of the location question answered.
         /// </summary>
         public Int32? questionId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The answer the user provided.
         /// </summary>
         public String value { get; set; }
+
 
 
         /// <summary>

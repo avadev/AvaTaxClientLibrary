@@ -9,70 +9,71 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class UPCModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number for this UPC.
         /// </summary>
         public Int32 id { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of the company to which this UPC belongs.
         /// </summary>
         public Int32 companyId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The 12-14 character Universal Product Code, European Article Number, or Global Trade Identification Number.
         /// </summary>
         public String upc { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Legacy Tax Code applied to any product sold with this UPC.
         /// </summary>
         public String legacyTaxCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Description of the product to which this UPC applies.
         /// </summary>
         public String description { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// If this UPC became effective on a certain date, this contains the first date on which the UPC was effective.
         /// </summary>
         public DateTime? effectiveDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// If this UPC expired or will expire on a certain date, this contains the last date on which the UPC was effective.
         /// </summary>
         public DateTime? endDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// A usage identifier for this UPC code.
         /// </summary>
         public Int32? usage { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// A flag indicating whether this UPC code is attached to the AvaTax system or to a company.
         /// </summary>
         public Int32? isSystem { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The User ID of the user who created this record.
         /// </summary>
         public Int32? createdUserId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The date/time when this record was last modified.
         /// </summary>
         public DateTime? modifiedDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
+
 
 
         /// <summary>

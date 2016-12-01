@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// TransactionAddressType
+    /// 
     /// </summary>
     public enum TransactionAddressType
     {
@@ -31,6 +31,7 @@ namespace Avalara.AvaTax.RestClient
         /// Only used if all addresses for this transaction were identical; e.g. if this was a point-of-sale physical transaction
         /// </summary>
         SingleLocation,
+
 
     }
 }

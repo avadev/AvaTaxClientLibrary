@@ -9,20 +9,21 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class UserEntitlementModel
     {
-	    /// <summary>
+        /// <summary>
         /// List of API names and categories that this user is permitted to access
         /// </summary>
         public String permissions { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// What access privileges does the current user have to see companies?
         /// </summary>
         public CompanyAccessLevel? accessLevel { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The identities of all companies this user is permitted to access
         /// </summary>
         public Int32? companies { get; set; }
+
 
 
         /// <summary>

@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// ResolutionQuality
+    /// 
     /// </summary>
     public enum ResolutionQuality
     {
@@ -66,6 +66,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Constant,
+
 
     }
 }

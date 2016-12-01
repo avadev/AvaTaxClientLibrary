@@ -9,15 +9,16 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class CoordinateInfo
     {
-	    /// <summary>
+        /// <summary>
         /// Latitude
         /// </summary>
         public Decimal? latitude { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Longitude
         /// </summary>
         public Decimal? longitude { get; set; }
+
 
 
         /// <summary>

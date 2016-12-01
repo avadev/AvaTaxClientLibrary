@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// TaxDebugLevel
+    /// 
     /// </summary>
     public enum TaxDebugLevel
     {
@@ -16,6 +16,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Diagnostic,
+
 
     }
 }

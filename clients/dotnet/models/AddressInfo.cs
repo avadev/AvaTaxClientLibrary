@@ -10,50 +10,51 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class AddressInfo
     {
-	    /// <summary>
+        /// <summary>
         /// Line1
         /// </summary>
         public String line1 { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Line2
         /// </summary>
         public String line2 { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Line3
         /// </summary>
         public String line3 { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// City
         /// </summary>
         public String city { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// State / Province / Region
         /// </summary>
         public String region { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Two character ISO 3166 Country Code
         /// </summary>
         public String country { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Postal Code / Zip Code
         /// </summary>
         public String postalCode { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Geospatial latitude measurement
         /// </summary>
         public Decimal? latitude { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Geospatial longitude measurement
         /// </summary>
         public Decimal? longitude { get; set; }
+
 
 
         /// <summary>

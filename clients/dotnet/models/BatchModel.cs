@@ -9,90 +9,91 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class BatchModel
     {
-	    /// <summary>
+        /// <summary>
         /// The unique ID number of this batch.
         /// </summary>
         public Int32? id { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The user-friendly readable name for this batch.
         /// </summary>
         public String name { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The Account ID number of the account that owns this batch.
         /// </summary>
         public Int32? accountId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The Company ID number of the company that owns this batch.
         /// </summary>
         public Int32? companyId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The type of this batch.
         /// </summary>
         public BatchType type { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// This batch's current processing status
         /// </summary>
         public BatchStatus? status { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// Any optional flags provided for this batch
         /// </summary>
         public String options { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The agent used to create this batch
         /// </summary>
         public String batchAgent { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The date/time when this batch started processing
         /// </summary>
         public DateTime? startedDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The number of records in this batch; determined by the server
         /// </summary>
         public Int32? recordCount { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The current record being processed
         /// </summary>
         public Int32? currentRecord { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The date/time when this batch was completely processed
         /// </summary>
         public DateTime? completedDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The User ID of the user who created this record.
         /// </summary>
         public Int32? createdUserId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The date/time when this record was last modified.
         /// </summary>
         public DateTime? modifiedDate { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
 
-	    /// <summary>
+        /// <summary>
         /// The list of files contained in this batch.
         /// </summary>
         public List<BatchFileModel> files { get; set; }
+
 
 
         /// <summary>
