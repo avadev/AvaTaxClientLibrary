@@ -77,7 +77,7 @@ namespace Avalara.AvaTax.RestClient
 		WriteLine("        /// <param name=\"" + m.BodyParam.CleanParamName + "\">" + m.BodyParam.Comment + "</param>");
 	}
 
-	Write("        public async Task<" + m.TypeName + "> " + m.Name + "(");
+	Write("        public async Task<" + m.TypeName + "> " + m.Name + "Async(");
 
 	bool any = false;
 	foreach (var p in m.Params) {
