@@ -1,0 +1,21 @@
+#if PORTABLE
+        /// <summary>
+        /// @@COMMENT@@
+        /// </summary>
+@@PARAMCOMMENTS@@
+        public async Task<@@TYPENAME@@> @@APINAME@@Async(@@PARAMS@@)
+        {
+            var path = new AvaTaxPath("@@URI@@");@@PARAMBUILDER@@
+            return await RestCallAsync<@@TYPENAME@@>("@@HTTPVERB@@", path, @@PAYLOAD@@);
+        }
+#endif
+
+        /// <summary>
+        /// @@COMMENT@@
+        /// </summary>
+@@PARAMCOMMENTS@@
+        public @@TYPENAME@@ @@APINAME@@(@@PARAMS@@)
+        {
+            var path = new AvaTaxPath("@@URI@@");@@PARAMBUILDER@@
+            return RestCall<@@TYPENAME@@>("@@HTTPVERB@@", path, @@PAYLOAD@@);
+        }

@@ -1,0 +1,13 @@
+using System;
+using System.Collections.Generic;
+#if PORTABLE
+using System.Threading.Tasks;
+#endif
+
+namespace Avalara.AvaTax.RestClient
+{
+    public partial class AvaTaxClient
+    {
+@@APILIST@@
+    }
+}

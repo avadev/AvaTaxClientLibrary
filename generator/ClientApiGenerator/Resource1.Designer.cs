@@ -63,11 +63,9 @@ namespace ClientApiGenerator {
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///using System.Collections.Generic;
-        ///using System.Linq;
-        ///using System.Net.Http;
-        ///using System.Text;
+        ///#if PORTABLE
         ///using System.Threading.Tasks;
-        ///using Newtonsoft.Json;
+        ///#endif
         ///
         ///namespace Avalara.AvaTax.RestClient
         ///{
@@ -78,54 +76,56 @@ namespace ClientApiGenerator {
         ///}
         ///.
         /// </summary>
-        internal static string api_class_template_csharp {
+        internal static string csharp_api_class {
             get {
-                return ResourceManager.GetString("api_class_template_csharp", resourceCulture);
+                return ResourceManager.GetString("csharp_api_class", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to         /// &lt;summary&gt;
+        ///   Looks up a localized string similar to #if PORTABLE
+        ///        /// &lt;summary&gt;
         ///        /// @@COMMENT@@
         ///        /// &lt;/summary&gt;
         ///@@PARAMCOMMENTS@@
-        ///        public async Task&lt;@@TYPENAME@@&gt; @@APINAME@@(@@PARAMS@@)
+        ///        public async Task&lt;@@TYPENAME@@&gt; @@APINAME@@Async(@@PARAMS@@)
         ///        {
-        ///            var path = new AvaTaxPath(&quot;&quot;@@URI@@&quot;&quot;);@@PARAMBUILDER@@
-        ///            return await RestCall&lt;@@TYPENAME@@&gt;(&quot;&quot;@@HTTPVERB@@&quot;&quot;, path, @@PAYLOAD@@);
+        ///            var path = new AvaTaxPath(&quot;@@URI@@&quot;);@@PARAMBUILDER@@
+        ///            return await RestCallAsync&lt;@@TYPENAME@@&gt;(&quot;@@HTTPVERB@@&quot;, path, @@PAYLOAD@@);
         ///        }
-        ///.
+        ///#endif
+        ///
+        ///        /// &lt;summary&gt;
+        ///        /// @@COMMENT@@
+        ///        /// &lt;/summary&gt;
+        ///@@PARAMCOMMENTS@@
+        ///        public @@TYPENAME@@ @@APINAME@@(@@PARAMS@@)
+        ///     [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string api_template_csharp {
+        internal static string csharp_api_method {
             get {
-                return ResourceManager.GetString("api_template_csharp", resourceCulture);
+                return ResourceManager.GetString("csharp_api_method", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to using System;
-        ///using System.Collections.Generic;
-        ///using System.Linq;
-        ///using System.Net.Http;
-        ///using System.Text;
-        ///using System.Threading.Tasks;
-        ///using Newtonsoft.Json;
         ///
         ///namespace Avalara.AvaTax.RestClient
         ///{
         ///    /// &lt;summary&gt;
         ///    /// @@COMMENT@@
         ///    /// &lt;/summary&gt;
-        ///    public class @@ENUMCLASS@@
+        ///    public enum @@ENUMCLASS@@
         ///    {
         ///@@VALUELIST@@
         ///    }
         ///}
         ///.
         /// </summary>
-        internal static string enum_class_template_csharp {
+        internal static string csharp_enum_class {
             get {
-                return ResourceManager.GetString("enum_class_template_csharp", resourceCulture);
+                return ResourceManager.GetString("csharp_enum_class", resourceCulture);
             }
         }
         
@@ -133,22 +133,18 @@ namespace ClientApiGenerator {
         ///   Looks up a localized string similar to         /// &lt;summary&gt;
         ///        /// @@COMMENT@@
         ///        /// &lt;/summary&gt;
-        ///        @@VALUE@@
+        ///        @@VALUE@@,
         ///.
         /// </summary>
-        internal static string enum_value_template_csharp {
+        internal static string csharp_enum_value {
             get {
-                return ResourceManager.GetString("enum_value_template_csharp", resourceCulture);
+                return ResourceManager.GetString("csharp_enum_value", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///using System.Collections.Generic;
-        ///using System.Linq;
-        ///using System.Net.Http;
-        ///using System.Text;
-        ///using System.Threading.Tasks;
         ///using Newtonsoft.Json;
         ///
         ///namespace Avalara.AvaTax.RestClient
@@ -159,13 +155,18 @@ namespace ClientApiGenerator {
         ///    public class @@MODELCLASS@@
         ///    {
         ///@@PROPERTYLIST@@
-        ///    }
-        ///}
-        ///.
+        ///
+        ///        /// &lt;summary&gt;
+        ///        /// Convert this object to a JSON string of itself
+        ///        /// &lt;/summary&gt;
+        ///        /// &lt;returns&gt;A JSON string of this object&lt;/returns&gt;
+        ///        public override string ToString()
+        ///		{
+        ///            return JsonConvert.SerializeObject(this, new Jso [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string model_class_template_csharp {
+        internal static string csharp_model_class {
             get {
-                return ResourceManager.GetString("model_class_template_csharp", resourceCulture);
+                return ResourceManager.GetString("csharp_model_class", resourceCulture);
             }
         }
         
@@ -176,9 +177,132 @@ namespace ClientApiGenerator {
         ///        public @@PROPERTYTYPE@@ @@PROPERTYNAME@@ { get; set; }
         ///.
         /// </summary>
-        internal static string model_property_template_csharp {
+        internal static string csharp_model_property {
             get {
-                return ResourceManager.GetString("model_property_template_csharp", resourceCulture);
+                return ResourceManager.GetString("csharp_model_property", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///#if PORTABLE
+        ///using System.Threading.Tasks;
+        ///#endif
+        ///
+        ///namespace Avalara.AvaTax.RestClient
+        ///{
+        ///    public partial class AvaTaxClient
+        ///    {
+        ///@@APILIST@@
+        ///    }
+        ///}
+        ///.
+        /// </summary>
+        internal static string php_api_class {
+            get {
+                return ResourceManager.GetString("php_api_class", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #if PORTABLE
+        ///        /// &lt;summary&gt;
+        ///        /// @@COMMENT@@
+        ///        /// &lt;/summary&gt;
+        ///@@PARAMCOMMENTS@@
+        ///        public async Task&lt;@@TYPENAME@@&gt; @@APINAME@@Async(@@PARAMS@@)
+        ///        {
+        ///            var path = new AvaTaxPath(&quot;@@URI@@&quot;);@@PARAMBUILDER@@
+        ///            return await RestCallAsync&lt;@@TYPENAME@@&gt;(&quot;@@HTTPVERB@@&quot;, path, @@PAYLOAD@@);
+        ///        }
+        ///#endif
+        ///
+        ///        /// &lt;summary&gt;
+        ///        /// @@COMMENT@@
+        ///        /// &lt;/summary&gt;
+        ///@@PARAMCOMMENTS@@
+        ///        public @@TYPENAME@@ @@APINAME@@(@@PARAMS@@)
+        ///     [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string php_api_method {
+            get {
+                return ResourceManager.GetString("php_api_method", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///
+        ///namespace Avalara.AvaTax.RestClient
+        ///{
+        ///    /// &lt;summary&gt;
+        ///    /// @@COMMENT@@
+        ///    /// &lt;/summary&gt;
+        ///    public enum @@ENUMCLASS@@
+        ///    {
+        ///@@VALUELIST@@
+        ///    }
+        ///}
+        ///.
+        /// </summary>
+        internal static string php_enum_class {
+            get {
+                return ResourceManager.GetString("php_enum_class", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to         /// &lt;summary&gt;
+        ///        /// @@COMMENT@@
+        ///        /// &lt;/summary&gt;
+        ///        @@VALUE@@,
+        ///.
+        /// </summary>
+        internal static string php_enum_value {
+            get {
+                return ResourceManager.GetString("php_enum_value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using Newtonsoft.Json;
+        ///
+        ///namespace Avalara.AvaTax.RestClient
+        ///{
+        ///    /// &lt;summary&gt;
+        ///    /// @@COMMENT@@
+        ///    /// &lt;/summary&gt;
+        ///    public class @@MODELCLASS@@
+        ///    {
+        ///@@PROPERTYLIST@@
+        ///
+        ///        /// &lt;summary&gt;
+        ///        /// Convert this object to a JSON string of itself
+        ///        /// &lt;/summary&gt;
+        ///        /// &lt;returns&gt;A JSON string of this object&lt;/returns&gt;
+        ///        public override string ToString()
+        ///		{
+        ///            return JsonConvert.SerializeObject(this, new Jso [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string php_model_class {
+            get {
+                return ResourceManager.GetString("php_model_class", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to         /// &lt;summary&gt;
+        ///        /// @@COMMENT@@
+        ///        /// &lt;/summary&gt;
+        ///        public @@PROPERTYTYPE@@ @@PROPERTYNAME@@ { get; set; }
+        ///.
+        /// </summary>
+        internal static string php_model_property {
+            get {
+                return ResourceManager.GetString("php_model_property", resourceCulture);
             }
         }
     }
