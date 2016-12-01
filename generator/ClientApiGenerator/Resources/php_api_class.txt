@@ -10,16 +10,17 @@
 namespace Avalara.AvaTax;
 
 /**
- * @author Ted Spence <ted.spence@avalara.com>
- * @author Bob Maidens <bob.maidens@avalara.com
+ * @@author Ted Spence <ted.spence@@avalara.com>
+ * @@author Bob Maidens <bob.maidens@@avalara.com
  */
 final class AvaTaxApi extends AvaTaxApiBase
 {
     /**
-     * @param string $x
+     * @@param string x
      */
-    public function SomeTask($x)
+    public function MethodName(x)
     {
-        $this->funcvalue = "hi";
+        this->funcvalue = "hi";
     }
 }
+?>

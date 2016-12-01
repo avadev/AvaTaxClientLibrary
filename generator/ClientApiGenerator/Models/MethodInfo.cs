@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ClientApiGenerator.Models
 {
-    public class ApiInfo
+    public class MethodInfo
     {
+        public string Name { get; set; }
         public string URI { get; set; }
         public string Comment { get; set; }
         public string Category { get; set; }
         public string TypeName { get; set; }
         public string HttpVerb { get; set; }
-        public string OperationId { get; set; }
         public ParameterInfo BodyParam { get; set; }
         public List<ParameterInfo> Params { get; set; }
         public List<ParameterInfo> QueryParams { get; set; }
@@ -25,17 +25,17 @@ namespace ClientApiGenerator.Models
             StringBuilder paramlist = new StringBuilder();
             StringBuilder parambuilder = new StringBuilder();
             foreach (var p in Params) {
-                paramcomments.AppendFormat("        /// <param name=\"{0}\">{1}</param>\r\n", p.CSharpParamName, p.Comment);
+                paramcomments.AppendFormat("        /// <param name=\"{0}\">{1}</param>\r\n", p.CleanParamName, p.Comment);
                 paramlist.AppendFormat("{0} {1}, ", p.TypeName, p.ParamName.Replace("$", ""));
-                parambuilder.AppendFormat("\r\n            path.ApplyField(\"{0}\", {1});", p.ParamName, p.CSharpParamName);
+                parambuilder.AppendFormat("\r\n            path.ApplyField(\"{0}\", {1});", p.ParamName, p.CleanParamName);
             }
             foreach (var p in QueryParams) {
-                paramcomments.AppendFormat("        /// <param name=\"{0}\">{1}</param>\r\n", p.CSharpParamName, p.Comment);
+                paramcomments.AppendFormat("        /// <param name=\"{0}\">{1}</param>\r\n", p.CleanParamName, p.Comment);
                 paramlist.AppendFormat("{0} {1}, ", p.TypeName, p.ParamName.Replace("$", ""));
-                parambuilder.AppendFormat("\r\n            path.AddQuery(\"{0}\", {1});", p.ParamName, p.CSharpParamName);
+                parambuilder.AppendFormat("\r\n            path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
             }
             if (BodyParam != null) {
-                paramcomments.AppendFormat("        /// <param name=\"{0}\">{1}</param>\r\n", BodyParam.CSharpParamName, BodyParam.Comment);
+                paramcomments.AppendFormat("        /// <param name=\"{0}\">{1}</param>\r\n", BodyParam.CleanParamName, BodyParam.Comment);
                 paramlist.AppendFormat("{0} {1}, ", BodyParam.TypeName, BodyParam.ParamName.Replace("$", ""));
             }
             paramcomments.Append("        /// <returns></returns>");
@@ -46,7 +46,7 @@ namespace ClientApiGenerator.Models
                 .Replace("@@CATEGORY@@", Category)
                 .Replace("@@COMMENT@@", Fixups.Comment(Comment))
                 .Replace("@@TYPENAME@@", TypeName)
-                .Replace("@@APINAME@@", OperationId)
+                .Replace("@@APINAME@@", Name)
                 .Replace("@@HTTPVERB@@", HttpVerb)
                 .Replace("@@PARAMCOMMENTS@@", paramcomments.ToString())
                 .Replace("@@PARAMBUILDER@@", parambuilder.ToString())

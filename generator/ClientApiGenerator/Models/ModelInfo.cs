@@ -21,7 +21,7 @@ namespace ClientApiGenerator.Models
             StringBuilder sb = new StringBuilder();
             foreach (var prop in Properties) {
                 sb.AppendLine(Resource1.csharp_model_property
-                    .Replace("@@PROPERTYNAME@@", prop.CSharpParamName)
+                    .Replace("@@PROPERTYNAME@@", prop.CleanParamName)
                     .Replace("@@COMMENT@@", Fixups.Comment(prop.Comment))
                     .Replace("@@PROPERTYTYPE@@", prop.TypeName));
             }

@@ -51,8 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ApiInfo.cs" />
-    <Compile Include="Models\ApiModel.cs" />
+    <Compile Include="Models\MethodInfo.cs" />
+    <Compile Include="Models\SwaggerInfo.cs" />
     <Compile Include="Models\EnumInfo.cs" />
     <Compile Include="Models\EnumItem.cs" />
     <Compile Include="Fixups.cs" />

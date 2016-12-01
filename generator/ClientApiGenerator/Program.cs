@@ -55,23 +55,23 @@ Arguments:
         }
 
         #region Parsing
-        private static ApiModel ParseSwagger(SwaggerModel obj)
+        private static SwaggerInfo ParseSwagger(SwaggerModel obj)
         {
-            ApiModel result = new ApiModel();
+            SwaggerInfo result = new SwaggerInfo();
 
             // Loop through all paths and spit them out to the console
             foreach (var path in (from p in obj.paths orderby p.Key select p)) {
                 foreach (var verb in path.Value) {
 
                     // Set up our API
-                    ApiInfo api = new ApiInfo();
+                    MethodInfo api = new MethodInfo();
                     api.URI = path.Key;
                     api.HttpVerb = verb.Key;
                     api.Comment = verb.Value.summary;
                     api.Params = new List<ParameterInfo>();
                     api.QueryParams = new List<ParameterInfo>();
                     api.Category = verb.Value.tags.FirstOrDefault();
-                    api.OperationId = verb.Value.operationId.Replace("ApiV2", "");
+                    api.Name = verb.Value.operationId.Replace("ApiV2", "");
 
                     // Now figure out all the URL parameters
                     foreach (var parameter in verb.Value.parameters) {

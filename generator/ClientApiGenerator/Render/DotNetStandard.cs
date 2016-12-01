@@ -10,12 +10,12 @@ namespace ClientApiGenerator.Render
 {
     public class DotNetStandard : BaseRenderTarget
     {
-        public override void Render(ApiModel model, string rootPath)
+        public override void Render(SwaggerInfo model, string rootPath)
         {
             // Now spit out a coherent API structure
             StringBuilder sb = new StringBuilder();
             string currentRegion = null;
-            foreach (var api in (from a in model.Methods orderby a.Category, a.OperationId select a)) {
+            foreach (var api in (from a in model.Methods orderby a.Category, a.Name select a)) {
                 if (currentRegion != api.Category) {
                     if (currentRegion != null) {
                         sb.AppendLine("        #endregion\r\n");

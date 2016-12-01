@@ -19,7 +19,7 @@ namespace ClientApiGenerator.Render
         /// </summary>
         /// <param name="model"></param>
         /// <param name="rootPath"></param>
-        public virtual void Render(ApiModel model, string rootPath)
+        public virtual void Render(SwaggerInfo model, string rootPath)
         {
         }
 

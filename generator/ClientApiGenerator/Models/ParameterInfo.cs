@@ -9,7 +9,7 @@ namespace ClientApiGenerator.Models
     public class ParameterInfo
     {
         public string ParamName { get; set; }
-        public string CSharpParamName
+        public string CleanParamName
         {
             get
             {

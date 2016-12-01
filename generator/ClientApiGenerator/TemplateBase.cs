@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.CSharp;
+using System.Dynamic;
+using ClientApiGenerator.Models;
 
 namespace ClientApiGenerator
 {
@@ -17,7 +20,13 @@ namespace ClientApiGenerator
         public StringWriter Writer { get; set; }
 
         [Browsable(false)]
-        public dynamic Model { get; set; }
+        public SwaggerInfo SwaggerModel { get; set; }
+
+        [Browsable(false)]
+        public ModelInfo ClassModel { get; set; }
+
+        [Browsable(false)]
+        public EnumInfo EnumModel { get; set; }
 
         public TemplateBase()
         {
@@ -33,9 +42,16 @@ namespace ClientApiGenerator
         /// <param name="value"></param>
         public virtual void Write(object value)
         {
-            // Don't need to do anything special
-            // Razor for ASP.Net does HTML encoding here.
             WriteLiteral(value);
+        }
+
+        /// <summary>
+        /// Writes a CRLF at the end
+        /// </summary>
+        /// <param name="value"></param>
+        public virtual void WriteLine(object value)
+        {
+            WriteLiteral(value.ToString() + "\r\n");
         }
 
         /// <summary>
@@ -51,10 +67,15 @@ namespace ClientApiGenerator
         /// Execute this template against the specified model
         /// </summary>
         /// <param name="model"></param>
+        /// <param name="m"></param>
+        /// <param name="e"></param>
         /// <returns></returns>
-        public virtual string ExecuteTemplate(dynamic model)
+        public virtual string ExecuteTemplate(SwaggerInfo api, ModelInfo m, EnumInfo e)
         {
-            Model = model;
+            Buffer.Clear();
+            SwaggerModel = api;
+            ClassModel = m;
+            EnumModel = e;
             Execute();
             return Buffer.ToString();
         }
