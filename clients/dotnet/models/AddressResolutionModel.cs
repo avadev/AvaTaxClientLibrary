@@ -9,36 +9,35 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class AddressResolutionModel
     {
-        /// <summary>
+	    /// <summary>
         /// The original address
         /// </summary>
         public AddressInfo address { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The validated address or addresses
         /// </summary>
         public List<AddressInfo> validatedAddresses { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The geospatial coordinates of this address
         /// </summary>
         public CoordinateInfo coordinates { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The resolution quality of the geospatial coordinates
         /// </summary>
         public ResolutionQuality? resolutionQuality { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// List of informational and warning messages regarding this address
         /// </summary>
         public List<TaxAuthorityInfo> taxAuthorities { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// List of informational and warning messages regarding this address
         /// </summary>
         public List<AvaTaxMessage> messages { get; set; }
-
 
 
         /// <summary>

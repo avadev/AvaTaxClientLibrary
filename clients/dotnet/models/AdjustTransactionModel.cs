@@ -9,21 +9,20 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class AdjustTransactionModel
     {
-        /// <summary>
+	    /// <summary>
         /// A reason code indicating why this adjustment was made
         /// </summary>
         public AdjustmentReason adjustmentReason { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// If the AdjustmentReason is "Other", specify the reason here
         /// </summary>
         public String adjustmentDescription { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Replace the current transaction with tax data calculated for this new transaction
         /// </summary>
         public CreateTransactionModel newTransaction { get; set; }
-
 
 
         /// <summary>

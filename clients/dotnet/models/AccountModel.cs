@@ -9,61 +9,60 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class AccountModel
     {
-        /// <summary>
+	    /// <summary>
         /// The unique ID number assigned to this account.
         /// </summary>
         public Int32 id { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The name of this account.
         /// </summary>
         public String name { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The earliest date on which this account may be used.
         /// </summary>
         public DateTime? effectiveDate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// If this account has been closed, this is the last date the account was open.
         /// </summary>
         public DateTime? endDate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The current status of this account.
         /// </summary>
         public AccountStatusId? accountStatusId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The User ID of the user who created this record.
         /// </summary>
         public Int32? createdUserId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The date/time when this record was last modified.
         /// </summary>
         public DateTime? modifiedDate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Optional: A list of subscriptions granted to this account.  To fetch this list, add the query string "?$include=Subscriptions" to your URL.
         /// </summary>
         public List<SubscriptionModel> subscriptions { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Optional: A list of all the users belonging to this account.  To fetch this list, add the query string "?$include=Users" to your URL.
         /// </summary>
         public List<UserModel> users { get; set; }
-
 
 
         /// <summary>

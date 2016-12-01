@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// ErrorCodeId
     /// </summary>
     public enum ErrorCodeId
     {
@@ -466,7 +466,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         SubscriptionRequired,
-
 
     }
 }

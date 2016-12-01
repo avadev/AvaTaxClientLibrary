@@ -11,11 +11,10 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class ChangeTransactionCodeModel
     {
-        /// <summary>
+	    /// <summary>
         /// To change the transaction code for this transaction, specify the new transaction code here.
         /// </summary>
         public String newCode { get; set; }
-
 
 
         /// <summary>

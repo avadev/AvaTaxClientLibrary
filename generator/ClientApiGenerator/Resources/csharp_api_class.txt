@@ -8,6 +8,108 @@ namespace Avalara.AvaTax.RestClient
 {
     public partial class AvaTaxClient
     {
-@@APILIST@@
+#region Methods
+@foreach(var m in SwaggerModel.Methods) {
+
+	WriteLine("        /// <summary>");
+	WriteLine("        /// " + CSharpComment(m.Comment));
+	WriteLine("        /// </summary>");
+
+	foreach (var p in m.Params) {
+		WriteLine("        /// <param name=\"" + p.CleanParamName + "\">" + p.Comment + "</param>");
+	}
+	foreach (var p in m.QueryParams) {
+		WriteLine("        /// <param name=\"" + p.CleanParamName + "\">" + p.Comment + "</param>");
+	}
+	if (m.BodyParam != null) {
+		WriteLine("        /// <param name=\"" + m.BodyParam.CleanParamName + "\">" + m.BodyParam.Comment + "</param>");
+	}
+
+	Write("        public " + m.TypeName + " " + m.Name + "(");
+
+	bool any = false;
+	foreach (var p in m.Params) {
+        Write(p.TypeName + " " + p.CleanParamName + ", ");
+		any = true;
+	}
+	foreach (var p in m.QueryParams) {
+        Write(p.TypeName + " " + p.CleanParamName + ", ");
+		any = true;
+	}
+	if (m.BodyParam != null) {
+		Write(m.BodyParam.TypeName + " " + m.BodyParam.CleanParamName + ", ");
+		any = true;
+	}
+	if (any) {
+		Backtrack(2);
+	}
+
+	WriteLine(")");
+	WriteLine("        {");
+	WriteLine("            var path = new AvaTaxPath(\"" + m.URI + "\");");
+	foreach (var p in m.Params) {
+        WriteLine("            path.ApplyField(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+	}
+	foreach (var p in m.QueryParams) {
+        WriteLine("            path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+	}
+	WriteLine("            return RestCall<" + m.TypeName + ">(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+	WriteLine("        }");
+	WriteLine("");
+}
+#endregion
+
+#region Asynchronous
+#if PORTABLE
+@foreach(var m in SwaggerModel.Methods) {
+
+	WriteLine("        /// <summary>");
+	WriteLine("        /// " + CSharpComment(m.Comment));
+	WriteLine("        /// </summary>");
+
+	foreach (var p in m.Params) {
+		WriteLine("        /// <param name=\"" + p.CleanParamName + "\">" + p.Comment + "</param>");
+	}
+	foreach (var p in m.QueryParams) {
+		WriteLine("        /// <param name=\"" + p.CleanParamName + "\">" + p.Comment + "</param>");
+	}
+	if (m.BodyParam != null) {
+		WriteLine("        /// <param name=\"" + m.BodyParam.CleanParamName + "\">" + m.BodyParam.Comment + "</param>");
+	}
+
+	Write("        public async Task<" + m.TypeName + "> " + m.Name + "(");
+
+	bool any = false;
+	foreach (var p in m.Params) {
+        Write(p.TypeName + " " + p.CleanParamName + ", ");
+		any = true;
+	}
+	foreach (var p in m.QueryParams) {
+        Write(p.TypeName + " " + p.CleanParamName + ", ");
+		any = true;
+	}
+	if (m.BodyParam != null) {
+		Write(m.BodyParam.TypeName + " " + m.BodyParam.CleanParamName + ", ");
+		any = true;
+	}
+	if (any) {
+		Backtrack(2);
+	}
+
+	WriteLine(")");
+	WriteLine("        {");
+	WriteLine("            var path = new AvaTaxPath(\"" + m.URI + "\");");
+	foreach (var p in m.Params) {
+        WriteLine("            path.ApplyField(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+	}
+	foreach (var p in m.QueryParams) {
+        WriteLine("            path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+	}
+	WriteLine("            return await RestCallAsync<" + m.TypeName + ">(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+	WriteLine("        }");
+	WriteLine("");
+}
+#endif
+#endregion
     }
 }

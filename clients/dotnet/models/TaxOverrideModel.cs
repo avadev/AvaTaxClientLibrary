@@ -9,27 +9,26 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class TaxOverrideModel
     {
-        /// <summary>
+	    /// <summary>
         /// Identifies the type of tax override
         /// </summary>
         public TaxOverrideType? type { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Indicates a total override of the calculated tax on the document.  AvaTax will distribute
         ///                 the override across all the lines.
         /// </summary>
         public Decimal? taxAmount { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The override tax date to use
         /// </summary>
         public DateTime? taxDate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// This provides the reason for a tax override for audit purposes.  It is required for types 2-4.
         /// </summary>
         public String reason { get; set; }
-
 
 
         /// <summary>

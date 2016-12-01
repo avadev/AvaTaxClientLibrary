@@ -10,82 +10,81 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class TaxCodeModel
     {
-        /// <summary>
+	    /// <summary>
         /// The unique ID number of this tax code.
         /// </summary>
         public Int32 id { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The unique ID number of the company that owns this tax code.
         /// </summary>
         public Int32 companyId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// A code string that identifies this tax code.
         /// </summary>
         public String taxCode { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The type of this tax code.
         /// </summary>
         public String taxCodeTypeId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// A friendly description of this tax code.
         /// </summary>
         public String description { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// If this tax code is a subset of a different tax code, this identifies the parent code.
         /// </summary>
         public String parentTaxCode { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// True if this tax code refers to a physical object.
         /// </summary>
         public Boolean? isPhysical { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The Avalara Goods and Service Code represented by this tax code.
         /// </summary>
         public Int32? goodsServiceCode { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The Avalara Entity Use Code represented by this tax code.
         /// </summary>
         public String entityUseCode { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// True if this tax code is active and can be used in transactions.
         /// </summary>
         public Boolean? isActive { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// True if this tax code has been certified by the Streamlined Sales Tax governing board.
         ///             By default, you should leave this value empty.
         /// </summary>
         public Boolean? isSSTCertified { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The User ID of the user who created this record.
         /// </summary>
         public Int32? createdUserId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The date/time when this record was last modified.
         /// </summary>
         public DateTime? modifiedDate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
-
 
 
         /// <summary>

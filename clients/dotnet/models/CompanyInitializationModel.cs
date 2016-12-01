@@ -9,96 +9,95 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class CompanyInitializationModel
     {
-        /// <summary>
+	    /// <summary>
         /// Company Name
         /// </summary>
         public String name { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Company Code - used to distinguish between companies within your accounting system
         /// </summary>
         public String companyCode { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Vat Registration Id - leave blank if not known.
         /// </summary>
         public String vatRegistrationId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// United States Taxpayer ID number, usually your Employer Identification Number if you are a business or your Social Security Number if you are an individual.
         /// </summary>
         public String taxpayerIdNumber { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Address Line1
         /// </summary>
         public String line1 { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Line2
         /// </summary>
         public String line2 { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Line3
         /// </summary>
         public String line3 { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// City
         /// </summary>
         public String city { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Two character ISO 3166 Region code for this company's primary business location.
         /// </summary>
         public String region { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Postal Code
         /// </summary>
         public String postalCode { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Two character ISO 3166 Country code for this company's primary business location.
         /// </summary>
         public String country { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// First Name
         /// </summary>
         public String firstName { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Last Name
         /// </summary>
         public String lastName { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Title
         /// </summary>
         public String title { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Email
         /// </summary>
         public String email { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Phone Number
         /// </summary>
         public String phoneNumber { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Mobile Number
         /// </summary>
         public String mobileNumber { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Fax Number
         /// </summary>
         public String faxNumber { get; set; }
-
 
 
         /// <summary>

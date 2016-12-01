@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// AddressCategoryId
     /// </summary>
     public enum AddressCategoryId
     {
@@ -31,7 +31,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Other,
-
 
     }
 }

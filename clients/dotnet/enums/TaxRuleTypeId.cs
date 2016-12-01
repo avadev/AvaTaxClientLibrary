@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// TaxRuleTypeId
     /// </summary>
     public enum TaxRuleTypeId
     {
@@ -36,7 +36,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         NexusRule,
-
 
     }
 }

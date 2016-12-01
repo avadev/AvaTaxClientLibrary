@@ -1,6 +1,6 @@
 <?php
 /*
- * AvaTax Model
+ * AvaTax Entity Model Class
  *
  * (c) 2004-2016 Avalara, Inc.
  *
@@ -11,7 +11,7 @@ namespace Avalara.AvaTax;
 
 /**
  * @author Ted Spence <ted.spence@avalara.com>
- * @author Bob Maidens <bob.maidens@avalara.com
+ * @author Bob Maidens <bob.maidens@avalara.com>
  */
 final class ChangeTransactionCodeModel extends AbstractEntity
 {

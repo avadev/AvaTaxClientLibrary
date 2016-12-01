@@ -9,16 +9,15 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class TaxRateModel
     {
-        /// <summary>
+	    /// <summary>
         /// Total Rate
         /// </summary>
         public Decimal? totalRate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Rates
         /// </summary>
         public List<RateModel> rates { get; set; }
-
 
 
         /// <summary>

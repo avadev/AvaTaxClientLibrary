@@ -71,40 +71,19 @@ namespace ClientApiGenerator {
         ///{
         ///    public partial class AvaTaxClient
         ///    {
-        ///@@APILIST@@
-        ///    }
-        ///}
-        ///.
+        ///#region Methods
+        ///@foreach(var m in SwaggerModel.Methods) {
+        ///
+        ///	WriteLine(&quot;        /// &lt;summary&gt;&quot;);
+        ///	WriteLine(&quot;        /// &quot; + CSharpComment(m.Comment));
+        ///	WriteLine(&quot;        /// &lt;/summary&gt;&quot;);
+        ///
+        ///	foreach (var p in m.Params) {
+        ///		WriteLine(&quot;        /// &lt;param name=\&quot;&quot; + p.CleanParamName + &quot;\&quot;&gt;&quot; + p.Comment + &quot;&lt;/param&gt;&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string csharp_api_class {
             get {
                 return ResourceManager.GetString("csharp_api_class", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to #if PORTABLE
-        ///        /// &lt;summary&gt;
-        ///        /// @@COMMENT@@
-        ///        /// &lt;/summary&gt;
-        ///@@PARAMCOMMENTS@@
-        ///        public async Task&lt;@@TYPENAME@@&gt; @@APINAME@@Async(@@PARAMS@@)
-        ///        {
-        ///            var path = new AvaTaxPath(&quot;@@URI@@&quot;);@@PARAMBUILDER@@
-        ///            return await RestCallAsync&lt;@@TYPENAME@@&gt;(&quot;@@HTTPVERB@@&quot;, path, @@PAYLOAD@@);
-        ///        }
-        ///#endif
-        ///
-        ///        /// &lt;summary&gt;
-        ///        /// @@COMMENT@@
-        ///        /// &lt;/summary&gt;
-        ///@@PARAMCOMMENTS@@
-        ///        public @@TYPENAME@@ @@APINAME@@(@@PARAMS@@)
-        ///     [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string csharp_api_method {
-            get {
-                return ResourceManager.GetString("csharp_api_method", resourceCulture);
             }
         }
         
@@ -114,11 +93,17 @@ namespace ClientApiGenerator {
         ///namespace Avalara.AvaTax.RestClient
         ///{
         ///    /// &lt;summary&gt;
-        ///    /// @@COMMENT@@
+        ///    /// @EnumModel.EnumDataType
         ///    /// &lt;/summary&gt;
-        ///    public enum @@ENUMCLASS@@
+        ///    public enum @EnumModel.EnumDataType
         ///    {
-        ///@@VALUELIST@@
+        ///@foreach(var v in EnumModel.Items) {
+        ///WriteLine(&quot;        /// &lt;summary&gt;&quot;);
+        ///WriteLine(&quot;        /// &quot; + CSharpComment(v.Comment));
+        ///WriteLine(&quot;        /// &lt;/summary&gt;&quot;);
+        ///WriteLine(&quot;        {0},&quot;, v.Value);
+        ///WriteLine(&quot;&quot;);
+        ///}
         ///    }
         ///}
         ///.
@@ -130,19 +115,6 @@ namespace ClientApiGenerator {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to         /// &lt;summary&gt;
-        ///        /// @@COMMENT@@
-        ///        /// &lt;/summary&gt;
-        ///        @@VALUE@@,
-        ///.
-        /// </summary>
-        internal static string csharp_enum_value {
-            get {
-                return ResourceManager.GetString("csharp_enum_value", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to using System;
         ///using System.Collections.Generic;
         ///using Newtonsoft.Json;
@@ -150,19 +122,16 @@ namespace ClientApiGenerator {
         ///namespace Avalara.AvaTax.RestClient
         ///{
         ///    /// &lt;summary&gt;
-        ///    /// @@COMMENT@@
+        ///    /// @CSharpComment(ClassModel.Comment)
         ///    /// &lt;/summary&gt;
-        ///    public class @@MODELCLASS@@
+        ///    public class @ClassModel.SchemaName
         ///    {
-        ///@@PROPERTYLIST@@
-        ///
-        ///        /// &lt;summary&gt;
-        ///        /// Convert this object to a JSON string of itself
-        ///        /// &lt;/summary&gt;
-        ///        /// &lt;returns&gt;A JSON string of this object&lt;/returns&gt;
-        ///        public override string ToString()
-        ///		{
-        ///            return JsonConvert.SerializeObject(this, new Jso [rest of string was truncated]&quot;;.
+        ///@foreach(var p in ClassModel.Properties) {
+        ///	WriteLine(&quot;	    /// &lt;summary&gt;&quot;);
+        ///	WriteLine(&quot;        /// &quot; + CSharpComment(p.Comment));
+        ///	WriteLine(&quot;        /// &lt;/summary&gt;&quot;);
+        ///	WriteLine(&quot;        public &quot; + p.TypeName + &quot; &quot; + p.CleanParamName + &quot; { get; set; }&quot;);
+        ///	W [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string csharp_model_class {
             get {
@@ -171,22 +140,9 @@ namespace ClientApiGenerator {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to         /// &lt;summary&gt;
-        ///        /// @@COMMENT@@
-        ///        /// &lt;/summary&gt;
-        ///        public @@PROPERTYTYPE@@ @@PROPERTYNAME@@ { get; set; }
-        ///.
-        /// </summary>
-        internal static string csharp_model_property {
-            get {
-                return ResourceManager.GetString("csharp_model_property", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &lt;?php
         ////*
-        /// * AvaTax Model
+        /// * AvaTax API Client Library
         /// *
         /// * (c) 2004-2016 Avalara, Inc.
         /// *
@@ -196,19 +152,17 @@ namespace ClientApiGenerator {
         ///namespace Avalara.AvaTax;
         ///
         ////**
-        /// * @author Ted Spence &lt;ted.spence@avalara.com&gt;
-        /// * @author Bob Maidens &lt;bob.maidens@avalara.com
+        /// * @@author Ted Spence &lt;ted.spence@@avalara.com&gt;
+        /// * @@author Bob Maidens &lt;bob.maidens@@avalara.com&gt;
         /// */
         ///final class AvaTaxApi extends AvaTaxApiBase
         ///{
         ///    /**
-        ///     * @param string $x
+        ///     * @@param string x
         ///     */
-        ///    public function SomeTask($x)
+        ///    public function MethodName(x)
         ///    {
-        ///        $this-&gt;funcvalue = &quot;hi&quot;;
-        ///    }
-        ///}.
+        ///        this-&gt;funcvalue [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string php_api_class {
             get {
@@ -218,21 +172,26 @@ namespace ClientApiGenerator {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?php
-        ///class Month extends SplEnum {
-        ///    const January = 1;
-        ///    const February = 2;
-        ///    const March = 3;
-        ///    const April = 4;
-        ///    const May = 5;
-        ///    const June = 6;
-        ///    const July = 7;
-        ///    const August = 8;
-        ///    const September = 9;
-        ///    const October = 10;
-        ///    const November = 11;
-        ///    const December = 12;
+        ////*
+        /// * AvaTax Enum Class
+        /// *
+        /// * (c) 2004-2016 Avalara, Inc.
+        /// *
+        /// * For the full copyright and license information, please view the LICENSE
+        /// * file that was distributed with this source code.
+        /// */
+        ///namespace Avalara.AvaTax;
+        ///
+        ////**
+        /// * @@author Ted Spence &lt;ted.spence@@avalara.com&gt;
+        /// * @@author Bob Maidens &lt;bob.maidens@@avalara.com&gt;
+        /// */class @EnumModel.EnumDataType extends AvaTaxEnum 
+        ///{
+        ///
+        ///@foreach(var i in EnumModel.Items) {
+        ///    Write(&quot;    const &quot; + i.Value + &quot; = \&quot;&quot; + i.Value + &quot;\&quot;;\r\n&quot;);
         ///}
-        ///.
+        ///} [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string php_enum_class {
             get {
@@ -243,7 +202,7 @@ namespace ClientApiGenerator {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?php
         ////*
-        /// * AvaTax Model
+        /// * AvaTax Entity Model Class
         /// *
         /// * (c) 2004-2016 Avalara, Inc.
         /// *
@@ -253,16 +212,14 @@ namespace ClientApiGenerator {
         ///namespace Avalara.AvaTax;
         ///
         ////**
-        /// * @author Ted Spence &lt;ted.spence@avalara.com&gt;
-        /// * @author Bob Maidens &lt;bob.maidens@avalara.com
+        /// * @@author Ted Spence &lt;ted.spence@@avalara.com&gt;
+        /// * @@author Bob Maidens &lt;bob.maidens@@avalara.com&gt;
         /// */
-        ///final class Action extends AbstractEntity
+        ///final class @ClassModel.SchemaName extends AbstractEntity
         ///{
-        ///    /**
-        ///     * @var int
-        ///     */
-        ///    public $id;
-        ///}.
+        ///@foreach(var p in ClassModel.Properties) {
+        ///WriteLine(&quot;    /**&quot;);
+        ///WriteLine(&quot;     * @var &quot; +  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string php_model_class {
             get {

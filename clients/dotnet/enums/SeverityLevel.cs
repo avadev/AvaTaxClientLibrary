@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// SeverityLevel
     /// </summary>
     public enum SeverityLevel
     {
@@ -26,7 +26,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Exception,
-
 
     }
 }

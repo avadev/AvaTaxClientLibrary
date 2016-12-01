@@ -9,81 +9,80 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class UserModel
     {
-        /// <summary>
+	    /// <summary>
         /// The unique ID number of this user.
         /// </summary>
         public Int32 id { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The unique ID number of the account to which this user belongs.
         /// </summary>
         public Int32 accountId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// If this user is locked to one company (and its children), this is the unique ID number of the company to which this user belongs.
         /// </summary>
         public Int32? companyId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The username which is used to log on to the AvaTax website, or to authenticate against API calls.
         /// </summary>
         public String userName { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The first or given name of the user.
         /// </summary>
         public String firstName { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The last or family name of the user.
         /// </summary>
         public String lastName { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The email address to be used to contact this user.  If the user has forgotten a password, an email can be sent to this email address with information on how to reset this password.
         /// </summary>
         public String email { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The postal code in which this user resides.
         /// </summary>
         public String postalCode { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The security level for this user.
         /// </summary>
         public SecurityRoleId securityRoleId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The status of the user's password.
         /// </summary>
         public PasswordStatusId? passwordStatus { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// True if this user is currently active.
         /// </summary>
         public Boolean? isActive { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The User ID of the user who created this record.
         /// </summary>
         public Int32? createdUserId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The date/time when this record was last modified.
         /// </summary>
         public DateTime? modifiedDate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
-
 
 
         /// <summary>

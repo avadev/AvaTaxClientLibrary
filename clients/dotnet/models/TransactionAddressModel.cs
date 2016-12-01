@@ -9,61 +9,60 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class TransactionAddressModel
     {
-        /// <summary>
+	    /// <summary>
         /// The unique ID number of this address.
         /// </summary>
         public Int32? id { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The unique ID number of the document to which this address belongs.
         /// </summary>
         public Int32? transactionId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The boundary level at which this address was validated.
         /// </summary>
         public BoundaryLevel? boundaryLevel { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The first line of the address.
         /// </summary>
         public String line1 { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The second line of the address.
         /// </summary>
         public String line2 { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The third line of the address.
         /// </summary>
         public String line3 { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The city for the address.
         /// </summary>
         public String city { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The region, state, or province for the address.
         /// </summary>
         public String region { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The postal code or zip code for the address.
         /// </summary>
         public String postalCode { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The country for the address.
         /// </summary>
         public String country { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The unique ID number of the tax region for this address.
         /// </summary>
         public Int32? taxRegionId { get; set; }
-
 
 
         /// <summary>

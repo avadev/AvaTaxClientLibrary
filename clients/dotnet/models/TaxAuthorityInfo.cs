@@ -9,26 +9,25 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class TaxAuthorityInfo
     {
-        /// <summary>
+	    /// <summary>
         /// Avalara Id
         /// </summary>
         public String avalaraId { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Jurisdiction Name
         /// </summary>
         public String jurisdictionName { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Jurisdiction Type
         /// </summary>
         public JurisdictionType? jurisdictionType { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Signature Code
         /// </summary>
         public String signatureCode { get; set; }
-
 
 
         /// <summary>

@@ -11,22 +11,21 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class SettleTransactionModel
     {
-        /// <summary>
+	    /// <summary>
         /// To use the "Settle" endpoint to verify a transaction, fill out this value.
         /// </summary>
         public VerifyTransactionModel verify { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// To use the "Settle" endpoint to change a transaction's code, fill out this value.
         /// </summary>
         public ChangeTransactionCodeModel changeCode { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// To use the "Settle" endpoint to commit a transaction for reporting purposes, fill out this value.
         ///                 If you use Avalara Returns, committing a transaction will cause that transaction to be filed.
         /// </summary>
         public CommitTransactionModel commit { get; set; }
-
 
 
         /// <summary>

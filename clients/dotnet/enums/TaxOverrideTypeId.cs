@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// TaxOverrideTypeId
     /// </summary>
     public enum TaxOverrideTypeId
     {
@@ -31,7 +31,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         AccruedTaxAmount,
-
 
     }
 }

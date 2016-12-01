@@ -9,26 +9,25 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class ErrorInfo
     {
-        /// <summary>
+	    /// <summary>
         /// Type of error that occurred
         /// </summary>
         public ErrorCodeId? code { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Short one-line message to summaryize what went wrong
         /// </summary>
         public String message { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// What object or service caused the error?
         /// </summary>
         public ErrorTargetCode? target { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Array of detailed error messages
         /// </summary>
         public List<ErrorDetail> details { get; set; }
-
 
 
         /// <summary>

@@ -9,26 +9,25 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class PingResultModel
     {
-        /// <summary>
+	    /// <summary>
         /// Version number
         /// </summary>
         public String version { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Returns true if you provided authentication for this API call; false if you did not.
         /// </summary>
         public Boolean? authenticated { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Returns the type of authentication you provided, if authenticated
         /// </summary>
         public AuthenticationTypeId? authenticationType { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The username of the currently authenticated user, if any.
         /// </summary>
         public String authenticatedUserName { get; set; }
-
 
 
         /// <summary>

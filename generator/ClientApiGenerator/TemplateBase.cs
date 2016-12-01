@@ -36,6 +36,7 @@ namespace ClientApiGenerator
 
         public abstract void Execute();
 
+        #region Writing functions
         /// <summary>
         /// Writes the results of expressions like: "@foo.Bar"
         /// </summary>
@@ -49,9 +50,14 @@ namespace ClientApiGenerator
         /// Writes a CRLF at the end
         /// </summary>
         /// <param name="value"></param>
-        public virtual void WriteLine(object value)
+        /// <param name="paramlist"></param>
+        public virtual void WriteLine(string value, params object[] paramlist)
         {
-            WriteLiteral(value.ToString() + "\r\n");
+            if (paramlist.Length == 0) {
+                WriteLiteral(value + "\r\n");
+            } else {
+                WriteLiteral(String.Format(value, paramlist) + "\r\n");
+            }
         }
 
         /// <summary>
@@ -63,6 +69,17 @@ namespace ClientApiGenerator
             Buffer.Append(value);
         }
 
+        /// <summary>
+        /// Backtrack a specific number of characters
+        /// </summary>
+        /// <param name="numChars"></param>
+        public virtual void Backtrack(int numChars)
+        {
+            Buffer.Length -= numChars;
+        }
+        #endregion
+
+        #region Interface
         /// <summary>
         /// Execute this template against the specified model
         /// </summary>
@@ -79,5 +96,20 @@ namespace ClientApiGenerator
             Execute();
             return Buffer.ToString();
         }
+        #endregion
+
+        #region Fixups
+        public static string CSharpComment(string c)
+        {
+            if (String.IsNullOrEmpty(c)) return "";
+            return c.Replace("\r\n", "\r\n        /// ");
+        }
+
+        public static string CleanParameterName(string p)
+        {
+            if (String.IsNullOrEmpty(p)) return "";
+            return p.Replace("$", "");
+        }
+        #endregion
     }
 }

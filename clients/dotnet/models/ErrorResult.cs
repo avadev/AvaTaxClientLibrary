@@ -9,11 +9,10 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class ErrorResult
     {
-        /// <summary>
+	    /// <summary>
         /// Information about the error(s)
         /// </summary>
         public ErrorInfo error { get; set; }
-
 
 
         /// <summary>

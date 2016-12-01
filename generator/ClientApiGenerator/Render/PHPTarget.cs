@@ -34,7 +34,6 @@ namespace ClientApiGenerator.Render
                 File.WriteAllText(Path.Combine(rootPath, "php\\enums\\" + e.EnumDataType + ".php"),
                     enumTask.ExecuteTemplate(null, null, e));
             }
-
         }
     }
 }

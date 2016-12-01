@@ -9,91 +9,90 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class TransactionSummary
     {
-        /// <summary>
+	    /// <summary>
         /// Two character ISO-3166 country code.
         /// </summary>
         public String country { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Two or three character ISO region, state or province code, if applicable.
         /// </summary>
         public String region { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The type of jurisdiction that collects this tax.
         /// </summary>
         public JurisdictionType? jurisType { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Jurisdiction Code for the taxing jurisdiction
         /// </summary>
         public String jurisCode { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The name of the jurisdiction that collects this tax.
         /// </summary>
         public String jurisName { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The unique ID of the Tax Authority Type that collects this tax.
         /// </summary>
         public Int32? taxAuthorityType { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The state assigned number of the jurisdiction that collects this tax.
         /// </summary>
         public String stateAssignedNo { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The tax type of this tax.
         /// </summary>
         public TaxType? taxType { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The name of the tax.
         /// </summary>
         public String taxName { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Group code when special grouping is enabled.
         /// </summary>
         public String taxGroup { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Indicates the tax rate type.
         /// </summary>
         public RateType? rateType { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Tax Base - The adjusted taxable amount.
         /// </summary>
         public Decimal? taxable { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Tax Rate - The rate of taxation, as a fraction of the amount.
         /// </summary>
         public Decimal? rate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Tax amount - The calculated tax (Base * Rate).
         /// </summary>
         public Decimal? tax { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Tax Calculated by Avalara AvaTax.  This may be overriden by a TaxOverride.TaxAmount.
         /// </summary>
         public Decimal? taxCalculated { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The amount of the transaction that was non-taxable.
         /// </summary>
         public Decimal? nonTaxable { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The amount of the transaction that was exempt.
         /// </summary>
         public Decimal? exemption { get; set; }
-
 
 
         /// <summary>

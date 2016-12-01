@@ -10,11 +10,10 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class TaxCodeTypesModel
     {
-        /// <summary>
+	    /// <summary>
         /// The list of Avalara-defined tax code types.
         /// </summary>
         public Dictionary<string, string> types { get; set; }
-
 
 
         /// <summary>

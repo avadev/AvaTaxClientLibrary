@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Sourcing
     /// </summary>
     public enum Sourcing
     {
@@ -16,7 +16,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Destination,
-
 
     }
 }

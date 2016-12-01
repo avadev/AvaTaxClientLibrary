@@ -9,16 +9,15 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class PasswordChangeModel
     {
-        /// <summary>
+	    /// <summary>
         /// Old Password
         /// </summary>
         public String oldPassword { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// New Password
         /// </summary>
         public String newPassword { get; set; }
-
 
 
         /// <summary>

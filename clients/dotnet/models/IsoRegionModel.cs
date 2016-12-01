@@ -9,26 +9,25 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class IsoRegionModel
     {
-        /// <summary>
+	    /// <summary>
         /// The two-character ISO 3166 country code this region belongs to
         /// </summary>
         public String countryCode { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The three character ISO 3166 region code
         /// </summary>
         public String code { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The full name, using localized characters, for this region
         /// </summary>
         public String name { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// The word in the local language that classifies what type of a region this represents
         /// </summary>
         public String classification { get; set; }
-
 
 
         /// <summary>

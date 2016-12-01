@@ -55,7 +55,6 @@
     <Compile Include="Models\SwaggerInfo.cs" />
     <Compile Include="Models\EnumInfo.cs" />
     <Compile Include="Models\EnumItem.cs" />
-    <Compile Include="Fixups.cs" />
     <Compile Include="Models\ModelInfo.cs" />
     <Compile Include="Models\ParameterInfo.cs" />
     <Compile Include="Program.cs" />
@@ -87,22 +86,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\csharp_api_method.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\csharp_api_class.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\csharp_model_class.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\csharp_model_property.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\csharp_enum_class.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\csharp_enum_value.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\php_api_class.txt" />

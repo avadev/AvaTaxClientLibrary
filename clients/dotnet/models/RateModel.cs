@@ -9,21 +9,20 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class RateModel
     {
-        /// <summary>
+	    /// <summary>
         /// Rate
         /// </summary>
         public Decimal? rate { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Name
         /// </summary>
         public String name { get; set; }
 
-        /// <summary>
+	    /// <summary>
         /// Type
         /// </summary>
         public JurisdictionType? type { get; set; }
-
 
 
         /// <summary>
