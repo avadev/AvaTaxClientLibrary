@@ -30,7 +30,7 @@ namespace ClientApiGenerator.Render
             }
 
             // Next let's assemble the api file
-            string filetext = Resource1.api_class_template_csharp
+            string filetext = Resource1.csharp_api_class
                 .Replace("@@APILIST@@", sb.ToString());
             File.WriteAllText(Path.Combine(rootPath, "dotnet\\AvaTaxApi.cs"), filetext);
 

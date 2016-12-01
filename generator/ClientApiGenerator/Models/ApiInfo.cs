@@ -42,7 +42,7 @@ namespace ClientApiGenerator.Models
             if (paramlist.Length > 0) paramlist.Length -= 2;
 
             // Here's your template
-            return Resource1.api_template_csharp
+            return Resource1.csharp_api_method
                 .Replace("@@CATEGORY@@", Category)
                 .Replace("@@COMMENT@@", Fixups.Comment(Comment))
                 .Replace("@@TYPENAME@@", TypeName)

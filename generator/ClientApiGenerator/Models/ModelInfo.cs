@@ -20,14 +20,14 @@ namespace ClientApiGenerator.Models
         {
             StringBuilder sb = new StringBuilder();
             foreach (var prop in Properties) {
-                sb.AppendLine(Resource1.model_property_template_csharp
+                sb.AppendLine(Resource1.csharp_model_property
                     .Replace("@@PROPERTYNAME@@", prop.CSharpParamName)
                     .Replace("@@COMMENT@@", Fixups.Comment(prop.Comment))
                     .Replace("@@PROPERTYTYPE@@", prop.TypeName));
             }
 
             // Produce the full file
-            return Resource1.model_class_template_csharp
+            return Resource1.csharp_model_class
                 .Replace("@@PROPERTYLIST@@", sb.ToString())
                 .Replace("@@COMMENT@@", Fixups.Comment(Comment))
                 .Replace("@@MODELCLASS@@", SchemaName);

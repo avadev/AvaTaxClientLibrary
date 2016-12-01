@@ -61,7 +61,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\BaseRenderTarget.cs" />
-    <Compile Include="Render\PHP.cs" />
+    <Compile Include="Render\PHPTarget.cs" />
     <Compile Include="Render\DotNetStandard.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -74,6 +74,7 @@
     <Compile Include="Swagger\SwaggerProperty.cs" />
     <Compile Include="Swagger\SwaggerResult.cs" />
     <Compile Include="Swagger\SwaggerSchemaRef.cs" />
+    <Compile Include="TemplateBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -107,19 +108,10 @@
     <None Include="Resources\php_api_class.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\php_api_method.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\php_enum_class.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\php_enum_value.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\php_model_class.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\php_model_property.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

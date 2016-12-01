@@ -1,13 +1,25 @@
-using System;
-using System.Collections.Generic;
-#if PORTABLE
-using System.Threading.Tasks;
-#endif
+<?php
+/*
+ * AvaTax Model
+ *
+ * (c) 2004-2016 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Avalara.AvaTax;
 
-namespace Avalara.AvaTax.RestClient
+/**
+ * @author Ted Spence <ted.spence@avalara.com>
+ * @author Bob Maidens <bob.maidens@avalara.com
+ */
+final class AvaTaxApi extends AvaTaxApiBase
 {
-    public partial class AvaTaxClient
+    /**
+     * @param string $x
+     */
+    public function SomeTask($x)
     {
-@@APILIST@@
+        $this->funcvalue = "hi";
     }
 }

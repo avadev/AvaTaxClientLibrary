@@ -20,12 +20,12 @@ namespace ClientApiGenerator.Models
         {
             StringBuilder sb = new StringBuilder();
             foreach (var i in Items) {
-                sb.AppendLine(Resource1.enum_value_template_csharp
+                sb.AppendLine(Resource1.csharp_enum_value
                     .Replace("@@COMMENT@@", Fixups.Comment(i.Comment))
                     .Replace("@@VALUE@@", i.Value));
             }
 
-            return Resource1.enum_class_template_csharp
+            return Resource1.csharp_enum_class
                 .Replace("@@ENUMCLASS@@", EnumDataType)
                 .Replace("@@COMMENT@@", Fixups.Comment(Comment))
                 .Replace("@@VALUELIST@@", sb.ToString());

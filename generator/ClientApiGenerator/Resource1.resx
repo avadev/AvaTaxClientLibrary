@@ -139,19 +139,10 @@
   <data name="php_api_class" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resources\php_api_class.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="php_api_method" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>resources\php_api_method.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="php_enum_class" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resources\php_enum_class.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="php_enum_value" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>resources\php_enum_value.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="php_model_class" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resources\php_model_class.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="php_model_property" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>resources\php_model_property.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>
