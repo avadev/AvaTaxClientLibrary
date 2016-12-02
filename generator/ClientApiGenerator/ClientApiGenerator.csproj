@@ -39,6 +39,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,16 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ApiInfo.cs" />
-    <Compile Include="Models\ApiModel.cs" />
+    <Compile Include="Models\MethodInfo.cs" />
+    <Compile Include="Models\SwaggerInfo.cs" />
     <Compile Include="Models\EnumInfo.cs" />
     <Compile Include="Models\EnumItem.cs" />
-    <Compile Include="Fixups.cs" />
     <Compile Include="Models\ModelInfo.cs" />
     <Compile Include="Models\ParameterInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\BaseRenderTarget.cs" />
+    <Compile Include="Render\PHPTarget.cs" />
     <Compile Include="Render\DotNetStandard.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -69,6 +73,7 @@
     <Compile Include="Swagger\SwaggerProperty.cs" />
     <Compile Include="Swagger\SwaggerResult.cs" />
     <Compile Include="Swagger\SwaggerSchemaRef.cs" />
+    <Compile Include="TemplateBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -81,22 +86,22 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\api_template_csharp.txt" />
+    <None Include="Resources\csharp_api_class.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\api_class_template_csharp.txt" />
+    <None Include="Resources\csharp_model_class.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\model_class_template_csharp.txt" />
+    <None Include="Resources\csharp_enum_class.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\model_property_template_csharp.txt" />
+    <None Include="Resources\php_api_class.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\enum_class_template_csharp.txt" />
+    <None Include="Resources\php_enum_class.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\enum_value_template_csharp.txt" />
+    <None Include="Resources\php_model_class.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

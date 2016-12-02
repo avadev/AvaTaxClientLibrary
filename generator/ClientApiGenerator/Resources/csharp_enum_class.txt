@@ -1,0 +1,18 @@
+using System;
+
+namespace Avalara.AvaTax.RestClient
+{
+    /// <summary>
+    /// @EnumModel.EnumDataType
+    /// </summary>
+    public enum @EnumModel.EnumDataType
+    {
+@foreach(var v in EnumModel.Items) {
+WriteLine("        /// <summary>");
+WriteLine("        /// " + CSharpComment(v.Comment));
+WriteLine("        /// </summary>");
+WriteLine("        {0},", v.Value);
+WriteLine("");
+}
+    }
+}

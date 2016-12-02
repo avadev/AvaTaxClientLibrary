@@ -5,11 +5,17 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// @@COMMENT@@
+    /// @CSharpComment(ClassModel.Comment)
     /// </summary>
-    public class @@MODELCLASS@@
+    public class @ClassModel.SchemaName
     {
-@@PROPERTYLIST@@
+@foreach(var p in ClassModel.Properties) {
+	WriteLine("	    /// <summary>");
+	WriteLine("        /// " + CSharpComment(p.Comment));
+	WriteLine("        /// </summary>");
+	WriteLine("        public " + p.TypeName + " " + p.CleanParamName + " { get; set; }");
+	WriteLine("");
+}
 
         /// <summary>
         /// Convert this object to a JSON string of itself

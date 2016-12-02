@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ClientApiGenerator.Models
 {
-    public class ApiModel
+    public class SwaggerInfo
     {
-        public List<ApiInfo> Methods { get; set; }
+        public List<MethodInfo> Methods { get; set; }
         public List<EnumInfo> Enums { get; set; }
         public List<ModelInfo> Models { get; set; }
 
-        public ApiModel()
+        public SwaggerInfo()
         {
-            Methods = new List<ApiInfo>();
+            Methods = new List<MethodInfo>();
             Enums = new List<EnumInfo>();
             Models = new List<ModelInfo>();
         }

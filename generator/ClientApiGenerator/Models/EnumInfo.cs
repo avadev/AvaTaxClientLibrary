@@ -12,25 +12,6 @@ namespace ClientApiGenerator.Models
         public string Comment { get; set; }
         public List<EnumItem> Items { get; set; }
 
-        /// <summary>
-        /// Convert this object to a JSON string of itself
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (var i in Items) {
-                sb.AppendLine(Resource1.enum_value_template_csharp
-                    .Replace("@@COMMENT@@", Fixups.Comment(i.Comment))
-                    .Replace("@@VALUE@@", i.Value));
-            }
-
-            return Resource1.enum_class_template_csharp
-                .Replace("@@ENUMCLASS@@", EnumDataType)
-                .Replace("@@COMMENT@@", Fixups.Comment(Comment))
-                .Replace("@@VALUELIST@@", sb.ToString());
-        }
-
         public void AddItem(string value, string comment)
         {
             if (this.Items == null) this.Items = new List<EnumItem>();
