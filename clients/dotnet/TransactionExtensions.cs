@@ -141,12 +141,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="postalCode"></param>
         /// <param name="country"></param>
         /// <returns></returns>
-        public TransactionBuilder WithAddress(TransactionAddressType type, string line1, string city, string region, string postalCode, string country)
+        public TransactionBuilder WithAddress(TransactionAddressType type, string line1, string line2, string line3, string city, string region, string postalCode, string country)
         {
             if (_model.addresses == null) _model.addresses = new Dictionary<TransactionAddressType, AddressInfo>();
             var ai = new AddressInfo()
             {
                 line1 = line1,
+                line2 = line2,
+                line3 = line3,
                 city = city,
                 region = region,
                 postalCode = postalCode,
@@ -173,13 +175,15 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="type"></param>
         /// <param name="region"></param>
         /// <returns></returns>
-        public TransactionBuilder WithLineAddress(TransactionAddressType type, string line1, string city, string region, string postalCode, string country)
+        public TransactionBuilder WithLineAddress(TransactionAddressType type, string line1, string line2, string line3, string city, string region, string postalCode, string country)
         {
             var line = _model.lines[_model.lines.Count - 1];
             if (line.addresses == null) line.addresses = new Dictionary<TransactionAddressType, AddressInfo>();
             line.addresses[type] = new AddressInfo()
             {
                 line1 = line1,
+                line2 = line2,
+                line3 = line3,
                 city = city,
                 region = region,
                 postalCode = postalCode,
