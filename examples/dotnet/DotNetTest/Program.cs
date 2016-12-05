@@ -1,9 +1,6 @@
 ﻿using Avalara.AvaTax.RestClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleTest
 {
@@ -58,7 +55,7 @@ namespace ConsoleTest
 
                 // Execute a transaction
                 var t = new TransactionBuilder(client, init.companyCode, DocumentType.SalesInvoice, "ABC")
-                    .WithAddress(TransactionAddressType.SingleLocation, "123 Main Street", "Irvine", "CA", "92615", "US")
+                    .WithAddress(TransactionAddressType.SingleLocation, "123 Main Street", "", "", "Irvine", "CA", "92615", "US")
                     .WithLine(100.0m)
                     .WithExemptLine(50.0m, "NT")
                     .Create();
