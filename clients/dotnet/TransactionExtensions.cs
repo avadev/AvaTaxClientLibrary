@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 #if PORTABLE
 using System.Threading.Tasks;
 #endif
@@ -134,12 +133,14 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Add an address to this transaction
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="line1"></param>
-        /// <param name="city"></param>
-        /// <param name="region"></param>
-        /// <param name="postalCode"></param>
-        /// <param name="country"></param>
+        /// <param name="type">Address Type. Can be ShipFrom, ShipTo, PointOfOrderAcceptance, PointOfOrderOrigin, SingleLocation.</param>
+        /// <param name="line1">The street address, attention line, or business name of the location.</param>
+        /// <param name="line2">The street address, business name, or apartment/unit number of the location.</param>
+        /// <param name="line3">The street address or apartment/unit number of the location.</param>
+        /// <param name="city">City of the location.</param>
+        /// <param name="region">State or Region of the location.</param>
+        /// <param name="postalCode">Postal/zip code of the location.</param>
+        /// <param name="country">The two-letter country code of the location.</param>
         /// <returns></returns>
         public TransactionBuilder WithAddress(TransactionAddressType type, string line1, string line2, string line3, string city, string region, string postalCode, string country)
         {
@@ -170,10 +171,16 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
-        /// Add an address to this transaction
+        /// Add an address to this line
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="region"></param>
+        /// <param name="type">Address Type. Can be ShipFrom, ShipTo, PointOfOrderAcceptance, PointOfOrderOrigin, SingleLocation.</param>
+        /// <param name="line1">Street address, attention line, or business name of the location.</param>
+        /// <param name="line2">Street address, business name, or apartment/unit number of the location.</param>
+        /// <param name="line3">Street address or apartment/unit number of the location.</param>
+        /// <param name="city">City of the location.</param>
+        /// <param name="region">State or Region of the location.</param>
+        /// <param name="postalCode">Postal/zip code of the location.</param>
+        /// <param name="country">Two-letter country code of the location.</param>
         /// <returns></returns>
         public TransactionBuilder WithLineAddress(TransactionAddressType type, string line1, string line2, string line3, string city, string region, string postalCode, string country)
         {
