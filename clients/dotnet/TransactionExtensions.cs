@@ -23,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode"></param>
         public TransactionBuilder(AvaTaxClient client, string companyCode, DocumentType type, string customerCode)
         {
-            _model = new CreateTransactionModel()
+            _model = new CreateTransactionModel
             {
                 companyCode = companyCode,
                 customerCode = customerCode,
@@ -38,12 +38,12 @@ namespace Avalara.AvaTax.RestClient
 
         #region Builder Pattern
         /// <summary>
-        /// Flag this transaction to commit
+        /// Set the commit flag of the transaction.
         /// </summary>
         /// <returns></returns>
-        public TransactionBuilder WithCommit()
+        public TransactionBuilder WithCommitFlag(bool? commit)
         {
-            _model.commit = true;
+            _model.commit = commit;
             return this;
         }
 
@@ -76,6 +76,12 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionBuilder IsItemDiscounted(bool? discounted)
         {
+            // Ensure this can only be invoked when a line has been created.
+            if (_model.lines.Count <= 0)
+            {
+                throw new Exception("No lines have been added yet.");
+            }
+
             var l = _model.lines[_model.lines.Count - 1];
             l.discounted = discounted;
             return this;
@@ -89,20 +95,6 @@ namespace Avalara.AvaTax.RestClient
         public TransactionBuilder WithTransactionCode(string code)
         {
             _model.code = code;
-            return this;
-        }
-
-        /// <summary>
-        /// Add a parameter to the current line
-        /// </summary>
-        /// <param name="paramname"></param>
-        /// <param name="paramvalue"></param>
-        /// <returns></returns>
-        public TransactionBuilder WithLineParameter(string paramname, string paramvalue)
-        {
-            var l = _model.lines[_model.lines.Count - 1];
-            if (l.parameters == null) l.parameters = new Dictionary<string, string>();
-            l.parameters.Add(paramname, paramvalue);
             return this;
         }
 
@@ -131,6 +123,26 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
+        /// Add a parameter to the current line
+        /// </summary>
+        /// <param name="paramname"></param>
+        /// <param name="paramvalue"></param>
+        /// <returns></returns>
+        public TransactionBuilder WithLineParameter(string paramname, string paramvalue)
+        {
+            // Ensure this can only be invoked when a line has been created.
+            if (_model.lines.Count <= 0)
+            {
+                throw new Exception("No lines have been added yet.");
+            }
+
+            var l = _model.lines[_model.lines.Count - 1];
+            if (l.parameters == null) l.parameters = new Dictionary<string, string>();
+            l.parameters.Add(paramname, paramvalue);
+            return this;
+        }
+
+        /// <summary>
         /// Add an address to this transaction
         /// </summary>
         /// <param name="type">Address Type. Can be ShipFrom, ShipTo, PointOfOrderAcceptance, PointOfOrderOrigin, SingleLocation.</param>
@@ -145,7 +157,7 @@ namespace Avalara.AvaTax.RestClient
         public TransactionBuilder WithAddress(TransactionAddressType type, string line1, string line2, string line3, string city, string region, string postalCode, string country)
         {
             if (_model.addresses == null) _model.addresses = new Dictionary<TransactionAddressType, AddressInfo>();
-            var ai = new AddressInfo()
+            var ai = new AddressInfo
             {
                 line1 = line1,
                 line2 = line2,
@@ -161,7 +173,7 @@ namespace Avalara.AvaTax.RestClient
 
         public TransactionBuilder WithLatLong(TransactionAddressType type, decimal latitude, decimal longitude)
         {
-            var ai = new AddressInfo()
+            var ai = new AddressInfo
             {
                 latitude = latitude,
                 longitude = longitude
@@ -184,9 +196,15 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionBuilder WithLineAddress(TransactionAddressType type, string line1, string line2, string line3, string city, string region, string postalCode, string country)
         {
+            // Ensure this can only be invoked when a line has been created.
+            if (_model.lines.Count <= 0)
+            {
+                throw new Exception("No lines have been added yet.");
+            }
+
             var line = _model.lines[_model.lines.Count - 1];
             if (line.addresses == null) line.addresses = new Dictionary<TransactionAddressType, AddressInfo>();
-            line.addresses[type] = new AddressInfo()
+            line.addresses[type] = new AddressInfo
             {
                 line1 = line1,
                 line2 = line2,
@@ -200,18 +218,58 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
-        /// Add a global tax override to this transaction
+        /// Add a document-level Tax Override to the transaction.
+        ///  - A TaxDate override requires a valid DateTime object to be passed.
+        /// TODO: Verify Tax Override constraints and add exceptions.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="taxAmount"></param>
-        /// <param name="taxDate"></param>
+        /// <param name="type">Type of the Tax Override.</param>
+        /// <param name="reason">Reason of the Tax Override.</param>
+        /// <param name="taxAmount">Amount of tax to apply. Required for a TaxAmount Override.</param>
+        /// <param name="taxDate">Date of a Tax Override. Required for a TaxDate Override.</param>
         /// <returns></returns>
-        public TransactionBuilder WithGlobalTaxOverride(TaxOverrideType type, decimal taxAmount, DateTime taxDate)
+        public TransactionBuilder WithGlobalTaxOverride(TaxOverrideType type, string reason, decimal taxAmount = 0, DateTime? taxDate = null)
         {
-            _model.taxOverride = new TaxOverrideModel()
+            _model.taxOverride = new TaxOverrideModel
             {
                 type = type,
-                reason = "global tax override",
+                reason = reason,
+                taxAmount = taxAmount,
+                taxDate = taxDate
+            };
+
+            // Continue building
+            return this;
+        }
+
+        /// <summary>
+        /// Add a line-level Tax Override to the current line.
+        ///  - A TaxDate override requires a valid DateTime object to be passed.
+        /// TODO: Verify Tax Override constraints and add exceptions.
+        /// </summary>
+        /// <param name="type">Type of the Tax Override.</param>
+        /// <param name="reason">Reason of the Tax Override.</param>
+        /// <param name="taxAmount">Amount of tax to apply. Required for a TaxAmount Override.</param>
+        /// <param name="taxDate">Date of a Tax Override. Required for a TaxDate Override.</param>
+        /// <returns></returns>
+        public TransactionBuilder WithLineTaxOverride(TaxOverrideType type, string reason, decimal taxAmount = 0, DateTime? taxDate = null)
+        {
+            // Ensure this can only be invoked when a line has been created.
+            if (_model.lines.Count <= 0)
+            {
+                throw new Exception("No lines have been added yet.");
+            }
+
+            // Address the DateOverride constraint.
+            if (type.Equals(TaxOverrideType.TaxDate) && taxDate == null)
+            {
+                throw new Exception("A valid date is required for a Tax Date Tax Override.");
+            }
+
+            var line = _model.lines[_model.lines.Count - 1];
+            line.taxOverride = new TaxOverrideModel
+            {
+                type = type,
+                reason = reason,
                 taxAmount = taxAmount,
                 taxDate = taxDate
             };
@@ -223,17 +281,20 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Add a line to this transaction
         /// </summary>
-        /// <param name="amount"></param>
+        /// <param name="amount">Value of the item.</param>
+        /// <param name="quantity">Quantity of the item.</param>
+        /// <param name="taxCode">Tax Code of the item. If left blank, the default item (P0000000) is assumed.</param>
         /// <returns></returns>
-        public TransactionBuilder WithLine(decimal amount, string taxCode = null)
+        public TransactionBuilder WithLine(decimal amount, decimal quantity = 1, string taxCode = null)
         {
-            var l = new LineItemModel()
+            var l = new LineItemModel
             {
                 number = _line_number.ToString(),
-                quantity = 1,
+                quantity = quantity,
                 amount = amount,
                 taxCode = taxCode
             };
+
             _model.lines.Add(l);
             _line_number++;
 
@@ -244,20 +305,28 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Add a line to this transaction
         /// </summary>
-        /// <param name="amount"></param>
+        /// <param name="amount">Value of the item.</param>
+        /// <param name="type">Address Type. Can be ShipFrom, ShipTo, PointOfOrderAcceptance, PointOfOrderOrigin, SingleLocation.</param>
+        /// <param name="line1">Street address, attention line, or business name of the location.</param>
+        /// <param name="line2">Street address, business name, or apartment/unit number of the location.</param>
+        /// <param name="line3">Street address or apartment/unit number of the location.</param>
+        /// <param name="city">City of the location.</param>
+        /// <param name="region">State or Region of the location.</param>
+        /// <param name="postalCode">Postal/zip code of the location.</param>
+        /// <param name="country">Two-letter country code of the location.</param>
         /// <returns></returns>
         public TransactionBuilder WithSeparateAddressLine(decimal amount, TransactionAddressType type, string line1, string line2, string line3, string city, string region, string postalCode, string country)
         {
-            var l = new LineItemModel()
+            var l = new LineItemModel
             {
                 number = _line_number.ToString(),
                 quantity = 1,
-                amount = amount,
+                amount = amount
             };
 
             // Add this address
             l.addresses = new Dictionary<TransactionAddressType, AddressInfo>();
-            l.addresses[type] = new AddressInfo()
+            l.addresses[type] = new AddressInfo
             {
                 line1 = line1,
                 line2 = line2,
@@ -277,13 +346,14 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
-        /// Add a line to this transaction
+        /// Add a line with an exemption to this transaction
         /// </summary>
         /// <param name="amount"></param>
+        /// <param name="exemptionCode"></param>
         /// <returns></returns>
         public TransactionBuilder WithExemptLine(decimal amount, string exemptionCode)
         {
-            var l = new LineItemModel()
+            var l = new LineItemModel
             {
                 number = _line_number.ToString(),
                 quantity = 1,
@@ -303,7 +373,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Create this transaction
         /// </summary>
-        /// <param name="client"></param>
         /// <returns></returns>
         public async Task<TransactionModel> CreateAsync()
         {
@@ -313,7 +382,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Create this transaction
         /// </summary>
-        /// <param name="client"></param>
         /// <returns></returns>
         public TransactionModel Create()
         {
@@ -337,7 +405,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public AdjustTransactionModel CreateAdjustmentRequest(string desc, AdjustmentReason reason)
         {
-            return new AdjustTransactionModel()
+            return new AdjustTransactionModel
             {
                 newTransaction = _model,
                 adjustmentDescription = desc,
