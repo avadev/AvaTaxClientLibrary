@@ -21,6 +21,7 @@ class AvaTaxClient
 @foreach(var m in SwaggerModel.Methods) {
     var paramlist = new System.Text.StringBuilder();
     var guzzleparamlist = new System.Text.StringBuilder();
+    var paramcomments = new System.Collections.Generic.List<string>();
     string payload = "null";
     foreach (var p in m.Params) {
         paramlist.Append("$");
@@ -32,12 +33,14 @@ class AvaTaxClient
         paramlist.Append(p.CleanParamName);
         paramlist.Append(", ");
         guzzleparamlist.Append("'" + p.ParamName + "' = $" + p.CleanParamName + ", ");
+        paramcomments.Add("\r\n     * @param " + p.TypeName + " $" + p.CleanParamName + " " + p.Comment.Replace("\r\n", " "));
     }
     if (m.BodyParam != null) {
         paramlist.Append("$");
         paramlist.Append(m.BodyParam.CleanParamName);
         paramlist.Append(", ");
         payload = "$" + m.BodyParam.CleanParamName;
+        paramcomments.Add("\r\n     * @param " + m.BodyParam.TypeName + " $" + m.BodyParam.CleanParamName + " " + m.BodyParam.Comment.Replace("\r\n", " "));
     }
     if (paramlist.Length > 0) paramlist.Length -= 2;
     if (guzzleparamlist.Length > 0) guzzleparamlist.Length -= 2;
@@ -45,10 +48,12 @@ class AvaTaxClient
 <text>
     /**
      * @m.Comment
+     * </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
+     * @@return @m.TypeName
      */
     public function @{Write(FirstCharLower(m.Name) + "(" + paramlist.ToString() + ")");}
     {
-        $path = "@m.URI.Replace("{", "$").Replace("}", "")";
+        $path = "@m.URI.Replace("{", "{$")";
         $guzzleparams = [
             'query' => [@guzzleparamlist.ToString()],
             'body' => @payload
