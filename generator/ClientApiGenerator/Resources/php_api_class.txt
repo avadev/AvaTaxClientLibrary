@@ -1,4 +1,5 @@
-<?php namespace Avalara;
+<?php 
+namespace Avalara;
 /*
  * AvaTax API Client Library
  *
@@ -16,22 +17,13 @@
  * @@version    2.16.12-30
  * @@link       https://github.com/avadev/AvaTaxClientLibrary
  */
-/*
- * AvaTax API Client Library
- *
- * (c) 2004-2016 Avalara, Inc.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 include_once __DIR__."vendor/autoload.php";
 
 use Guzzle\Http\Client;
 
 /**
- * @@author Ted Spence <ted.spence@@avalara.com>
- * @@author Bob Maidens <bob.maidens@@avalara.com>
+ * An AvaTaxClient object that handles connectivity to the AvaTax v2 API server.
  */
 class AvaTaxClient 
 {
