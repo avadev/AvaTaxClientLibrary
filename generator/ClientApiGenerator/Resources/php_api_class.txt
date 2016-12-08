@@ -18,7 +18,7 @@ namespace Avalara;
  * @@link       https://github.com/avadev/AvaTaxClientLibrary
  */
 
-include_once __DIR__."vendor/autoload.php";
+include_once __DIR__."/vendor/autoload.php";
 
 use GuzzleHttp\Client;
 
@@ -47,16 +47,26 @@ class AvaTaxClient
      */
     public function __construct($environment, $appName, $appVersion, $machineName)
     {
-        // Configure the HTTP client
-        $this->client = new Client();
+        // Determine startup environment
+        $env = 'https://rest.avatax.com';
         if ($environment == "sandbox") {
-            $this->client->setBaseUri('https://sandbox-rest.avatax.com');
-        } else {
-            $this->client->setBaseUri('https://rest.avatax.com');
+            $env = 'https://sandbox-rest.avatax.com';
         }
+
+        // Configure the HTTP client
+        $this->client = new Client([
+            'base_url' => $env
+        ]);
+        
+        // Set client options
         $this->client->setDefaultOption('headers', array(
             'Accept' => 'application/json',
             'X-Avalara-Client' => "{$appName}; {$appVersion}; PhpRestClient; 2.16.12-30; {$machineName}"));
+            
+        // For some reason, Guzzle reports that 'https://sandbox-rest.avatax.com' is a self signed certificate, even though Verisign issued it
+        if ($environment == "sandbox") {
+            $this->client->setDefaultOption('verify', false);
+        }
     }
 
     /**
@@ -123,7 +133,7 @@ class AvaTaxClient
     {
         $path = "@m.URI.Replace("{", "{$")";
         $guzzleParams = [
-            'auth' => $this->auth
+            'auth' => $this->auth,
             'query' => [@guzzleparamlist.ToString()],
             'body' => @payload
         ];
@@ -134,14 +144,15 @@ class AvaTaxClient
     /**
      * Make a single REST call to the AvaTax v2 API server
      *
-     * @@param string $apiUrl The relative path of the API on the server
-     * @@param string $method The HTTP verb being used in this request
-     * @@param string $guzzleParams The Guzzle parameters for this request, including query string and body parameters
+     * @@param string $apiUrl           The relative path of the API on the server
+     * @@param string $verb             The HTTP verb being used in this request
+     * @@param string $guzzleParams     The Guzzle parameters for this request, including query string and body parameters
      */
-    private function restCall($apiUrl, $method, $guzzleParams)
+    private function restCall($apiUrl, $verb, $guzzleParams)
     {
         try {
-            $response = $this->client->request($method, $apiUrl, $guzzleParams);
+            $request = $this->client->createRequest($verb, $apiUrl, $guzzleParams);
+            $response = $this->client->send($request);
             $body = $response->getBody();
             return json_decode($body);
 
