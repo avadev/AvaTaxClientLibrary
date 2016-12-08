@@ -81,7 +81,7 @@ namespace ClientApiGenerator.Render
             // Did the compiler produce an error?
             if (compiled.Errors.HasErrors) {
                 CompilerError err = compiled.Errors.OfType<CompilerError>().Where(ce => !ce.IsWarning).First();
-                throw new Exception(String.Format("Error Compiling Template: ({0}, {1}) {2}", err.Line, err.Column, err.ErrorText));
+                throw new Exception(String.Format("Error Compiling Template (Line {0} Col {1}) Err {2}", err.Line, err.Column, err.ErrorText));
 
             // Load this assembly into the project
             } else {

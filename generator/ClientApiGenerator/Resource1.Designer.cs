@@ -74,12 +74,12 @@ namespace ClientApiGenerator {
         ///#region Methods
         ///@foreach(var m in SwaggerModel.Methods) {
         ///
-        ///	WriteLine(&quot;        /// &lt;summary&gt;&quot;);
-        ///	WriteLine(&quot;        /// &quot; + CSharpComment(m.Comment));
-        ///	WriteLine(&quot;        /// &lt;/summary&gt;&quot;);
+        ///    WriteLine(&quot;        /// &lt;summary&gt;&quot;);
+        ///    WriteLine(&quot;        /// &quot; + CSharpComment(m.Comment));
+        ///    WriteLine(&quot;        /// &lt;/summary&gt;&quot;);
         ///
-        ///	foreach (var p in m.Params) {
-        ///		WriteLine(&quot;        /// &lt;param name=\&quot;&quot; + p.CleanParamName + &quot;\&quot;&gt;&quot; + p.Comment + &quot;&lt;/param&gt;&quot; [rest of string was truncated]&quot;;.
+        ///    foreach (var p in m.Params) {
+        ///        WriteLine(&quot;        /// &lt;param name=\&quot;&quot; + p.CleanParamName + &quot;\&quot;&gt;&quot; + p.Comment + &quot;&lt;/param&gt;&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string csharp_api_class {
             get {
@@ -127,11 +127,11 @@ namespace ClientApiGenerator {
         ///    public class @ClassModel.SchemaName
         ///    {
         ///@foreach(var p in ClassModel.Properties) {
-        ///	WriteLine(&quot;	    /// &lt;summary&gt;&quot;);
-        ///	WriteLine(&quot;        /// &quot; + CSharpComment(p.Comment));
-        ///	WriteLine(&quot;        /// &lt;/summary&gt;&quot;);
-        ///	WriteLine(&quot;        public &quot; + p.TypeName + &quot; &quot; + p.CleanParamName + &quot; { get; set; }&quot;);
-        ///	W [rest of string was truncated]&quot;;.
+        ///    WriteLine(&quot;        /// &lt;summary&gt;&quot;);
+        ///    WriteLine(&quot;        /// &quot; + CSharpComment(p.Comment));
+        ///    WriteLine(&quot;        /// &lt;/summary&gt;&quot;);
+        ///    WriteLine(&quot;        public &quot; + p.TypeName + &quot; &quot; + p.CleanParamName + &quot; { get; set; }&quot;);
+        ///    W [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string csharp_model_class {
             get {

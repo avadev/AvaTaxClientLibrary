@@ -110,6 +110,20 @@ namespace ClientApiGenerator
             if (String.IsNullOrEmpty(p)) return "";
             return p.Replace("$", "");
         }
+
+        public static string FirstCharLower(string s)
+        {
+            return s[0].ToString().ToLower() + s.Substring(1);
+        }
+        public static string PhpTypeName(string typename)
+        {
+            if (typename == "Int32" || typename == "Int32?") {
+                return "int";
+            } else if (typename == "String") {
+                return "string";
+            }
+            return typename;
+        }
         #endregion
     }
 }
