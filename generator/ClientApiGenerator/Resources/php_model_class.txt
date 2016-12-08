@@ -17,7 +17,7 @@ final class @ClassModel.SchemaName extends AbstractEntity
 {
 @foreach(var p in ClassModel.Properties) {
 WriteLine("    /**");
-WriteLine("     * @var " + p.TypeName);
+WriteLine("     * @var " + p.TypeName + " " + p.Comment.Replace("\r\n", "\r\n     * "));
 WriteLine("     */");
 WriteLine("    public $" + p.CleanParamName + ";");
 WriteLine("");

@@ -19,36 +19,61 @@ class AvaTaxClient
 {
 
 @foreach(var m in SwaggerModel.Methods) {
+    var paramlist = new System.Text.StringBuilder();
+    string payload = "null";
+    foreach (var p in m.Params) {
+        paramlist.Append("$");
+        paramlist.Append(p.CleanParamName);
+        paramlist.Append(", ");
+    }
+    foreach (var p in m.QueryParams) {
+        paramlist.Append("$");
+        paramlist.Append(p.CleanParamName);
+        paramlist.Append(", ");
+    }
+    if (m.BodyParam != null) {
+        paramlist.Append("$");
+        paramlist.Append(m.BodyParam.CleanParamName);
+        paramlist.Append(", ");
+        payload = "$" + m.BodyParam.CleanParamName;
+    }
+    if (paramlist.Length > 0) paramlist.Length -= 2;
+
 <text>
     /**
-	 * @m.Comment
+     * @m.Comment
      */
-    public function @m.Name()
+    public function @{Write(m.Name + "(" + paramlist.ToString() + ")");}
     {
-        return $this->restcall('@m.URI', '@m.HttpVerb', $payload);
+        return $this->restcall('@m.URI', '@m.HttpVerb.ToUpper()', @payload);
     }
+</text>}
 
-</text>
-}
+    private $client;
 
     /**
-     * @param Client $client
+     * Construct a new AvaTaxClient 
+     * @@param string $environment Indicates which server to use; acceptable values are "sandbox" or "production"
      */
-    public function __construct(Client $client)
+    public function __construct($environment)
     {
         // Configure the HTTP client
-        \$this->client = \$client->setBaseUrl('https://sandbox-rest.avatax.com')
-            ->setDefaultOption('headers', array('Accept' => 'application/json'));
+        \$this->client = new Client();
+        if (\$environment == "sandbox") {
+            \$this->client->setBaseUri('https://sandbox-rest.avatax.com');
+        } else {
+            \$this->client->setBaseUri('https://rest.avatax.com');
+        }
+        \$this->client->setDefaultOption('headers', array('Accept' => 'application/json'));
     }
 
-    private function restcall($apiUrl, $method, $payload)
+    private function restcall($apiUrl, $method, $payload, $guzzleparams)
     {
         $timestamp = time();
         $url .= "&ts=" . $timestamp . "&apikey=" . $apiKey . "&hash=" . $hash;
 
         try {
-            $response = $this->client->get($this->$baseurl . $apiUrl)->send();
-
+            $response = $this->client->request($method, $apiUrl, $guzzleparams);
             if ($response->getStatusCode() != 200) {
                 throw new \Exception('Bad Response');
             }
@@ -62,4 +87,3 @@ class AvaTaxClient
         }
     }
 }
-s

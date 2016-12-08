@@ -10,7 +10,6 @@ namespace Avalara.AvaTax.RestClient
     {
 #region Methods
 @foreach(var m in SwaggerModel.Methods) {
-
     WriteLine("        /// <summary>");
     WriteLine("        /// " + CSharpComment(m.Comment));
     WriteLine("        /// </summary>");
