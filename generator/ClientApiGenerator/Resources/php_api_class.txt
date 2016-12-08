@@ -1,4 +1,4 @@
-<?php
+<?php namespace Avalara;
 /*
  * AvaTax API Client Library
  *
@@ -9,17 +9,57 @@
  */
 namespace Avalara.AvaTax;
 
+use Guzzle\Http\Client;
+
 /**
  * @@author Ted Spence <ted.spence@@avalara.com>
  * @@author Bob Maidens <bob.maidens@@avalara.com>
  */
-final class AvaTaxApi extends AvaTaxApiBase
+class AvaTaxClient 
 {
+
+@foreach(var m in SwaggerModel.Methods) {
+<text>
     /**
-     * @@param string x
+	 * @m.Comment
      */
-    public function MethodName(x)
+    public function @m.Name()
     {
-        this->funcvalue = "hi";
+        return $this->restcall('@m.URI', '@m.HttpVerb', $payload);
+    }
+
+</text>
+}
+
+    /**
+     * @param Client $client
+     */
+    public function __construct(Client $client)
+    {
+        // Configure the HTTP client
+        \$this->client = \$client->setBaseUrl('https://sandbox-rest.avatax.com')
+            ->setDefaultOption('headers', array('Accept' => 'application/json'));
+    }
+
+    private function restcall($apiUrl, $method, $payload)
+    {
+        $timestamp = time();
+        $url .= "&ts=" . $timestamp . "&apikey=" . $apiKey . "&hash=" . $hash;
+
+        try {
+            $response = $this->client->get($this->$baseurl . $apiUrl)->send();
+
+            if ($response->getStatusCode() != 200) {
+                throw new \Exception('Bad Response');
+            }
+
+            $body = $response->getBody();
+
+            return json_decode($body);
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
+s

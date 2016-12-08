@@ -10,11 +10,11 @@ namespace Avalara.AvaTax.RestClient
     public class @ClassModel.SchemaName
     {
 @foreach(var p in ClassModel.Properties) {
-	WriteLine("	    /// <summary>");
-	WriteLine("        /// " + CSharpComment(p.Comment));
-	WriteLine("        /// </summary>");
-	WriteLine("        public " + p.TypeName + " " + p.CleanParamName + " { get; set; }");
-	WriteLine("");
+    WriteLine("        /// <summary>");
+    WriteLine("        /// " + CSharpComment(p.Comment));
+    WriteLine("        /// </summary>");
+    WriteLine("        public " + p.TypeName + " " + p.CleanParamName + " { get; set; }");
+    WriteLine("");
 }
 
         /// <summary>
@@ -22,8 +22,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <returns>A JSON string of this object</returns>
         public override string ToString()
-		{
+        {
             return JsonConvert.SerializeObject(this, new JsonSerializerSettings() { Formatting = Formatting.Indented });
-		}
+        }
     }
 }
