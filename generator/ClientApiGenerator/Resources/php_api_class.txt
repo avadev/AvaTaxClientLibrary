@@ -14,7 +14,7 @@ namespace Avalara;
  * @@author     Bob Maidens <bob.maidens@@avalara.com>
  * @@copyright  2004-2016 Avalara, Inc.
  * @@license    https://www.apache.org/licenses/LICENSE-2.0
- * @@version    2.16.12-30
+ * @@version    @SwaggerModel.ApiVersion
  * @@link       https://github.com/avadev/AvaTaxClientLibrary
  */
 
@@ -61,7 +61,7 @@ class AvaTaxClient
         // Set client options
         $this->client->setDefaultOption('headers', array(
             'Accept' => 'application/json',
-            'X-Avalara-Client' => "{$appName}; {$appVersion}; PhpRestClient; 2.16.12-30; {$machineName}"));
+            'X-Avalara-Client' => "{$appName}; {$appVersion}; PhpRestClient; @SwaggerModel.ApiVersion; {$machineName}"));
             
         // For some reason, Guzzle reports that 'https://sandbox-rest.avatax.com' is a self signed certificate, even though Verisign issued it
         if ($environment == "sandbox") {
