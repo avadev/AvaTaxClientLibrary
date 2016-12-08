@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 #if PORTABLE
 using System.Threading.Tasks;
 #endif
@@ -41,9 +42,9 @@ namespace Avalara.AvaTax.RestClient
         /// Set the commit flag of the transaction.
         /// </summary>
         /// <returns></returns>
-        public TransactionBuilder WithCommitFlag(bool? commit)
+        public TransactionBuilder WithCommit()
         {
-            _model.commit = commit;
+            _model.commit = true;
             return this;
         }
 
@@ -74,15 +75,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="discounted"></param>
         /// <returns></returns>
-        public TransactionBuilder IsItemDiscounted(bool? discounted)
+        public TransactionBuilder WithItemDiscount(bool? discounted)
         {
-            // Ensure this can only be invoked when a line has been created.
-            if (_model.lines.Count <= 0)
-            {
-                throw new Exception("No lines have been added yet.");
-            }
-
-            var l = _model.lines[_model.lines.Count - 1];
+            var l = GetMostRecentLine();
             l.discounted = discounted;
             return this;
         }
@@ -130,13 +125,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionBuilder WithLineParameter(string paramname, string paramvalue)
         {
-            // Ensure this can only be invoked when a line has been created.
-            if (_model.lines.Count <= 0)
-            {
-                throw new Exception("No lines have been added yet.");
-            }
-
-            var l = _model.lines[_model.lines.Count - 1];
+            var l = GetMostRecentLine();
             if (l.parameters == null) l.parameters = new Dictionary<string, string>();
             l.parameters.Add(paramname, paramvalue);
             return this;
@@ -196,13 +185,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionBuilder WithLineAddress(TransactionAddressType type, string line1, string line2, string line3, string city, string region, string postalCode, string country)
         {
-            // Ensure this can only be invoked when a line has been created.
-            if (_model.lines.Count <= 0)
-            {
-                throw new Exception("No lines have been added yet.");
-            }
-
-            var line = _model.lines[_model.lines.Count - 1];
+            var line = GetMostRecentLine();
             if (line.addresses == null) line.addresses = new Dictionary<TransactionAddressType, AddressInfo>();
             line.addresses[type] = new AddressInfo
             {
@@ -227,7 +210,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="taxAmount">Amount of tax to apply. Required for a TaxAmount Override.</param>
         /// <param name="taxDate">Date of a Tax Override. Required for a TaxDate Override.</param>
         /// <returns></returns>
-        public TransactionBuilder WithGlobalTaxOverride(TaxOverrideType type, string reason, decimal taxAmount = 0, DateTime? taxDate = null)
+        public TransactionBuilder WithTaxOverride(TaxOverrideType type, string reason, decimal taxAmount = 0, DateTime? taxDate = null)
         {
             _model.taxOverride = new TaxOverrideModel
             {
@@ -253,19 +236,13 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionBuilder WithLineTaxOverride(TaxOverrideType type, string reason, decimal taxAmount = 0, DateTime? taxDate = null)
         {
-            // Ensure this can only be invoked when a line has been created.
-            if (_model.lines.Count <= 0)
-            {
-                throw new Exception("No lines have been added yet.");
-            }
-
             // Address the DateOverride constraint.
             if (type.Equals(TaxOverrideType.TaxDate) && taxDate == null)
             {
                 throw new Exception("A valid date is required for a Tax Date Tax Override.");
             }
 
-            var line = _model.lines[_model.lines.Count - 1];
+            var line = GetMostRecentLine();
             line.taxOverride = new TaxOverrideModel
             {
                 type = type,
@@ -365,6 +342,23 @@ namespace Avalara.AvaTax.RestClient
 
             // Continue building
             return this;
+        }
+        #endregion
+
+        #region Private Helpers
+        /// <summary>
+        /// Checks to see if the current model has a line.
+        /// </summary>
+        /// <returns></returns>
+        private LineItemModel GetMostRecentLine([CallerMemberName]string memberName = "")
+        {
+            if (_model.lines.Count <= 0)
+            {
+                throw new Exception($"No lines have been added. The {memberName} method applies to the most recent line." +
+                                    $" To use this function, first add a line.");
+            }
+
+            return _model.lines[_model.lines.Count - 1];
         }
         #endregion
 
