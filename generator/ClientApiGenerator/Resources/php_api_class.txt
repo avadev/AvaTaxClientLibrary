@@ -6,8 +6,26 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * @@category   AvaTax client libraries
+ * @@package    Avalara.AvaTaxClient
+ * @@author     Ted Spence <ted.spence@@avalara.com>
+ * @@author     Bob Maidens <bob.maidens@@avalara.com>
+ * @@copyright  2004-2016 Avalara, Inc.
+ * @@license    https://www.apache.org/licenses/LICENSE-2.0
+ * @@version    2.16.12-30
+ * @@link       https://github.com/avadev/AvaTaxClientLibrary
  */
-namespace Avalara.AvaTax;
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2016 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+include_once __DIR__."vendor/autoload.php";
 
 use Guzzle\Http\Client;
 
@@ -17,6 +35,10 @@ use Guzzle\Http\Client;
  */
 class AvaTaxClient 
 {
+    /**
+     * @@var GuzzleHttp\Client;
+     */
+    private $client;
 
 @foreach(var m in SwaggerModel.Methods) {
     var paramlist = new System.Text.StringBuilder();
@@ -32,7 +54,7 @@ class AvaTaxClient
         paramlist.Append("$");
         paramlist.Append(p.CleanParamName);
         paramlist.Append(", ");
-        guzzleparamlist.Append("'" + p.ParamName + "' = $" + p.CleanParamName + ", ");
+        guzzleparamlist.Append("'" + p.ParamName + "' => $" + p.CleanParamName + ", ");
         paramcomments.Add("\r\n     * @param " + p.TypeName + " $" + p.CleanParamName + " " + p.Comment.Replace("\r\n", " "));
     }
     if (m.BodyParam != null) {
@@ -54,18 +76,17 @@ class AvaTaxClient
     public function @{Write(FirstCharLower(m.Name) + "(" + paramlist.ToString() + ")");}
     {
         $path = "@m.URI.Replace("{", "{$")";
-        $guzzleparams = [
+        $guzzleParams = [
             'query' => [@guzzleparamlist.ToString()],
             'body' => @payload
         ];
-        return $this->restcall($path, '@m.HttpVerb.ToUpper()', $guzzleparams);
+        return $this->restCall($path, '@m.HttpVerb.ToUpper()', $guzzleParams);
     }
 </text>}
 
-    private $client;
-
     /**
      * Construct a new AvaTaxClient 
+     *
      * @@param string $environment Indicates which server to use; acceptable values are "sandbox" or "production"
      */
     public function __construct($environment)
@@ -80,13 +101,17 @@ class AvaTaxClient
         $this->client->setDefaultOption('headers', array('Accept' => 'application/json'));
     }
 
-    private function restcall($apiUrl, $method, $payload, $guzzleparams)
+    /**
+     * Make a single REST call to the AvaTax v2 API server
+     *
+     * @@param string $apiUrl The relative path of the API on the server
+     * @@param string $method The HTTP verb being used in this request
+     * @@param string $guzzleParams The Guzzle parameters for this request, including query string and body parameters
+     */
+    private function restCall($apiUrl, $method, $guzzleParams)
     {
-        $timestamp = time();
-        $url .= "&ts=" . $timestamp . "&apikey=" . $apiKey . "&hash=" . $hash;
-
         try {
-            $response = $this->client->request($method, $apiUrl, $guzzleparams);
+            $response = $this->client->request($method, $apiUrl, $guzzleParams);
             $body = $response->getBody();
             return json_decode($body);
 
