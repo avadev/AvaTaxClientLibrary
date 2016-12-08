@@ -110,6 +110,11 @@ namespace ClientApiGenerator
             if (String.IsNullOrEmpty(p)) return "";
             return p.Replace("$", "");
         }
+
+        public static string FirstCharLower(string s)
+        {
+            return s[0].ToString().ToLower() + s.Substring(1);
+        }
         #endregion
     }
 }

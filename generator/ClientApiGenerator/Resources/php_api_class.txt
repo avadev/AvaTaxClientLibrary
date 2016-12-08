@@ -20,6 +20,7 @@ class AvaTaxClient
 
 @foreach(var m in SwaggerModel.Methods) {
     var paramlist = new System.Text.StringBuilder();
+    var guzzleparamlist = new System.Text.StringBuilder();
     string payload = "null";
     foreach (var p in m.Params) {
         paramlist.Append("$");
@@ -30,6 +31,7 @@ class AvaTaxClient
         paramlist.Append("$");
         paramlist.Append(p.CleanParamName);
         paramlist.Append(", ");
+        guzzleparamlist.Append("'" + p.ParamName + "' = $" + p.CleanParamName + ", ");
     }
     if (m.BodyParam != null) {
         paramlist.Append("$");
@@ -38,14 +40,20 @@ class AvaTaxClient
         payload = "$" + m.BodyParam.CleanParamName;
     }
     if (paramlist.Length > 0) paramlist.Length -= 2;
+    if (guzzleparamlist.Length > 0) guzzleparamlist.Length -= 2;
 
 <text>
     /**
      * @m.Comment
      */
-    public function @{Write(m.Name + "(" + paramlist.ToString() + ")");}
+    public function @{Write(FirstCharLower(m.Name) + "(" + paramlist.ToString() + ")");}
     {
-        return $this->restcall('@m.URI', '@m.HttpVerb.ToUpper()', @payload);
+        $path = "@m.URI.Replace("{", "$").Replace("}", "")";
+        $guzzleparams = [
+            'query' => [@guzzleparamlist.ToString()],
+            'body' => @payload
+        ];
+        return $this->restcall($path, '@m.HttpVerb.ToUpper()', $guzzleparams);
     }
 </text>}
 
@@ -58,13 +66,13 @@ class AvaTaxClient
     public function __construct($environment)
     {
         // Configure the HTTP client
-        \$this->client = new Client();
-        if (\$environment == "sandbox") {
-            \$this->client->setBaseUri('https://sandbox-rest.avatax.com');
+        $this->client = new Client();
+        if ($environment == "sandbox") {
+            $this->client->setBaseUri('https://sandbox-rest.avatax.com');
         } else {
-            \$this->client->setBaseUri('https://rest.avatax.com');
+            $this->client->setBaseUri('https://rest.avatax.com');
         }
-        \$this->client->setDefaultOption('headers', array('Accept' => 'application/json'));
+        $this->client->setDefaultOption('headers', array('Accept' => 'application/json'));
     }
 
     private function restcall($apiUrl, $method, $payload, $guzzleparams)
@@ -74,12 +82,7 @@ class AvaTaxClient
 
         try {
             $response = $this->client->request($method, $apiUrl, $guzzleparams);
-            if ($response->getStatusCode() != 200) {
-                throw new \Exception('Bad Response');
-            }
-
             $body = $response->getBody();
-
             return json_decode($body);
 
         } catch (\Exception $e) {
