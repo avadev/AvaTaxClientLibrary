@@ -25,14 +25,14 @@ namespace ClientApiGenerator.Render
             foreach (var m in model.Models) {
                 if (!m.SchemaName.StartsWith("FetchResult")) {
                     File.WriteAllText(Path.Combine(rootPath, "dotnet\\models\\" + m.SchemaName + ".cs"),
-                        modelTask.ExecuteTemplate(null, m, null));
+                        modelTask.ExecuteTemplate(model, m, null));
                 }
             }
 
             // Finally assemble the enums
             foreach (var e in model.Enums) {
                 File.WriteAllText(Path.Combine(rootPath, "dotnet\\enums\\" + e.EnumDataType + ".cs"),
-                    enumTask.ExecuteTemplate(null, null, e));
+                    enumTask.ExecuteTemplate(model, null, e));
             }
 
             //// Now spit out a coherent API structure

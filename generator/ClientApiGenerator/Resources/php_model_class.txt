@@ -14,7 +14,7 @@ namespace Avalara;
  * @@author     Bob Maidens <bob.maidens@@avalara.com>
  * @@copyright  2004-2016 Avalara, Inc.
  * @@license    https://www.apache.org/licenses/LICENSE-2.0
- * @@version    2.16.12-30
+ * @@version    @SwaggerModel.ApiVersion
  * @@link       https://github.com/avadev/AvaTaxClientLibrary
  */
 

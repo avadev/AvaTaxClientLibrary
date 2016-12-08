@@ -12,6 +12,8 @@ namespace ClientApiGenerator.Models
         public List<EnumInfo> Enums { get; set; }
         public List<ModelInfo> Models { get; set; }
 
+        public string ApiVersion { get; set; }
+
         public SwaggerInfo()
         {
             Methods = new List<MethodInfo>();

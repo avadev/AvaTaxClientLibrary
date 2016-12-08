@@ -15,6 +15,9 @@ namespace ClientApiGenerator.Swagger
         public Dictionary<string, Dictionary<string, SwaggerMethod>> paths { get; set; }
         public Dictionary<string, SwaggerDefinition> definitions { get; set; }
         public Dictionary<string, object> securityDefinitions { get; set; }
+
+        [JsonProperty("x-api-version")]
+        public string ApiVersion { get; set; }
         
         [JsonExtensionData]
         public IDictionary<string, object> Extended { get; set; }

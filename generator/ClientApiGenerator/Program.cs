@@ -58,6 +58,7 @@ Arguments:
         private static SwaggerInfo ParseSwagger(SwaggerModel obj)
         {
             SwaggerInfo result = new SwaggerInfo();
+            result.ApiVersion = obj.ApiVersion;
 
             // Loop through all paths and spit them out to the console
             foreach (var path in (from p in obj.paths orderby p.Key select p)) {

@@ -126,7 +126,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public AvaTaxClient WithClientIdentifier(string appName, string appVersion, string machineName)
         {
-            string clientId = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", "2.16.12", machineName);
+            string clientId = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
 #if PORTABLE
             if (_client.DefaultRequestHeaders.Any(h => h.Key == "X-Avalara-Client")) {
                 _client.DefaultRequestHeaders.Remove("X-Avalara-Client");
