@@ -23,7 +23,7 @@ namespace ClientApiGenerator.Render
             var enumTask = this.MakeRazorTemplate(Resource1.php_enum_class);
 
             // Now spit out a coherent API structure
-            File.WriteAllText(Path.Combine(rootPath, "php\\AvaTaxApi.php"),
+            File.WriteAllText(Path.Combine(rootPath, "php\\AvaTaxClient.php"),
                 apiTask.ExecuteTemplate(model, null, null));
 
             // Next let's assemble the model files

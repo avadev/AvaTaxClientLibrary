@@ -11,8 +11,12 @@
 	],
     "authors": [
         {
+            "name": "Avalara Developer Relations",
+            "homepage": "https://developer.avalara.com",
+        },
+        {
             "name": "Ted Spence",
-            "email": "ted.spence@avalara.com"
+            "email": "ted.spence@avalara.com",
         },
         {
             "name": "Bob Maidens",
@@ -20,8 +24,13 @@
         }
     ],
 	"license": "Apache-2.0",
-	"type": "project",
+	"type": "library",
 	"require": {
+		"php": ">=5.5.9",
 		"guzzlehttp/guzzle": "5.*"
-	}
+    },
+    "support": {
+        "docs": "https://developer.avalara.com",
+        "forum": "https://community.avalara.com"
+    }
 }
