@@ -20,7 +20,7 @@ namespace Avalara;
 
 include_once __DIR__."vendor/autoload.php";
 
-use Guzzle\Http\Client;
+use GuzzleHttp\Client;
 
 /**
  * An AvaTaxClient object that handles connectivity to the AvaTax v2 API server.
@@ -28,9 +28,26 @@ use Guzzle\Http\Client;
 class AvaTaxClient 
 {
     /**
-     * @@var GuzzleHttp\Client;
+     * @@var Client;
      */
     private $client;
+
+    /**
+     * Construct a new AvaTaxClient 
+     *
+     * @@param string $environment Indicates which server to use; acceptable values are "sandbox" or "production"
+     */
+    public function __construct($environment)
+    {
+        // Configure the HTTP client
+        $this->client = new Client();
+        if ($environment == "sandbox") {
+            $this->client->setBaseUri('https://sandbox-rest.avatax.com');
+        } else {
+            $this->client->setBaseUri('https://rest.avatax.com');
+        }
+        $this->client->setDefaultOption('headers', array('Accept' => 'application/json'));
+    }
 
 @foreach(var m in SwaggerModel.Methods) {
     var paramlist = new System.Text.StringBuilder();
@@ -75,23 +92,6 @@ class AvaTaxClient
         return $this->restCall($path, '@m.HttpVerb.ToUpper()', $guzzleParams);
     }
 </text>}
-
-    /**
-     * Construct a new AvaTaxClient 
-     *
-     * @@param string $environment Indicates which server to use; acceptable values are "sandbox" or "production"
-     */
-    public function __construct($environment)
-    {
-        // Configure the HTTP client
-        $this->client = new Client();
-        if ($environment == "sandbox") {
-            $this->client->setBaseUri('https://sandbox-rest.avatax.com');
-        } else {
-            $this->client->setBaseUri('https://rest.avatax.com');
-        }
-        $this->client->setDefaultOption('headers', array('Accept' => 'application/json'));
-    }
 
     /**
      * Make a single REST call to the AvaTax v2 API server
