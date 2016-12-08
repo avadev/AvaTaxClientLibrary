@@ -28,12 +28,12 @@ use GuzzleHttp\Client;
 class AvaTaxClient 
 {
     /**
-     * @@var Client;
+     * @@var Client     The Guzzle client to use to connect to AvaTax.
      */
     private $client;
 
     /**
-     * @@var Authentication credentials;
+     * @@var array      The authentication credentials to use to connect to AvaTax.
      */
     private $auth;
 
@@ -41,9 +41,9 @@ class AvaTaxClient
      * Construct a new AvaTaxClient 
      *
      * @@param string $environment  Indicates which server to use; acceptable values are "sandbox" or "production"
-     * @@param string $appName      Indicates which server to use; acceptable values are "sandbox" or "production"
-     * @@param string $appVersion   Indicates which server to use; acceptable values are "sandbox" or "production"
-     * @@param string $machineName  Indicates which server to use; acceptable values are "sandbox" or "production"
+     * @@param string $appName      Specify the name of your application here.  Should not contain any semicolons.
+     * @@param string $appVersion   Specify the version number of your application here.  Should not contain any semicolons.
+     * @@param string $machineName  Specify the machine name of the machine on which this code is executing here.  Should not contain any semicolons.
      */
     public function __construct($environment, $appName, $appVersion, $machineName)
     {
@@ -54,14 +54,16 @@ class AvaTaxClient
         } else {
             $this->client->setBaseUri('https://rest.avatax.com');
         }
-        $this->client->setDefaultOption('headers', array('Accept' => 'application/json'));
+        $this->client->setDefaultOption('headers', array(
+            'Accept' => 'application/json',
+            'X-Avalara-Client' => "{$appName}; {$appVersion}; PhpRestClient; 2.16.12-30; {$machineName}"));
     }
 
     /**
      * Configure this client to use the specified username/password security settings
      *
-     * @@param string $username     The username to use to connect to AvaTax
-     * @@param string $password     The password to use to connect to AvaTax
+     * @@param string $username     The username for your AvaTax user account
+     * @@param string $password     The password for your AvaTax user account
      * @@return AvaTaxClient
      */
     public function withSecurity($username, $password)
