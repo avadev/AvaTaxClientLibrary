@@ -1,0 +1,27 @@
+{
+	"name": "Avalara/AvaTaxApi-php",
+	"description": "Avalara AvaTax PHP Client Library",
+	"keywords": [
+        "tax",
+        "AvaTax",
+        "Avalara",
+		"sales compliance",
+		"taxes",
+		"tax calculation"
+	],
+    "authors": [
+        {
+            "name": "Ted Spence",
+            "email": "ted.spence@avalara.com"
+        },
+        {
+            "name": "Bob Maidens",
+            "email": "bob.maidens@avalara.com"
+        }
+    ],
+	"license": "Apache-2.0",
+	"type": "project",
+	"require": {
+		"guzzlehttp/guzzle": "5.*"
+	}
+}
