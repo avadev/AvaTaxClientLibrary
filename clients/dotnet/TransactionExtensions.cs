@@ -77,7 +77,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionBuilder WithItemDiscount(bool? discounted)
         {
-            var l = GetMostRecentLine();
+            var l = GetMostRecentLine("WithItemDiscount");
             l.discounted = discounted;
             return this;
         }
@@ -125,7 +125,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionBuilder WithLineParameter(string paramname, string paramvalue)
         {
-            var l = GetMostRecentLine();
+            var l = GetMostRecentLine("WithLineParameter");
             if (l.parameters == null) l.parameters = new Dictionary<string, string>();
             l.parameters.Add(paramname, paramvalue);
             return this;
@@ -185,7 +185,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionBuilder WithLineAddress(TransactionAddressType type, string line1, string line2, string line3, string city, string region, string postalCode, string country)
         {
-            var line = GetMostRecentLine();
+            var line = GetMostRecentLine("WithLineAddress");
             if (line.addresses == null) line.addresses = new Dictionary<TransactionAddressType, AddressInfo>();
             line.addresses[type] = new AddressInfo
             {
@@ -242,7 +242,7 @@ namespace Avalara.AvaTax.RestClient
                 throw new Exception("A valid date is required for a Tax Date Tax Override.");
             }
 
-            var line = GetMostRecentLine();
+            var line = GetMostRecentLine("WithLineTaxOverride");
             line.taxOverride = new TaxOverrideModel
             {
                 type = type,
@@ -350,7 +350,7 @@ namespace Avalara.AvaTax.RestClient
         /// Checks to see if the current model has a line.
         /// </summary>
         /// <returns></returns>
-        private LineItemModel GetMostRecentLine([CallerMemberName]string memberName = "")
+        private LineItemModel GetMostRecentLine(string memberName = "")
         {
             if (_model.lines.Count <= 0)
             {
