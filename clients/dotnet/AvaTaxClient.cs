@@ -168,6 +168,19 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private async Task<T> RestCallAsync<T>(string verb, AvaTaxPath uri, object payload = null)
         {
+            var s = await RestCallStringAsync(verb, uri, payload);
+            return JsonConvert.DeserializeObject<T>(s);
+        }
+
+        /// <summary>
+        /// Implementation of raw string-returning async API 
+        /// </summary>
+        /// <param name="verb"></param>
+        /// <param name="uri"></param>
+        /// <param name="payload"></param>
+        /// <returns></returns>
+        private async Task<string> RestCallStringAsync(string verb, AvaTaxPath uri, object payload = null)
+        {
             // Make the request
             HttpResponseMessage result = null;
             string json = null;
@@ -186,11 +199,23 @@ namespace Avalara.AvaTax.RestClient
             // Read the result
             var s = await result.Content.ReadAsStringAsync();
             if (result.IsSuccessStatusCode) {
-                return JsonConvert.DeserializeObject<T>(s);
+                return s;
             } else {
                 var err = JsonConvert.DeserializeObject<ErrorResult>(s);
                 throw new AvaTaxError(err);
             }
+        }
+
+        /// <summary>
+        /// Implementation of raw string-returning API
+        /// </summary>
+        /// <param name="verb"></param>
+        /// <param name="uri"></param>
+        /// <param name="payload"></param>
+        /// <returns></returns>
+        private string RestCallString(string verb, AvaTaxPath uri, object payload = null)
+        {
+            return RestCallStringAsync(verb, uri, payload).Result;
         }
 
         /// <summary>
@@ -216,7 +241,7 @@ namespace Avalara.AvaTax.RestClient
         }
 #else
         /// <summary>
-        /// Direct implementation of client APIs
+        /// Direct implementation of client APIs to object values
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="verb"></param>
@@ -224,6 +249,20 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="payload"></param>
         /// <returns></returns>
         private T RestCall<T>(string verb, AvaTaxPath uri, object payload = null)
+        {
+            var s = RestCallString(verb, uri, payload);
+            return JsonConvert.DeserializeObject<T>(s);
+        }
+
+        /// <summary>
+        /// Direct implementation of client APIs to string values
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="verb"></param>
+        /// <param name="uri"></param>
+        /// <param name="payload"></param>
+        /// <returns></returns>
+        private string RestCallString(string verb, AvaTaxPath uri, object payload = null)
         {
             string path = CombinePath(_envUri.ToString(), uri.ToString());
 
@@ -263,8 +302,7 @@ namespace Avalara.AvaTax.RestClient
                 using (var response = wr.GetResponse()) {
                     using (var inStream = response.GetResponseStream()) {
                         using (var reader = new StreamReader(inStream)) {
-                            var resultString = reader.ReadToEnd();
-                            return JsonConvert.DeserializeObject<T>(resultString);
+                            return reader.ReadToEnd();
                         }
                     }
 

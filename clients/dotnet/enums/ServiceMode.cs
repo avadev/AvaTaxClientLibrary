@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// ServiceMode
     /// </summary>
     public enum ServiceMode
     {
@@ -21,7 +21,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Remote,
-
 
     }
 }

@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// CompanyAccessLevel
     /// </summary>
     public enum CompanyAccessLevel
     {
@@ -26,7 +26,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         AllCompanies,
-
 
     }
 }

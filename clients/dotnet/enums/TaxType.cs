@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// TaxType
     /// </summary>
     public enum TaxType
     {
@@ -51,7 +51,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Use,
-
 
     }
 }

@@ -56,7 +56,7 @@ namespace ConsoleTest
 
                 // Execute a transaction
                 var t = new TransactionBuilder(client, init.companyCode, DocumentType.SalesInvoice, "ABC")
-                    .WithAddress(TransactionAddressType.SingleLocation, "123 Main Street", "Irvine", "CA", "92615", "US")
+                    .WithAddress(TransactionAddressType.SingleLocation, "123 Main Street", null, null, "Irvine", "CA", "92615", "US")
                     .WithLine(100.0m)
                     .WithExemptLine(50.0m, "NT")
                     .Create();
@@ -78,6 +78,18 @@ namespace ConsoleTest
                     }
                 });
                 Console.WriteLine(locations[0].ToString());
+
+                // Create one item form this company
+                var items = new List<ItemModel>();
+                items.Add(new ItemModel()
+                {
+                    companyId = init.id,
+                    itemCode = "WIDGET1",
+                    taxCode = "P0000000",
+                    description = "My Widget"
+                });
+                var createdItems = client.CreateItems(init.id, items);
+                Console.WriteLine(createdItems);
 
                 // Now create a point-of-sale file for this location
                 var contents = client.BuildPointOfSaleDataForLocation(init.id, locations[0].id, null, null, null, null);

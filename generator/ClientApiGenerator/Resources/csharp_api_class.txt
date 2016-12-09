@@ -57,7 +57,13 @@ namespace Avalara.AvaTax.RestClient
     foreach (var p in m.QueryParams) {
         WriteLine("            path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
     }
-    WriteLine("            return RestCall<" + m.TypeName + ">(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+    
+    if (m.TypeName == "String") {
+        WriteLine("            return RestCallString(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+    } else {
+        WriteLine("            return RestCall<" + m.TypeName + ">(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+    }
+
     WriteLine("        }");
     WriteLine("");
 }
@@ -109,7 +115,11 @@ namespace Avalara.AvaTax.RestClient
     foreach (var p in m.QueryParams) {
         WriteLine("            path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
     }
-    WriteLine("            return await RestCallAsync<" + m.TypeName + ">(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+    if (m.TypeName == "String") {
+        WriteLine("            return await RestCallStringAsync(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+    } else {
+        WriteLine("            return await RestCallAsync<" + m.TypeName + ">(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+    }
     WriteLine("        }");
     WriteLine("");
 }

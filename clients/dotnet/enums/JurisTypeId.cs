@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// JurisTypeId
     /// </summary>
     public enum JurisTypeId
     {
@@ -31,7 +31,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CNT,
-
 
     }
 }

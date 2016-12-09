@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// TaxOverrideType
     /// </summary>
     public enum TaxOverrideType
     {
@@ -36,7 +36,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         DeriveTaxable,
-
 
     }
 }

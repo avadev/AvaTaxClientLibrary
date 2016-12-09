@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// BoundaryLevel
     /// </summary>
     public enum BoundaryLevel
     {
@@ -21,7 +21,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Zip5,
-
 
     }
 }

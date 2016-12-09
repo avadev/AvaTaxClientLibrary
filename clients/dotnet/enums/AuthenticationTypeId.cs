@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// AuthenticationTypeId
     /// </summary>
     public enum AuthenticationTypeId
     {
@@ -26,7 +26,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         OpenIdBearerToken,
-
 
     }
 }

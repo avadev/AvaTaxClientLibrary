@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// PasswordStatusId
     /// </summary>
     public enum PasswordStatusId
     {
@@ -21,7 +21,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         UserMustChange,
-
 
     }
 }

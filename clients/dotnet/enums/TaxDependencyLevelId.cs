@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// TaxDependencyLevelId
     /// </summary>
     public enum TaxDependencyLevelId
     {
@@ -26,7 +26,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Address,
-
 
     }
 }

@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// AdjustmentReason
     /// </summary>
     public enum AdjustmentReason
     {
@@ -56,7 +56,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Offline,
-
 
     }
 }

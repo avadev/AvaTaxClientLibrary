@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// PointOfSaleFileType
     /// </summary>
     public enum PointOfSaleFileType
     {
@@ -21,7 +21,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Xml,
-
 
     }
 }
