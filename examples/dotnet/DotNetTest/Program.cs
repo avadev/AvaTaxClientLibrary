@@ -56,7 +56,8 @@ namespace ConsoleTest
 
                 // Execute a transaction
                 var t = new TransactionBuilder(client, init.companyCode, DocumentType.SalesInvoice, "ABC")
-                    .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA", "98104", "US")
+                    .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
+                        "98104", "US")
                     .WithLine(100.0m, 1, "P0000000")
                     .WithLineTaxOverride(TaxOverrideType.TaxAmount, "Test", 50m)
                     .WithLine(200m)
@@ -68,7 +69,8 @@ namespace ConsoleTest
                 // Define a location
                 var locations = client.CreateLocations(init.id, new List<LocationModel>()
                 {
-                    new LocationModel() {
+                    new LocationModel()
+                    {
                         companyId = init.id,
                         locationCode = "FIELD",
                         line1 = "123 Main Street",
@@ -98,12 +100,13 @@ namespace ConsoleTest
                 var contents = client.BuildPointOfSaleDataForLocation(init.id, locations[0].id, null, null, null, null);
                 Console.WriteLine(contents);
 
-            }
-            catch (AvaTaxError ex)
+            } catch (AvaTaxError ex)
             {
                 Console.WriteLine(ex.error.ToString());
+            } catch (InvalidOperationException ex)
+            {
+                Console.WriteLine($"Incorrect method sequence. {ex.Message}");
             }
-
             // Finished
             Console.WriteLine("Done");
         }
