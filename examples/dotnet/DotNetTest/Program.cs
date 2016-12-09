@@ -21,7 +21,8 @@ namespace ConsoleTest
             Console.WriteLine(pingResult.version);
 
             // Call fetch
-            try {
+            try
+            {
                 var companies = client.QueryCompanies(null, null, 0, 0, null);
                 Console.WriteLine(companies.ToString());
 
@@ -55,10 +56,13 @@ namespace ConsoleTest
 
                 // Execute a transaction
                 var t = new TransactionBuilder(client, init.companyCode, DocumentType.SalesInvoice, "ABC")
-                    .WithAddress(TransactionAddressType.SingleLocation, "123 Main Street", null, null, "Irvine", "CA", "92615", "US")
-                    .WithLine(100.0m)
-                    .WithExemptLine(50.0m, "NT")
+                    .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA", "98104", "US")
+                    .WithLine(100.0m, 1, "P0000000")
+                    .WithLineTaxOverride(TaxOverrideType.TaxAmount, "Test", 50m)
+                    .WithLine(200m)
+                    .WithExemptLine(50m, "NT")
                     .Create();
+
                 Console.WriteLine(t.ToString());
 
                 // Define a location
@@ -94,7 +98,9 @@ namespace ConsoleTest
                 var contents = client.BuildPointOfSaleDataForLocation(init.id, locations[0].id, null, null, null, null);
                 Console.WriteLine(contents);
 
-            } catch (AvaTaxError ex) {
+            }
+            catch (AvaTaxError ex)
+            {
                 Console.WriteLine(ex.error.ToString());
             }
 
