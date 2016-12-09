@@ -78,6 +78,18 @@ namespace ConsoleTest
                 });
                 Console.WriteLine(locations[0].ToString());
 
+                // Create one item form this company
+                var items = new List<ItemModel>();
+                items.Add(new ItemModel()
+                {
+                    companyId = init.id,
+                    itemCode = "WIDGET1",
+                    taxCode = "P0000000",
+                    description = "My Widget"
+                });
+                var createdItems = client.CreateItems(init.id, items);
+                Console.WriteLine(createdItems);
+
                 // Now create a point-of-sale file for this location
                 var contents = client.BuildPointOfSaleDataForLocation(init.id, locations[0].id, null, null, null, null);
                 Console.WriteLine(contents);

@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// RateType
     /// </summary>
     public enum RateType
     {
@@ -66,7 +66,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         Zero,
-
 
     }
 }

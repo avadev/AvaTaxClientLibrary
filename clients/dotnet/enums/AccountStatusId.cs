@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// AccountStatusId
     /// </summary>
     public enum AccountStatusId
     {
@@ -26,7 +26,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         New,
-
 
     }
 }

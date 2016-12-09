@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// ErrorTargetCode
     /// </summary>
     public enum ErrorTargetCode
     {
@@ -41,7 +41,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CustomerAccountSetup,
-
 
     }
 }

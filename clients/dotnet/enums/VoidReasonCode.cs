@@ -3,7 +3,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// VoidReasonCode
     /// </summary>
     public enum VoidReasonCode
     {
@@ -31,7 +31,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         AdjustmentCancelled,
-
 
     }
 }
