@@ -25,22 +25,22 @@ namespace Avalara;
 final class TransactionLineDetailModel
 {
     /**
-     * @var Int32? The unique ID number of this tax detail.
+     * @var Int64? The unique ID number of this tax detail.
      */
     public $id;
 
     /**
-     * @var Int32? The unique ID number of the line within this transaction.
+     * @var Int64? The unique ID number of the line within this transaction.
      */
     public $transactionLineId;
 
     /**
-     * @var Int32? The unique ID number of this transaction.
+     * @var Int64? The unique ID number of this transaction.
      */
     public $transactionId;
 
     /**
-     * @var Int32? The unique ID number of the address used for this tax detail.
+     * @var Int64? The unique ID number of the address used for this tax detail.
      */
     public $addressId;
 

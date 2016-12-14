@@ -25,12 +25,12 @@ namespace Avalara;
 final class TransactionLineModel
 {
     /**
-     * @var Int32? The unique ID number of this transaction line item.
+     * @var Int64? The unique ID number of this transaction line item.
      */
     public $id;
 
     /**
-     * @var Int32? The unique ID number of the transaction to which this line item belongs.
+     * @var Int64? The unique ID number of the transaction to which this line item belongs.
      */
     public $transactionId;
 
@@ -55,14 +55,14 @@ final class TransactionLineModel
     public $description;
 
     /**
-     * @var Int32? The unique ID number of the destination address where this line was delivered or sold.
+     * @var Int64? The unique ID number of the destination address where this line was delivered or sold.
      *             In the case of a point-of-sale transaction, the destination address and origin address will be the same.
      *             In the case of a shipped transaction, they will be different.
      */
     public $destinationAddressId;
 
     /**
-     * @var Int32? The unique ID number of the origin address where this line was delivered or sold.
+     * @var Int64? The unique ID number of the origin address where this line was delivered or sold.
      *             In the case of a point-of-sale transaction, the origin address and destination address will be the same.
      *             In the case of a shipped transaction, they will be different.
      */

@@ -12,22 +12,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of this tax detail.
         /// </summary>
-        public Int32? id { get; set; }
+        public Int64? id { get; set; }
 
         /// <summary>
         /// The unique ID number of the line within this transaction.
         /// </summary>
-        public Int32? transactionLineId { get; set; }
+        public Int64? transactionLineId { get; set; }
 
         /// <summary>
         /// The unique ID number of this transaction.
         /// </summary>
-        public Int32? transactionId { get; set; }
+        public Int64? transactionId { get; set; }
 
         /// <summary>
         /// The unique ID number of the address used for this tax detail.
         /// </summary>
-        public Int32? addressId { get; set; }
+        public Int64? addressId { get; set; }
 
         /// <summary>
         /// The two character ISO 3166 country code of the country where this tax detail is assigned.

@@ -12,12 +12,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of this transaction line item.
         /// </summary>
-        public Int32? id { get; set; }
+        public Int64? id { get; set; }
 
         /// <summary>
         /// The unique ID number of the transaction to which this line item belongs.
         /// </summary>
-        public Int32? transactionId { get; set; }
+        public Int64? transactionId { get; set; }
 
         /// <summary>
         /// The line number or code indicating the line on this invoice or receipt or document.
@@ -44,14 +44,14 @@ namespace Avalara.AvaTax.RestClient
         ///             In the case of a point-of-sale transaction, the destination address and origin address will be the same.
         ///             In the case of a shipped transaction, they will be different.
         /// </summary>
-        public Int32? destinationAddressId { get; set; }
+        public Int64? destinationAddressId { get; set; }
 
         /// <summary>
         /// The unique ID number of the origin address where this line was delivered or sold.
         ///             In the case of a point-of-sale transaction, the origin address and destination address will be the same.
         ///             In the case of a shipped transaction, they will be different.
         /// </summary>
-        public Int32? originAddressId { get; set; }
+        public Int64? originAddressId { get; set; }
 
         /// <summary>
         /// The amount of discount that was applied to this line item.  This represents the difference between list price and sale price of the item.

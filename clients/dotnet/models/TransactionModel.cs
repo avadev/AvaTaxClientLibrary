@@ -12,7 +12,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of this transaction.
         /// </summary>
-        public Int32? id { get; set; }
+        public Int64? id { get; set; }
 
         /// <summary>
         /// A unique customer-provided code identifying this transaction.
@@ -185,12 +185,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of the origin address for this transaction.
         /// </summary>
-        public Int32? originAddressId { get; set; }
+        public Int64? originAddressId { get; set; }
 
         /// <summary>
         /// The unique ID number of the destination address for this transaction.
         /// </summary>
-        public Int32? destinationAddressId { get; set; }
+        public Int64? destinationAddressId { get; set; }
 
         /// <summary>
         /// If this transaction included foreign currency exchange, this is the date as of which the exchange rate was calculated.

@@ -61,7 +61,7 @@ final class TaxCodeModel
     public $isPhysical;
 
     /**
-     * @var Int32? The Avalara Goods and Service Code represented by this tax code.
+     * @var Int64? The Avalara Goods and Service Code represented by this tax code.
      */
     public $goodsServiceCode;
 
