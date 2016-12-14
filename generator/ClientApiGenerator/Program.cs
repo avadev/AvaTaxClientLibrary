@@ -280,7 +280,11 @@ Arguments:
             StringBuilder typename = new StringBuilder();
             bool isValueType = false;
             if (type == "integer") {
-                typename.Append("Int32");
+                if (format == "int64") {
+                    typename.Append("Int64");
+                } else {
+                    typename.Append("Int32");
+                }
                 isValueType = true;
             } else if (type == "number") {
                 typename.Append("Decimal");

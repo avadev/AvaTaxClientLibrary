@@ -48,7 +48,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The Avalara Goods and Service Code represented by this tax code.
         /// </summary>
-        public Int32? goodsServiceCode { get; set; }
+        public Int64? goodsServiceCode { get; set; }
 
         /// <summary>
         /// The Avalara Entity Use Code represented by this tax code.

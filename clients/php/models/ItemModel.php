@@ -25,7 +25,7 @@ namespace Avalara;
 final class ItemModel
 {
     /**
-     * @var Int32 The unique ID number of this item.
+     * @var Int64 The unique ID number of this item.
      */
     public $id;
 

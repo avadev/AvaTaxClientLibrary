@@ -1400,7 +1400,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="id">The unique ID number of the transaction to retrieve</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        public TransactionModel GetTransactionById(Int32 id, String include)
+        public TransactionModel GetTransactionById(Int64 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/transactions/{id}");
             path.ApplyField("id", id);
@@ -2873,7 +2873,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="id">The unique ID number of the transaction to retrieve</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        public async Task<TransactionModel> GetTransactionByIdAsync(Int32 id, String include)
+        public async Task<TransactionModel> GetTransactionByIdAsync(Int64 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/transactions/{id}");
             path.ApplyField("id", id);

@@ -12,12 +12,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of this address.
         /// </summary>
-        public Int32? id { get; set; }
+        public Int64? id { get; set; }
 
         /// <summary>
         /// The unique ID number of the document to which this address belongs.
         /// </summary>
-        public Int32? transactionId { get; set; }
+        public Int64? transactionId { get; set; }
 
         /// <summary>
         /// The boundary level at which this address was validated.

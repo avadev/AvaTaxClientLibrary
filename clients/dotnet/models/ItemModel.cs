@@ -12,7 +12,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of this item.
         /// </summary>
-        public Int32 id { get; set; }
+        public Int64 id { get; set; }
 
         /// <summary>
         /// The unique ID number of the company that owns this item.
