@@ -83,7 +83,7 @@ Arguments:
                             {
                                 Comment = parameter.description ?? "",
                                 ParamName = parameter.name,
-                                TypeName = ResolveType(parameter, parameter.schema)
+                                TypeName = ResolveType(parameter)
                             });
 
                             // URL Path parameters
@@ -92,7 +92,7 @@ Arguments:
                             {
                                 Comment = parameter.description ?? "",
                                 ParamName = parameter.name,
-                                TypeName = ResolveType(parameter, parameter.schema)
+                                TypeName = ResolveType(parameter)
                             });
 
                             // Body parameters
@@ -101,7 +101,7 @@ Arguments:
                             {
                                 Comment = parameter.description ?? "",
                                 ParamName = "model",
-                                TypeName = ResolveType(parameter, parameter.schema)
+                                TypeName = ResolveType(parameter)
                             };
                         }
 
@@ -117,10 +117,10 @@ Arguments:
                         if (ok.schema == null) {
                             api.TypeName = "String";
                         } else {
-                            api.TypeName = ResolveType(null, ok.schema);
+                            api.TypeName = ResolveType(ok.schema);
                         }
                     } else if (verb.Value.responses.TryGetValue("201", out ok)) {
-                        api.TypeName = ResolveType(null, ok.schema);
+                        api.TypeName = ResolveType(ok.schema);
                     }
 
                     // Done with this API
@@ -144,7 +144,7 @@ Arguments:
                     {
                         Comment = prop.Value.description,
                         ParamName = prop.Key,
-                        TypeName = ResolveType(prop.Value, null)
+                        TypeName = ResolveType(prop.Value)
                     });
 
                     // Is this property an enum?
@@ -196,124 +196,74 @@ Arguments:
             }
         }
 
-        private static string ResolveType(SwaggerProperty prop, SwaggerSchemaRef schema)
-        {
-            // First, is this a simple property?
-            string responsetype = null;
-            string basetype = null;
-            if (prop != null) {
-                var rawtype = ResolveValueType(prop.type, prop.format, prop.EnumDataType, prop.required);
-                if (rawtype != null) return rawtype;
-                if (schema == null) schema = prop.items;
-                if (schema == null) schema = prop.schema;
-
-                // See if we have a custom schema in the extended properties
-                if (schema == null && prop.schemaref != null) schema = new SwaggerSchemaRef()
-                {
-                     schemaName = prop.schemaref.Substring(prop.schemaref.LastIndexOf('/')+1),
-                     type = prop.type
-                };
-
-                // Is this an array?
-                if (prop.type == "array") {
-                    responsetype = prop.type;
-                }
-            }
-
-            // Okay, this is a complex object
-            if (schema != null) {
-
-                // Try to resolve it as a value type
-                var rawtype = ResolveValueType(schema.type, null, null, false);
-                if (rawtype != null) {
-                    return rawtype;
-                }
-
-                // Okay, it's not void
-                if (responsetype == null) responsetype = schema.type ?? "";
-                if (basetype == null) basetype = schema.schemaName;
-
-                // If this is recursion
-                if (responsetype == "array") {
-                    if (prop != null && prop.items != null) {
-                        basetype = ResolveType(null, prop.items);
-                    } else {
-                        basetype = ResolveType(null, schema.items);
-                    }
-                }
-
-                // If there's no base type, try resolving it as a value
-                if (basetype == null && prop != null) {
-                    basetype = ResolveValueType(schema.type, prop.format, prop.EnumDataType, prop.required);
-                } else if (basetype == null) {
-                    basetype = ResolveValueType(schema.type, null, null, false);
-                }
-
-                // Cleanup the type
-                if (basetype.IndexOf("/") > 0) {
-                    basetype = basetype.Substring(basetype.LastIndexOf('/') + 1);
-                }
-                if (basetype.StartsWith("FetchResult[")) {
-                    basetype = basetype.Replace("[", "<").Replace("]", ">");
-                }
-                if (basetype.Contains("Enumerable")) {
-                    Console.WriteLine("Something");
-                }
-                if (responsetype == "array") {
-                    basetype = "List<" + basetype + ">";
-                }
-                return basetype;
-            }
-
-            // No hope left - just describe it as an anonymous object
-            if (prop != null && prop.Extended != null && prop.Extended.Count != 0) {
-                if (prop.description == "Default addresses for all lines in this document" ||
-                    prop.description == "Specify any differences for addresses between this line and the rest of the document") {
-                    return "Dictionary<TransactionAddressType, AddressInfo>";
-                }
-            }
-            return "Dictionary<string, string>";
-        }
-
-        private static string ResolveValueType(string type, string format, string enumdatatype, bool required)
+        private static string ResolveType(SwaggerProperty prop)
         {
             StringBuilder typename = new StringBuilder();
             bool isValueType = false;
-            if (type == "integer") {
-                if (format == "int64") {
+
+            // Handle integers / int64s
+            if (prop.type == "integer") {
+                if (prop.format == "int64") {
                     typename.Append("Int64");
                 } else {
                     typename.Append("Int32");
                 }
                 isValueType = true;
-            } else if (type == "number") {
+
+                // Handle decimals
+            } else if (prop.type == "number") {
                 typename.Append("Decimal");
                 isValueType = true;
-            } else if (type == "boolean") {
+
+                // Handle boolean
+            } else if (prop.type == "boolean") {
                 typename.Append("Boolean");
                 isValueType = true;
-            } else if (format == "date-time" && type == "string") {
+
+                // Handle date-times formatted as strings
+            } else if (prop.format == "date-time" && prop.type == "string") {
                 typename.Append("DateTime");
                 isValueType = true;
-            } else if (type == "string") {
-                if (enumdatatype == null) {
+
+                // Handle strings, and enums, which are represented as strings
+            } else if (prop.type == "string") {
+                if (prop.EnumDataType == null) {
                     return "String";
                 } else {
-                    typename.Append(enumdatatype);
+                    typename.Append(prop.EnumDataType);
                     isValueType = true;
                 }
+
+                // But, if this is an array, nest it
+            } else if (prop.type == "array") {
+                typename.Append("List<");
+                typename.Append(ResolveType(prop.items).Replace("?", ""));
+                typename.Append(">");
+
+                // Is it a custom object?
+            } else if (prop.schemaref != null) {
+                typename.Append(prop.schemaref.Substring(prop.schemaref.LastIndexOf("/") + 1));
+
+                // Custom hack for objects that aren't represented correctly in swagger at the moment - still have to fix this in REST v2
+            } else if (prop.description == "Default addresses for all lines in this document") {
+                typename.Append("Dictionary<TransactionAddressType, AddressInfo>");
+
+                // Custom hack for objects that aren't represented correctly in swagger at the moment - still have to fix this in REST v2
+            } else if (prop.description == "Specify any differences for addresses between this line and the rest of the document") {
+                typename.Append("Dictionary<TransactionAddressType, AddressInfo>");
+
+            // All else is just a generic object
+            } else {
+                typename.Append("Dictionary<string, string>");
             }
 
-            // Is this a basic value type?
-            if (isValueType) {
-                if (!required) {
-                    typename.Append("?");
-                }
-                return typename.ToString();
+            // Is this a basic value type that's not required?  Make it nullable
+            if (isValueType && !prop.required) {
+                typename.Append("?");
             }
 
-            // No help here
-            return null;
+            // Here's your type name
+            return typename.ToString();
         }
         #endregion
     }

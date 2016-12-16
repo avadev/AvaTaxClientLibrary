@@ -27,12 +27,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A list of tax codes to include in this point-of-sale file. If no tax codes are specified, response will include all distinct tax codes associated with the Items within your company.
         /// </summary>
-        public String taxCodes { get; set; }
+        public List<String> taxCodes { get; set; }
 
         /// <summary>
         /// A list of location codes to include in this point-of-sale file. If no location codes are specified, response will include all locations within your company.
         /// </summary>
-        public String locationCodes { get; set; }
+        public List<String> locationCodes { get; set; }
 
         /// <summary>
         /// Set this value to true to include Juris Code in the response.

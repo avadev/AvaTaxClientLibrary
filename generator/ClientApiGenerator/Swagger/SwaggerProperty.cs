@@ -18,8 +18,8 @@ namespace ClientApiGenerator.Swagger
         public bool readOnly { get; set; }
         public object example { get; set; }
 
-        public SwaggerSchemaRef schema { get; set; }
-        public SwaggerSchemaRef items { get; set; }
+        public SwaggerProperty schema { get; set; }
+        public SwaggerProperty items { get; set; }
 
         [JsonProperty("$ref")]
         public string schemaref { get; set; }

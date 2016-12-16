@@ -10,7 +10,7 @@ namespace ClientApiGenerator.Swagger
     public class SwaggerResult
     {
         public string description { get; set; }
-        public SwaggerSchemaRef schema { get; set; }
+        public SwaggerProperty schema { get; set; }
 
         [JsonExtensionData]
         public IDictionary<string, object> Extended { get; set; }
