@@ -72,7 +72,6 @@
     <Compile Include="Swagger\SwaggerModel.cs" />
     <Compile Include="Swagger\SwaggerProperty.cs" />
     <Compile Include="Swagger\SwaggerResult.cs" />
-    <Compile Include="Swagger\SwaggerSchemaRef.cs" />
     <Compile Include="TemplateBase.cs" />
   </ItemGroup>
   <ItemGroup>

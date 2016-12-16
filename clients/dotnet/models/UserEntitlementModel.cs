@@ -12,7 +12,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// List of API names and categories that this user is permitted to access
         /// </summary>
-        public String permissions { get; set; }
+        public List<String> permissions { get; set; }
 
         /// <summary>
         /// What access privileges does the current user have to see companies?
@@ -22,7 +22,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The identities of all companies this user is permitted to access
         /// </summary>
-        public Int32? companies { get; set; }
+        public List<Int32> companies { get; set; }
 
 
         /// <summary>
