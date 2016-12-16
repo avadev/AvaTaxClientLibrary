@@ -105,7 +105,7 @@ namespace ConsoleTest
                 Console.WriteLine(ex.error.ToString());
             } catch (InvalidOperationException ex)
             {
-                Console.WriteLine($"Incorrect method sequence. {ex.Message}");
+                Console.WriteLine($"Incorrect method sequence.\n{ex.Message}");
             }
             // Finished
             Console.WriteLine("Done");
