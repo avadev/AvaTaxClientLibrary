@@ -6,6 +6,7 @@ This repository contains the open source implementation of a standard client lib
 Online swagger documentation is always available at https://sandbox-rest.avatax.com/swagger/ui/index.html .
 
 # Current Status
+
 <table>
     <tr>
         <th>Client</th>
@@ -38,3 +39,4 @@ Online swagger documentation is always available at https://sandbox-rest.avatax.
         <td></td>
     </tr>
 </table>
+

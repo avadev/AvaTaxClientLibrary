@@ -25,12 +25,12 @@ namespace Avalara;
 final class TransactionAddressModel
 {
     /**
-     * @var Int32? The unique ID number of this address.
+     * @var Int64? The unique ID number of this address.
      */
     public $id;
 
     /**
-     * @var Int32? The unique ID number of the document to which this address belongs.
+     * @var Int64? The unique ID number of the document to which this address belongs.
      */
     public $transactionId;
 

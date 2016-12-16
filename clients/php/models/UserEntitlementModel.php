@@ -25,7 +25,7 @@ namespace Avalara;
 final class UserEntitlementModel
 {
     /**
-     * @var String List of API names and categories that this user is permitted to access
+     * @var List<String> List of API names and categories that this user is permitted to access
      */
     public $permissions;
 
@@ -35,7 +35,7 @@ final class UserEntitlementModel
     public $accessLevel;
 
     /**
-     * @var Int32? The identities of all companies this user is permitted to access
+     * @var List<Int32> The identities of all companies this user is permitted to access
      */
     public $companies;
 

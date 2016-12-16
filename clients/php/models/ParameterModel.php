@@ -25,7 +25,7 @@ namespace Avalara;
 final class ParameterModel
 {
     /**
-     * @var Int32? The unique ID number of this property.
+     * @var Int64? The unique ID number of this property.
      */
     public $id;
 

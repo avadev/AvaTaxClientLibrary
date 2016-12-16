@@ -40,12 +40,12 @@ final class PointOfSaleDataRequestModel
     public $responseType;
 
     /**
-     * @var String A list of tax codes to include in this point-of-sale file. If no tax codes are specified, response will include all distinct tax codes associated with the Items within your company.
+     * @var List<String> A list of tax codes to include in this point-of-sale file. If no tax codes are specified, response will include all distinct tax codes associated with the Items within your company.
      */
     public $taxCodes;
 
     /**
-     * @var String A list of location codes to include in this point-of-sale file. If no location codes are specified, response will include all locations within your company.
+     * @var List<String> A list of location codes to include in this point-of-sale file. If no location codes are specified, response will include all locations within your company.
      */
     public $locationCodes;
 

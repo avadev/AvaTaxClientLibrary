@@ -25,7 +25,7 @@ namespace Avalara;
 final class TransactionModel
 {
     /**
-     * @var Int32? The unique ID number of this transaction.
+     * @var Int64? The unique ID number of this transaction.
      */
     public $id;
 
@@ -198,12 +198,12 @@ final class TransactionModel
     public $softwareVersion;
 
     /**
-     * @var Int32? The unique ID number of the origin address for this transaction.
+     * @var Int64? The unique ID number of the origin address for this transaction.
      */
     public $originAddressId;
 
     /**
-     * @var Int32? The unique ID number of the destination address for this transaction.
+     * @var Int64? The unique ID number of the destination address for this transaction.
      */
     public $destinationAddressId;
 

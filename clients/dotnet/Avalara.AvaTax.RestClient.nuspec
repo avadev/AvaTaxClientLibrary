@@ -2,9 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Avalara.AvaTax</id>
-        <version>2.16.12.3</version>
-        <title>AvaTaxClient</title>
-        <description>Client library for Avalara's AvaTax suite of business tax calculation and processing services.</description>
+        <version>2.16.12.32</version>
+        <title>Avalara AvaTax Rest Client</title>
+        <description>Client library for Avalara's AvaTax suite of business tax calculation and processing services.  Uses the REST v2 API.</description>
         <authors>Ted Spence, Zhenya Frolov</authors>
         <language>en-US</language>
         <projectUrl>https://developer.avalara.com</projectUrl>

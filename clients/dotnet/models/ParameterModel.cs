@@ -12,7 +12,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of this property.
         /// </summary>
-        public Int32? id { get; set; }
+        public Int64? id { get; set; }
 
         /// <summary>
         /// The service category of this property.  Some properties may require that you subscribe to certain features of avatax before they can be used.
