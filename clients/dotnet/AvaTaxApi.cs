@@ -22,7 +22,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[SubscriptionModel] ListSubscriptionsByAccount(Int32 accountId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<SubscriptionModel> ListSubscriptionsByAccount(Int32 accountId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
             path.ApplyField("accountId", accountId);
@@ -30,7 +30,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[SubscriptionModel]>("get", path, null);
+            return RestCall<FetchResult<SubscriptionModel>>("get", path, null);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[UserModel] ListUsersByAccount(Int32 accountId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<UserModel> ListUsersByAccount(Int32 accountId, String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
             path.ApplyField("accountId", accountId);
@@ -64,7 +64,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[UserModel]>("get", path, null);
+            return RestCall<FetchResult<UserModel>>("get", path, null);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The ID of the user you wish to update.</param>
         /// <param name="accountId">The accountID of the user you wish to update.</param>
         /// <param name="model">The user object you wish to update.</param>
-        public UserModel UpdateUser(Int32 id, Int32 accountId, Dictionary<string, string> model)
+        public UserModel UpdateUser(Int32 id, Int32 accountId, UserModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
@@ -127,7 +127,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="id">The ID of the account you wish to update.</param>
         /// <param name="model">A request confirming that you wish to reset the license key of this account.</param>
-        public LicenseKeyModel AccountResetLicenseKey(Int32 id, Dictionary<string, string> model)
+        public LicenseKeyModel AccountResetLicenseKey(Int32 id, ResetLicenseKeyModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
@@ -138,7 +138,7 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve geolocation information for a specified address
         /// </summary>
         /// <param name="model">The address to resolve</param>
-        public AddressResolutionModel ResolveAddress(Dictionary<string, string> model)
+        public AddressResolutionModel ResolveAddress(AddressInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             return RestCall<AddressResolutionModel>("post", path, model);
@@ -151,14 +151,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[BatchModel] QueryBatches(String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<BatchModel> QueryBatches(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/batches");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[BatchModel]>("get", path, null);
+            return RestCall<FetchResult<BatchModel>>("get", path, null);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[CompanyModel] QueryCompanies(String include, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<CompanyModel> QueryCompanies(String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies");
             path.AddQuery("$include", include);
@@ -177,14 +177,14 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[CompanyModel]>("get", path, null);
+            return RestCall<FetchResult<CompanyModel>>("get", path, null);
         }
 
         /// <summary>
         /// Create new companies
         /// </summary>
         /// <param name="model">Either a single company object or an array of companies to create</param>
-        public List<CompanyModel> CreateCompanies(Dictionary<string, string> model)
+        public List<CompanyModel> CreateCompanies(List<CompanyModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies");
             return RestCall<List<CompanyModel>>("post", path, model);
@@ -199,7 +199,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[TransactionModel] ListTransactionsByCompany(String companyCode, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<TransactionModel> ListTransactionsByCompany(String companyCode, String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions");
             path.ApplyField("companyCode", companyCode);
@@ -208,7 +208,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[TransactionModel]>("get", path, null);
+            return RestCall<FetchResult<TransactionModel>>("get", path, null);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to adjust</param>
         /// <param name="model">The adjustment you wish to make</param>
-        public TransactionModel AdjustTransaction(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public TransactionModel AdjustTransaction(String companyCode, String transactionCode, AdjustTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/adjust");
             path.ApplyField("companyCode", companyCode);
@@ -246,7 +246,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to change</param>
         /// <param name="model">The code change request you wish to execute</param>
-        public TransactionModel ChangeTransactionCode(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public TransactionModel ChangeTransactionCode(String companyCode, String transactionCode, ChangeTransactionCodeModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/changecode");
             path.ApplyField("companyCode", companyCode);
@@ -260,7 +260,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to commit</param>
         /// <param name="model">The commit request you wish to execute</param>
-        public TransactionModel CommitTransaction(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public TransactionModel CommitTransaction(String companyCode, String transactionCode, CommitTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/commit");
             path.ApplyField("companyCode", companyCode);
@@ -274,7 +274,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
         /// <param name="model">The settle request containing the actions you wish to execute</param>
-        public TransactionModel SettleTransaction(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public TransactionModel SettleTransaction(String companyCode, String transactionCode, SettleTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/settle");
             path.ApplyField("companyCode", companyCode);
@@ -288,7 +288,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
         /// <param name="model">The settle request you wish to execute</param>
-        public TransactionModel VerifyTransaction(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public TransactionModel VerifyTransaction(String companyCode, String transactionCode, VerifyTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/verify");
             path.ApplyField("companyCode", companyCode);
@@ -302,7 +302,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to void</param>
         /// <param name="model">The void request you wish to execute</param>
-        public TransactionModel VoidTransaction(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public TransactionModel VoidTransaction(String companyCode, String transactionCode, VoidTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/void");
             path.ApplyField("companyCode", companyCode);
@@ -318,7 +318,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[BatchModel] ListBatchesByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<BatchModel> ListBatchesByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
@@ -326,7 +326,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[BatchModel]>("get", path, null);
+            return RestCall<FetchResult<BatchModel>>("get", path, null);
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this batch.</param>
         /// <param name="model">The batch you wish to create.</param>
-        public List<BatchModel> CreateBatches(Int32 companyId, Dictionary<string, string> model)
+        public List<BatchModel> CreateBatches(Int32 companyId, List<BatchModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
@@ -360,7 +360,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this batch belongs to.</param>
         /// <param name="id">The ID of the batch you wish to update</param>
         /// <param name="model">The batch you wish to update.</param>
-        public BatchModel UpdateBatch(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public BatchModel UpdateBatch(Int32 companyId, Int32 id, BatchModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
@@ -389,7 +389,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[ContactModel] ListContactsByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<ContactModel> ListContactsByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
@@ -397,7 +397,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[ContactModel]>("get", path, null);
+            return RestCall<FetchResult<ContactModel>>("get", path, null);
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this contact.</param>
         /// <param name="model">The contacts you wish to create.</param>
-        public List<ContactModel> CreateContacts(Int32 companyId, Dictionary<string, string> model)
+        public List<ContactModel> CreateContacts(Int32 companyId, List<ContactModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
@@ -431,7 +431,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this contact belongs to.</param>
         /// <param name="id">The ID of the contact you wish to update</param>
         /// <param name="model">The contact you wish to update.</param>
-        public ContactModel UpdateContact(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public ContactModel UpdateContact(Int32 companyId, Int32 id, ContactModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
@@ -460,7 +460,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[ItemModel] ListItemsByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<ItemModel> ListItemsByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
@@ -468,7 +468,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[ItemModel]>("get", path, null);
+            return RestCall<FetchResult<ItemModel>>("get", path, null);
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="model">The item you wish to create.</param>
-        public List<ItemModel> CreateItems(Int32 companyId, Dictionary<string, string> model)
+        public List<ItemModel> CreateItems(Int32 companyId, List<ItemModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
@@ -502,7 +502,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
         /// <param name="id">The ID of the item you wish to update</param>
         /// <param name="model">The item object you wish to update.</param>
-        public ItemModel UpdateItem(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public ItemModel UpdateItem(Int32 companyId, Int32 id, ItemModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
@@ -531,7 +531,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[LocationModel] ListLocationsByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<LocationModel> ListLocationsByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
@@ -539,7 +539,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[LocationModel]>("get", path, null);
+            return RestCall<FetchResult<LocationModel>>("get", path, null);
         }
 
         /// <summary>
@@ -547,7 +547,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this location.</param>
         /// <param name="model">The location you wish to create.</param>
-        public List<LocationModel> CreateLocations(Int32 companyId, Dictionary<string, string> model)
+        public List<LocationModel> CreateLocations(Int32 companyId, List<LocationModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
@@ -573,7 +573,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this location belongs to.</param>
         /// <param name="id">The ID of the location you wish to update</param>
         /// <param name="model">The location you wish to update.</param>
-        public LocationModel UpdateLocation(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public LocationModel UpdateLocation(Int32 companyId, Int32 id, LocationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
@@ -636,7 +636,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[NexusModel] ListNexusByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<NexusModel> ListNexusByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
@@ -644,7 +644,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[NexusModel]>("get", path, null);
+            return RestCall<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
@@ -652,7 +652,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="model">The nexus you wish to create.</param>
-        public List<NexusModel> CreateNexus(Int32 companyId, Dictionary<string, string> model)
+        public List<NexusModel> CreateNexus(Int32 companyId, List<NexusModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
@@ -678,7 +678,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this nexus belongs to.</param>
         /// <param name="id">The ID of the nexus you wish to update</param>
         /// <param name="model">The nexus object you wish to update.</param>
-        public NexusModel UpdateNexus(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public NexusModel UpdateNexus(Int32 companyId, Int32 id, NexusModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
@@ -707,7 +707,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[SettingModel] ListSettingsByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<SettingModel> ListSettingsByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
@@ -715,7 +715,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[SettingModel]>("get", path, null);
+            return RestCall<FetchResult<SettingModel>>("get", path, null);
         }
 
         /// <summary>
@@ -723,7 +723,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this setting.</param>
         /// <param name="model">The setting you wish to create.</param>
-        public List<SettingModel> CreateSettings(Int32 companyId, Dictionary<string, string> model)
+        public List<SettingModel> CreateSettings(Int32 companyId, List<SettingModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
@@ -749,7 +749,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this setting belongs to.</param>
         /// <param name="id">The ID of the setting you wish to update</param>
         /// <param name="model">The setting you wish to update.</param>
-        public SettingModel UpdateSetting(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public SettingModel UpdateSetting(Int32 companyId, Int32 id, SettingModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
@@ -778,7 +778,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[TaxCodeModel] ListTaxCodesByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<TaxCodeModel> ListTaxCodesByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
@@ -786,7 +786,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[TaxCodeModel]>("get", path, null);
+            return RestCall<FetchResult<TaxCodeModel>>("get", path, null);
         }
 
         /// <summary>
@@ -794,7 +794,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this tax code.</param>
         /// <param name="model">The tax code you wish to create.</param>
-        public List<TaxCodeModel> CreateTaxCodes(Int32 companyId, Dictionary<string, string> model)
+        public List<TaxCodeModel> CreateTaxCodes(Int32 companyId, List<TaxCodeModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
@@ -820,7 +820,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this tax code belongs to.</param>
         /// <param name="id">The ID of the tax code you wish to update</param>
         /// <param name="model">The tax code you wish to update.</param>
-        public TaxCodeModel UpdateTaxCode(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public TaxCodeModel UpdateTaxCode(Int32 companyId, Int32 id, TaxCodeModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
@@ -849,7 +849,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[TaxRuleModel] ListTaxRules(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<TaxRuleModel> ListTaxRules(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
@@ -857,7 +857,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[TaxRuleModel]>("get", path, null);
+            return RestCall<FetchResult<TaxRuleModel>>("get", path, null);
         }
 
         /// <summary>
@@ -865,7 +865,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this tax rule.</param>
         /// <param name="model">The tax rule you wish to create.</param>
-        public List<TaxRuleModel> CreateTaxRules(Int32 companyId, Dictionary<string, string> model)
+        public List<TaxRuleModel> CreateTaxRules(Int32 companyId, List<TaxRuleModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
@@ -891,7 +891,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this tax rule belongs to.</param>
         /// <param name="id">The ID of the tax rule you wish to update</param>
         /// <param name="model">The tax rule you wish to update.</param>
-        public TaxRuleModel UpdateTaxRule(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public TaxRuleModel UpdateTaxRule(Int32 companyId, Int32 id, TaxRuleModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
@@ -920,7 +920,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[UPCModel] ListUPCsByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<UPCModel> ListUPCsByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
@@ -928,7 +928,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[UPCModel]>("get", path, null);
+            return RestCall<FetchResult<UPCModel>>("get", path, null);
         }
 
         /// <summary>
@@ -936,7 +936,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this UPC.</param>
         /// <param name="model">The UPC you wish to create.</param>
-        public List<UPCModel> CreateUPCs(Int32 companyId, Dictionary<string, string> model)
+        public List<UPCModel> CreateUPCs(Int32 companyId, List<UPCModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
@@ -962,7 +962,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this UPC belongs to.</param>
         /// <param name="id">The ID of the UPC you wish to update</param>
         /// <param name="model">The UPC you wish to update.</param>
-        public UPCModel UpdateUPC(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public UPCModel UpdateUPC(Int32 companyId, Int32 id, UPCModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
@@ -1001,7 +1001,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="id">The ID of the company you wish to update.</param>
         /// <param name="model">The company object you wish to update.</param>
-        public CompanyModel UpdateCompany(Int32 id, Dictionary<string, string> model)
+        public CompanyModel UpdateCompany(Int32 id, CompanyModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
@@ -1023,7 +1023,7 @@ namespace Avalara.AvaTax.RestClient
         /// Quick setup for a company with a single physical address
         /// </summary>
         /// <param name="model">Information about the company you wish to create.</param>
-        public CompanyModel CompanyInitialize(Dictionary<string, string> model)
+        public CompanyModel CompanyInitialize(CompanyInitializationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/initialize");
             return RestCall<CompanyModel>("post", path, model);
@@ -1036,34 +1036,34 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[ContactModel] QueryContacts(String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<ContactModel> QueryContacts(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/contacts");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[ContactModel]>("get", path, null);
+            return RestCall<FetchResult<ContactModel>>("get", path, null);
         }
 
         /// <summary>
         /// List all ISO 3166 countries
         /// </summary>
-        public FetchResult[IsoCountryModel] ListCountries()
+        public FetchResult<IsoCountryModel> ListCountries()
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries");
-            return RestCall<FetchResult[IsoCountryModel]>("get", path, null);
+            return RestCall<FetchResult<IsoCountryModel>>("get", path, null);
         }
 
         /// <summary>
         /// List all ISO 3166 regions for a country
         /// </summary>
         /// <param name="country"></param>
-        public FetchResult[IsoRegionModel] ListRegionsByCountry(String country)
+        public FetchResult<IsoRegionModel> ListRegionsByCountry(String country)
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries/{country}/regions");
             path.ApplyField("country", country);
-            return RestCall<FetchResult[IsoRegionModel]>("get", path, null);
+            return RestCall<FetchResult<IsoRegionModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1078,7 +1078,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The country part of this location's address.</param>
         /// <param name="latitude">Optionally identify the location via latitude/longitude instead of via address.</param>
         /// <param name="longitude">Optionally identify the location via latitude/longitude instead of via address.</param>
-        public FetchResult[LocationQuestionModel] ListLocationQuestionsByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude)
+        public FetchResult<LocationQuestionModel> ListLocationQuestionsByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude)
         {
             var path = new AvaTaxPath("/api/v2/definitions/locationquestions");
             path.AddQuery("line1", line1);
@@ -1090,27 +1090,27 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("country", country);
             path.AddQuery("latitude", latitude);
             path.AddQuery("longitude", longitude);
-            return RestCall<FetchResult[LocationQuestionModel]>("get", path, null);
+            return RestCall<FetchResult<LocationQuestionModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported nexus for all countries and regions.
         /// </summary>
-        public FetchResult[NexusModel] DefinitionsNexusGet()
+        public FetchResult<NexusModel> DefinitionsNexusGet()
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus");
-            return RestCall<FetchResult[NexusModel]>("get", path, null);
+            return RestCall<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported nexus for a country.
         /// </summary>
         /// <param name="country"></param>
-        public FetchResult[NexusModel] DefinitionsNexusByCountryGet(String country)
+        public FetchResult<NexusModel> DefinitionsNexusByCountryGet(String country)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}");
             path.ApplyField("country", country);
-            return RestCall<FetchResult[NexusModel]>("get", path, null);
+            return RestCall<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1118,12 +1118,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
-        public FetchResult[NexusModel] DefinitionsNexusByCountryByRegionGet(String country, String region)
+        public FetchResult<NexusModel> DefinitionsNexusByCountryByRegionGet(String country, String region)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}/{region}");
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return RestCall<FetchResult[NexusModel]>("get", path, null);
+            return RestCall<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1136,7 +1136,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="region">The region, state, or province code portion of this address.</param>
         /// <param name="postalCode">The postal code or zip code portion of this address.</param>
         /// <param name="country">The two-character ISO-3166 code of the country portion of this address.</param>
-        public FetchResult[NexusModel] ListNexusByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country)
+        public FetchResult<NexusModel> ListNexusByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/byaddress");
             path.AddQuery("line1", line1);
@@ -1146,79 +1146,79 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
-            return RestCall<FetchResult[NexusModel]>("get", path, null);
+            return RestCall<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported extra parameters for creating transactions.
         /// </summary>
-        public FetchResult[ParameterModel] ListParameters()
+        public FetchResult<ParameterModel> ListParameters()
         {
             var path = new AvaTaxPath("/api/v2/definitions/parameters");
-            return RestCall<FetchResult[ParameterModel]>("get", path, null);
+            return RestCall<FetchResult<ParameterModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported permissions
         /// </summary>
-        public FetchResult[String] ListPermissions()
+        public FetchResult<String> ListPermissions()
         {
             var path = new AvaTaxPath("/api/v2/definitions/permissions");
-            return RestCall<FetchResult[String]>("get", path, null);
+            return RestCall<FetchResult<String>>("get", path, null);
         }
 
         /// <summary>
         /// List all ISO 3166 regions
         /// </summary>
-        public FetchResult[IsoRegionModel] ListRegions()
+        public FetchResult<IsoRegionModel> ListRegions()
         {
             var path = new AvaTaxPath("/api/v2/definitions/regions");
-            return RestCall<FetchResult[IsoRegionModel]>("get", path, null);
+            return RestCall<FetchResult<IsoRegionModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported permissions
         /// </summary>
-        public FetchResult[SecurityRoleModel] ListSecurityRoles()
+        public FetchResult<SecurityRoleModel> ListSecurityRoles()
         {
             var path = new AvaTaxPath("/api/v2/definitions/securityroles");
-            return RestCall<FetchResult[SecurityRoleModel]>("get", path, null);
+            return RestCall<FetchResult<SecurityRoleModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported subscription types
         /// </summary>
-        public FetchResult[SubscriptionTypeModel] ListSubscriptionTypes()
+        public FetchResult<SubscriptionTypeModel> ListSubscriptionTypes()
         {
             var path = new AvaTaxPath("/api/v2/definitions/subscriptiontypes");
-            return RestCall<FetchResult[SubscriptionTypeModel]>("get", path, null);
+            return RestCall<FetchResult<SubscriptionTypeModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported tax authorities.
         /// </summary>
-        public FetchResult[TaxAuthorityModel] ListTaxAuthorities()
+        public FetchResult<TaxAuthorityModel> ListTaxAuthorities()
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxauthorities");
-            return RestCall<FetchResult[TaxAuthorityModel]>("get", path, null);
+            return RestCall<FetchResult<TaxAuthorityModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported forms for each tax authority.
         /// </summary>
-        public FetchResult[TaxAuthorityFormModel] ListTaxAuthorityForms()
+        public FetchResult<TaxAuthorityFormModel> ListTaxAuthorityForms()
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxauthorityforms");
-            return RestCall<FetchResult[TaxAuthorityFormModel]>("get", path, null);
+            return RestCall<FetchResult<TaxAuthorityFormModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported tax codes.
         /// </summary>
-        public FetchResult[TaxCodeModel] ListTaxCodes()
+        public FetchResult<TaxCodeModel> ListTaxCodes()
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxcodes");
-            return RestCall<FetchResult[TaxCodeModel]>("get", path, null);
+            return RestCall<FetchResult<TaxCodeModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1237,14 +1237,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[ItemModel] QueryItems(String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<ItemModel> QueryItems(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/items");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[ItemModel]>("get", path, null);
+            return RestCall<FetchResult<ItemModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1254,14 +1254,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[LocationModel] QueryLocations(String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<LocationModel> QueryLocations(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/locations");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[LocationModel]>("get", path, null);
+            return RestCall<FetchResult<LocationModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1271,21 +1271,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[NexusModel] QueryNexus(String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<NexusModel> QueryNexus(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/nexus");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[NexusModel]>("get", path, null);
+            return RestCall<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
         /// Point of sale data file generation
         /// </summary>
         /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
-        public String BuildPointOfSaleDataFile(Dictionary<string, string> model)
+        public String BuildPointOfSaleDataFile(PointOfSaleDataRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
             return RestCallString("post", path, model);
@@ -1298,14 +1298,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[SettingModel] QuerySettings(String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<SettingModel> QuerySettings(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/settings");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[SettingModel]>("get", path, null);
+            return RestCall<FetchResult<SettingModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1315,14 +1315,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[SubscriptionModel] QuerySubscriptions(String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<SubscriptionModel> QuerySubscriptions(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/subscriptions");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[SubscriptionModel]>("get", path, null);
+            return RestCall<FetchResult<SubscriptionModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1332,14 +1332,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[TaxCodeModel] QueryTaxCodes(String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<TaxCodeModel> QueryTaxCodes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/taxcodes");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[TaxCodeModel]>("get", path, null);
+            return RestCall<FetchResult<TaxCodeModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1385,14 +1385,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[TaxRuleModel] QueryTaxRules(String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<TaxRuleModel> QueryTaxRules(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/taxrules");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[TaxRuleModel]>("get", path, null);
+            return RestCall<FetchResult<TaxRuleModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1412,7 +1412,7 @@ namespace Avalara.AvaTax.RestClient
         /// Create a new transaction
         /// </summary>
         /// <param name="model">The transaction you wish to create</param>
-        public TransactionModel CreateTransaction(Dictionary<string, string> model)
+        public TransactionModel CreateTransaction(CreateTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
             return RestCall<TransactionModel>("post", path, model);
@@ -1425,14 +1425,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[UPCModel] QueryUPCs(String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<UPCModel> QueryUPCs(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/upcs");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[UPCModel]>("get", path, null);
+            return RestCall<FetchResult<UPCModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1443,7 +1443,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public FetchResult[UserModel] QueryUsers(String include, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<UserModel> QueryUsers(String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/users");
             path.AddQuery("$include", include);
@@ -1451,7 +1451,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult[UserModel]>("get", path, null);
+            return RestCall<FetchResult<UserModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1495,7 +1495,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[SubscriptionModel]> ListSubscriptionsByAccountAsync(Int32 accountId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<SubscriptionModel>> ListSubscriptionsByAccountAsync(Int32 accountId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
             path.ApplyField("accountId", accountId);
@@ -1503,7 +1503,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[SubscriptionModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<SubscriptionModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1528,7 +1528,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[UserModel]> ListUsersByAccountAsync(Int32 accountId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<UserModel>> ListUsersByAccountAsync(Int32 accountId, String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
             path.ApplyField("accountId", accountId);
@@ -1537,7 +1537,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[UserModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<UserModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1561,7 +1561,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The ID of the user you wish to update.</param>
         /// <param name="accountId">The accountID of the user you wish to update.</param>
         /// <param name="model">The user object you wish to update.</param>
-        public async Task<UserModel> UpdateUserAsync(Int32 id, Int32 accountId, Dictionary<string, string> model)
+        public async Task<UserModel> UpdateUserAsync(Int32 id, Int32 accountId, UserModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
@@ -1600,7 +1600,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="id">The ID of the account you wish to update.</param>
         /// <param name="model">A request confirming that you wish to reset the license key of this account.</param>
-        public async Task<LicenseKeyModel> AccountResetLicenseKeyAsync(Int32 id, Dictionary<string, string> model)
+        public async Task<LicenseKeyModel> AccountResetLicenseKeyAsync(Int32 id, ResetLicenseKeyModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
@@ -1611,7 +1611,7 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve geolocation information for a specified address
         /// </summary>
         /// <param name="model">The address to resolve</param>
-        public async Task<AddressResolutionModel> ResolveAddressAsync(Dictionary<string, string> model)
+        public async Task<AddressResolutionModel> ResolveAddressAsync(AddressInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             return await RestCallAsync<AddressResolutionModel>("post", path, model);
@@ -1624,14 +1624,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[BatchModel]> QueryBatchesAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<BatchModel>> QueryBatchesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/batches");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[BatchModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<BatchModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1642,7 +1642,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[CompanyModel]> QueryCompaniesAsync(String include, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<CompanyModel>> QueryCompaniesAsync(String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies");
             path.AddQuery("$include", include);
@@ -1650,14 +1650,14 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[CompanyModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<CompanyModel>>("get", path, null);
         }
 
         /// <summary>
         /// Create new companies
         /// </summary>
         /// <param name="model">Either a single company object or an array of companies to create</param>
-        public async Task<List<CompanyModel>> CreateCompaniesAsync(Dictionary<string, string> model)
+        public async Task<List<CompanyModel>> CreateCompaniesAsync(List<CompanyModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies");
             return await RestCallAsync<List<CompanyModel>>("post", path, model);
@@ -1672,7 +1672,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[TransactionModel]> ListTransactionsByCompanyAsync(String companyCode, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<TransactionModel>> ListTransactionsByCompanyAsync(String companyCode, String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions");
             path.ApplyField("companyCode", companyCode);
@@ -1681,7 +1681,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[TransactionModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<TransactionModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1705,7 +1705,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to adjust</param>
         /// <param name="model">The adjustment you wish to make</param>
-        public async Task<TransactionModel> AdjustTransactionAsync(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public async Task<TransactionModel> AdjustTransactionAsync(String companyCode, String transactionCode, AdjustTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/adjust");
             path.ApplyField("companyCode", companyCode);
@@ -1719,7 +1719,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to change</param>
         /// <param name="model">The code change request you wish to execute</param>
-        public async Task<TransactionModel> ChangeTransactionCodeAsync(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public async Task<TransactionModel> ChangeTransactionCodeAsync(String companyCode, String transactionCode, ChangeTransactionCodeModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/changecode");
             path.ApplyField("companyCode", companyCode);
@@ -1733,7 +1733,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to commit</param>
         /// <param name="model">The commit request you wish to execute</param>
-        public async Task<TransactionModel> CommitTransactionAsync(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public async Task<TransactionModel> CommitTransactionAsync(String companyCode, String transactionCode, CommitTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/commit");
             path.ApplyField("companyCode", companyCode);
@@ -1747,7 +1747,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
         /// <param name="model">The settle request containing the actions you wish to execute</param>
-        public async Task<TransactionModel> SettleTransactionAsync(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public async Task<TransactionModel> SettleTransactionAsync(String companyCode, String transactionCode, SettleTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/settle");
             path.ApplyField("companyCode", companyCode);
@@ -1761,7 +1761,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
         /// <param name="model">The settle request you wish to execute</param>
-        public async Task<TransactionModel> VerifyTransactionAsync(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public async Task<TransactionModel> VerifyTransactionAsync(String companyCode, String transactionCode, VerifyTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/verify");
             path.ApplyField("companyCode", companyCode);
@@ -1775,7 +1775,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to void</param>
         /// <param name="model">The void request you wish to execute</param>
-        public async Task<TransactionModel> VoidTransactionAsync(String companyCode, String transactionCode, Dictionary<string, string> model)
+        public async Task<TransactionModel> VoidTransactionAsync(String companyCode, String transactionCode, VoidTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/void");
             path.ApplyField("companyCode", companyCode);
@@ -1791,7 +1791,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[BatchModel]> ListBatchesByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<BatchModel>> ListBatchesByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
@@ -1799,7 +1799,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[BatchModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<BatchModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1807,7 +1807,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this batch.</param>
         /// <param name="model">The batch you wish to create.</param>
-        public async Task<List<BatchModel>> CreateBatchesAsync(Int32 companyId, Dictionary<string, string> model)
+        public async Task<List<BatchModel>> CreateBatchesAsync(Int32 companyId, List<BatchModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
@@ -1833,7 +1833,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this batch belongs to.</param>
         /// <param name="id">The ID of the batch you wish to update</param>
         /// <param name="model">The batch you wish to update.</param>
-        public async Task<BatchModel> UpdateBatchAsync(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public async Task<BatchModel> UpdateBatchAsync(Int32 companyId, Int32 id, BatchModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
@@ -1862,7 +1862,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[ContactModel]> ListContactsByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<ContactModel>> ListContactsByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
@@ -1870,7 +1870,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[ContactModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<ContactModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1878,7 +1878,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this contact.</param>
         /// <param name="model">The contacts you wish to create.</param>
-        public async Task<List<ContactModel>> CreateContactsAsync(Int32 companyId, Dictionary<string, string> model)
+        public async Task<List<ContactModel>> CreateContactsAsync(Int32 companyId, List<ContactModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
@@ -1904,7 +1904,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this contact belongs to.</param>
         /// <param name="id">The ID of the contact you wish to update</param>
         /// <param name="model">The contact you wish to update.</param>
-        public async Task<ContactModel> UpdateContactAsync(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public async Task<ContactModel> UpdateContactAsync(Int32 companyId, Int32 id, ContactModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
@@ -1933,7 +1933,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[ItemModel]> ListItemsByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<ItemModel>> ListItemsByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
@@ -1941,7 +1941,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[ItemModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<ItemModel>>("get", path, null);
         }
 
         /// <summary>
@@ -1949,7 +1949,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="model">The item you wish to create.</param>
-        public async Task<List<ItemModel>> CreateItemsAsync(Int32 companyId, Dictionary<string, string> model)
+        public async Task<List<ItemModel>> CreateItemsAsync(Int32 companyId, List<ItemModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
@@ -1975,7 +1975,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
         /// <param name="id">The ID of the item you wish to update</param>
         /// <param name="model">The item object you wish to update.</param>
-        public async Task<ItemModel> UpdateItemAsync(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public async Task<ItemModel> UpdateItemAsync(Int32 companyId, Int32 id, ItemModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
@@ -2004,7 +2004,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[LocationModel]> ListLocationsByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<LocationModel>> ListLocationsByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
@@ -2012,7 +2012,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[LocationModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<LocationModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2020,7 +2020,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this location.</param>
         /// <param name="model">The location you wish to create.</param>
-        public async Task<List<LocationModel>> CreateLocationsAsync(Int32 companyId, Dictionary<string, string> model)
+        public async Task<List<LocationModel>> CreateLocationsAsync(Int32 companyId, List<LocationModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
@@ -2046,7 +2046,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this location belongs to.</param>
         /// <param name="id">The ID of the location you wish to update</param>
         /// <param name="model">The location you wish to update.</param>
-        public async Task<LocationModel> UpdateLocationAsync(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public async Task<LocationModel> UpdateLocationAsync(Int32 companyId, Int32 id, LocationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
@@ -2109,7 +2109,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[NexusModel]> ListNexusByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<NexusModel>> ListNexusByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
@@ -2117,7 +2117,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[NexusModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2125,7 +2125,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="model">The nexus you wish to create.</param>
-        public async Task<List<NexusModel>> CreateNexusAsync(Int32 companyId, Dictionary<string, string> model)
+        public async Task<List<NexusModel>> CreateNexusAsync(Int32 companyId, List<NexusModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
@@ -2151,7 +2151,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this nexus belongs to.</param>
         /// <param name="id">The ID of the nexus you wish to update</param>
         /// <param name="model">The nexus object you wish to update.</param>
-        public async Task<NexusModel> UpdateNexusAsync(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public async Task<NexusModel> UpdateNexusAsync(Int32 companyId, Int32 id, NexusModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
@@ -2180,7 +2180,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[SettingModel]> ListSettingsByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<SettingModel>> ListSettingsByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
@@ -2188,7 +2188,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[SettingModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<SettingModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2196,7 +2196,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this setting.</param>
         /// <param name="model">The setting you wish to create.</param>
-        public async Task<List<SettingModel>> CreateSettingsAsync(Int32 companyId, Dictionary<string, string> model)
+        public async Task<List<SettingModel>> CreateSettingsAsync(Int32 companyId, List<SettingModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
@@ -2222,7 +2222,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this setting belongs to.</param>
         /// <param name="id">The ID of the setting you wish to update</param>
         /// <param name="model">The setting you wish to update.</param>
-        public async Task<SettingModel> UpdateSettingAsync(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public async Task<SettingModel> UpdateSettingAsync(Int32 companyId, Int32 id, SettingModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
@@ -2251,7 +2251,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[TaxCodeModel]> ListTaxCodesByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<TaxCodeModel>> ListTaxCodesByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
@@ -2259,7 +2259,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[TaxCodeModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<TaxCodeModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2267,7 +2267,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this tax code.</param>
         /// <param name="model">The tax code you wish to create.</param>
-        public async Task<List<TaxCodeModel>> CreateTaxCodesAsync(Int32 companyId, Dictionary<string, string> model)
+        public async Task<List<TaxCodeModel>> CreateTaxCodesAsync(Int32 companyId, List<TaxCodeModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
@@ -2293,7 +2293,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this tax code belongs to.</param>
         /// <param name="id">The ID of the tax code you wish to update</param>
         /// <param name="model">The tax code you wish to update.</param>
-        public async Task<TaxCodeModel> UpdateTaxCodeAsync(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public async Task<TaxCodeModel> UpdateTaxCodeAsync(Int32 companyId, Int32 id, TaxCodeModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
@@ -2322,7 +2322,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[TaxRuleModel]> ListTaxRulesAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<TaxRuleModel>> ListTaxRulesAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
@@ -2330,7 +2330,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[TaxRuleModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<TaxRuleModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2338,7 +2338,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this tax rule.</param>
         /// <param name="model">The tax rule you wish to create.</param>
-        public async Task<List<TaxRuleModel>> CreateTaxRulesAsync(Int32 companyId, Dictionary<string, string> model)
+        public async Task<List<TaxRuleModel>> CreateTaxRulesAsync(Int32 companyId, List<TaxRuleModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
@@ -2364,7 +2364,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this tax rule belongs to.</param>
         /// <param name="id">The ID of the tax rule you wish to update</param>
         /// <param name="model">The tax rule you wish to update.</param>
-        public async Task<TaxRuleModel> UpdateTaxRuleAsync(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public async Task<TaxRuleModel> UpdateTaxRuleAsync(Int32 companyId, Int32 id, TaxRuleModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
@@ -2393,7 +2393,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[UPCModel]> ListUPCsByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<UPCModel>> ListUPCsByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
@@ -2401,7 +2401,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[UPCModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<UPCModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2409,7 +2409,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="companyId">The ID of the company that owns this UPC.</param>
         /// <param name="model">The UPC you wish to create.</param>
-        public async Task<List<UPCModel>> CreateUPCsAsync(Int32 companyId, Dictionary<string, string> model)
+        public async Task<List<UPCModel>> CreateUPCsAsync(Int32 companyId, List<UPCModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
@@ -2435,7 +2435,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this UPC belongs to.</param>
         /// <param name="id">The ID of the UPC you wish to update</param>
         /// <param name="model">The UPC you wish to update.</param>
-        public async Task<UPCModel> UpdateUPCAsync(Int32 companyId, Int32 id, Dictionary<string, string> model)
+        public async Task<UPCModel> UpdateUPCAsync(Int32 companyId, Int32 id, UPCModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
@@ -2474,7 +2474,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="id">The ID of the company you wish to update.</param>
         /// <param name="model">The company object you wish to update.</param>
-        public async Task<CompanyModel> UpdateCompanyAsync(Int32 id, Dictionary<string, string> model)
+        public async Task<CompanyModel> UpdateCompanyAsync(Int32 id, CompanyModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
@@ -2496,7 +2496,7 @@ namespace Avalara.AvaTax.RestClient
         /// Quick setup for a company with a single physical address
         /// </summary>
         /// <param name="model">Information about the company you wish to create.</param>
-        public async Task<CompanyModel> CompanyInitializeAsync(Dictionary<string, string> model)
+        public async Task<CompanyModel> CompanyInitializeAsync(CompanyInitializationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/initialize");
             return await RestCallAsync<CompanyModel>("post", path, model);
@@ -2509,34 +2509,34 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[ContactModel]> QueryContactsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<ContactModel>> QueryContactsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/contacts");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[ContactModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<ContactModel>>("get", path, null);
         }
 
         /// <summary>
         /// List all ISO 3166 countries
         /// </summary>
-        public async Task<FetchResult[IsoCountryModel]> ListCountriesAsync()
+        public async Task<FetchResult<IsoCountryModel>> ListCountriesAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries");
-            return await RestCallAsync<FetchResult[IsoCountryModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<IsoCountryModel>>("get", path, null);
         }
 
         /// <summary>
         /// List all ISO 3166 regions for a country
         /// </summary>
         /// <param name="country"></param>
-        public async Task<FetchResult[IsoRegionModel]> ListRegionsByCountryAsync(String country)
+        public async Task<FetchResult<IsoRegionModel>> ListRegionsByCountryAsync(String country)
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries/{country}/regions");
             path.ApplyField("country", country);
-            return await RestCallAsync<FetchResult[IsoRegionModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<IsoRegionModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2551,7 +2551,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The country part of this location's address.</param>
         /// <param name="latitude">Optionally identify the location via latitude/longitude instead of via address.</param>
         /// <param name="longitude">Optionally identify the location via latitude/longitude instead of via address.</param>
-        public async Task<FetchResult[LocationQuestionModel]> ListLocationQuestionsByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude)
+        public async Task<FetchResult<LocationQuestionModel>> ListLocationQuestionsByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude)
         {
             var path = new AvaTaxPath("/api/v2/definitions/locationquestions");
             path.AddQuery("line1", line1);
@@ -2563,27 +2563,27 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("country", country);
             path.AddQuery("latitude", latitude);
             path.AddQuery("longitude", longitude);
-            return await RestCallAsync<FetchResult[LocationQuestionModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<LocationQuestionModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported nexus for all countries and regions.
         /// </summary>
-        public async Task<FetchResult[NexusModel]> DefinitionsNexusGetAsync()
+        public async Task<FetchResult<NexusModel>> DefinitionsNexusGetAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus");
-            return await RestCallAsync<FetchResult[NexusModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported nexus for a country.
         /// </summary>
         /// <param name="country"></param>
-        public async Task<FetchResult[NexusModel]> DefinitionsNexusByCountryGetAsync(String country)
+        public async Task<FetchResult<NexusModel>> DefinitionsNexusByCountryGetAsync(String country)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}");
             path.ApplyField("country", country);
-            return await RestCallAsync<FetchResult[NexusModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2591,12 +2591,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
-        public async Task<FetchResult[NexusModel]> DefinitionsNexusByCountryByRegionGetAsync(String country, String region)
+        public async Task<FetchResult<NexusModel>> DefinitionsNexusByCountryByRegionGetAsync(String country, String region)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}/{region}");
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return await RestCallAsync<FetchResult[NexusModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2609,7 +2609,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="region">The region, state, or province code portion of this address.</param>
         /// <param name="postalCode">The postal code or zip code portion of this address.</param>
         /// <param name="country">The two-character ISO-3166 code of the country portion of this address.</param>
-        public async Task<FetchResult[NexusModel]> ListNexusByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country)
+        public async Task<FetchResult<NexusModel>> ListNexusByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/byaddress");
             path.AddQuery("line1", line1);
@@ -2619,79 +2619,79 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
-            return await RestCallAsync<FetchResult[NexusModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported extra parameters for creating transactions.
         /// </summary>
-        public async Task<FetchResult[ParameterModel]> ListParametersAsync()
+        public async Task<FetchResult<ParameterModel>> ListParametersAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/parameters");
-            return await RestCallAsync<FetchResult[ParameterModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<ParameterModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported permissions
         /// </summary>
-        public async Task<FetchResult[String]> ListPermissionsAsync()
+        public async Task<FetchResult<String>> ListPermissionsAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/permissions");
-            return await RestCallAsync<FetchResult[String]>("get", path, null);
+            return await RestCallAsync<FetchResult<String>>("get", path, null);
         }
 
         /// <summary>
         /// List all ISO 3166 regions
         /// </summary>
-        public async Task<FetchResult[IsoRegionModel]> ListRegionsAsync()
+        public async Task<FetchResult<IsoRegionModel>> ListRegionsAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/regions");
-            return await RestCallAsync<FetchResult[IsoRegionModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<IsoRegionModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported permissions
         /// </summary>
-        public async Task<FetchResult[SecurityRoleModel]> ListSecurityRolesAsync()
+        public async Task<FetchResult<SecurityRoleModel>> ListSecurityRolesAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/securityroles");
-            return await RestCallAsync<FetchResult[SecurityRoleModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<SecurityRoleModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported subscription types
         /// </summary>
-        public async Task<FetchResult[SubscriptionTypeModel]> ListSubscriptionTypesAsync()
+        public async Task<FetchResult<SubscriptionTypeModel>> ListSubscriptionTypesAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/subscriptiontypes");
-            return await RestCallAsync<FetchResult[SubscriptionTypeModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<SubscriptionTypeModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported tax authorities.
         /// </summary>
-        public async Task<FetchResult[TaxAuthorityModel]> ListTaxAuthoritiesAsync()
+        public async Task<FetchResult<TaxAuthorityModel>> ListTaxAuthoritiesAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxauthorities");
-            return await RestCallAsync<FetchResult[TaxAuthorityModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<TaxAuthorityModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported forms for each tax authority.
         /// </summary>
-        public async Task<FetchResult[TaxAuthorityFormModel]> ListTaxAuthorityFormsAsync()
+        public async Task<FetchResult<TaxAuthorityFormModel>> ListTaxAuthorityFormsAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxauthorityforms");
-            return await RestCallAsync<FetchResult[TaxAuthorityFormModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<TaxAuthorityFormModel>>("get", path, null);
         }
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported tax codes.
         /// </summary>
-        public async Task<FetchResult[TaxCodeModel]> ListTaxCodesAsync()
+        public async Task<FetchResult<TaxCodeModel>> ListTaxCodesAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxcodes");
-            return await RestCallAsync<FetchResult[TaxCodeModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<TaxCodeModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2710,14 +2710,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[ItemModel]> QueryItemsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<ItemModel>> QueryItemsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/items");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[ItemModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<ItemModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2727,14 +2727,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[LocationModel]> QueryLocationsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<LocationModel>> QueryLocationsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/locations");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[LocationModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<LocationModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2744,21 +2744,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[NexusModel]> QueryNexusAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<NexusModel>> QueryNexusAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/nexus");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[NexusModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<NexusModel>>("get", path, null);
         }
 
         /// <summary>
         /// Point of sale data file generation
         /// </summary>
         /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
-        public async Task<String> BuildPointOfSaleDataFileAsync(Dictionary<string, string> model)
+        public async Task<String> BuildPointOfSaleDataFileAsync(PointOfSaleDataRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
             return await RestCallStringAsync("post", path, model);
@@ -2771,14 +2771,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[SettingModel]> QuerySettingsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<SettingModel>> QuerySettingsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/settings");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[SettingModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<SettingModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2788,14 +2788,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[SubscriptionModel]> QuerySubscriptionsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<SubscriptionModel>> QuerySubscriptionsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/subscriptions");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[SubscriptionModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<SubscriptionModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2805,14 +2805,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[TaxCodeModel]> QueryTaxCodesAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<TaxCodeModel>> QueryTaxCodesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/taxcodes");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[TaxCodeModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<TaxCodeModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2858,14 +2858,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[TaxRuleModel]> QueryTaxRulesAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<TaxRuleModel>> QueryTaxRulesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/taxrules");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[TaxRuleModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<TaxRuleModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2885,7 +2885,7 @@ namespace Avalara.AvaTax.RestClient
         /// Create a new transaction
         /// </summary>
         /// <param name="model">The transaction you wish to create</param>
-        public async Task<TransactionModel> CreateTransactionAsync(Dictionary<string, string> model)
+        public async Task<TransactionModel> CreateTransactionAsync(CreateTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
             return await RestCallAsync<TransactionModel>("post", path, model);
@@ -2898,14 +2898,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[UPCModel]> QueryUPCsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<UPCModel>> QueryUPCsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/upcs");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[UPCModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<UPCModel>>("get", path, null);
         }
 
         /// <summary>
@@ -2916,7 +2916,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results.</param>
         /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        public async Task<FetchResult[UserModel]> QueryUsersAsync(String include, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<UserModel>> QueryUsersAsync(String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/users");
             path.AddQuery("$include", include);
@@ -2924,7 +2924,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult[UserModel]>("get", path, null);
+            return await RestCallAsync<FetchResult<UserModel>>("get", path, null);
         }
 
         /// <summary>

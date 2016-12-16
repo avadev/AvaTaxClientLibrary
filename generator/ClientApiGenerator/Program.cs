@@ -242,7 +242,16 @@ Arguments:
 
                 // Is it a custom object?
             } else if (prop.schemaref != null) {
-                typename.Append(prop.schemaref.Substring(prop.schemaref.LastIndexOf("/") + 1));
+                string schema = prop.schemaref.Substring(prop.schemaref.LastIndexOf("/") + 1);
+                if (schema.StartsWith("FetchResult")) {
+                    schema = schema.Replace("[", "<");
+                    schema = schema.Replace("]", ">");
+                }
+                typename.Append(schema);
+
+            // Is this a nested swagger element?
+            } else if (prop.schema != null) {
+                typename.Append(ResolveType(prop.schema));
 
                 // Custom hack for objects that aren't represented correctly in swagger at the moment - still have to fix this in REST v2
             } else if (prop.description == "Default addresses for all lines in this document") {

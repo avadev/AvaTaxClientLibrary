@@ -104,7 +104,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[SubscriptionModel]
+     * @return FetchResult<SubscriptionModel>
      */
     public function listSubscriptionsByAccount($accountId, $filter, $top, $skip, $orderBy)
     {
@@ -141,7 +141,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[UserModel]
+     * @return FetchResult<UserModel>
      */
     public function listUsersByAccount($accountId, $include, $filter, $top, $skip, $orderBy)
     {
@@ -174,7 +174,7 @@ class AvaTaxClient
     /**
      * Update a single user
      * 
-     * @param Dictionary<string, string> $model The user object you wish to update.
+     * @param UserModel $model The user object you wish to update.
      * @return UserModel
      */
     public function updateUser($id, $accountId, $model)
@@ -224,7 +224,7 @@ class AvaTaxClient
     /**
      * Reset this account's license key
      * 
-     * @param Dictionary<string, string> $model A request confirming that you wish to reset the license key of this account.
+     * @param ResetLicenseKeyModel $model A request confirming that you wish to reset the license key of this account.
      * @return LicenseKeyModel
      */
     public function accountResetLicenseKey($id, $model)
@@ -241,7 +241,7 @@ class AvaTaxClient
     /**
      * Retrieve geolocation information for a specified address
      * 
-     * @param Dictionary<string, string> $model The address to resolve
+     * @param AddressInfo $model The address to resolve
      * @return AddressResolutionModel
      */
     public function resolveAddress($model)
@@ -262,7 +262,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[BatchModel]
+     * @return FetchResult<BatchModel>
      */
     public function queryBatches($filter, $top, $skip, $orderBy)
     {
@@ -283,7 +283,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[CompanyModel]
+     * @return FetchResult<CompanyModel>
      */
     public function queryCompanies($include, $filter, $top, $skip, $orderBy)
     {
@@ -299,7 +299,7 @@ class AvaTaxClient
     /**
      * Create new companies
      * 
-     * @param Dictionary<string, string> $model Either a single company object or an array of companies to create
+     * @param List<CompanyModel> $model Either a single company object or an array of companies to create
      * @return List<CompanyModel>
      */
     public function createCompanies($model)
@@ -321,7 +321,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[TransactionModel]
+     * @return FetchResult<TransactionModel>
      */
     public function listTransactionsByCompany($companyCode, $include, $filter, $top, $skip, $orderBy)
     {
@@ -354,7 +354,7 @@ class AvaTaxClient
     /**
      * Correct a previously created transaction
      * 
-     * @param Dictionary<string, string> $model The adjustment you wish to make
+     * @param AdjustTransactionModel $model The adjustment you wish to make
      * @return TransactionModel
      */
     public function adjustTransaction($companyCode, $transactionCode, $model)
@@ -371,7 +371,7 @@ class AvaTaxClient
     /**
      * Change a transaction's code
      * 
-     * @param Dictionary<string, string> $model The code change request you wish to execute
+     * @param ChangeTransactionCodeModel $model The code change request you wish to execute
      * @return TransactionModel
      */
     public function changeTransactionCode($companyCode, $transactionCode, $model)
@@ -388,7 +388,7 @@ class AvaTaxClient
     /**
      * Commit a transaction for reporting
      * 
-     * @param Dictionary<string, string> $model The commit request you wish to execute
+     * @param CommitTransactionModel $model The commit request you wish to execute
      * @return TransactionModel
      */
     public function commitTransaction($companyCode, $transactionCode, $model)
@@ -405,7 +405,7 @@ class AvaTaxClient
     /**
      * Perform multiple actions on a transaction
      * 
-     * @param Dictionary<string, string> $model The settle request containing the actions you wish to execute
+     * @param SettleTransactionModel $model The settle request containing the actions you wish to execute
      * @return TransactionModel
      */
     public function settleTransaction($companyCode, $transactionCode, $model)
@@ -422,7 +422,7 @@ class AvaTaxClient
     /**
      * Verify a transaction
      * 
-     * @param Dictionary<string, string> $model The settle request you wish to execute
+     * @param VerifyTransactionModel $model The settle request you wish to execute
      * @return TransactionModel
      */
     public function verifyTransaction($companyCode, $transactionCode, $model)
@@ -439,7 +439,7 @@ class AvaTaxClient
     /**
      * Void a transaction
      * 
-     * @param Dictionary<string, string> $model The void request you wish to execute
+     * @param VoidTransactionModel $model The void request you wish to execute
      * @return TransactionModel
      */
     public function voidTransaction($companyCode, $transactionCode, $model)
@@ -460,7 +460,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[BatchModel]
+     * @return FetchResult<BatchModel>
      */
     public function listBatchesByCompany($companyId, $filter, $top, $skip, $orderBy)
     {
@@ -476,7 +476,7 @@ class AvaTaxClient
     /**
      * Create a new batch
      * 
-     * @param Dictionary<string, string> $model The batch you wish to create.
+     * @param List<BatchModel> $model The batch you wish to create.
      * @return List<BatchModel>
      */
     public function createBatches($companyId, $model)
@@ -509,7 +509,7 @@ class AvaTaxClient
     /**
      * Update a single batch
      * 
-     * @param Dictionary<string, string> $model The batch you wish to update.
+     * @param BatchModel $model The batch you wish to update.
      * @return BatchModel
      */
     public function updateBatch($companyId, $id, $model)
@@ -546,7 +546,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[ContactModel]
+     * @return FetchResult<ContactModel>
      */
     public function listContactsByCompany($companyId, $filter, $top, $skip, $orderBy)
     {
@@ -562,7 +562,7 @@ class AvaTaxClient
     /**
      * Create a new contact
      * 
-     * @param Dictionary<string, string> $model The contacts you wish to create.
+     * @param List<ContactModel> $model The contacts you wish to create.
      * @return List<ContactModel>
      */
     public function createContacts($companyId, $model)
@@ -595,7 +595,7 @@ class AvaTaxClient
     /**
      * Update a single contact
      * 
-     * @param Dictionary<string, string> $model The contact you wish to update.
+     * @param ContactModel $model The contact you wish to update.
      * @return ContactModel
      */
     public function updateContact($companyId, $id, $model)
@@ -632,7 +632,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[ItemModel]
+     * @return FetchResult<ItemModel>
      */
     public function listItemsByCompany($companyId, $filter, $top, $skip, $orderBy)
     {
@@ -648,7 +648,7 @@ class AvaTaxClient
     /**
      * Create a new item
      * 
-     * @param Dictionary<string, string> $model The item you wish to create.
+     * @param List<ItemModel> $model The item you wish to create.
      * @return List<ItemModel>
      */
     public function createItems($companyId, $model)
@@ -681,7 +681,7 @@ class AvaTaxClient
     /**
      * Update a single item
      * 
-     * @param Dictionary<string, string> $model The item object you wish to update.
+     * @param ItemModel $model The item object you wish to update.
      * @return ItemModel
      */
     public function updateItem($companyId, $id, $model)
@@ -718,7 +718,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[LocationModel]
+     * @return FetchResult<LocationModel>
      */
     public function listLocationsByCompany($companyId, $filter, $top, $skip, $orderBy)
     {
@@ -734,7 +734,7 @@ class AvaTaxClient
     /**
      * Create a new location
      * 
-     * @param Dictionary<string, string> $model The location you wish to create.
+     * @param List<LocationModel> $model The location you wish to create.
      * @return List<LocationModel>
      */
     public function createLocations($companyId, $model)
@@ -767,7 +767,7 @@ class AvaTaxClient
     /**
      * Update a single location
      * 
-     * @param Dictionary<string, string> $model The location you wish to update.
+     * @param LocationModel $model The location you wish to update.
      * @return LocationModel
      */
     public function updateLocation($companyId, $id, $model)
@@ -840,7 +840,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[NexusModel]
+     * @return FetchResult<NexusModel>
      */
     public function listNexusByCompany($companyId, $filter, $top, $skip, $orderBy)
     {
@@ -856,7 +856,7 @@ class AvaTaxClient
     /**
      * Create a new nexus
      * 
-     * @param Dictionary<string, string> $model The nexus you wish to create.
+     * @param List<NexusModel> $model The nexus you wish to create.
      * @return List<NexusModel>
      */
     public function createNexus($companyId, $model)
@@ -889,7 +889,7 @@ class AvaTaxClient
     /**
      * Update a single nexus
      * 
-     * @param Dictionary<string, string> $model The nexus object you wish to update.
+     * @param NexusModel $model The nexus object you wish to update.
      * @return NexusModel
      */
     public function updateNexus($companyId, $id, $model)
@@ -926,7 +926,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[SettingModel]
+     * @return FetchResult<SettingModel>
      */
     public function listSettingsByCompany($companyId, $filter, $top, $skip, $orderBy)
     {
@@ -942,7 +942,7 @@ class AvaTaxClient
     /**
      * Create a new setting
      * 
-     * @param Dictionary<string, string> $model The setting you wish to create.
+     * @param List<SettingModel> $model The setting you wish to create.
      * @return List<SettingModel>
      */
     public function createSettings($companyId, $model)
@@ -975,7 +975,7 @@ class AvaTaxClient
     /**
      * Update a single setting
      * 
-     * @param Dictionary<string, string> $model The setting you wish to update.
+     * @param SettingModel $model The setting you wish to update.
      * @return SettingModel
      */
     public function updateSetting($companyId, $id, $model)
@@ -1012,7 +1012,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[TaxCodeModel]
+     * @return FetchResult<TaxCodeModel>
      */
     public function listTaxCodesByCompany($companyId, $filter, $top, $skip, $orderBy)
     {
@@ -1028,7 +1028,7 @@ class AvaTaxClient
     /**
      * Create a new tax code
      * 
-     * @param Dictionary<string, string> $model The tax code you wish to create.
+     * @param List<TaxCodeModel> $model The tax code you wish to create.
      * @return List<TaxCodeModel>
      */
     public function createTaxCodes($companyId, $model)
@@ -1061,7 +1061,7 @@ class AvaTaxClient
     /**
      * Update a single tax code
      * 
-     * @param Dictionary<string, string> $model The tax code you wish to update.
+     * @param TaxCodeModel $model The tax code you wish to update.
      * @return TaxCodeModel
      */
     public function updateTaxCode($companyId, $id, $model)
@@ -1098,7 +1098,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[TaxRuleModel]
+     * @return FetchResult<TaxRuleModel>
      */
     public function listTaxRules($companyId, $filter, $top, $skip, $orderBy)
     {
@@ -1114,7 +1114,7 @@ class AvaTaxClient
     /**
      * Create a new tax rule
      * 
-     * @param Dictionary<string, string> $model The tax rule you wish to create.
+     * @param List<TaxRuleModel> $model The tax rule you wish to create.
      * @return List<TaxRuleModel>
      */
     public function createTaxRules($companyId, $model)
@@ -1147,7 +1147,7 @@ class AvaTaxClient
     /**
      * Update a single tax rule
      * 
-     * @param Dictionary<string, string> $model The tax rule you wish to update.
+     * @param TaxRuleModel $model The tax rule you wish to update.
      * @return TaxRuleModel
      */
     public function updateTaxRule($companyId, $id, $model)
@@ -1184,7 +1184,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[UPCModel]
+     * @return FetchResult<UPCModel>
      */
     public function listUPCsByCompany($companyId, $filter, $top, $skip, $orderBy)
     {
@@ -1200,7 +1200,7 @@ class AvaTaxClient
     /**
      * Create a new UPC
      * 
-     * @param Dictionary<string, string> $model The UPC you wish to create.
+     * @param List<UPCModel> $model The UPC you wish to create.
      * @return List<UPCModel>
      */
     public function createUPCs($companyId, $model)
@@ -1233,7 +1233,7 @@ class AvaTaxClient
     /**
      * Update a single UPC
      * 
-     * @param Dictionary<string, string> $model The UPC you wish to update.
+     * @param UPCModel $model The UPC you wish to update.
      * @return UPCModel
      */
     public function updateUPC($companyId, $id, $model)
@@ -1283,7 +1283,7 @@ class AvaTaxClient
     /**
      * Update a single company
      * 
-     * @param Dictionary<string, string> $model The company object you wish to update.
+     * @param CompanyModel $model The company object you wish to update.
      * @return CompanyModel
      */
     public function updateCompany($id, $model)
@@ -1316,7 +1316,7 @@ class AvaTaxClient
     /**
      * Quick setup for a company with a single physical address
      * 
-     * @param Dictionary<string, string> $model Information about the company you wish to create.
+     * @param CompanyInitializationModel $model Information about the company you wish to create.
      * @return CompanyModel
      */
     public function companyInitialize($model)
@@ -1337,7 +1337,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[ContactModel]
+     * @return FetchResult<ContactModel>
      */
     public function queryContacts($filter, $top, $skip, $orderBy)
     {
@@ -1353,7 +1353,7 @@ class AvaTaxClient
     /**
      * List all ISO 3166 countries
      * 
-     * @return FetchResult[IsoCountryModel]
+     * @return FetchResult<IsoCountryModel>
      */
     public function listCountries()
     {
@@ -1369,7 +1369,7 @@ class AvaTaxClient
     /**
      * List all ISO 3166 regions for a country
      * 
-     * @return FetchResult[IsoRegionModel]
+     * @return FetchResult<IsoRegionModel>
      */
     public function listRegionsByCountry($country)
     {
@@ -1394,7 +1394,7 @@ class AvaTaxClient
      * @param String $country The country part of this location's address.
      * @param Decimal? $latitude Optionally identify the location via latitude/longitude instead of via address.
      * @param Decimal? $longitude Optionally identify the location via latitude/longitude instead of via address.
-     * @return FetchResult[LocationQuestionModel]
+     * @return FetchResult<LocationQuestionModel>
      */
     public function listLocationQuestionsByAddress($line1, $line2, $line3, $city, $region, $postalCode, $country, $latitude, $longitude)
     {
@@ -1410,7 +1410,7 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported nexus for all countries and regions.
      * 
-     * @return FetchResult[NexusModel]
+     * @return FetchResult<NexusModel>
      */
     public function definitionsNexusGet()
     {
@@ -1426,7 +1426,7 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported nexus for a country.
      * 
-     * @return FetchResult[NexusModel]
+     * @return FetchResult<NexusModel>
      */
     public function definitionsNexusByCountryGet($country)
     {
@@ -1442,7 +1442,7 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported nexus for a country and region.
      * 
-     * @return FetchResult[NexusModel]
+     * @return FetchResult<NexusModel>
      */
     public function definitionsNexusByCountryByRegionGet($country, $region)
     {
@@ -1465,7 +1465,7 @@ class AvaTaxClient
      * @param String $region The region, state, or province code portion of this address.
      * @param String $postalCode The postal code or zip code portion of this address.
      * @param String $country The two-character ISO-3166 code of the country portion of this address.
-     * @return FetchResult[NexusModel]
+     * @return FetchResult<NexusModel>
      */
     public function listNexusByAddress($line1, $line2, $line3, $city, $region, $postalCode, $country)
     {
@@ -1481,7 +1481,7 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported extra parameters for creating transactions.
      * 
-     * @return FetchResult[ParameterModel]
+     * @return FetchResult<ParameterModel>
      */
     public function listParameters()
     {
@@ -1497,7 +1497,7 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported permissions
      * 
-     * @return FetchResult[String]
+     * @return FetchResult<String>
      */
     public function listPermissions()
     {
@@ -1513,7 +1513,7 @@ class AvaTaxClient
     /**
      * List all ISO 3166 regions
      * 
-     * @return FetchResult[IsoRegionModel]
+     * @return FetchResult<IsoRegionModel>
      */
     public function listRegions()
     {
@@ -1529,7 +1529,7 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported permissions
      * 
-     * @return FetchResult[SecurityRoleModel]
+     * @return FetchResult<SecurityRoleModel>
      */
     public function listSecurityRoles()
     {
@@ -1545,7 +1545,7 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported subscription types
      * 
-     * @return FetchResult[SubscriptionTypeModel]
+     * @return FetchResult<SubscriptionTypeModel>
      */
     public function listSubscriptionTypes()
     {
@@ -1561,7 +1561,7 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported tax authorities.
      * 
-     * @return FetchResult[TaxAuthorityModel]
+     * @return FetchResult<TaxAuthorityModel>
      */
     public function listTaxAuthorities()
     {
@@ -1577,7 +1577,7 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported forms for each tax authority.
      * 
-     * @return FetchResult[TaxAuthorityFormModel]
+     * @return FetchResult<TaxAuthorityFormModel>
      */
     public function listTaxAuthorityForms()
     {
@@ -1593,7 +1593,7 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported tax codes.
      * 
-     * @return FetchResult[TaxCodeModel]
+     * @return FetchResult<TaxCodeModel>
      */
     public function listTaxCodes()
     {
@@ -1629,7 +1629,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[ItemModel]
+     * @return FetchResult<ItemModel>
      */
     public function queryItems($filter, $top, $skip, $orderBy)
     {
@@ -1649,7 +1649,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[LocationModel]
+     * @return FetchResult<LocationModel>
      */
     public function queryLocations($filter, $top, $skip, $orderBy)
     {
@@ -1669,7 +1669,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[NexusModel]
+     * @return FetchResult<NexusModel>
      */
     public function queryNexus($filter, $top, $skip, $orderBy)
     {
@@ -1685,7 +1685,7 @@ class AvaTaxClient
     /**
      * Point of sale data file generation
      * 
-     * @param Dictionary<string, string> $model Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.
+     * @param PointOfSaleDataRequestModel $model Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.
      * @return String
      */
     public function buildPointOfSaleDataFile($model)
@@ -1706,7 +1706,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[SettingModel]
+     * @return FetchResult<SettingModel>
      */
     public function querySettings($filter, $top, $skip, $orderBy)
     {
@@ -1726,7 +1726,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[SubscriptionModel]
+     * @return FetchResult<SubscriptionModel>
      */
     public function querySubscriptions($filter, $top, $skip, $orderBy)
     {
@@ -1746,7 +1746,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[TaxCodeModel]
+     * @return FetchResult<TaxCodeModel>
      */
     public function queryTaxCodes($filter, $top, $skip, $orderBy)
     {
@@ -1807,7 +1807,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[TaxRuleModel]
+     * @return FetchResult<TaxRuleModel>
      */
     public function queryTaxRules($filter, $top, $skip, $orderBy)
     {
@@ -1840,7 +1840,7 @@ class AvaTaxClient
     /**
      * Create a new transaction
      * 
-     * @param Dictionary<string, string> $model The transaction you wish to create
+     * @param CreateTransactionModel $model The transaction you wish to create
      * @return TransactionModel
      */
     public function createTransaction($model)
@@ -1861,7 +1861,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[UPCModel]
+     * @return FetchResult<UPCModel>
      */
     public function queryUPCs($filter, $top, $skip, $orderBy)
     {
@@ -1882,7 +1882,7 @@ class AvaTaxClient
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult[UserModel]
+     * @return FetchResult<UserModel>
      */
     public function queryUsers($include, $filter, $top, $skip, $orderBy)
     {
