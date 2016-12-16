@@ -355,7 +355,7 @@ namespace Avalara.AvaTax.RestClient
             if (_model.lines.Count <= 0)
             {
                 throw new InvalidOperationException($"No lines have been added. The {memberName} method applies to the most recent line." +
-                                    $" To use this function, first add a line.");
+                                    " To use this function, first add a line.");
             }
 
             return _model.lines[_model.lines.Count - 1];
