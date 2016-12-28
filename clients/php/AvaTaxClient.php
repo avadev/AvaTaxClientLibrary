@@ -14,13 +14,17 @@ namespace Avalara;
  * @author     Bob Maidens <bob.maidens@avalara.com>
  * @copyright  2004-2016 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    2.16.12-30
+ * @version    
  * @link       https://github.com/avadev/AvaTaxClientLibrary
  */
 
 include_once __DIR__."/vendor/autoload.php";
 
 use GuzzleHttp\Client;
+
+/*****************************************************************************
+ *                              API Section                                  *
+ *****************************************************************************/
 
 /**
  * An AvaTaxClient object that handles connectivity to the AvaTax v2 API server.
@@ -61,7 +65,7 @@ class AvaTaxClient
         // Set client options
         $this->client->setDefaultOption('headers', array(
             'Accept' => 'application/json',
-            'X-Avalara-Client' => "{$appName}; {$appVersion}; PhpRestClient; 2.16.12-30; {$machineName}"));
+            'X-Avalara-Client' => "{$appName}; {$appVersion}; PhpRestClient; ; {$machineName}"));
             
         // For some reason, Guzzle reports that 'https://sandbox-rest.avatax.com' is a self signed certificate, even though Verisign issued it
         if ($environment == "sandbox") {
@@ -98,6 +102,44 @@ class AvaTaxClient
 
 
     /**
+     * Retrieve all accounts
+     * 
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
+     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param Int32? $top If nonzero, return no more than this number of results.
+     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @return FetchResult<AccountModel>
+     */
+    public function queryAccounts($include, $filter, $top, $skip, $orderBy)
+    {
+        $path = "/api/v2/accounts";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => ['$include' => $include, '$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'body' => null
+        ];
+        return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Create a new account
+     * 
+     * @param AccountModel $model The account you wish to create.
+     * @return AccountModel
+     */
+    public function createAccount($model)
+    {
+        $path = "/api/v2/accounts";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => $model
+        ];
+        return $this->restCall($path, 'POST', $guzzleParams);
+    }
+
+    /**
      * Retrieve subscriptions for this account
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
@@ -118,6 +160,23 @@ class AvaTaxClient
     }
 
     /**
+     * Create a new subscription
+     * 
+     * @param List<SubscriptionModel> $model The subscription you wish to create.
+     * @return List<SubscriptionModel>
+     */
+    public function createSubscriptions($accountId, $model)
+    {
+        $path = "/api/v2/accounts/{$accountId}/subscriptions";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => $model
+        ];
+        return $this->restCall($path, 'POST', $guzzleParams);
+    }
+
+    /**
      * Retrieve a single subscription
      * 
      * @return SubscriptionModel
@@ -131,6 +190,39 @@ class AvaTaxClient
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Update a single subscription
+     * 
+     * @param SubscriptionModel $model The subscription you wish to update.
+     * @return SubscriptionModel
+     */
+    public function updateSubscription($accountId, $id, $model)
+    {
+        $path = "/api/v2/accounts/{$accountId}/subscriptions/{$id}";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => $model
+        ];
+        return $this->restCall($path, 'PUT', $guzzleParams);
+    }
+
+    /**
+     * Delete a single subscription
+     * 
+     * @return ErrorResult
+     */
+    public function deleteSubscription($accountId, $id)
+    {
+        $path = "/api/v2/accounts/{$accountId}/subscriptions/{$id}";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => null
+        ];
+        return $this->restCall($path, 'DELETE', $guzzleParams);
     }
 
     /**
@@ -152,6 +244,23 @@ class AvaTaxClient
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Create new users
+     * 
+     * @param List<UserModel> $model The user or array of users you wish to create.
+     * @return List<UserModel>
+     */
+    public function createUsers($accountId, $model)
+    {
+        $path = "/api/v2/accounts/{$accountId}/users";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => $model
+        ];
+        return $this->restCall($path, 'POST', $guzzleParams);
     }
 
     /**
@@ -189,6 +298,22 @@ class AvaTaxClient
     }
 
     /**
+     * Delete a single user
+     * 
+     * @return ErrorResult
+     */
+    public function deleteUser($id, $accountId)
+    {
+        $path = "/api/v2/accounts/{$accountId}/users/{$id}";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => null
+        ];
+        return $this->restCall($path, 'DELETE', $guzzleParams);
+    }
+
+    /**
      * Retrieve all entitlements for a single user
      * 
      * @return UserEntitlementModel
@@ -222,6 +347,39 @@ class AvaTaxClient
     }
 
     /**
+     * Update a single account
+     * 
+     * @param AccountModel $model The account object you wish to update.
+     * @return AccountModel
+     */
+    public function updateAccount($id, $model)
+    {
+        $path = "/api/v2/accounts/{$id}";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => $model
+        ];
+        return $this->restCall($path, 'PUT', $guzzleParams);
+    }
+
+    /**
+     * Delete a single account
+     * 
+     * @return ErrorResult
+     */
+    public function deleteAccount($id)
+    {
+        $path = "/api/v2/accounts/{$id}";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => null
+        ];
+        return $this->restCall($path, 'DELETE', $guzzleParams);
+    }
+
+    /**
      * Reset this account's license key
      * 
      * @param ResetLicenseKeyModel $model A request confirming that you wish to reset the license key of this account.
@@ -241,10 +399,35 @@ class AvaTaxClient
     /**
      * Retrieve geolocation information for a specified address
      * 
+     * @param String $line1 Line 1
+     * @param String $line2 Line 2
+     * @param String $line3 Line 3
+     * @param String $city City
+     * @param String $region State / Province / Region
+     * @param String $postalCode Postal Code / Zip Code
+     * @param String $country Two character ISO 3166 Country Code (see /api/v2/definitions/countries for a full list)
+     * @param Decimal? $latitude Geospatial latitude measurement
+     * @param Decimal? $longitude Geospatial longitude measurement
+     * @return AddressResolutionModel
+     */
+    public function resolveAddress($line1, $line2, $line3, $city, $region, $postalCode, $country, $latitude, $longitude)
+    {
+        $path = "/api/v2/addresses/resolve";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => ['line1' => $line1, 'line2' => $line2, 'line3' => $line3, 'city' => $city, 'region' => $region, 'postalCode' => $postalCode, 'country' => $country, 'latitude' => $latitude, 'longitude' => $longitude],
+            'body' => null
+        ];
+        return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Retrieve geolocation information for a specified address
+     * 
      * @param AddressInfo $model The address to resolve
      * @return AddressResolutionModel
      */
-    public function resolveAddress($model)
+    public function resolveAddressPost($model)
     {
         $path = "/api/v2/addresses/resolve";
         $guzzleParams = [
@@ -259,17 +442,18 @@ class AvaTaxClient
      * Retrieve all batches
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<BatchModel>
      */
-    public function queryBatches($filter, $top, $skip, $orderBy)
+    public function queryBatches($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/batches";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -457,17 +641,18 @@ class AvaTaxClient
      * Retrieve all batches for this company
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<BatchModel>
      */
-    public function listBatchesByCompany($companyId, $filter, $top, $skip, $orderBy)
+    public function listBatchesByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/batches";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -543,17 +728,18 @@ class AvaTaxClient
      * Retrieve contacts for this company
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<ContactModel>
      */
-    public function listContactsByCompany($companyId, $filter, $top, $skip, $orderBy)
+    public function listContactsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/contacts";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -626,20 +812,169 @@ class AvaTaxClient
     }
 
     /**
+     * Retrieve a list of filings for a specific company, year, and month.
+     * 
+     * @return WorksheetModel
+     */
+    public function getFilings($companyId, $year, $month)
+    {
+        $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => null
+        ];
+        return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Retrieve a list of filings for a specific company, year, month, and country.
+     * 
+     * @return WorksheetModel
+     */
+    public function getFilingsByCountry($companyId, $year, $month, $country)
+    {
+        $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/{$country}";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => null
+        ];
+        return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Retrieve a list of filings for a specific company, year, country, and region.
+     * 
+     * @return WorksheetModel
+     */
+    public function getFilingsByCountryRegion($companyId, $year, $month, $country, $region)
+    {
+        $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/{$country}/{$region}";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => null
+        ];
+        return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Retrieve a list of filings for a specific company, year, month, country, region, and return name.
+     * 
+     * @return WorksheetModel
+     */
+    public function getFilingsByReturnName($companyId, $year, $month, $country, $region, $returnName)
+    {
+        $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/{$country}/{$region}/{$returnName}";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => null
+        ];
+        return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Rebuild a set of worksheets for a specific company based on year, month, country, and region.
+     * 
+     * @param RebuildWorksheetModel $model The commit request you wish to execute
+     * @return WorksheetModel
+     */
+    public function rebuildFilingsByCountryRegion($companyId, $year, $month, $country, $region, $model)
+    {
+        $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/{$country}/{$region}/rebuild";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => $model
+        ];
+        return $this->restCall($path, 'POST', $guzzleParams);
+    }
+
+    /**
+     * Rebuild a set of worksheets for a specific company based on year, month, and country.
+     * 
+     * @param RebuildWorksheetModel $model The commit request you wish to execute
+     * @return WorksheetModel
+     */
+    public function rebuildFilingsByCountry($companyId, $year, $month, $country, $model)
+    {
+        $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/{$country}/rebuild";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => $model
+        ];
+        return $this->restCall($path, 'POST', $guzzleParams);
+    }
+
+    /**
+     * Rebuild a set of worksheets for a specific company based on year and month.
+     * 
+     * @param RebuildWorksheetModel $model The commit request you wish to execute
+     * @return WorksheetModel
+     */
+    public function rebuildFilings($companyId, $year, $month, $model)
+    {
+        $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/rebuild";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => $model
+        ];
+        return $this->restCall($path, 'POST', $guzzleParams);
+    }
+
+    /**
+     * Check managed returns funding configuration for a company
+     * 
+     * @return List<FundingStatusModel>
+     */
+    public function listFundingRequestsByCompany($companyId)
+    {
+        $path = "/api/v2/companies/{$companyId}/funding";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => null
+        ];
+        return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Request managed returns funding setup for a company
+     * 
+     * @param FundingInitiateModel $model The funding initialization request
+     * @return FundingStatusModel
+     */
+    public function createFundingRequest($companyId, $model)
+    {
+        $path = "/api/v2/companies/{$companyId}/funding/setup";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => $model
+        ];
+        return $this->restCall($path, 'POST', $guzzleParams);
+    }
+
+    /**
      * Retrieve items for this company
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<ItemModel>
      */
-    public function listItemsByCompany($companyId, $filter, $top, $skip, $orderBy)
+    public function listItemsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/items";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -715,17 +1050,18 @@ class AvaTaxClient
      * Retrieve locations for this company
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<LocationModel>
      */
-    public function listLocationsByCompany($companyId, $filter, $top, $skip, $orderBy)
+    public function listLocationsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/locations";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -837,17 +1173,18 @@ class AvaTaxClient
      * Retrieve nexus for this company
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<NexusModel>
      */
-    public function listNexusByCompany($companyId, $filter, $top, $skip, $orderBy)
+    public function listNexusByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/nexus";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -923,17 +1260,18 @@ class AvaTaxClient
      * Retrieve all settings for this company
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<SettingModel>
      */
-    public function listSettingsByCompany($companyId, $filter, $top, $skip, $orderBy)
+    public function listSettingsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/settings";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -1009,17 +1347,18 @@ class AvaTaxClient
      * Retrieve tax codes for this company
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<TaxCodeModel>
      */
-    public function listTaxCodesByCompany($companyId, $filter, $top, $skip, $orderBy)
+    public function listTaxCodesByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/taxcodes";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -1095,17 +1434,18 @@ class AvaTaxClient
      * Retrieve tax rules for this company
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<TaxRuleModel>
      */
-    public function listTaxRules($companyId, $filter, $top, $skip, $orderBy)
+    public function listTaxRules($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/taxrules";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -1181,17 +1521,18 @@ class AvaTaxClient
      * Retrieve UPCs for this company
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<UPCModel>
      */
-    public function listUPCsByCompany($companyId, $filter, $top, $skip, $orderBy)
+    public function listUPCsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/upcs";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -1334,17 +1675,18 @@ class AvaTaxClient
      * Retrieve all contacts
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<ContactModel>
      */
-    public function queryContacts($filter, $top, $skip, $orderBy)
+    public function queryContacts($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/contacts";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -1374,6 +1716,22 @@ class AvaTaxClient
     public function listRegionsByCountry($country)
     {
         $path = "/api/v2/definitions/countries/{$country}/regions";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => null
+        ];
+        return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Retrieve the full list of Avalara-supported entity use codes
+     * 
+     * @return FetchResult<EntityUseCodeModel>
+     */
+    public function listEntityUseCodes()
+    {
+        $path = "/api/v2/definitions/entityusecodes";
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
@@ -1623,20 +1981,53 @@ class AvaTaxClient
     }
 
     /**
+     * Retrieve status about a funding setup request
+     * 
+     * @return FundingStatusModel
+     */
+    public function fundingRequestStatus($requestId)
+    {
+        $path = "/api/v2/fundingrequests/{$requestId}";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => null
+        ];
+        return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Request the javascript for a funding setup widget
+     * 
+     * @return FundingStatusModel
+     */
+    public function activateFundingRequest($requestId)
+    {
+        $path = "/api/v2/fundingrequests/{$requestId}/widget";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => null
+        ];
+        return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
      * Retrieve all items
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<ItemModel>
      */
-    public function queryItems($filter, $top, $skip, $orderBy)
+    public function queryItems($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/items";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -1646,17 +2037,18 @@ class AvaTaxClient
      * Retrieve all locations
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<LocationModel>
      */
-    public function queryLocations($filter, $top, $skip, $orderBy)
+    public function queryLocations($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/locations";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -1666,20 +2058,55 @@ class AvaTaxClient
      * Retrieve all nexus
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<NexusModel>
      */
-    public function queryNexus($filter, $top, $skip, $orderBy)
+    public function queryNexus($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/nexus";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
+    }
+
+    /**
+     * Change Password
+     * 
+     * @param PasswordChangeModel $model An object containing your current password and the new password.
+     * @return String
+     */
+    public function changePassword($model)
+    {
+        $path = "/api/v2/passwords";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => $model
+        ];
+        return $this->restCall($path, 'PUT', $guzzleParams);
+    }
+
+    /**
+     * Reset a user's password programmatically
+     * 
+     * @param SetPasswordModel $model The new password for this user
+     * @return String
+     */
+    public function resetPassword($userId, $model)
+    {
+        $path = "/api/v2/passwords/{$userId}/reset";
+        $guzzleParams = [
+            'auth' => $this->auth,
+            'query' => [],
+            'body' => $model
+        ];
+        return $this->restCall($path, 'POST', $guzzleParams);
     }
 
     /**
@@ -1703,17 +2130,18 @@ class AvaTaxClient
      * Retrieve all settings
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<SettingModel>
      */
-    public function querySettings($filter, $top, $skip, $orderBy)
+    public function querySettings($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/settings";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -1743,17 +2171,18 @@ class AvaTaxClient
      * Retrieve all tax codes
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<TaxCodeModel>
      */
-    public function queryTaxCodes($filter, $top, $skip, $orderBy)
+    public function queryTaxCodes($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/taxcodes";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -1804,17 +2233,18 @@ class AvaTaxClient
      * Retrieve all tax rules
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<TaxRuleModel>
      */
-    public function queryTaxRules($filter, $top, $skip, $orderBy)
+    public function queryTaxRules($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/taxrules";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -1858,17 +2288,18 @@ class AvaTaxClient
      * Retrieve all UPCs
      * 
      * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param String $include A comma separated list of child objects to return underneath the primary object.
      * @param Int32? $top If nonzero, return no more than this number of results.
      * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<UPCModel>
      */
-    public function queryUPCs($filter, $top, $skip, $orderBy)
+    public function queryUPCs($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/upcs";
         $guzzleParams = [
             'auth' => $this->auth,
-            'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
+            'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
         return $this->restCall($path, 'GET', $guzzleParams);
@@ -1962,4 +2393,571 @@ class AvaTaxClient
             return $e->getMessage();
         }
     }
+}
+
+/*****************************************************************************
+ *                              Enumerated constants                         *
+ *****************************************************************************/
+
+/**
+ * Lists of constants defined for use in AvaTax API calls
+ */
+class Constants
+{
+
+    /**
+     * Enumerated values defined for AccountStatusId
+     */
+
+    const AccountStatusId_Inactive = "Inactive";
+    const AccountStatusId_Active = "Active";
+    const AccountStatusId_Test = "Test";
+    const AccountStatusId_New = "New";
+
+    /**
+     * Enumerated values defined for SecurityRoleId
+     */
+
+    const SecurityRoleId_NoAccess = "NoAccess";
+    const SecurityRoleId_SiteAdmin = "SiteAdmin";
+    const SecurityRoleId_AccountOperator = "AccountOperator";
+    const SecurityRoleId_AccountAdmin = "AccountAdmin";
+    const SecurityRoleId_AccountUser = "AccountUser";
+    const SecurityRoleId_SystemAdmin = "SystemAdmin";
+    const SecurityRoleId_Registrar = "Registrar";
+    const SecurityRoleId_CSPTester = "CSPTester";
+    const SecurityRoleId_CSPAdmin = "CSPAdmin";
+    const SecurityRoleId_SystemOperator = "SystemOperator";
+    const SecurityRoleId_TechnicalSupportUser = "TechnicalSupportUser";
+    const SecurityRoleId_TechnicalSupportAdmin = "TechnicalSupportAdmin";
+    const SecurityRoleId_TreasuryUser = "TreasuryUser";
+    const SecurityRoleId_TreasuryAdmin = "TreasuryAdmin";
+    const SecurityRoleId_ComplianceUser = "ComplianceUser";
+    const SecurityRoleId_ComplianceAdmin = "ComplianceAdmin";
+    const SecurityRoleId_ProStoresOperator = "ProStoresOperator";
+    const SecurityRoleId_CompanyUser = "CompanyUser";
+    const SecurityRoleId_CompanyAdmin = "CompanyAdmin";
+    const SecurityRoleId_ComplianceTempUser = "ComplianceTempUser";
+    const SecurityRoleId_ComplianceRootUser = "ComplianceRootUser";
+    const SecurityRoleId_ComplianceOperator = "ComplianceOperator";
+    const SecurityRoleId_SSTAdmin = "SSTAdmin";
+
+    /**
+     * Enumerated values defined for PasswordStatusId
+     */
+
+    const PasswordStatusId_UserCannotChange = "UserCannotChange";
+    const PasswordStatusId_UserCanChange = "UserCanChange";
+    const PasswordStatusId_UserMustChange = "UserMustChange";
+
+    /**
+     * Enumerated values defined for ErrorCodeId
+     */
+
+    const ErrorCodeId_ServerConfiguration = "ServerConfiguration";
+    const ErrorCodeId_AccountInvalidException = "AccountInvalidException";
+    const ErrorCodeId_CompanyInvalidException = "CompanyInvalidException";
+    const ErrorCodeId_EntityNotFoundError = "EntityNotFoundError";
+    const ErrorCodeId_ValueRequiredError = "ValueRequiredError";
+    const ErrorCodeId_RangeError = "RangeError";
+    const ErrorCodeId_RangeCompareError = "RangeCompareError";
+    const ErrorCodeId_RangeSetError = "RangeSetError";
+    const ErrorCodeId_TaxpayerNumberRequired = "TaxpayerNumberRequired";
+    const ErrorCodeId_CommonPassword = "CommonPassword";
+    const ErrorCodeId_WeakPassword = "WeakPassword";
+    const ErrorCodeId_StringLengthError = "StringLengthError";
+    const ErrorCodeId_EmailValidationError = "EmailValidationError";
+    const ErrorCodeId_EmailMissingError = "EmailMissingError";
+    const ErrorCodeId_ParserFieldNameError = "ParserFieldNameError";
+    const ErrorCodeId_ParserFieldValueError = "ParserFieldValueError";
+    const ErrorCodeId_ParserSyntaxError = "ParserSyntaxError";
+    const ErrorCodeId_ParserTooManyParametersError = "ParserTooManyParametersError";
+    const ErrorCodeId_ParserUnterminatedValueError = "ParserUnterminatedValueError";
+    const ErrorCodeId_DeleteUserSelfError = "DeleteUserSelfError";
+    const ErrorCodeId_OldPasswordInvalid = "OldPasswordInvalid";
+    const ErrorCodeId_CannotChangePassword = "CannotChangePassword";
+    const ErrorCodeId_CannotChangeCompanyCode = "CannotChangeCompanyCode";
+    const ErrorCodeId_AuthenticationException = "AuthenticationException";
+    const ErrorCodeId_AuthorizationException = "AuthorizationException";
+    const ErrorCodeId_ValidationException = "ValidationException";
+    const ErrorCodeId_InactiveUserError = "InactiveUserError";
+    const ErrorCodeId_AuthenticationIncomplete = "AuthenticationIncomplete";
+    const ErrorCodeId_BasicAuthIncorrect = "BasicAuthIncorrect";
+    const ErrorCodeId_IdentityServerError = "IdentityServerError";
+    const ErrorCodeId_BearerTokenInvalid = "BearerTokenInvalid";
+    const ErrorCodeId_ModelRequiredException = "ModelRequiredException";
+    const ErrorCodeId_AccountExpiredException = "AccountExpiredException";
+    const ErrorCodeId_VisibilityError = "VisibilityError";
+    const ErrorCodeId_BearerTokenNotSupported = "BearerTokenNotSupported";
+    const ErrorCodeId_InvalidSecurityRole = "InvalidSecurityRole";
+    const ErrorCodeId_InvalidRegistrarAction = "InvalidRegistrarAction";
+    const ErrorCodeId_RemoteServerError = "RemoteServerError";
+    const ErrorCodeId_NoFilterCriteriaException = "NoFilterCriteriaException";
+    const ErrorCodeId_OpenClauseException = "OpenClauseException";
+    const ErrorCodeId_JsonFormatError = "JsonFormatError";
+    const ErrorCodeId_UnhandledException = "UnhandledException";
+    const ErrorCodeId_ReportingCompanyMustHaveContactsError = "ReportingCompanyMustHaveContactsError";
+    const ErrorCodeId_CompanyProfileNotSet = "CompanyProfileNotSet";
+    const ErrorCodeId_ModelStateInvalid = "ModelStateInvalid";
+    const ErrorCodeId_DateRangeError = "DateRangeError";
+    const ErrorCodeId_InvalidDateRangeError = "InvalidDateRangeError";
+    const ErrorCodeId_DeleteInformation = "DeleteInformation";
+    const ErrorCodeId_CannotCreateDeletedObjects = "CannotCreateDeletedObjects";
+    const ErrorCodeId_CannotModifyDeletedObjects = "CannotModifyDeletedObjects";
+    const ErrorCodeId_ReturnNameNotFound = "ReturnNameNotFound";
+    const ErrorCodeId_InvalidAddressTypeAndCategory = "InvalidAddressTypeAndCategory";
+    const ErrorCodeId_DefaultCompanyLocation = "DefaultCompanyLocation";
+    const ErrorCodeId_InvalidCountry = "InvalidCountry";
+    const ErrorCodeId_InvalidCountryRegion = "InvalidCountryRegion";
+    const ErrorCodeId_BrazilValidationError = "BrazilValidationError";
+    const ErrorCodeId_BrazilExemptValidationError = "BrazilExemptValidationError";
+    const ErrorCodeId_BrazilPisCofinsError = "BrazilPisCofinsError";
+    const ErrorCodeId_JurisdictionNotFoundError = "JurisdictionNotFoundError";
+    const ErrorCodeId_MedicalExciseError = "MedicalExciseError";
+    const ErrorCodeId_RateDependsTaxabilityError = "RateDependsTaxabilityError";
+    const ErrorCodeId_RateDependsEuropeError = "RateDependsEuropeError";
+    const ErrorCodeId_RateTypeNotSupported = "RateTypeNotSupported";
+    const ErrorCodeId_CannotUpdateNestedObjects = "CannotUpdateNestedObjects";
+    const ErrorCodeId_UPCCodeInvalidChars = "UPCCodeInvalidChars";
+    const ErrorCodeId_UPCCodeInvalidLength = "UPCCodeInvalidLength";
+    const ErrorCodeId_IncorrectPathError = "IncorrectPathError";
+    const ErrorCodeId_InvalidJurisdictionType = "InvalidJurisdictionType";
+    const ErrorCodeId_MustConfirmResetLicenseKey = "MustConfirmResetLicenseKey";
+    const ErrorCodeId_DuplicateCompanyCode = "DuplicateCompanyCode";
+    const ErrorCodeId_TINFormatError = "TINFormatError";
+    const ErrorCodeId_DuplicateNexusError = "DuplicateNexusError";
+    const ErrorCodeId_UnknownNexusError = "UnknownNexusError";
+    const ErrorCodeId_ParentNexusNotFound = "ParentNexusNotFound";
+    const ErrorCodeId_InvalidTaxCodeType = "InvalidTaxCodeType";
+    const ErrorCodeId_CannotActivateCompany = "CannotActivateCompany";
+    const ErrorCodeId_DuplicateEntityProperty = "DuplicateEntityProperty";
+    const ErrorCodeId_BatchSalesAuditMustBeZippedError = "BatchSalesAuditMustBeZippedError";
+    const ErrorCodeId_BatchZipMustContainOneFileError = "BatchZipMustContainOneFileError";
+    const ErrorCodeId_BatchInvalidFileTypeError = "BatchInvalidFileTypeError";
+    const ErrorCodeId_PointOfSaleFileSize = "PointOfSaleFileSize";
+    const ErrorCodeId_PointOfSaleSetup = "PointOfSaleSetup";
+    const ErrorCodeId_GetTaxError = "GetTaxError";
+    const ErrorCodeId_AddressConflictException = "AddressConflictException";
+    const ErrorCodeId_DocumentCodeConflict = "DocumentCodeConflict";
+    const ErrorCodeId_MissingAddress = "MissingAddress";
+    const ErrorCodeId_InvalidParameter = "InvalidParameter";
+    const ErrorCodeId_InvalidParameterValue = "InvalidParameterValue";
+    const ErrorCodeId_CompanyCodeConflict = "CompanyCodeConflict";
+    const ErrorCodeId_DocumentFetchLimit = "DocumentFetchLimit";
+    const ErrorCodeId_AddressIncomplete = "AddressIncomplete";
+    const ErrorCodeId_AddressLocationNotFound = "AddressLocationNotFound";
+    const ErrorCodeId_MissingLine = "MissingLine";
+    const ErrorCodeId_BadDocumentFetch = "BadDocumentFetch";
+    const ErrorCodeId_ServerUnreachable = "ServerUnreachable";
+    const ErrorCodeId_SubscriptionRequired = "SubscriptionRequired";
+
+    /**
+     * Enumerated values defined for ErrorTargetCode
+     */
+
+    const ErrorTargetCode_Unknown = "Unknown";
+    const ErrorTargetCode_HttpRequest = "HttpRequest";
+    const ErrorTargetCode_HttpRequestHeaders = "HttpRequestHeaders";
+    const ErrorTargetCode_IncorrectData = "IncorrectData";
+    const ErrorTargetCode_AvaTaxApiServer = "AvaTaxApiServer";
+    const ErrorTargetCode_AvalaraIdentityServer = "AvalaraIdentityServer";
+    const ErrorTargetCode_CustomerAccountSetup = "CustomerAccountSetup";
+
+    /**
+     * Enumerated values defined for SeverityLevel
+     */
+
+    const SeverityLevel_Success = "Success";
+    const SeverityLevel_Warning = "Warning";
+    const SeverityLevel_Error = "Error";
+    const SeverityLevel_Exception = "Exception";
+
+    /**
+     * Enumerated values defined for ResolutionQuality
+     */
+
+    const ResolutionQuality_NotCoded = "NotCoded";
+    const ResolutionQuality_External = "External";
+    const ResolutionQuality_CountryCentroid = "CountryCentroid";
+    const ResolutionQuality_RegionCentroid = "RegionCentroid";
+    const ResolutionQuality_PartialCentroid = "PartialCentroid";
+    const ResolutionQuality_PostalCentroidGood = "PostalCentroidGood";
+    const ResolutionQuality_PostalCentroidBetter = "PostalCentroidBetter";
+    const ResolutionQuality_PostalCentroidBest = "PostalCentroidBest";
+    const ResolutionQuality_Intersection = "Intersection";
+    const ResolutionQuality_Interpolated = "Interpolated";
+    const ResolutionQuality_Rooftop = "Rooftop";
+    const ResolutionQuality_Constant = "Constant";
+
+    /**
+     * Enumerated values defined for JurisdictionType
+     */
+
+    const JurisdictionType_Country = "Country";
+    const JurisdictionType_Composite = "Composite";
+    const JurisdictionType_State = "State";
+    const JurisdictionType_County = "County";
+    const JurisdictionType_City = "City";
+    const JurisdictionType_Special = "Special";
+
+    /**
+     * Enumerated values defined for BatchType
+     */
+
+    const BatchType_AvaCertUpdate = "AvaCertUpdate";
+    const BatchType_AvaCertUpdateAll = "AvaCertUpdateAll";
+    const BatchType_BatchMaintenance = "BatchMaintenance";
+    const BatchType_CompanyLocationImport = "CompanyLocationImport";
+    const BatchType_DocumentImport = "DocumentImport";
+    const BatchType_ExemptCertImport = "ExemptCertImport";
+    const BatchType_ItemImport = "ItemImport";
+    const BatchType_SalesAuditExport = "SalesAuditExport";
+    const BatchType_SstpTestDeckImport = "SstpTestDeckImport";
+    const BatchType_TaxRuleImport = "TaxRuleImport";
+    const BatchType_TransactionImport = "TransactionImport";
+    const BatchType_UPCBulkImport = "UPCBulkImport";
+    const BatchType_UPCValidationImport = "UPCValidationImport";
+
+    /**
+     * Enumerated values defined for BatchStatus
+     */
+
+    const BatchStatus_Waiting = "Waiting";
+    const BatchStatus_SystemErrors = "SystemErrors";
+    const BatchStatus_Cancelled = "Cancelled";
+    const BatchStatus_Completed = "Completed";
+    const BatchStatus_Creating = "Creating";
+    const BatchStatus_Deleted = "Deleted";
+    const BatchStatus_Errors = "Errors";
+    const BatchStatus_Paused = "Paused";
+    const BatchStatus_Processing = "Processing";
+
+    /**
+     * Enumerated values defined for RoundingLevelId
+     */
+
+    const RoundingLevelId_Line = "Line";
+    const RoundingLevelId_Document = "Document";
+
+    /**
+     * Enumerated values defined for TaxDependencyLevelId
+     */
+
+    const TaxDependencyLevelId_Document = "Document";
+    const TaxDependencyLevelId_State = "State";
+    const TaxDependencyLevelId_TaxRegion = "TaxRegion";
+    const TaxDependencyLevelId_Address = "Address";
+
+    /**
+     * Enumerated values defined for AddressTypeId
+     */
+
+    const AddressTypeId_Location = "Location";
+    const AddressTypeId_Salesperson = "Salesperson";
+
+    /**
+     * Enumerated values defined for AddressCategoryId
+     */
+
+    const AddressCategoryId_Storefront = "Storefront";
+    const AddressCategoryId_MainOffice = "MainOffice";
+    const AddressCategoryId_Warehouse = "Warehouse";
+    const AddressCategoryId_Salesperson = "Salesperson";
+    const AddressCategoryId_Other = "Other";
+
+    /**
+     * Enumerated values defined for JurisTypeId
+     */
+
+    const JurisTypeId_STA = "STA";
+    const JurisTypeId_CTY = "CTY";
+    const JurisTypeId_CIT = "CIT";
+    const JurisTypeId_STJ = "STJ";
+    const JurisTypeId_CNT = "CNT";
+
+    /**
+     * Enumerated values defined for NexusTypeId
+     */
+
+    const NexusTypeId_None = "None";
+    const NexusTypeId_SalesOrSellersUseTax = "SalesOrSellersUseTax";
+    const NexusTypeId_SalesTax = "SalesTax";
+    const NexusTypeId_SSTVolunteer = "SSTVolunteer";
+    const NexusTypeId_SSTNonVolunteer = "SSTNonVolunteer";
+
+    /**
+     * Enumerated values defined for Sourcing
+     */
+
+    const Sourcing_Mixed = "Mixed";
+    const Sourcing_Destination = "Destination";
+    const Sourcing_Origin = "Origin";
+
+    /**
+     * Enumerated values defined for LocalNexusTypeId
+     */
+
+    const LocalNexusTypeId_Selected = "Selected";
+    const LocalNexusTypeId_StateAdministered = "StateAdministered";
+    const LocalNexusTypeId_All = "All";
+
+    /**
+     * Enumerated values defined for MatchingTaxType
+     */
+
+    const MatchingTaxType_All = "All";
+    const MatchingTaxType_BothSalesAndUseTax = "BothSalesAndUseTax";
+    const MatchingTaxType_ConsumerUseTax = "ConsumerUseTax";
+    const MatchingTaxType_MedicalExcise = "MedicalExcise";
+    const MatchingTaxType_Fee = "Fee";
+    const MatchingTaxType_VATInputTax = "VATInputTax";
+    const MatchingTaxType_VATNonrecoverableInputTax = "VATNonrecoverableInputTax";
+    const MatchingTaxType_VATOutputTax = "VATOutputTax";
+    const MatchingTaxType_Rental = "Rental";
+    const MatchingTaxType_SalesTax = "SalesTax";
+    const MatchingTaxType_UseTax = "UseTax";
+
+    /**
+     * Enumerated values defined for RateType
+     */
+
+    const RateType_ReducedA = "ReducedA";
+    const RateType_ReducedB = "ReducedB";
+    const RateType_Food = "Food";
+    const RateType_General = "General";
+    const RateType_IncreasedStandard = "IncreasedStandard";
+    const RateType_LinenRental = "LinenRental";
+    const RateType_Medical = "Medical";
+    const RateType_Parking = "Parking";
+    const RateType_SuperReduced = "SuperReduced";
+    const RateType_ReducedR = "ReducedR";
+    const RateType_Standard = "Standard";
+    const RateType_Zero = "Zero";
+
+    /**
+     * Enumerated values defined for TaxRuleTypeId
+     */
+
+    const TaxRuleTypeId_RateRule = "RateRule";
+    const TaxRuleTypeId_RateOverrideRule = "RateOverrideRule";
+    const TaxRuleTypeId_BaseRule = "BaseRule";
+    const TaxRuleTypeId_ExemptEntityRule = "ExemptEntityRule";
+    const TaxRuleTypeId_ProductTaxabilityRule = "ProductTaxabilityRule";
+    const TaxRuleTypeId_NexusRule = "NexusRule";
+
+    /**
+     * Enumerated values defined for ParameterBagDataType
+     */
+
+    const ParameterBagDataType_String = "String";
+    const ParameterBagDataType_Boolean = "Boolean";
+    const ParameterBagDataType_Numeric = "Numeric";
+
+    /**
+     * Enumerated values defined for WorksheetTypeId
+     */
+
+    const WorksheetTypeId_Original = "Original";
+    const WorksheetTypeId_Amended = "Amended";
+    const WorksheetTypeId_Test = "Test";
+
+    /**
+     * Enumerated values defined for WorksheetStatusId
+     */
+
+    const WorksheetStatusId_PendingApproval = "PendingApproval";
+    const WorksheetStatusId_Dirty = "Dirty";
+    const WorksheetStatusId_ApprovedToFile = "ApprovedToFile";
+    const WorksheetStatusId_PendingFiling = "PendingFiling";
+    const WorksheetStatusId_PendingFilingOnBehalf = "PendingFilingOnBehalf";
+    const WorksheetStatusId_Filed = "Filed";
+    const WorksheetStatusId_FiledOnBehalf = "FiledOnBehalf";
+    const WorksheetStatusId_ReturnAccepted = "ReturnAccepted";
+    const WorksheetStatusId_ReturnAcceptedOnBehalf = "ReturnAcceptedOnBehalf";
+    const WorksheetStatusId_PaymentRemitted = "PaymentRemitted";
+    const WorksheetStatusId_Voided = "Voided";
+    const WorksheetStatusId_PendingReturn = "PendingReturn";
+    const WorksheetStatusId_PendingReturnOnBehalf = "PendingReturnOnBehalf";
+    const WorksheetStatusId_DoNotFile = "DoNotFile";
+    const WorksheetStatusId_ReturnRejected = "ReturnRejected";
+    const WorksheetStatusId_ReturnRejectedOnBehalf = "ReturnRejectedOnBehalf";
+    const WorksheetStatusId_ApprovedToFileOnBehalf = "ApprovedToFileOnBehalf";
+
+    /**
+     * Enumerated values defined for FilingFrequencyId
+     */
+
+    const FilingFrequencyId_Monthly = "Monthly";
+    const FilingFrequencyId_Quarterly = "Quarterly";
+    const FilingFrequencyId_SemiAnnually = "SemiAnnually";
+    const FilingFrequencyId_Annually = "Annually";
+    const FilingFrequencyId_Bimonthly = "Bimonthly";
+    const FilingFrequencyId_Occasional = "Occasional";
+    const FilingFrequencyId_InverseQuarterly = "InverseQuarterly";
+
+    /**
+     * Enumerated values defined for FilingTypeId
+     */
+
+    const FilingTypeId_PaperReturn = "PaperReturn";
+    const FilingTypeId_ElectronicReturn = "ElectronicReturn";
+    const FilingTypeId_SER = "SER";
+    const FilingTypeId_EFTPaper = "EFTPaper";
+    const FilingTypeId_PhonePaper = "PhonePaper";
+    const FilingTypeId_SignatureReady = "SignatureReady";
+    const FilingTypeId_EfileCheck = "EfileCheck";
+
+    /**
+     * Enumerated values defined for PointOfSaleFileType
+     */
+
+    const PointOfSaleFileType_Json = "Json";
+    const PointOfSaleFileType_Csv = "Csv";
+    const PointOfSaleFileType_Xml = "Xml";
+
+    /**
+     * Enumerated values defined for DocumentStatus
+     */
+
+    const DocumentStatus_Temporary = "Temporary";
+    const DocumentStatus_Saved = "Saved";
+    const DocumentStatus_Posted = "Posted";
+    const DocumentStatus_Committed = "Committed";
+    const DocumentStatus_Cancelled = "Cancelled";
+    const DocumentStatus_Adjusted = "Adjusted";
+    const DocumentStatus_Queued = "Queued";
+    const DocumentStatus_PendingApproval = "PendingApproval";
+    const DocumentStatus_Any = "Any";
+
+    /**
+     * Enumerated values defined for DocumentType
+     */
+
+    const DocumentType_SalesOrder = "SalesOrder";
+    const DocumentType_SalesInvoice = "SalesInvoice";
+    const DocumentType_PurchaseOrder = "PurchaseOrder";
+    const DocumentType_PurchaseInvoice = "PurchaseInvoice";
+    const DocumentType_ReturnOrder = "ReturnOrder";
+    const DocumentType_ReturnInvoice = "ReturnInvoice";
+    const DocumentType_InventoryTransferOrder = "InventoryTransferOrder";
+    const DocumentType_InventoryTransferInvoice = "InventoryTransferInvoice";
+    const DocumentType_ReverseChargeOrder = "ReverseChargeOrder";
+    const DocumentType_ReverseChargeInvoice = "ReverseChargeInvoice";
+    const DocumentType_Any = "Any";
+
+    /**
+     * Enumerated values defined for TaxOverrideTypeId
+     */
+
+    const TaxOverrideTypeId_None = "None";
+    const TaxOverrideTypeId_TaxAmount = "TaxAmount";
+    const TaxOverrideTypeId_Exemption = "Exemption";
+    const TaxOverrideTypeId_TaxDate = "TaxDate";
+    const TaxOverrideTypeId_AccruedTaxAmount = "AccruedTaxAmount";
+
+    /**
+     * Enumerated values defined for AdjustmentReason
+     */
+
+    const AdjustmentReason_NotAdjusted = "NotAdjusted";
+    const AdjustmentReason_SourcingIssue = "SourcingIssue";
+    const AdjustmentReason_ReconciledWithGeneralLedger = "ReconciledWithGeneralLedger";
+    const AdjustmentReason_ExemptCertApplied = "ExemptCertApplied";
+    const AdjustmentReason_PriceAdjusted = "PriceAdjusted";
+    const AdjustmentReason_ProductReturned = "ProductReturned";
+    const AdjustmentReason_ProductExchanged = "ProductExchanged";
+    const AdjustmentReason_BadDebt = "BadDebt";
+    const AdjustmentReason_Other = "Other";
+    const AdjustmentReason_Offline = "Offline";
+
+    /**
+     * Enumerated values defined for BoundaryLevel
+     */
+
+    const BoundaryLevel_Address = "Address";
+    const BoundaryLevel_Zip9 = "Zip9";
+    const BoundaryLevel_Zip5 = "Zip5";
+
+    /**
+     * Enumerated values defined for TaxType
+     */
+
+    const TaxType_ConsumerUse = "ConsumerUse";
+    const TaxType_Excise = "Excise";
+    const TaxType_Fee = "Fee";
+    const TaxType_Input = "Input";
+    const TaxType_Nonrecoverable = "Nonrecoverable";
+    const TaxType_Output = "Output";
+    const TaxType_Rental = "Rental";
+    const TaxType_Sales = "Sales";
+    const TaxType_Use = "Use";
+
+    /**
+     * Enumerated values defined for TransactionAddressType
+     */
+
+
+    /**
+     * Enumerated values defined for ServiceMode
+     */
+
+    const ServiceMode_Automatic = "Automatic";
+    const ServiceMode_Local = "Local";
+    const ServiceMode_Remote = "Remote";
+
+    /**
+     * Enumerated values defined for TaxDebugLevel
+     */
+
+    const TaxDebugLevel_Normal = "Normal";
+    const TaxDebugLevel_Diagnostic = "Diagnostic";
+
+    /**
+     * Enumerated values defined for TaxOverrideType
+     */
+
+    const TaxOverrideType_None = "None";
+    const TaxOverrideType_TaxAmount = "TaxAmount";
+    const TaxOverrideType_Exemption = "Exemption";
+    const TaxOverrideType_TaxDate = "TaxDate";
+    const TaxOverrideType_AccruedTaxAmount = "AccruedTaxAmount";
+    const TaxOverrideType_DeriveTaxable = "DeriveTaxable";
+
+    /**
+     * Enumerated values defined for VoidReasonCode
+     */
+
+    const VoidReasonCode_Unspecified = "Unspecified";
+    const VoidReasonCode_PostFailed = "PostFailed";
+    const VoidReasonCode_DocDeleted = "DocDeleted";
+    const VoidReasonCode_DocVoided = "DocVoided";
+    const VoidReasonCode_AdjustmentCancelled = "AdjustmentCancelled";
+
+    /**
+     * Enumerated values defined for CompanyAccessLevel
+     */
+
+    const CompanyAccessLevel_None = "None";
+    const CompanyAccessLevel_SingleCompany = "SingleCompany";
+    const CompanyAccessLevel_SingleAccount = "SingleAccount";
+    const CompanyAccessLevel_AllCompanies = "AllCompanies";
+
+    /**
+     * Enumerated values defined for AuthenticationTypeId
+     */
+
+    const AuthenticationTypeId_None = "None";
+    const AuthenticationTypeId_UsernamePassword = "UsernamePassword";
+    const AuthenticationTypeId_AccountIdLicenseKey = "AccountIdLicenseKey";
+    const AuthenticationTypeId_OpenIdBearerToken = "OpenIdBearerToken";
+
+    /**
+     * Enumerated values defined for TransactionAddressType
+     */
+
+    const TransactionAddressType_ShipFrom = "ShipFrom";
+    const TransactionAddressType_ShipTo = "ShipTo";
+    const TransactionAddressType_PointOfOrderAcceptance = "PointOfOrderAcceptance";
+    const TransactionAddressType_PointOfOrderOrigin = "PointOfOrderOrigin";
+    const TransactionAddressType_SingleLocation = "SingleLocation";
 }

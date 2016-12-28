@@ -22,6 +22,10 @@ include_once __DIR__."/vendor/autoload.php";
 
 use GuzzleHttp\Client;
 
+/*****************************************************************************
+ *                              API Section                                  *
+ *****************************************************************************/
+
 /**
  * An AvaTaxClient object that handles connectivity to the AvaTax v2 API server.
  */
@@ -160,4 +164,25 @@ class AvaTaxClient
             return $e->getMessage();
         }
     }
+}
+
+/*****************************************************************************
+ *                              Enumerated constants                         *
+ *****************************************************************************/
+
+/**
+ * Lists of constants defined for use in AvaTax API calls
+ */
+class Constants
+{
+@foreach(var i in SwaggerModel.Enums) {
+<text>
+    /**
+     * Enumerated values defined for @i.EnumDataType
+     */
+</text>
+    foreach (var v in i.Items) {
+        Write("    const " + i.EnumDataType + "_" + v.Value + " = \"" + v.Value + "\";\r\n");
+    }
+}
 }

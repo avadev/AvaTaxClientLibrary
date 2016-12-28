@@ -21,8 +21,8 @@ namespace Avalara.AvaTax.RestClient
         public String code { get; set; }
 
         /// <summary>
-        /// Company Code - If you are posting to /api/v2/transactions/create, you must specify the company code value here.
-        ///                 If you are posting to /api/v2/companies/(companyCode)/transactions/create, this value must be null.
+        /// Company Code - Specify the code of the company creating this transaction here.  If you leave this value null,
+        ///                 your account's default company will be used instead.
         /// </summary>
         public String companyCode { get; set; }
 

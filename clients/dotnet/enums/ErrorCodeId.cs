@@ -455,6 +455,26 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        DocumentFetchLimit,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AddressIncomplete,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AddressLocationNotFound,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MissingLine,
+
+        /// <summary>
+        /// 
+        /// </summary>
         BadDocumentFetch,
 
         /// <summary>
