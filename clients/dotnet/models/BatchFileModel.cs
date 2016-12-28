@@ -27,7 +27,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Content of the batch file.
         /// </summary>
-        public String content { get; set; }
+        public Byte[] content { get; set; }
 
         /// <summary>
         /// Size of content, in bytes.

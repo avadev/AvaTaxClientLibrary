@@ -203,10 +203,16 @@ Arguments:
 
             // Handle integers / int64s
             if (prop.type == "integer") {
-                if (prop.format == "int64") {
+                if (String.Equals(prop.format, "int64", StringComparison.CurrentCultureIgnoreCase)) {
                     typename.Append("Int64");
-                } else {
+                } else if (String.Equals(prop.format, "byte", StringComparison.CurrentCultureIgnoreCase)) {
+                    typename.Append("Byte");
+                } else if (String.Equals(prop.format, "int16", StringComparison.CurrentCultureIgnoreCase)) {
+                    typename.Append("Int16");
+                } else if (prop.format == null || String.Equals(prop.format, "int32", StringComparison.CurrentCultureIgnoreCase)) {
                     typename.Append("Int32");
+                } else {
+                    Console.WriteLine("Unknown typename");
                 }
                 isValueType = true;
 
@@ -227,7 +233,11 @@ Arguments:
 
                 // Handle strings, and enums, which are represented as strings
             } else if (prop.type == "string") {
-                if (prop.EnumDataType == null) {
+
+                // Base64 encoded bytes
+                if (String.Equals(prop.format, "byte", StringComparison.CurrentCultureIgnoreCase)) {
+                    typename.Append("Byte[]");
+                } else if (prop.EnumDataType == null) {
                     return "String";
                 } else {
                     typename.Append(prop.EnumDataType);

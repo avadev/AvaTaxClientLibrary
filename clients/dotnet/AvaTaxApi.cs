@@ -607,7 +607,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filings</param>
         /// <param name="year">The year of the filing</param>
         /// <param name="month">The two digit month of the filing</param>
-        public WorksheetModel GetFilings(Int32 companyId, Int32 year, String month)
+        public WorksheetModel GetFilings(Int32 companyId, Int16 year, Byte month)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}");
             path.ApplyField("companyId", companyId);
@@ -623,7 +623,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="year">The year of the filing</param>
         /// <param name="month">The two digit month of the filing</param>
         /// <param name="country">The two-character ISO-3166 code for the country</param>
-        public WorksheetModel GetFilingsByCountry(Int32 companyId, Int32 year, String month, String country)
+        public WorksheetModel GetFilingsByCountry(Int32 companyId, Int16 year, Byte month, String country)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}");
             path.ApplyField("companyId", companyId);
@@ -641,7 +641,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="month">The two digit month of the filing</param>
         /// <param name="country">The two-character ISO-3166 code for the country</param>
         /// <param name="region">The two or three character region code for the region</param>
-        public WorksheetModel GetFilingsByCountryRegion(Int32 companyId, Int32 year, String month, String country, String region)
+        public WorksheetModel GetFilingsByCountryRegion(Int32 companyId, Int16 year, Byte month, String country, String region)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}");
             path.ApplyField("companyId", companyId);
@@ -661,7 +661,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The two-character ISO-3166 code for the country</param>
         /// <param name="region">The two or three character region code for the region</param>
         /// <param name="returnName">The return name of the filing</param>
-        public WorksheetModel GetFilingsByReturnName(Int32 companyId, Int32 year, String month, String country, String region, String returnName)
+        public WorksheetModel GetFilingsByReturnName(Int32 companyId, Int16 year, Byte month, String country, String region, String returnName)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{returnName}");
             path.ApplyField("companyId", companyId);
@@ -682,7 +682,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The two-character ISO-3166 code for the country</param>
         /// <param name="region">The two or three character region code for the region</param>
         /// <param name="model">The commit request you wish to execute</param>
-        public WorksheetModel RebuildFilingsByCountryRegion(Int32 companyId, Int32 year, String month, String country, String region, RebuildWorksheetModel model)
+        public WorksheetModel RebuildFilingsByCountryRegion(Int32 companyId, Int16 year, Byte month, String country, String region, RebuildWorksheetModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/rebuild");
             path.ApplyField("companyId", companyId);
@@ -701,7 +701,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="month">The month of the filings that need to be rebuilt</param>
         /// <param name="country">The two-character ISO-3166 code for the country</param>
         /// <param name="model">The commit request you wish to execute</param>
-        public WorksheetModel RebuildFilingsByCountry(Int32 companyId, Int32 year, String month, String country, RebuildWorksheetModel model)
+        public WorksheetModel RebuildFilingsByCountry(Int32 companyId, Int16 year, Byte month, String country, RebuildWorksheetModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/rebuild");
             path.ApplyField("companyId", companyId);
@@ -718,7 +718,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="year">The year of the filings that need to be rebuilt</param>
         /// <param name="month">The month of the filings that need to be rebuilt</param>
         /// <param name="model">The commit request you wish to execute</param>
-        public WorksheetModel RebuildFilings(Int32 companyId, Int32 year, String month, RebuildWorksheetModel model)
+        public WorksheetModel RebuildFilings(Int32 companyId, Int16 year, Byte month, RebuildWorksheetModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/rebuild");
             path.ApplyField("companyId", companyId);
@@ -2461,7 +2461,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filings</param>
         /// <param name="year">The year of the filing</param>
         /// <param name="month">The two digit month of the filing</param>
-        public async Task<WorksheetModel> GetFilingsAsync(Int32 companyId, Int32 year, String month)
+        public async Task<WorksheetModel> GetFilingsAsync(Int32 companyId, Int16 year, Byte month)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}");
             path.ApplyField("companyId", companyId);
@@ -2477,7 +2477,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="year">The year of the filing</param>
         /// <param name="month">The two digit month of the filing</param>
         /// <param name="country">The two-character ISO-3166 code for the country</param>
-        public async Task<WorksheetModel> GetFilingsByCountryAsync(Int32 companyId, Int32 year, String month, String country)
+        public async Task<WorksheetModel> GetFilingsByCountryAsync(Int32 companyId, Int16 year, Byte month, String country)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}");
             path.ApplyField("companyId", companyId);
@@ -2495,7 +2495,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="month">The two digit month of the filing</param>
         /// <param name="country">The two-character ISO-3166 code for the country</param>
         /// <param name="region">The two or three character region code for the region</param>
-        public async Task<WorksheetModel> GetFilingsByCountryRegionAsync(Int32 companyId, Int32 year, String month, String country, String region)
+        public async Task<WorksheetModel> GetFilingsByCountryRegionAsync(Int32 companyId, Int16 year, Byte month, String country, String region)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}");
             path.ApplyField("companyId", companyId);
@@ -2515,7 +2515,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The two-character ISO-3166 code for the country</param>
         /// <param name="region">The two or three character region code for the region</param>
         /// <param name="returnName">The return name of the filing</param>
-        public async Task<WorksheetModel> GetFilingsByReturnNameAsync(Int32 companyId, Int32 year, String month, String country, String region, String returnName)
+        public async Task<WorksheetModel> GetFilingsByReturnNameAsync(Int32 companyId, Int16 year, Byte month, String country, String region, String returnName)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{returnName}");
             path.ApplyField("companyId", companyId);
@@ -2536,7 +2536,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The two-character ISO-3166 code for the country</param>
         /// <param name="region">The two or three character region code for the region</param>
         /// <param name="model">The commit request you wish to execute</param>
-        public async Task<WorksheetModel> RebuildFilingsByCountryRegionAsync(Int32 companyId, Int32 year, String month, String country, String region, RebuildWorksheetModel model)
+        public async Task<WorksheetModel> RebuildFilingsByCountryRegionAsync(Int32 companyId, Int16 year, Byte month, String country, String region, RebuildWorksheetModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/rebuild");
             path.ApplyField("companyId", companyId);
@@ -2555,7 +2555,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="month">The month of the filings that need to be rebuilt</param>
         /// <param name="country">The two-character ISO-3166 code for the country</param>
         /// <param name="model">The commit request you wish to execute</param>
-        public async Task<WorksheetModel> RebuildFilingsByCountryAsync(Int32 companyId, Int32 year, String month, String country, RebuildWorksheetModel model)
+        public async Task<WorksheetModel> RebuildFilingsByCountryAsync(Int32 companyId, Int16 year, Byte month, String country, RebuildWorksheetModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/rebuild");
             path.ApplyField("companyId", companyId);
@@ -2572,7 +2572,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="year">The year of the filings that need to be rebuilt</param>
         /// <param name="month">The month of the filings that need to be rebuilt</param>
         /// <param name="model">The commit request you wish to execute</param>
-        public async Task<WorksheetModel> RebuildFilingsAsync(Int32 companyId, Int32 year, String month, RebuildWorksheetModel model)
+        public async Task<WorksheetModel> RebuildFilingsAsync(Int32 companyId, Int16 year, Byte month, RebuildWorksheetModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/rebuild");
             path.ApplyField("companyId", companyId);
