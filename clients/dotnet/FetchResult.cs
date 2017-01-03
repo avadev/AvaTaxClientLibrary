@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Avalara.AvaTax.RestClient
 {
+    /// <summary>
+    /// Represents a result set fetched from AvaTax
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class FetchResult<T>
     {
         /// <summary>
@@ -42,6 +46,10 @@ namespace Avalara.AvaTax.RestClient
             this.value = newlist;
         }
 
+        /// <summary>
+        /// Converts the result set to a printable text object
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             var sb = new StringBuilder();

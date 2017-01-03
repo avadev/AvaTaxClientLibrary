@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Use this class to construct a transaction with convenient syntax
+    /// TransactionBuilder helps you construct a new transaction using a fluent interface
     /// </summary>
     public class TransactionBuilder
     {
@@ -18,10 +18,12 @@ namespace Avalara.AvaTax.RestClient
 
         #region Constructor
         /// <summary>
-        /// TransactionBuilder helps you construct a transaction API call correctly with necessary data
+        /// TransactionBuilder helps you construct a new transaction using a fluent interface
         /// </summary>
-        /// <param name="client"></param>
-        /// <param name="companyCode"></param>
+        /// <param name="client">The AvaTaxClient object to use to create this transaction</param>
+        /// <param name="companyCode">The code of the company for this transaction</param>
+        /// <param name="type">The type of transaction to create</param>
+        /// <param name="customerCode">The customer code for this transaction</param>
         public TransactionBuilder(AvaTaxClient client, string companyCode, DocumentType type, string customerCode)
         {
             _model = new CreateTransactionModel
@@ -41,7 +43,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Set the commit flag of the transaction.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The TransactionBuilder object</returns>
         public TransactionBuilder WithCommit()
         {
             _model.commit = true;
@@ -51,7 +53,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Enable diagnostic information
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The TransactionBuilder object</returns>
         public TransactionBuilder WithDiagnostics()
         {
             _model.debugLevel = TaxDebugLevel.Diagnostic;
@@ -62,8 +64,8 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Set a specific discount amount
         /// </summary>
-        /// <param name="discount"></param>
-        /// <returns></returns>
+        /// <param name="discount">The amount of the discount to grant</param>
+        /// <returns>The TransactionBuilder object</returns>
         public TransactionBuilder WithDiscountAmount(decimal? discount)
         {
             _model.discount = discount;
@@ -73,8 +75,8 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Set if discount is applicable for the current line
         /// </summary>
-        /// <param name="discounted"></param>
-        /// <returns></returns>
+        /// <param name="discounted">Sets the "discount" flag on the most recently created line</param>
+        /// <returns>The TransactionBuilder object</returns>
         public TransactionBuilder WithItemDiscount(bool? discounted)
         {
             var l = GetMostRecentLine("WithItemDiscount");
@@ -85,8 +87,8 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Set a specific transaction code
         /// </summary>
-        /// <param name="code"></param>
-        /// <returns></returns>
+        /// <param name="code">The code to use for this transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
         public TransactionBuilder WithTransactionCode(string code)
         {
             _model.code = code;
@@ -96,8 +98,8 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Set the document type
         /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
+        /// <param name="type">The document type of this transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
         public TransactionBuilder WithType(DocumentType type)
         {
             _model.type = type;
@@ -107,9 +109,9 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Add a parameter at the document level
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="name">The parameter name.  For a list of valid parameter names, call AvaTaxClient.ListParameters()</param>
+        /// <param name="value">The value for this parameter</param>
+        /// <returns>The TransactionBuilder object</returns>
         public TransactionBuilder WithParameter(string name, string value)
         {
             if (_model.parameters == null) _model.parameters = new Dictionary<string, string>();
@@ -120,14 +122,14 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Add a parameter to the current line
         /// </summary>
-        /// <param name="paramname"></param>
-        /// <param name="paramvalue"></param>
+        /// <param name="name">The parameter name.  For a list of valid parameter names, call AvaTaxClient.ListParameters()</param>
+        /// <param name="value">The value for this parameter</param>
         /// <returns></returns>
-        public TransactionBuilder WithLineParameter(string paramname, string paramvalue)
+        public TransactionBuilder WithLineParameter(string name, string value)
         {
             var l = GetMostRecentLine("WithLineParameter");
             if (l.parameters == null) l.parameters = new Dictionary<string, string>();
-            l.parameters.Add(paramname, paramvalue);
+            l.parameters.Add(name, value);
             return this;
         }
 
@@ -160,6 +162,13 @@ namespace Avalara.AvaTax.RestClient
             return this;
         }
 
+        /// <summary>
+        /// Add a geocoded location address to this transaction
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="latitude"></param>
+        /// <param name="longitude"></param>
+        /// <returns></returns>
         public TransactionBuilder WithLatLong(TransactionAddressType type, decimal latitude, decimal longitude)
         {
             var ai = new AddressInfo
@@ -349,7 +358,8 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Checks to see if the current model has a line.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="memberName">The name of the method called that needs the line</param>
+        /// <returns>The line object</returns>
         private LineItemModel GetMostRecentLine(string memberName = "")
         {
             if (_model.lines.Count <= 0)
@@ -396,6 +406,8 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// For using this with an adjustment
         /// </summary>
+        /// <param name="desc">The descriptive reason why this transaction is being adjusted</param>
+        /// <param name="reason">The reason code why this transaction is being adjusted</param>
         /// <returns></returns>
         public AdjustTransactionModel CreateAdjustmentRequest(string desc, AdjustmentReason reason)
         {
