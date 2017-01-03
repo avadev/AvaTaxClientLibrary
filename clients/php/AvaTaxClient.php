@@ -134,7 +134,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -171,7 +171,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -204,7 +204,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -258,7 +258,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -292,7 +292,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -358,7 +358,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -391,7 +391,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -433,7 +433,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -492,7 +492,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -547,7 +547,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -564,7 +564,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -581,7 +581,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -598,7 +598,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -615,7 +615,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -632,7 +632,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -670,7 +670,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -703,7 +703,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -757,7 +757,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -790,7 +790,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -887,7 +887,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -904,7 +904,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -921,7 +921,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -954,7 +954,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -992,7 +992,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -1025,7 +1025,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -1079,7 +1079,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -1112,7 +1112,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -1202,7 +1202,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -1235,7 +1235,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -1289,7 +1289,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -1322,7 +1322,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -1376,7 +1376,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -1409,7 +1409,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -1463,7 +1463,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -1496,7 +1496,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -1550,7 +1550,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -1583,7 +1583,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -1633,7 +1633,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -1666,7 +1666,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -2087,7 +2087,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'PUT', $guzzleParams);
     }
@@ -2104,7 +2104,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -2121,7 +2121,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -2279,7 +2279,7 @@ class AvaTaxClient
         $guzzleParams = [
             'auth' => $this->auth,
             'query' => [],
-            'body' => $model
+            'body' => json_encode($model)
         ];
         return $this->restCall($path, 'POST', $guzzleParams);
     }
@@ -2960,4 +2960,404 @@ class Constants
     const TransactionAddressType_PointOfOrderAcceptance = "PointOfOrderAcceptance";
     const TransactionAddressType_PointOfOrderOrigin = "PointOfOrderOrigin";
     const TransactionAddressType_SingleLocation = "SingleLocation";
+}
+
+/*****************************************************************************
+ *                              Transaction Builder                          *
+ *****************************************************************************/
+
+/**
+ * TransactionBuilder helps you construct a new transaction using a literate interface
+ */
+class TransactionBuilder
+{
+    /**
+     * The in-progress model
+     */
+    private $_model;
+
+    /**
+     * Keeps track of the line number when adding multiple lines
+     */
+    private $_line_number;
+    
+    /**
+     * The client that will be used to create the transaction
+     */
+    private $_client;
+        
+    /**
+     * TransactionBuilder helps you construct a new transaction using a literate interface
+     *
+     * @param AvaTaxClient  $client        The AvaTaxClient object to use to create this transaction
+     * @param string        $companyCode   The code of the company for this transaction
+     * @param DocumentType  $type          The type of transaction to create. See Constants.DocumentType_* for allowable values.
+     * @param string        $customerCode  The customer code for this transaction
+     */
+    public function __construct($client, $companyCode, $type, $customerCode)
+    {
+        $this->_client = $client;
+        $this->_line_number = 1;
+        $this->_model = [
+            'companyCode' => $companyCode,
+            'customerCode' => $customerCode,
+            'date' => date('Y-m-d H:i:s'),
+            'type' => $type,
+            'lines' => [],
+        ];
+    }
+
+    /**
+     * Set the commit flag of the transaction.
+     *
+     * @return
+     */
+    public function WithCommit()
+    {
+        $this->_model['commit'] = true;
+        return $this;
+    }
+
+    /**
+     * Enable diagnostic information
+     *
+     * @return  TransactionBuilder
+     */
+    public function WithDiagnostics()
+    {
+        $this->_model['debugLevel'] = Constants::TaxDebugLevel_Diagnostic;
+        return $this;
+    }
+
+
+    /**
+     * Set a specific discount amount
+     *
+     * @param   decimal             $discount
+     * @return  TransactionBuilder
+     */
+    public function WithDiscountAmount($discount)
+    {
+        $this->_model['discount'] = $discount;
+        return $this;
+    }
+
+    /**
+     * Set if discount is applicable for the current line
+     *
+     * @param   boolean             discounted
+     * @return  TransactionBuilder
+     */
+    public function WithItemDiscount($discounted)
+    {
+        $l = GetMostRecentLine("WithItemDiscount");
+        $l['discounted'] = $discounted;
+        return $this;
+    }
+
+    /**
+     * Set a specific transaction code
+     *
+     * @param   string              code
+     * @return  TransactionBuilder
+     */
+    public function WithTransactionCode($code)
+    {
+        $this->_model['code'] = $code;
+        return $this;
+    }
+
+    /**
+     * Set the document type
+     *
+     * @param   string              type    See Constants::DocumentType_* for a list of values
+     * @return  TransactionBuilder
+     */
+    public function WithType($type)
+    {
+        $this->_model['type'] = $type;
+        return $this;
+    }
+
+    /**
+     * Add a parameter at the document level
+     *
+     * @param   string              name
+     * @param   string              value
+     * @return  TransactionBuilder
+     */
+    public function WithParameter($name, $value)
+    {
+        if (empty($this->_model['parameters'])) $this->_model['parameters'] = [];
+        $this->_model['parameters'][$name] = $value;
+        return $this;
+    }
+
+    /**
+     * Add a parameter to the current line
+     *
+     * @param   string              name
+     * @param   string              value
+     * @return  TransactionBuilder
+     */
+    public function WithLineParameter($name, $value)
+    {
+        $l = GetMostRecentLine("WithLineParameter");
+        if (empty($l['parameters'])) $l['parameters'] = [];
+        $l[$name] = $value;
+        return $this;
+    }
+
+    /**
+     * Add an address to this transaction
+     *
+     * @param   string              type          Address Type - see Constants::AddressType_* for acceptable values
+     * @param   string              line1         The street address, attention line, or business name of the location.
+     * @param   string              line2         The street address, business name, or apartment/unit number of the location.
+     * @param   string              line3         The street address or apartment/unit number of the location.
+     * @param   string              city          City of the location.
+     * @param   string              region        State or Region of the location.
+     * @param   string              postalCode    Postal/zip code of the location.
+     * @param   string              country       The two-letter country code of the location.
+     * @return  TransactionBuilder
+     */
+    public function WithAddress($type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
+    {
+        if (empty($this->_model['addresses'])) $this->_model['addresses'] = [];
+        $ai = [
+            'line1' => $line1,
+            'line2' => $line2,
+            'line3' => $line3,
+            'city' => $city,
+            'region' => $region,
+            'postalCode' => $postalCode,
+            'country' => $country
+        ];
+        $this->_model['addresses'][$type] = $ai;
+        return $this;
+    }
+
+    /**
+     * Add a lat/long coordinate to this transaction
+     *
+     * @param   string              $type       Address Type - see Constants::AddressType_* for acceptable values
+     * @param   decimal             $latitude   The latitude of the geolocation for this transaction
+     * @param   decimal             $longitude  The longitude of the geolocation for this transaction
+     * @return  TransactionBuilder
+     */
+     public function WithLatLong($type, $latitude, $longitude)
+    {
+        $this->_model['addresses'][$type] = [
+            'latitude' => $latitude,
+            'longitude' => $longitude
+        ];
+        return $this;
+    }
+
+    /**
+     * Add an address to this line
+     *
+     * @param   string              type        Address Type - see Constants::AddressType_* for acceptable values
+     * @param   string              line1       The street address, attention line, or business name of the location.
+     * @param   string              line2       The street address, business name, or apartment/unit number of the location.
+     * @param   string              line3       The street address or apartment/unit number of the location.
+     * @param   string              city        City of the location.
+     * @param   string              region      State or Region of the location.
+     * @param   string              postalCode  Postal/zip code of the location.
+     * @param   string              country     The two-letter country code of the location.
+     * @return  TransactionBuilder
+     */
+    public function WithLineAddress($type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
+    {
+        $line = $this->GetMostRecentLine("WithLineAddress");
+        $line['addresses'][$type] = [
+            'line1' => $line1,
+            'line2' => $line2,
+            'line3' => $line3,
+            'city' => $city,
+            'region' => $region,
+            'postalCode' => $postalCode,
+            'country' => $country
+        ];
+        return $this;
+    }
+
+    /**
+     * Add a document-level Tax Override to the transaction.
+     *  - A TaxDate override requires a valid DateTime object to be passed.
+     * TODO: Verify Tax Override constraints and add exceptions.
+     *
+     * @param   string              $type       Type of the Tax Override. See Constants::TaxOverrideType_* for a list of allowable values.
+     * @param   string              $reason     Reason of the Tax Override.
+     * @param   decimal             $taxAmount  Amount of tax to apply. Required for a TaxAmount Override.
+     * @param   date                $taxDate    Date of a Tax Override. Required for a TaxDate Override.
+     * @return  TransactionBuilder
+     */
+    public function WithTaxOverride($type, $reason, $taxAmount, $taxDate)
+    {
+        $this->_model['taxOverride'] = [
+            'type' => $type,
+            'reason' => $reason,
+            'taxAmount' => $taxAmount,
+            'taxDate' => $taxDate
+        ];
+
+        // Continue building
+        return $this;
+    }
+
+    /**
+     * Add a line-level Tax Override to the current line.
+     *  - A TaxDate override requires a valid DateTime object to be passed.
+     * TODO: Verify Tax Override constraints and add exceptions.
+     *
+     * @param   string              $type        Type of the Tax Override. See Constants::TaxOverrideType_* for a list of allowable values.
+     * @param   string              $reason      Reason of the Tax Override.
+     * @param   decimal             $taxAmount   Amount of tax to apply. Required for a TaxAmount Override.
+     * @param   date                $taxDate     Date of a Tax Override. Required for a TaxDate Override.
+     * @return  TransactionBuilder
+     */
+    public function WithLineTaxOverride($type, $reason, $taxAmount, $taxDate)
+    {
+        // Address the DateOverride constraint.
+        if (($type == Constants::TaxOverrideType_TaxDate) && (empty($taxDate))) {
+            throw new Exception("A valid date is required for a Tax Date Tax Override.");
+        }
+
+        $line = $this->GetMostRecentLine("WithLineTaxOverride");
+        $line['taxOverride'] = [
+            'type' => $type,
+            'reason' => $reason,
+            'taxAmount' => $taxAmount,
+            'taxDate' => $taxDate
+        ];
+
+        // Continue building
+        return $this;
+    }
+
+    /**
+     * Add a line to this transaction
+     *
+     * @param   decimal             $amount      Value of the item.
+     * @param   decimal             $quantity    Quantity of the item.
+     * @param   string              $taxCode     Tax Code of the item. If left blank, the default item (P0000000) is assumed.
+     * @return  TransactionBuilder
+     */
+    public function WithLine($amount, $quantity, $taxCode)
+    {
+        $l = [
+            'number' => $this->_line_number,
+            'quantity' => $quantity,
+            'amount' => $amount,
+            'taxCode' => $taxCode
+        ];
+        array_push($this->_model['lines'], $l);
+        $this->_line_number++;
+
+        // Continue building
+        return $this;
+    }
+
+    /**
+     * Add a line to this transaction
+     *
+     * @param   decimal             $amount      Value of the line
+     * @param   string              $type        Address Type - see Constants::AddressType_* for acceptable values
+     * @param   string              $line1       The street address, attention line, or business name of the location.
+     * @param   string              $line2       The street address, business name, or apartment/unit number of the location.
+     * @param   string              $line3       The street address or apartment/unit number of the location.
+     * @param   string              $city        City of the location.
+     * @param   string              $region      State or Region of the location.
+     * @param   string              $postalCode  Postal/zip code of the location.
+     * @param   string              $country     The two-letter country code of the location.
+     * @return  TransactionBuilder
+     */
+    public function WithSeparateAddressLine($amount, $type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
+    {
+        $l = [
+            'number' => $this->_line_number,
+            'quantity' => 1,
+            'amount' => $amount,
+            'addresses' => [
+                $type => [
+                    'line1' => $line1,
+                    'line2' => $line2,
+                    'line3' => $line3,
+                    'city' => $city,
+                    'region' => $region,
+                    'postalCode' => $postalCode,
+                    'country' => $country
+                ]
+            ]
+        ];
+
+        // Put this line in the model
+        array_push($this->_model['lines'], $l);
+        $this->_line_number++;
+
+        // Continue building
+        return $this;
+    }
+
+    /**
+     * Add a line with an exemption to this transaction
+     *
+     * @param   decimal             $amount         The amount of this line item
+     * @param   string              $exemptionCode  The exemption code for this line item
+     * @return  TransactionBuilder
+     */
+    public function WithExemptLine($amount, $exemptionCode)
+    {
+        $l = [
+            'number' => $this->_line_number,
+            'quantity' => 1,
+            'amount' => $amount,
+            'exemptionCode' => $exemptionCode
+        ];
+        array_push($this->_model['lines'], $l); 
+        $this->_line_number++;
+
+        // Continue building
+        return $this;
+    }
+
+    /**
+     * Checks to see if the current model has a line.
+     *
+     * @return  TransactionBuilder
+     */
+    private function GetMostRecentLine($memberName)
+    {
+        $c = count($this->_model['lines']);
+        if ($c <= 0) {
+            throw new Exception("No lines have been added. The $memberName method applies to the most recent line.  To use this function, first add a line.");
+        }
+
+        return $this->_model['lines'][$c];
+    }
+
+    /**
+     * Create this transaction
+     *
+     * @return  TransactionModel
+     */
+    public function Create()
+    {
+        return $this->_client->createTransaction($this->_model);
+    }
+
+    /**
+     * Create a transaction adjustment request that can be used with the AdjustTransaction() API call
+     *
+     * @return  AdjustTransactionModel
+     */
+    public function CreateAdjustmentRequest($desc, $reason)
+    {
+        return [
+            'newTransaction' => $this->_model,
+            'adjustmentDescription' => $desc,
+            'adjustmentReason' => $reason
+        ];
+    }
 }
