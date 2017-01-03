@@ -3012,7 +3012,7 @@ class TransactionBuilder
      *
      * @return
      */
-    public function WithCommit()
+    public function withCommit()
     {
         $this->_model['commit'] = true;
         return $this;
@@ -3023,12 +3023,11 @@ class TransactionBuilder
      *
      * @return  TransactionBuilder
      */
-    public function WithDiagnostics()
+    public function withDiagnostics()
     {
         $this->_model['debugLevel'] = Constants::TaxDebugLevel_Diagnostic;
         return $this;
     }
-
 
     /**
      * Set a specific discount amount
@@ -3036,7 +3035,7 @@ class TransactionBuilder
      * @param   decimal             $discount
      * @return  TransactionBuilder
      */
-    public function WithDiscountAmount($discount)
+    public function withDiscountAmount($discount)
     {
         $this->_model['discount'] = $discount;
         return $this;
@@ -3048,7 +3047,7 @@ class TransactionBuilder
      * @param   boolean             discounted
      * @return  TransactionBuilder
      */
-    public function WithItemDiscount($discounted)
+    public function withItemDiscount($discounted)
     {
         $l = GetMostRecentLine("WithItemDiscount");
         $l['discounted'] = $discounted;
@@ -3061,7 +3060,7 @@ class TransactionBuilder
      * @param   string              code
      * @return  TransactionBuilder
      */
-    public function WithTransactionCode($code)
+    public function withTransactionCode($code)
     {
         $this->_model['code'] = $code;
         return $this;
@@ -3073,7 +3072,7 @@ class TransactionBuilder
      * @param   string              type    See Constants::DocumentType_* for a list of values
      * @return  TransactionBuilder
      */
-    public function WithType($type)
+    public function withType($type)
     {
         $this->_model['type'] = $type;
         return $this;
@@ -3086,7 +3085,7 @@ class TransactionBuilder
      * @param   string              value
      * @return  TransactionBuilder
      */
-    public function WithParameter($name, $value)
+    public function withParameter($name, $value)
     {
         if (empty($this->_model['parameters'])) $this->_model['parameters'] = [];
         $this->_model['parameters'][$name] = $value;
@@ -3100,7 +3099,7 @@ class TransactionBuilder
      * @param   string              value
      * @return  TransactionBuilder
      */
-    public function WithLineParameter($name, $value)
+    public function withLineParameter($name, $value)
     {
         $l = GetMostRecentLine("WithLineParameter");
         if (empty($l['parameters'])) $l['parameters'] = [];
@@ -3121,7 +3120,7 @@ class TransactionBuilder
      * @param   string              country       The two-letter country code of the location.
      * @return  TransactionBuilder
      */
-    public function WithAddress($type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
+    public function withAddress($type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
     {
         if (empty($this->_model['addresses'])) $this->_model['addresses'] = [];
         $ai = [
@@ -3145,7 +3144,7 @@ class TransactionBuilder
      * @param   decimal             $longitude  The longitude of the geolocation for this transaction
      * @return  TransactionBuilder
      */
-     public function WithLatLong($type, $latitude, $longitude)
+     public function withLatLong($type, $latitude, $longitude)
     {
         $this->_model['addresses'][$type] = [
             'latitude' => $latitude,
@@ -3167,7 +3166,7 @@ class TransactionBuilder
      * @param   string              country     The two-letter country code of the location.
      * @return  TransactionBuilder
      */
-    public function WithLineAddress($type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
+    public function withLineAddress($type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
     {
         $line = $this->GetMostRecentLine("WithLineAddress");
         $line['addresses'][$type] = [
@@ -3193,7 +3192,7 @@ class TransactionBuilder
      * @param   date                $taxDate    Date of a Tax Override. Required for a TaxDate Override.
      * @return  TransactionBuilder
      */
-    public function WithTaxOverride($type, $reason, $taxAmount, $taxDate)
+    public function withTaxOverride($type, $reason, $taxAmount, $taxDate)
     {
         $this->_model['taxOverride'] = [
             'type' => $type,
@@ -3217,7 +3216,7 @@ class TransactionBuilder
      * @param   date                $taxDate     Date of a Tax Override. Required for a TaxDate Override.
      * @return  TransactionBuilder
      */
-    public function WithLineTaxOverride($type, $reason, $taxAmount, $taxDate)
+    public function withLineTaxOverride($type, $reason, $taxAmount, $taxDate)
     {
         // Address the DateOverride constraint.
         if (($type == Constants::TaxOverrideType_TaxDate) && (empty($taxDate))) {
@@ -3244,7 +3243,7 @@ class TransactionBuilder
      * @param   string              $taxCode     Tax Code of the item. If left blank, the default item (P0000000) is assumed.
      * @return  TransactionBuilder
      */
-    public function WithLine($amount, $quantity, $taxCode)
+    public function withLine($amount, $quantity, $taxCode)
     {
         $l = [
             'number' => $this->_line_number,
@@ -3273,7 +3272,7 @@ class TransactionBuilder
      * @param   string              $country     The two-letter country code of the location.
      * @return  TransactionBuilder
      */
-    public function WithSeparateAddressLine($amount, $type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
+    public function withSeparateAddressLine($amount, $type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
     {
         $l = [
             'number' => $this->_line_number,
@@ -3307,7 +3306,7 @@ class TransactionBuilder
      * @param   string              $exemptionCode  The exemption code for this line item
      * @return  TransactionBuilder
      */
-    public function WithExemptLine($amount, $exemptionCode)
+    public function withExemptLine($amount, $exemptionCode)
     {
         $l = [
             'number' => $this->_line_number,
@@ -3327,7 +3326,7 @@ class TransactionBuilder
      *
      * @return  TransactionBuilder
      */
-    private function GetMostRecentLine($memberName)
+    private function getMostRecentLine($memberName)
     {
         $c = count($this->_model['lines']);
         if ($c <= 0) {
@@ -3342,7 +3341,7 @@ class TransactionBuilder
      *
      * @return  TransactionModel
      */
-    public function Create()
+    public function create()
     {
         return $this->_client->createTransaction($this->_model);
     }
@@ -3352,7 +3351,7 @@ class TransactionBuilder
      *
      * @return  AdjustTransactionModel
      */
-    public function CreateAdjustmentRequest($desc, $reason)
+    public function createAdjustmentRequest($desc, $reason)
     {
         return [
             'newTransaction' => $this->_model,
