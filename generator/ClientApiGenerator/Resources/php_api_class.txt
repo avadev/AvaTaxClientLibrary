@@ -131,13 +131,12 @@ class AvaTaxClient
     /**
      * @m.Comment
      * </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
-     * @@return @m.TypeName
+     * @@return @PhpTypeName(m.TypeName)
      */
     public function @{Write(FirstCharLower(m.Name) + "(" + paramlist.ToString() + ")");}
     {
         $path = "@m.URI.Replace("{", "{$")";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [@guzzleparamlist.ToString()],
             'body' => @payload
         ];
@@ -154,6 +153,12 @@ class AvaTaxClient
      */
     private function restCall($apiUrl, $verb, $guzzleParams)
     {
+        // Set authentication on the parameters
+        if (!isset($guzzleParams['auth'])){
+            $guzzleParams['auth'] = $this->auth;
+        }
+    
+        // Contact the server
         try {
             $request = $this->client->createRequest($verb, $apiUrl, $guzzleParams);
             $response = $this->client->send($request);
@@ -182,7 +187,7 @@ class Constants
      */
 </text>
     foreach (var v in i.Items) {
-        Write("    const " + i.EnumDataType + "_" + v.Value + " = \"" + v.Value + "\";\r\n");
+        Write("    const " + i.EnumDataType.ToUpper() + "_" + v.Value.ToUpper() + " = \"" + v.Value + "\";\r\n");
     }
 }
 }
@@ -216,7 +221,7 @@ class TransactionBuilder
      *
      * @@param AvaTaxClient  $client        The AvaTaxClient object to use to create this transaction
      * @@param string        $companyCode   The code of the company for this transaction
-     * @@param DocumentType  $type          The type of transaction to create. See Constants.DocumentType_* for allowable values.
+     * @@param DocumentType  $type          The type of transaction to create. See Constants.DOCUMENTTYPE_* for allowable values.
      * @@param string        $customerCode  The customer code for this transaction
      */
     public function __construct($client, $companyCode, $type, $customerCode)
@@ -250,14 +255,14 @@ class TransactionBuilder
      */
     public function withDiagnostics()
     {
-        $this->_model['debugLevel'] = Constants::TaxDebugLevel_Diagnostic;
+        $this->_model['debugLevel'] = Constants::TAXDEBUGLEVEL_DIAGNOSTIC;
         return $this;
     }
 
     /**
      * Set a specific discount amount
      *
-     * @@param   decimal             $discount
+     * @@param   float               $discount
      * @@return  TransactionBuilder
      */
     public function withDiscountAmount($discount)
@@ -294,7 +299,7 @@ class TransactionBuilder
     /**
      * Set the document type
      *
-     * @@param   string              type    See Constants::DocumentType_* for a list of values
+     * @@param   string              type    See Constants::DOCUMENTTYPE_* for a list of values
      * @@return  TransactionBuilder
      */
     public function withType($type)
@@ -335,7 +340,7 @@ class TransactionBuilder
     /**
      * Add an address to this transaction
      *
-     * @@param   string              type          Address Type - see Constants::AddressType_* for acceptable values
+     * @@param   string              type          Address Type - see Constants::ADDRESSTYPE_* for acceptable values
      * @@param   string              line1         The street address, attention line, or business name of the location.
      * @@param   string              line2         The street address, business name, or apartment/unit number of the location.
      * @@param   string              line3         The street address or apartment/unit number of the location.
@@ -364,9 +369,9 @@ class TransactionBuilder
     /**
      * Add a lat/long coordinate to this transaction
      *
-     * @@param   string              $type       Address Type - see Constants::AddressType_* for acceptable values
-     * @@param   decimal             $latitude   The latitude of the geolocation for this transaction
-     * @@param   decimal             $longitude  The longitude of the geolocation for this transaction
+     * @@param   string              $type       Address Type - see Constants::ADDRESSTYPE_* for acceptable values
+     * @@param   float               $latitude   The latitude of the geolocation for this transaction
+     * @@param   float               $longitude  The longitude of the geolocation for this transaction
      * @@return  TransactionBuilder
      */
      public function withLatLong($type, $latitude, $longitude)
@@ -381,7 +386,7 @@ class TransactionBuilder
     /**
      * Add an address to this line
      *
-     * @@param   string              type        Address Type - see Constants::AddressType_* for acceptable values
+     * @@param   string              type        Address Type - see Constants::ADDRESSTYPE_* for acceptable values
      * @@param   string              line1       The street address, attention line, or business name of the location.
      * @@param   string              line2       The street address, business name, or apartment/unit number of the location.
      * @@param   string              line3       The street address or apartment/unit number of the location.
@@ -411,9 +416,9 @@ class TransactionBuilder
      *  - A TaxDate override requires a valid DateTime object to be passed.
      * TODO: Verify Tax Override constraints and add exceptions.
      *
-     * @@param   string              $type       Type of the Tax Override. See Constants::TaxOverrideType_* for a list of allowable values.
+     * @@param   string              $type       Type of the Tax Override. See Constants::TAXOVERRIDETYPE_* for a list of allowable values.
      * @@param   string              $reason     Reason of the Tax Override.
-     * @@param   decimal             $taxAmount  Amount of tax to apply. Required for a TaxAmount Override.
+     * @@param   float               $taxAmount  Amount of tax to apply. Required for a TaxAmount Override.
      * @@param   date                $taxDate    Date of a Tax Override. Required for a TaxDate Override.
      * @@return  TransactionBuilder
      */
@@ -435,16 +440,16 @@ class TransactionBuilder
      *  - A TaxDate override requires a valid DateTime object to be passed.
      * TODO: Verify Tax Override constraints and add exceptions.
      *
-     * @@param   string              $type        Type of the Tax Override. See Constants::TaxOverrideType_* for a list of allowable values.
+     * @@param   string              $type        Type of the Tax Override. See Constants::TAXOVERRIDETYPE_* for a list of allowable values.
      * @@param   string              $reason      Reason of the Tax Override.
-     * @@param   decimal             $taxAmount   Amount of tax to apply. Required for a TaxAmount Override.
+     * @@param   float               $taxAmount   Amount of tax to apply. Required for a TaxAmount Override.
      * @@param   date                $taxDate     Date of a Tax Override. Required for a TaxDate Override.
      * @@return  TransactionBuilder
      */
     public function withLineTaxOverride($type, $reason, $taxAmount, $taxDate)
     {
         // Address the DateOverride constraint.
-        if (($type == Constants::TaxOverrideType_TaxDate) && (empty($taxDate))) {
+        if (($type == Constants::TAXOVERRIDETYPE_TAXDATE) && (empty($taxDate))) {
             throw new Exception("A valid date is required for a Tax Date Tax Override.");
         }
 
@@ -463,8 +468,8 @@ class TransactionBuilder
     /**
      * Add a line to this transaction
      *
-     * @@param   decimal             $amount      Value of the item.
-     * @@param   decimal             $quantity    Quantity of the item.
+     * @@param   float               $amount      Value of the item.
+     * @@param   float               $quantity    Quantity of the item.
      * @@param   string              $taxCode     Tax Code of the item. If left blank, the default item (P0000000) is assumed.
      * @@return  TransactionBuilder
      */
@@ -486,8 +491,8 @@ class TransactionBuilder
     /**
      * Add a line to this transaction
      *
-     * @@param   decimal             $amount      Value of the line
-     * @@param   string              $type        Address Type - see Constants::AddressType_* for acceptable values
+     * @@param   float               $amount      Value of the line
+     * @@param   string              $type        Address Type - see Constants::ADDRESSTYPE_* for acceptable values
      * @@param   string              $line1       The street address, attention line, or business name of the location.
      * @@param   string              $line2       The street address, business name, or apartment/unit number of the location.
      * @@param   string              $line3       The street address or apartment/unit number of the location.
@@ -527,7 +532,7 @@ class TransactionBuilder
     /**
      * Add a line with an exemption to this transaction
      *
-     * @@param   decimal             $amount         The amount of this line item
+     * @@param   float               $amount         The amount of this line item
      * @@param   string              $exemptionCode  The exemption code for this line item
      * @@return  TransactionBuilder
      */

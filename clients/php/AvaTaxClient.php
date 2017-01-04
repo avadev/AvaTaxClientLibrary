@@ -109,13 +109,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<AccountModel>
+     * @return FetchResult
      */
     public function queryAccounts($include, $filter, $top, $skip, $orderBy)
     {
         $path = "/api/v2/accounts";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$include' => $include, '$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -132,7 +131,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -146,13 +144,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<SubscriptionModel>
+     * @return FetchResult
      */
     public function listSubscriptionsByAccount($accountId, $filter, $top, $skip, $orderBy)
     {
         $path = "/api/v2/accounts/{$accountId}/subscriptions";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -162,14 +159,13 @@ class AvaTaxClient
     /**
      * Create a new subscription
      * 
-     * @param List<SubscriptionModel> $model The subscription you wish to create.
-     * @return List<SubscriptionModel>
+     * @param SubscriptionModel[] $model The subscription you wish to create.
+     * @return SubscriptionModel[]
      */
     public function createSubscriptions($accountId, $model)
     {
         $path = "/api/v2/accounts/{$accountId}/subscriptions";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -185,7 +181,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts/{$accountId}/subscriptions/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -202,7 +197,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts/{$accountId}/subscriptions/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -218,7 +212,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts/{$accountId}/subscriptions/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -233,13 +226,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<UserModel>
+     * @return FetchResult
      */
     public function listUsersByAccount($accountId, $include, $filter, $top, $skip, $orderBy)
     {
         $path = "/api/v2/accounts/{$accountId}/users";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$include' => $include, '$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -249,14 +241,13 @@ class AvaTaxClient
     /**
      * Create new users
      * 
-     * @param List<UserModel> $model The user or array of users you wish to create.
-     * @return List<UserModel>
+     * @param UserModel[] $model The user or array of users you wish to create.
+     * @return UserModel[]
      */
     public function createUsers($accountId, $model)
     {
         $path = "/api/v2/accounts/{$accountId}/users";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -273,7 +264,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts/{$accountId}/users/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$include' => $include],
             'body' => null
         ];
@@ -290,7 +280,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts/{$accountId}/users/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -306,7 +295,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts/{$accountId}/users/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -322,7 +310,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts/{$accountId}/users/{$id}/entitlements";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -339,7 +326,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$include' => $include],
             'body' => null
         ];
@@ -356,7 +342,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -372,7 +357,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -389,7 +373,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/accounts/{$id}/resetlicensekey";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -406,15 +389,14 @@ class AvaTaxClient
      * @param string $region State / Province / Region
      * @param string $postalCode Postal Code / Zip Code
      * @param string $country Two character ISO 3166 Country Code (see /api/v2/definitions/countries for a full list)
-     * @param Decimal? $latitude Geospatial latitude measurement
-     * @param Decimal? $longitude Geospatial longitude measurement
+     * @param float $latitude Geospatial latitude measurement
+     * @param float $longitude Geospatial longitude measurement
      * @return AddressResolutionModel
      */
     public function resolveAddress($line1, $line2, $line3, $city, $region, $postalCode, $country, $latitude, $longitude)
     {
         $path = "/api/v2/addresses/resolve";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['line1' => $line1, 'line2' => $line2, 'line3' => $line3, 'city' => $city, 'region' => $region, 'postalCode' => $postalCode, 'country' => $country, 'latitude' => $latitude, 'longitude' => $longitude],
             'body' => null
         ];
@@ -431,7 +413,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/addresses/resolve";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -446,13 +427,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<BatchModel>
+     * @return FetchResult
      */
     public function queryBatches($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/batches";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -467,13 +447,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<CompanyModel>
+     * @return FetchResult
      */
     public function queryCompanies($include, $filter, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$include' => $include, '$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -483,14 +462,13 @@ class AvaTaxClient
     /**
      * Create new companies
      * 
-     * @param List<CompanyModel> $model Either a single company object or an array of companies to create
-     * @return List<CompanyModel>
+     * @param CompanyModel[] $model Either a single company object or an array of companies to create
+     * @return CompanyModel[]
      */
     public function createCompanies($model)
     {
         $path = "/api/v2/companies";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -505,13 +483,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<TransactionModel>
+     * @return FetchResult
      */
     public function listTransactionsByCompany($companyCode, $include, $filter, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyCode}/transactions";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$include' => $include, '$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -528,7 +505,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyCode}/transactions/{$transactionCode}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$include' => $include],
             'body' => null
         ];
@@ -545,7 +521,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyCode}/transactions/{$transactionCode}/adjust";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -562,7 +537,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyCode}/transactions/{$transactionCode}/changecode";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -579,7 +553,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyCode}/transactions/{$transactionCode}/commit";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -596,7 +569,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyCode}/transactions/{$transactionCode}/settle";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -613,7 +585,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyCode}/transactions/{$transactionCode}/verify";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -630,7 +601,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyCode}/transactions/{$transactionCode}/void";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -645,13 +615,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<BatchModel>
+     * @return FetchResult
      */
     public function listBatchesByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/batches";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -661,14 +630,13 @@ class AvaTaxClient
     /**
      * Create a new batch
      * 
-     * @param List<BatchModel> $model The batch you wish to create.
-     * @return List<BatchModel>
+     * @param BatchModel[] $model The batch you wish to create.
+     * @return BatchModel[]
      */
     public function createBatches($companyId, $model)
     {
         $path = "/api/v2/companies/{$companyId}/batches";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -684,7 +652,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/batches/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -701,7 +668,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/batches/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -717,7 +683,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/batches/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -732,13 +697,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<ContactModel>
+     * @return FetchResult
      */
     public function listContactsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/contacts";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -748,14 +712,13 @@ class AvaTaxClient
     /**
      * Create a new contact
      * 
-     * @param List<ContactModel> $model The contacts you wish to create.
-     * @return List<ContactModel>
+     * @param ContactModel[] $model The contacts you wish to create.
+     * @return ContactModel[]
      */
     public function createContacts($companyId, $model)
     {
         $path = "/api/v2/companies/{$companyId}/contacts";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -771,7 +734,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/contacts/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -788,7 +750,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/contacts/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -804,7 +765,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/contacts/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -820,7 +780,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -836,7 +795,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/{$country}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -852,7 +810,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/{$country}/{$region}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -868,7 +825,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/{$country}/{$region}/{$returnName}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -885,7 +841,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/{$country}/{$region}/rebuild";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -902,7 +857,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/{$country}/rebuild";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -919,7 +873,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/filings/{$year}/{$month}/rebuild";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -929,13 +882,12 @@ class AvaTaxClient
     /**
      * Check managed returns funding configuration for a company
      * 
-     * @return List<FundingStatusModel>
+     * @return FundingStatusModel[]
      */
     public function listFundingRequestsByCompany($companyId)
     {
         $path = "/api/v2/companies/{$companyId}/funding";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -952,7 +904,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/funding/setup";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -967,13 +918,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<ItemModel>
+     * @return FetchResult
      */
     public function listItemsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/items";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -983,14 +933,13 @@ class AvaTaxClient
     /**
      * Create a new item
      * 
-     * @param List<ItemModel> $model The item you wish to create.
-     * @return List<ItemModel>
+     * @param ItemModel[] $model The item you wish to create.
+     * @return ItemModel[]
      */
     public function createItems($companyId, $model)
     {
         $path = "/api/v2/companies/{$companyId}/items";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1006,7 +955,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/items/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1023,7 +971,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/items/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1039,7 +986,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/items/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1054,13 +1000,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<LocationModel>
+     * @return FetchResult
      */
     public function listLocationsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/locations";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -1070,14 +1015,13 @@ class AvaTaxClient
     /**
      * Create a new location
      * 
-     * @param List<LocationModel> $model The location you wish to create.
-     * @return List<LocationModel>
+     * @param LocationModel[] $model The location you wish to create.
+     * @return LocationModel[]
      */
     public function createLocations($companyId, $model)
     {
         $path = "/api/v2/companies/{$companyId}/locations";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1093,7 +1037,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/locations/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1110,7 +1053,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/locations/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1126,7 +1068,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/locations/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1140,13 +1081,12 @@ class AvaTaxClient
      * @param string $format The format of the file (JSON by default)
      * @param int $partnerId If specified, requests a custom partner-formatted version of the file.
      * @param boolean $includeJurisCodes When true, the file will include jurisdiction codes in the result.
-     * @return String
+     * @return string
      */
     public function buildPointOfSaleDataForLocation($companyId, $id, $date, $format, $partnerId, $includeJurisCodes)
     {
         $path = "/api/v2/companies/{$companyId}/locations/{$id}/pointofsaledata";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['date' => $date, 'format' => $format, 'partnerId' => $partnerId, 'includeJurisCodes' => $includeJurisCodes],
             'body' => null
         ];
@@ -1162,7 +1102,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/locations/{$id}/validate";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1177,13 +1116,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<NexusModel>
+     * @return FetchResult
      */
     public function listNexusByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/nexus";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -1193,14 +1131,13 @@ class AvaTaxClient
     /**
      * Create a new nexus
      * 
-     * @param List<NexusModel> $model The nexus you wish to create.
-     * @return List<NexusModel>
+     * @param NexusModel[] $model The nexus you wish to create.
+     * @return NexusModel[]
      */
     public function createNexus($companyId, $model)
     {
         $path = "/api/v2/companies/{$companyId}/nexus";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1216,7 +1153,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/nexus/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1233,7 +1169,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/nexus/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1249,7 +1184,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/nexus/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1264,13 +1198,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<SettingModel>
+     * @return FetchResult
      */
     public function listSettingsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/settings";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -1280,14 +1213,13 @@ class AvaTaxClient
     /**
      * Create a new setting
      * 
-     * @param List<SettingModel> $model The setting you wish to create.
-     * @return List<SettingModel>
+     * @param SettingModel[] $model The setting you wish to create.
+     * @return SettingModel[]
      */
     public function createSettings($companyId, $model)
     {
         $path = "/api/v2/companies/{$companyId}/settings";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1303,7 +1235,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/settings/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1320,7 +1251,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/settings/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1336,7 +1266,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/settings/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1351,13 +1280,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<TaxCodeModel>
+     * @return FetchResult
      */
     public function listTaxCodesByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/taxcodes";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -1367,14 +1295,13 @@ class AvaTaxClient
     /**
      * Create a new tax code
      * 
-     * @param List<TaxCodeModel> $model The tax code you wish to create.
-     * @return List<TaxCodeModel>
+     * @param TaxCodeModel[] $model The tax code you wish to create.
+     * @return TaxCodeModel[]
      */
     public function createTaxCodes($companyId, $model)
     {
         $path = "/api/v2/companies/{$companyId}/taxcodes";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1390,7 +1317,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/taxcodes/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1407,7 +1333,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/taxcodes/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1423,7 +1348,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/taxcodes/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1438,13 +1362,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<TaxRuleModel>
+     * @return FetchResult
      */
     public function listTaxRules($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/taxrules";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -1454,14 +1377,13 @@ class AvaTaxClient
     /**
      * Create a new tax rule
      * 
-     * @param List<TaxRuleModel> $model The tax rule you wish to create.
-     * @return List<TaxRuleModel>
+     * @param TaxRuleModel[] $model The tax rule you wish to create.
+     * @return TaxRuleModel[]
      */
     public function createTaxRules($companyId, $model)
     {
         $path = "/api/v2/companies/{$companyId}/taxrules";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1477,7 +1399,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/taxrules/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1494,7 +1415,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/taxrules/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1510,7 +1430,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/taxrules/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1525,13 +1444,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<UPCModel>
+     * @return FetchResult
      */
     public function listUPCsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/companies/{$companyId}/upcs";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -1541,14 +1459,13 @@ class AvaTaxClient
     /**
      * Create a new UPC
      * 
-     * @param List<UPCModel> $model The UPC you wish to create.
-     * @return List<UPCModel>
+     * @param UPCModel[] $model The UPC you wish to create.
+     * @return UPCModel[]
      */
     public function createUPCs($companyId, $model)
     {
         $path = "/api/v2/companies/{$companyId}/upcs";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1564,7 +1481,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/upcs/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1581,7 +1497,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/upcs/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1597,7 +1512,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$companyId}/upcs/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1614,7 +1528,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$include' => $include],
             'body' => null
         ];
@@ -1631,7 +1544,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1647,7 +1559,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1664,7 +1575,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/companies/initialize";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -1679,13 +1589,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<ContactModel>
+     * @return FetchResult
      */
     public function queryContacts($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/contacts";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -1695,13 +1604,12 @@ class AvaTaxClient
     /**
      * List all ISO 3166 countries
      * 
-     * @return FetchResult<IsoCountryModel>
+     * @return FetchResult
      */
     public function listCountries()
     {
         $path = "/api/v2/definitions/countries";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1711,13 +1619,12 @@ class AvaTaxClient
     /**
      * List all ISO 3166 regions for a country
      * 
-     * @return FetchResult<IsoRegionModel>
+     * @return FetchResult
      */
     public function listRegionsByCountry($country)
     {
         $path = "/api/v2/definitions/countries/{$country}/regions";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1727,13 +1634,12 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported entity use codes
      * 
-     * @return FetchResult<EntityUseCodeModel>
+     * @return FetchResult
      */
     public function listEntityUseCodes()
     {
         $path = "/api/v2/definitions/entityusecodes";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1750,15 +1656,14 @@ class AvaTaxClient
      * @param string $region The region, state, or province part of this location's address.
      * @param string $postalCode The postal code of this location's address.
      * @param string $country The country part of this location's address.
-     * @param Decimal? $latitude Optionally identify the location via latitude/longitude instead of via address.
-     * @param Decimal? $longitude Optionally identify the location via latitude/longitude instead of via address.
-     * @return FetchResult<LocationQuestionModel>
+     * @param float $latitude Optionally identify the location via latitude/longitude instead of via address.
+     * @param float $longitude Optionally identify the location via latitude/longitude instead of via address.
+     * @return FetchResult
      */
     public function listLocationQuestionsByAddress($line1, $line2, $line3, $city, $region, $postalCode, $country, $latitude, $longitude)
     {
         $path = "/api/v2/definitions/locationquestions";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['line1' => $line1, 'line2' => $line2, 'line3' => $line3, 'city' => $city, 'region' => $region, 'postalCode' => $postalCode, 'country' => $country, 'latitude' => $latitude, 'longitude' => $longitude],
             'body' => null
         ];
@@ -1768,13 +1673,12 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported nexus for all countries and regions.
      * 
-     * @return FetchResult<NexusModel>
+     * @return FetchResult
      */
     public function definitionsNexusGet()
     {
         $path = "/api/v2/definitions/nexus";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1784,13 +1688,12 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported nexus for a country.
      * 
-     * @return FetchResult<NexusModel>
+     * @return FetchResult
      */
     public function definitionsNexusByCountryGet($country)
     {
         $path = "/api/v2/definitions/nexus/{$country}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1800,13 +1703,12 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported nexus for a country and region.
      * 
-     * @return FetchResult<NexusModel>
+     * @return FetchResult
      */
     public function definitionsNexusByCountryByRegionGet($country, $region)
     {
         $path = "/api/v2/definitions/nexus/{$country}/{$region}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1823,13 +1725,12 @@ class AvaTaxClient
      * @param string $region The region, state, or province code portion of this address.
      * @param string $postalCode The postal code or zip code portion of this address.
      * @param string $country The two-character ISO-3166 code of the country portion of this address.
-     * @return FetchResult<NexusModel>
+     * @return FetchResult
      */
     public function listNexusByAddress($line1, $line2, $line3, $city, $region, $postalCode, $country)
     {
         $path = "/api/v2/definitions/nexus/byaddress";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['line1' => $line1, 'line2' => $line2, 'line3' => $line3, 'city' => $city, 'region' => $region, 'postalCode' => $postalCode, 'country' => $country],
             'body' => null
         ];
@@ -1839,13 +1740,12 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported extra parameters for creating transactions.
      * 
-     * @return FetchResult<ParameterModel>
+     * @return FetchResult
      */
     public function listParameters()
     {
         $path = "/api/v2/definitions/parameters";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1855,13 +1755,12 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported permissions
      * 
-     * @return FetchResult<String>
+     * @return FetchResult
      */
     public function listPermissions()
     {
         $path = "/api/v2/definitions/permissions";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1871,13 +1770,12 @@ class AvaTaxClient
     /**
      * List all ISO 3166 regions
      * 
-     * @return FetchResult<IsoRegionModel>
+     * @return FetchResult
      */
     public function listRegions()
     {
         $path = "/api/v2/definitions/regions";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1887,13 +1785,12 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported permissions
      * 
-     * @return FetchResult<SecurityRoleModel>
+     * @return FetchResult
      */
     public function listSecurityRoles()
     {
         $path = "/api/v2/definitions/securityroles";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1903,13 +1800,12 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported subscription types
      * 
-     * @return FetchResult<SubscriptionTypeModel>
+     * @return FetchResult
      */
     public function listSubscriptionTypes()
     {
         $path = "/api/v2/definitions/subscriptiontypes";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1919,13 +1815,12 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported tax authorities.
      * 
-     * @return FetchResult<TaxAuthorityModel>
+     * @return FetchResult
      */
     public function listTaxAuthorities()
     {
         $path = "/api/v2/definitions/taxauthorities";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1935,13 +1830,12 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported forms for each tax authority.
      * 
-     * @return FetchResult<TaxAuthorityFormModel>
+     * @return FetchResult
      */
     public function listTaxAuthorityForms()
     {
         $path = "/api/v2/definitions/taxauthorityforms";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1951,13 +1845,12 @@ class AvaTaxClient
     /**
      * Retrieve the full list of Avalara-supported tax codes.
      * 
-     * @return FetchResult<TaxCodeModel>
+     * @return FetchResult
      */
     public function listTaxCodes()
     {
         $path = "/api/v2/definitions/taxcodes";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1973,7 +1866,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/definitions/taxcodetypes";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -1989,7 +1881,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/fundingrequests/{$requestId}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -2005,7 +1896,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/fundingrequests/{$requestId}/widget";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -2020,13 +1910,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<ItemModel>
+     * @return FetchResult
      */
     public function queryItems($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/items";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -2041,13 +1930,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<LocationModel>
+     * @return FetchResult
      */
     public function queryLocations($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/locations";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -2062,13 +1950,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<NexusModel>
+     * @return FetchResult
      */
     public function queryNexus($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/nexus";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -2079,13 +1966,12 @@ class AvaTaxClient
      * Change Password
      * 
      * @param PasswordChangeModel $model An object containing your current password and the new password.
-     * @return String
+     * @return string
      */
     public function changePassword($model)
     {
         $path = "/api/v2/passwords";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -2096,13 +1982,12 @@ class AvaTaxClient
      * Reset a user's password programmatically
      * 
      * @param SetPasswordModel $model The new password for this user
-     * @return String
+     * @return string
      */
     public function resetPassword($userId, $model)
     {
         $path = "/api/v2/passwords/{$userId}/reset";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -2113,13 +1998,12 @@ class AvaTaxClient
      * Point of sale data file generation
      * 
      * @param PointOfSaleDataRequestModel $model Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.
-     * @return String
+     * @return string
      */
     public function buildPointOfSaleDataFile($model)
     {
         $path = "/api/v2/pointofsaledata/build";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -2134,13 +2018,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<SettingModel>
+     * @return FetchResult
      */
     public function querySettings($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/settings";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -2154,13 +2037,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<SubscriptionModel>
+     * @return FetchResult
      */
     public function querySubscriptions($filter, $top, $skip, $orderBy)
     {
         $path = "/api/v2/subscriptions";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -2175,13 +2057,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<TaxCodeModel>
+     * @return FetchResult
      */
     public function queryTaxCodes($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/taxcodes";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -2204,7 +2085,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/taxrates/byaddress";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['line1' => $line1, 'line2' => $line2, 'line3' => $line3, 'city' => $city, 'region' => $region, 'postalCode' => $postalCode, 'country' => $country],
             'body' => null
         ];
@@ -2222,7 +2102,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/taxrates/bypostalcode";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['country' => $country, 'postalCode' => $postalCode],
             'body' => null
         ];
@@ -2237,13 +2116,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<TaxRuleModel>
+     * @return FetchResult
      */
     public function queryTaxRules($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/taxrules";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -2260,7 +2138,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/transactions/{$id}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$include' => $include],
             'body' => null
         ];
@@ -2277,7 +2154,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/transactions/create";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => json_encode($model)
         ];
@@ -2292,13 +2168,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<UPCModel>
+     * @return FetchResult
      */
     public function queryUPCs($filter, $include, $top, $skip, $orderBy)
     {
         $path = "/api/v2/upcs";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$filter' => $filter, '$include' => $include, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -2313,13 +2188,12 @@ class AvaTaxClient
      * @param int $top If nonzero, return no more than this number of results.
      * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @return FetchResult<UserModel>
+     * @return FetchResult
      */
     public function queryUsers($include, $filter, $top, $skip, $orderBy)
     {
         $path = "/api/v2/users";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => ['$include' => $include, '$filter' => $filter, '$top' => $top, '$skip' => $skip, '$orderBy' => $orderBy],
             'body' => null
         ];
@@ -2335,7 +2209,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/utilities/ping";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -2351,7 +2224,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/utilities/subscriptions";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -2367,7 +2239,6 @@ class AvaTaxClient
     {
         $path = "/api/v2/utilities/subscriptions/{$serviceTypeId}";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [],
             'body' => null
         ];
@@ -2383,6 +2254,12 @@ class AvaTaxClient
      */
     private function restCall($apiUrl, $verb, $guzzleParams)
     {
+        // Set authentication on the parameters
+        if (!isset($guzzleParams['auth'])){
+            $guzzleParams['auth'] = $this->auth;
+        }
+    
+        // Contact the server
         try {
             $request = $this->client->createRequest($verb, $apiUrl, $guzzleParams);
             $response = $this->client->send($request);
@@ -2409,488 +2286,488 @@ class Constants
      * Enumerated values defined for AccountStatusId
      */
 
-    const AccountStatusId_Inactive = "Inactive";
-    const AccountStatusId_Active = "Active";
-    const AccountStatusId_Test = "Test";
-    const AccountStatusId_New = "New";
+    const ACCOUNTSTATUSID_INACTIVE = "Inactive";
+    const ACCOUNTSTATUSID_ACTIVE = "Active";
+    const ACCOUNTSTATUSID_TEST = "Test";
+    const ACCOUNTSTATUSID_NEW = "New";
 
     /**
      * Enumerated values defined for SecurityRoleId
      */
 
-    const SecurityRoleId_NoAccess = "NoAccess";
-    const SecurityRoleId_SiteAdmin = "SiteAdmin";
-    const SecurityRoleId_AccountOperator = "AccountOperator";
-    const SecurityRoleId_AccountAdmin = "AccountAdmin";
-    const SecurityRoleId_AccountUser = "AccountUser";
-    const SecurityRoleId_SystemAdmin = "SystemAdmin";
-    const SecurityRoleId_Registrar = "Registrar";
-    const SecurityRoleId_CSPTester = "CSPTester";
-    const SecurityRoleId_CSPAdmin = "CSPAdmin";
-    const SecurityRoleId_SystemOperator = "SystemOperator";
-    const SecurityRoleId_TechnicalSupportUser = "TechnicalSupportUser";
-    const SecurityRoleId_TechnicalSupportAdmin = "TechnicalSupportAdmin";
-    const SecurityRoleId_TreasuryUser = "TreasuryUser";
-    const SecurityRoleId_TreasuryAdmin = "TreasuryAdmin";
-    const SecurityRoleId_ComplianceUser = "ComplianceUser";
-    const SecurityRoleId_ComplianceAdmin = "ComplianceAdmin";
-    const SecurityRoleId_ProStoresOperator = "ProStoresOperator";
-    const SecurityRoleId_CompanyUser = "CompanyUser";
-    const SecurityRoleId_CompanyAdmin = "CompanyAdmin";
-    const SecurityRoleId_ComplianceTempUser = "ComplianceTempUser";
-    const SecurityRoleId_ComplianceRootUser = "ComplianceRootUser";
-    const SecurityRoleId_ComplianceOperator = "ComplianceOperator";
-    const SecurityRoleId_SSTAdmin = "SSTAdmin";
+    const SECURITYROLEID_NOACCESS = "NoAccess";
+    const SECURITYROLEID_SITEADMIN = "SiteAdmin";
+    const SECURITYROLEID_ACCOUNTOPERATOR = "AccountOperator";
+    const SECURITYROLEID_ACCOUNTADMIN = "AccountAdmin";
+    const SECURITYROLEID_ACCOUNTUSER = "AccountUser";
+    const SECURITYROLEID_SYSTEMADMIN = "SystemAdmin";
+    const SECURITYROLEID_REGISTRAR = "Registrar";
+    const SECURITYROLEID_CSPTESTER = "CSPTester";
+    const SECURITYROLEID_CSPADMIN = "CSPAdmin";
+    const SECURITYROLEID_SYSTEMOPERATOR = "SystemOperator";
+    const SECURITYROLEID_TECHNICALSUPPORTUSER = "TechnicalSupportUser";
+    const SECURITYROLEID_TECHNICALSUPPORTADMIN = "TechnicalSupportAdmin";
+    const SECURITYROLEID_TREASURYUSER = "TreasuryUser";
+    const SECURITYROLEID_TREASURYADMIN = "TreasuryAdmin";
+    const SECURITYROLEID_COMPLIANCEUSER = "ComplianceUser";
+    const SECURITYROLEID_COMPLIANCEADMIN = "ComplianceAdmin";
+    const SECURITYROLEID_PROSTORESOPERATOR = "ProStoresOperator";
+    const SECURITYROLEID_COMPANYUSER = "CompanyUser";
+    const SECURITYROLEID_COMPANYADMIN = "CompanyAdmin";
+    const SECURITYROLEID_COMPLIANCETEMPUSER = "ComplianceTempUser";
+    const SECURITYROLEID_COMPLIANCEROOTUSER = "ComplianceRootUser";
+    const SECURITYROLEID_COMPLIANCEOPERATOR = "ComplianceOperator";
+    const SECURITYROLEID_SSTADMIN = "SSTAdmin";
 
     /**
      * Enumerated values defined for PasswordStatusId
      */
 
-    const PasswordStatusId_UserCannotChange = "UserCannotChange";
-    const PasswordStatusId_UserCanChange = "UserCanChange";
-    const PasswordStatusId_UserMustChange = "UserMustChange";
+    const PASSWORDSTATUSID_USERCANNOTCHANGE = "UserCannotChange";
+    const PASSWORDSTATUSID_USERCANCHANGE = "UserCanChange";
+    const PASSWORDSTATUSID_USERMUSTCHANGE = "UserMustChange";
 
     /**
      * Enumerated values defined for ErrorCodeId
      */
 
-    const ErrorCodeId_ServerConfiguration = "ServerConfiguration";
-    const ErrorCodeId_AccountInvalidException = "AccountInvalidException";
-    const ErrorCodeId_CompanyInvalidException = "CompanyInvalidException";
-    const ErrorCodeId_EntityNotFoundError = "EntityNotFoundError";
-    const ErrorCodeId_ValueRequiredError = "ValueRequiredError";
-    const ErrorCodeId_RangeError = "RangeError";
-    const ErrorCodeId_RangeCompareError = "RangeCompareError";
-    const ErrorCodeId_RangeSetError = "RangeSetError";
-    const ErrorCodeId_TaxpayerNumberRequired = "TaxpayerNumberRequired";
-    const ErrorCodeId_CommonPassword = "CommonPassword";
-    const ErrorCodeId_WeakPassword = "WeakPassword";
-    const ErrorCodeId_StringLengthError = "StringLengthError";
-    const ErrorCodeId_EmailValidationError = "EmailValidationError";
-    const ErrorCodeId_EmailMissingError = "EmailMissingError";
-    const ErrorCodeId_ParserFieldNameError = "ParserFieldNameError";
-    const ErrorCodeId_ParserFieldValueError = "ParserFieldValueError";
-    const ErrorCodeId_ParserSyntaxError = "ParserSyntaxError";
-    const ErrorCodeId_ParserTooManyParametersError = "ParserTooManyParametersError";
-    const ErrorCodeId_ParserUnterminatedValueError = "ParserUnterminatedValueError";
-    const ErrorCodeId_DeleteUserSelfError = "DeleteUserSelfError";
-    const ErrorCodeId_OldPasswordInvalid = "OldPasswordInvalid";
-    const ErrorCodeId_CannotChangePassword = "CannotChangePassword";
-    const ErrorCodeId_CannotChangeCompanyCode = "CannotChangeCompanyCode";
-    const ErrorCodeId_AuthenticationException = "AuthenticationException";
-    const ErrorCodeId_AuthorizationException = "AuthorizationException";
-    const ErrorCodeId_ValidationException = "ValidationException";
-    const ErrorCodeId_InactiveUserError = "InactiveUserError";
-    const ErrorCodeId_AuthenticationIncomplete = "AuthenticationIncomplete";
-    const ErrorCodeId_BasicAuthIncorrect = "BasicAuthIncorrect";
-    const ErrorCodeId_IdentityServerError = "IdentityServerError";
-    const ErrorCodeId_BearerTokenInvalid = "BearerTokenInvalid";
-    const ErrorCodeId_ModelRequiredException = "ModelRequiredException";
-    const ErrorCodeId_AccountExpiredException = "AccountExpiredException";
-    const ErrorCodeId_VisibilityError = "VisibilityError";
-    const ErrorCodeId_BearerTokenNotSupported = "BearerTokenNotSupported";
-    const ErrorCodeId_InvalidSecurityRole = "InvalidSecurityRole";
-    const ErrorCodeId_InvalidRegistrarAction = "InvalidRegistrarAction";
-    const ErrorCodeId_RemoteServerError = "RemoteServerError";
-    const ErrorCodeId_NoFilterCriteriaException = "NoFilterCriteriaException";
-    const ErrorCodeId_OpenClauseException = "OpenClauseException";
-    const ErrorCodeId_JsonFormatError = "JsonFormatError";
-    const ErrorCodeId_UnhandledException = "UnhandledException";
-    const ErrorCodeId_ReportingCompanyMustHaveContactsError = "ReportingCompanyMustHaveContactsError";
-    const ErrorCodeId_CompanyProfileNotSet = "CompanyProfileNotSet";
-    const ErrorCodeId_ModelStateInvalid = "ModelStateInvalid";
-    const ErrorCodeId_DateRangeError = "DateRangeError";
-    const ErrorCodeId_InvalidDateRangeError = "InvalidDateRangeError";
-    const ErrorCodeId_DeleteInformation = "DeleteInformation";
-    const ErrorCodeId_CannotCreateDeletedObjects = "CannotCreateDeletedObjects";
-    const ErrorCodeId_CannotModifyDeletedObjects = "CannotModifyDeletedObjects";
-    const ErrorCodeId_ReturnNameNotFound = "ReturnNameNotFound";
-    const ErrorCodeId_InvalidAddressTypeAndCategory = "InvalidAddressTypeAndCategory";
-    const ErrorCodeId_DefaultCompanyLocation = "DefaultCompanyLocation";
-    const ErrorCodeId_InvalidCountry = "InvalidCountry";
-    const ErrorCodeId_InvalidCountryRegion = "InvalidCountryRegion";
-    const ErrorCodeId_BrazilValidationError = "BrazilValidationError";
-    const ErrorCodeId_BrazilExemptValidationError = "BrazilExemptValidationError";
-    const ErrorCodeId_BrazilPisCofinsError = "BrazilPisCofinsError";
-    const ErrorCodeId_JurisdictionNotFoundError = "JurisdictionNotFoundError";
-    const ErrorCodeId_MedicalExciseError = "MedicalExciseError";
-    const ErrorCodeId_RateDependsTaxabilityError = "RateDependsTaxabilityError";
-    const ErrorCodeId_RateDependsEuropeError = "RateDependsEuropeError";
-    const ErrorCodeId_RateTypeNotSupported = "RateTypeNotSupported";
-    const ErrorCodeId_CannotUpdateNestedObjects = "CannotUpdateNestedObjects";
-    const ErrorCodeId_UPCCodeInvalidChars = "UPCCodeInvalidChars";
-    const ErrorCodeId_UPCCodeInvalidLength = "UPCCodeInvalidLength";
-    const ErrorCodeId_IncorrectPathError = "IncorrectPathError";
-    const ErrorCodeId_InvalidJurisdictionType = "InvalidJurisdictionType";
-    const ErrorCodeId_MustConfirmResetLicenseKey = "MustConfirmResetLicenseKey";
-    const ErrorCodeId_DuplicateCompanyCode = "DuplicateCompanyCode";
-    const ErrorCodeId_TINFormatError = "TINFormatError";
-    const ErrorCodeId_DuplicateNexusError = "DuplicateNexusError";
-    const ErrorCodeId_UnknownNexusError = "UnknownNexusError";
-    const ErrorCodeId_ParentNexusNotFound = "ParentNexusNotFound";
-    const ErrorCodeId_InvalidTaxCodeType = "InvalidTaxCodeType";
-    const ErrorCodeId_CannotActivateCompany = "CannotActivateCompany";
-    const ErrorCodeId_DuplicateEntityProperty = "DuplicateEntityProperty";
-    const ErrorCodeId_BatchSalesAuditMustBeZippedError = "BatchSalesAuditMustBeZippedError";
-    const ErrorCodeId_BatchZipMustContainOneFileError = "BatchZipMustContainOneFileError";
-    const ErrorCodeId_BatchInvalidFileTypeError = "BatchInvalidFileTypeError";
-    const ErrorCodeId_PointOfSaleFileSize = "PointOfSaleFileSize";
-    const ErrorCodeId_PointOfSaleSetup = "PointOfSaleSetup";
-    const ErrorCodeId_GetTaxError = "GetTaxError";
-    const ErrorCodeId_AddressConflictException = "AddressConflictException";
-    const ErrorCodeId_DocumentCodeConflict = "DocumentCodeConflict";
-    const ErrorCodeId_MissingAddress = "MissingAddress";
-    const ErrorCodeId_InvalidParameter = "InvalidParameter";
-    const ErrorCodeId_InvalidParameterValue = "InvalidParameterValue";
-    const ErrorCodeId_CompanyCodeConflict = "CompanyCodeConflict";
-    const ErrorCodeId_DocumentFetchLimit = "DocumentFetchLimit";
-    const ErrorCodeId_AddressIncomplete = "AddressIncomplete";
-    const ErrorCodeId_AddressLocationNotFound = "AddressLocationNotFound";
-    const ErrorCodeId_MissingLine = "MissingLine";
-    const ErrorCodeId_BadDocumentFetch = "BadDocumentFetch";
-    const ErrorCodeId_ServerUnreachable = "ServerUnreachable";
-    const ErrorCodeId_SubscriptionRequired = "SubscriptionRequired";
+    const ERRORCODEID_SERVERCONFIGURATION = "ServerConfiguration";
+    const ERRORCODEID_ACCOUNTINVALIDEXCEPTION = "AccountInvalidException";
+    const ERRORCODEID_COMPANYINVALIDEXCEPTION = "CompanyInvalidException";
+    const ERRORCODEID_ENTITYNOTFOUNDERROR = "EntityNotFoundError";
+    const ERRORCODEID_VALUEREQUIREDERROR = "ValueRequiredError";
+    const ERRORCODEID_RANGEERROR = "RangeError";
+    const ERRORCODEID_RANGECOMPAREERROR = "RangeCompareError";
+    const ERRORCODEID_RANGESETERROR = "RangeSetError";
+    const ERRORCODEID_TAXPAYERNUMBERREQUIRED = "TaxpayerNumberRequired";
+    const ERRORCODEID_COMMONPASSWORD = "CommonPassword";
+    const ERRORCODEID_WEAKPASSWORD = "WeakPassword";
+    const ERRORCODEID_STRINGLENGTHERROR = "StringLengthError";
+    const ERRORCODEID_EMAILVALIDATIONERROR = "EmailValidationError";
+    const ERRORCODEID_EMAILMISSINGERROR = "EmailMissingError";
+    const ERRORCODEID_PARSERFIELDNAMEERROR = "ParserFieldNameError";
+    const ERRORCODEID_PARSERFIELDVALUEERROR = "ParserFieldValueError";
+    const ERRORCODEID_PARSERSYNTAXERROR = "ParserSyntaxError";
+    const ERRORCODEID_PARSERTOOMANYPARAMETERSERROR = "ParserTooManyParametersError";
+    const ERRORCODEID_PARSERUNTERMINATEDVALUEERROR = "ParserUnterminatedValueError";
+    const ERRORCODEID_DELETEUSERSELFERROR = "DeleteUserSelfError";
+    const ERRORCODEID_OLDPASSWORDINVALID = "OldPasswordInvalid";
+    const ERRORCODEID_CANNOTCHANGEPASSWORD = "CannotChangePassword";
+    const ERRORCODEID_CANNOTCHANGECOMPANYCODE = "CannotChangeCompanyCode";
+    const ERRORCODEID_AUTHENTICATIONEXCEPTION = "AuthenticationException";
+    const ERRORCODEID_AUTHORIZATIONEXCEPTION = "AuthorizationException";
+    const ERRORCODEID_VALIDATIONEXCEPTION = "ValidationException";
+    const ERRORCODEID_INACTIVEUSERERROR = "InactiveUserError";
+    const ERRORCODEID_AUTHENTICATIONINCOMPLETE = "AuthenticationIncomplete";
+    const ERRORCODEID_BASICAUTHINCORRECT = "BasicAuthIncorrect";
+    const ERRORCODEID_IDENTITYSERVERERROR = "IdentityServerError";
+    const ERRORCODEID_BEARERTOKENINVALID = "BearerTokenInvalid";
+    const ERRORCODEID_MODELREQUIREDEXCEPTION = "ModelRequiredException";
+    const ERRORCODEID_ACCOUNTEXPIREDEXCEPTION = "AccountExpiredException";
+    const ERRORCODEID_VISIBILITYERROR = "VisibilityError";
+    const ERRORCODEID_BEARERTOKENNOTSUPPORTED = "BearerTokenNotSupported";
+    const ERRORCODEID_INVALIDSECURITYROLE = "InvalidSecurityRole";
+    const ERRORCODEID_INVALIDREGISTRARACTION = "InvalidRegistrarAction";
+    const ERRORCODEID_REMOTESERVERERROR = "RemoteServerError";
+    const ERRORCODEID_NOFILTERCRITERIAEXCEPTION = "NoFilterCriteriaException";
+    const ERRORCODEID_OPENCLAUSEEXCEPTION = "OpenClauseException";
+    const ERRORCODEID_JSONFORMATERROR = "JsonFormatError";
+    const ERRORCODEID_UNHANDLEDEXCEPTION = "UnhandledException";
+    const ERRORCODEID_REPORTINGCOMPANYMUSTHAVECONTACTSERROR = "ReportingCompanyMustHaveContactsError";
+    const ERRORCODEID_COMPANYPROFILENOTSET = "CompanyProfileNotSet";
+    const ERRORCODEID_MODELSTATEINVALID = "ModelStateInvalid";
+    const ERRORCODEID_DATERANGEERROR = "DateRangeError";
+    const ERRORCODEID_INVALIDDATERANGEERROR = "InvalidDateRangeError";
+    const ERRORCODEID_DELETEINFORMATION = "DeleteInformation";
+    const ERRORCODEID_CANNOTCREATEDELETEDOBJECTS = "CannotCreateDeletedObjects";
+    const ERRORCODEID_CANNOTMODIFYDELETEDOBJECTS = "CannotModifyDeletedObjects";
+    const ERRORCODEID_RETURNNAMENOTFOUND = "ReturnNameNotFound";
+    const ERRORCODEID_INVALIDADDRESSTYPEANDCATEGORY = "InvalidAddressTypeAndCategory";
+    const ERRORCODEID_DEFAULTCOMPANYLOCATION = "DefaultCompanyLocation";
+    const ERRORCODEID_INVALIDCOUNTRY = "InvalidCountry";
+    const ERRORCODEID_INVALIDCOUNTRYREGION = "InvalidCountryRegion";
+    const ERRORCODEID_BRAZILVALIDATIONERROR = "BrazilValidationError";
+    const ERRORCODEID_BRAZILEXEMPTVALIDATIONERROR = "BrazilExemptValidationError";
+    const ERRORCODEID_BRAZILPISCOFINSERROR = "BrazilPisCofinsError";
+    const ERRORCODEID_JURISDICTIONNOTFOUNDERROR = "JurisdictionNotFoundError";
+    const ERRORCODEID_MEDICALEXCISEERROR = "MedicalExciseError";
+    const ERRORCODEID_RATEDEPENDSTAXABILITYERROR = "RateDependsTaxabilityError";
+    const ERRORCODEID_RATEDEPENDSEUROPEERROR = "RateDependsEuropeError";
+    const ERRORCODEID_RATETYPENOTSUPPORTED = "RateTypeNotSupported";
+    const ERRORCODEID_CANNOTUPDATENESTEDOBJECTS = "CannotUpdateNestedObjects";
+    const ERRORCODEID_UPCCODEINVALIDCHARS = "UPCCodeInvalidChars";
+    const ERRORCODEID_UPCCODEINVALIDLENGTH = "UPCCodeInvalidLength";
+    const ERRORCODEID_INCORRECTPATHERROR = "IncorrectPathError";
+    const ERRORCODEID_INVALIDJURISDICTIONTYPE = "InvalidJurisdictionType";
+    const ERRORCODEID_MUSTCONFIRMRESETLICENSEKEY = "MustConfirmResetLicenseKey";
+    const ERRORCODEID_DUPLICATECOMPANYCODE = "DuplicateCompanyCode";
+    const ERRORCODEID_TINFORMATERROR = "TINFormatError";
+    const ERRORCODEID_DUPLICATENEXUSERROR = "DuplicateNexusError";
+    const ERRORCODEID_UNKNOWNNEXUSERROR = "UnknownNexusError";
+    const ERRORCODEID_PARENTNEXUSNOTFOUND = "ParentNexusNotFound";
+    const ERRORCODEID_INVALIDTAXCODETYPE = "InvalidTaxCodeType";
+    const ERRORCODEID_CANNOTACTIVATECOMPANY = "CannotActivateCompany";
+    const ERRORCODEID_DUPLICATEENTITYPROPERTY = "DuplicateEntityProperty";
+    const ERRORCODEID_BATCHSALESAUDITMUSTBEZIPPEDERROR = "BatchSalesAuditMustBeZippedError";
+    const ERRORCODEID_BATCHZIPMUSTCONTAINONEFILEERROR = "BatchZipMustContainOneFileError";
+    const ERRORCODEID_BATCHINVALIDFILETYPEERROR = "BatchInvalidFileTypeError";
+    const ERRORCODEID_POINTOFSALEFILESIZE = "PointOfSaleFileSize";
+    const ERRORCODEID_POINTOFSALESETUP = "PointOfSaleSetup";
+    const ERRORCODEID_GETTAXERROR = "GetTaxError";
+    const ERRORCODEID_ADDRESSCONFLICTEXCEPTION = "AddressConflictException";
+    const ERRORCODEID_DOCUMENTCODECONFLICT = "DocumentCodeConflict";
+    const ERRORCODEID_MISSINGADDRESS = "MissingAddress";
+    const ERRORCODEID_INVALIDPARAMETER = "InvalidParameter";
+    const ERRORCODEID_INVALIDPARAMETERVALUE = "InvalidParameterValue";
+    const ERRORCODEID_COMPANYCODECONFLICT = "CompanyCodeConflict";
+    const ERRORCODEID_DOCUMENTFETCHLIMIT = "DocumentFetchLimit";
+    const ERRORCODEID_ADDRESSINCOMPLETE = "AddressIncomplete";
+    const ERRORCODEID_ADDRESSLOCATIONNOTFOUND = "AddressLocationNotFound";
+    const ERRORCODEID_MISSINGLINE = "MissingLine";
+    const ERRORCODEID_BADDOCUMENTFETCH = "BadDocumentFetch";
+    const ERRORCODEID_SERVERUNREACHABLE = "ServerUnreachable";
+    const ERRORCODEID_SUBSCRIPTIONREQUIRED = "SubscriptionRequired";
 
     /**
      * Enumerated values defined for ErrorTargetCode
      */
 
-    const ErrorTargetCode_Unknown = "Unknown";
-    const ErrorTargetCode_HttpRequest = "HttpRequest";
-    const ErrorTargetCode_HttpRequestHeaders = "HttpRequestHeaders";
-    const ErrorTargetCode_IncorrectData = "IncorrectData";
-    const ErrorTargetCode_AvaTaxApiServer = "AvaTaxApiServer";
-    const ErrorTargetCode_AvalaraIdentityServer = "AvalaraIdentityServer";
-    const ErrorTargetCode_CustomerAccountSetup = "CustomerAccountSetup";
+    const ERRORTARGETCODE_UNKNOWN = "Unknown";
+    const ERRORTARGETCODE_HTTPREQUEST = "HttpRequest";
+    const ERRORTARGETCODE_HTTPREQUESTHEADERS = "HttpRequestHeaders";
+    const ERRORTARGETCODE_INCORRECTDATA = "IncorrectData";
+    const ERRORTARGETCODE_AVATAXAPISERVER = "AvaTaxApiServer";
+    const ERRORTARGETCODE_AVALARAIDENTITYSERVER = "AvalaraIdentityServer";
+    const ERRORTARGETCODE_CUSTOMERACCOUNTSETUP = "CustomerAccountSetup";
 
     /**
      * Enumerated values defined for SeverityLevel
      */
 
-    const SeverityLevel_Success = "Success";
-    const SeverityLevel_Warning = "Warning";
-    const SeverityLevel_Error = "Error";
-    const SeverityLevel_Exception = "Exception";
+    const SEVERITYLEVEL_SUCCESS = "Success";
+    const SEVERITYLEVEL_WARNING = "Warning";
+    const SEVERITYLEVEL_ERROR = "Error";
+    const SEVERITYLEVEL_EXCEPTION = "Exception";
 
     /**
      * Enumerated values defined for ResolutionQuality
      */
 
-    const ResolutionQuality_NotCoded = "NotCoded";
-    const ResolutionQuality_External = "External";
-    const ResolutionQuality_CountryCentroid = "CountryCentroid";
-    const ResolutionQuality_RegionCentroid = "RegionCentroid";
-    const ResolutionQuality_PartialCentroid = "PartialCentroid";
-    const ResolutionQuality_PostalCentroidGood = "PostalCentroidGood";
-    const ResolutionQuality_PostalCentroidBetter = "PostalCentroidBetter";
-    const ResolutionQuality_PostalCentroidBest = "PostalCentroidBest";
-    const ResolutionQuality_Intersection = "Intersection";
-    const ResolutionQuality_Interpolated = "Interpolated";
-    const ResolutionQuality_Rooftop = "Rooftop";
-    const ResolutionQuality_Constant = "Constant";
+    const RESOLUTIONQUALITY_NOTCODED = "NotCoded";
+    const RESOLUTIONQUALITY_EXTERNAL = "External";
+    const RESOLUTIONQUALITY_COUNTRYCENTROID = "CountryCentroid";
+    const RESOLUTIONQUALITY_REGIONCENTROID = "RegionCentroid";
+    const RESOLUTIONQUALITY_PARTIALCENTROID = "PartialCentroid";
+    const RESOLUTIONQUALITY_POSTALCENTROIDGOOD = "PostalCentroidGood";
+    const RESOLUTIONQUALITY_POSTALCENTROIDBETTER = "PostalCentroidBetter";
+    const RESOLUTIONQUALITY_POSTALCENTROIDBEST = "PostalCentroidBest";
+    const RESOLUTIONQUALITY_INTERSECTION = "Intersection";
+    const RESOLUTIONQUALITY_INTERPOLATED = "Interpolated";
+    const RESOLUTIONQUALITY_ROOFTOP = "Rooftop";
+    const RESOLUTIONQUALITY_CONSTANT = "Constant";
 
     /**
      * Enumerated values defined for JurisdictionType
      */
 
-    const JurisdictionType_Country = "Country";
-    const JurisdictionType_Composite = "Composite";
-    const JurisdictionType_State = "State";
-    const JurisdictionType_County = "County";
-    const JurisdictionType_City = "City";
-    const JurisdictionType_Special = "Special";
+    const JURISDICTIONTYPE_COUNTRY = "Country";
+    const JURISDICTIONTYPE_COMPOSITE = "Composite";
+    const JURISDICTIONTYPE_STATE = "State";
+    const JURISDICTIONTYPE_COUNTY = "County";
+    const JURISDICTIONTYPE_CITY = "City";
+    const JURISDICTIONTYPE_SPECIAL = "Special";
 
     /**
      * Enumerated values defined for BatchType
      */
 
-    const BatchType_AvaCertUpdate = "AvaCertUpdate";
-    const BatchType_AvaCertUpdateAll = "AvaCertUpdateAll";
-    const BatchType_BatchMaintenance = "BatchMaintenance";
-    const BatchType_CompanyLocationImport = "CompanyLocationImport";
-    const BatchType_DocumentImport = "DocumentImport";
-    const BatchType_ExemptCertImport = "ExemptCertImport";
-    const BatchType_ItemImport = "ItemImport";
-    const BatchType_SalesAuditExport = "SalesAuditExport";
-    const BatchType_SstpTestDeckImport = "SstpTestDeckImport";
-    const BatchType_TaxRuleImport = "TaxRuleImport";
-    const BatchType_TransactionImport = "TransactionImport";
-    const BatchType_UPCBulkImport = "UPCBulkImport";
-    const BatchType_UPCValidationImport = "UPCValidationImport";
+    const BATCHTYPE_AVACERTUPDATE = "AvaCertUpdate";
+    const BATCHTYPE_AVACERTUPDATEALL = "AvaCertUpdateAll";
+    const BATCHTYPE_BATCHMAINTENANCE = "BatchMaintenance";
+    const BATCHTYPE_COMPANYLOCATIONIMPORT = "CompanyLocationImport";
+    const BATCHTYPE_DOCUMENTIMPORT = "DocumentImport";
+    const BATCHTYPE_EXEMPTCERTIMPORT = "ExemptCertImport";
+    const BATCHTYPE_ITEMIMPORT = "ItemImport";
+    const BATCHTYPE_SALESAUDITEXPORT = "SalesAuditExport";
+    const BATCHTYPE_SSTPTESTDECKIMPORT = "SstpTestDeckImport";
+    const BATCHTYPE_TAXRULEIMPORT = "TaxRuleImport";
+    const BATCHTYPE_TRANSACTIONIMPORT = "TransactionImport";
+    const BATCHTYPE_UPCBULKIMPORT = "UPCBulkImport";
+    const BATCHTYPE_UPCVALIDATIONIMPORT = "UPCValidationImport";
 
     /**
      * Enumerated values defined for BatchStatus
      */
 
-    const BatchStatus_Waiting = "Waiting";
-    const BatchStatus_SystemErrors = "SystemErrors";
-    const BatchStatus_Cancelled = "Cancelled";
-    const BatchStatus_Completed = "Completed";
-    const BatchStatus_Creating = "Creating";
-    const BatchStatus_Deleted = "Deleted";
-    const BatchStatus_Errors = "Errors";
-    const BatchStatus_Paused = "Paused";
-    const BatchStatus_Processing = "Processing";
+    const BATCHSTATUS_WAITING = "Waiting";
+    const BATCHSTATUS_SYSTEMERRORS = "SystemErrors";
+    const BATCHSTATUS_CANCELLED = "Cancelled";
+    const BATCHSTATUS_COMPLETED = "Completed";
+    const BATCHSTATUS_CREATING = "Creating";
+    const BATCHSTATUS_DELETED = "Deleted";
+    const BATCHSTATUS_ERRORS = "Errors";
+    const BATCHSTATUS_PAUSED = "Paused";
+    const BATCHSTATUS_PROCESSING = "Processing";
 
     /**
      * Enumerated values defined for RoundingLevelId
      */
 
-    const RoundingLevelId_Line = "Line";
-    const RoundingLevelId_Document = "Document";
+    const ROUNDINGLEVELID_LINE = "Line";
+    const ROUNDINGLEVELID_DOCUMENT = "Document";
 
     /**
      * Enumerated values defined for TaxDependencyLevelId
      */
 
-    const TaxDependencyLevelId_Document = "Document";
-    const TaxDependencyLevelId_State = "State";
-    const TaxDependencyLevelId_TaxRegion = "TaxRegion";
-    const TaxDependencyLevelId_Address = "Address";
+    const TAXDEPENDENCYLEVELID_DOCUMENT = "Document";
+    const TAXDEPENDENCYLEVELID_STATE = "State";
+    const TAXDEPENDENCYLEVELID_TAXREGION = "TaxRegion";
+    const TAXDEPENDENCYLEVELID_ADDRESS = "Address";
 
     /**
      * Enumerated values defined for AddressTypeId
      */
 
-    const AddressTypeId_Location = "Location";
-    const AddressTypeId_Salesperson = "Salesperson";
+    const ADDRESSTYPEID_LOCATION = "Location";
+    const ADDRESSTYPEID_SALESPERSON = "Salesperson";
 
     /**
      * Enumerated values defined for AddressCategoryId
      */
 
-    const AddressCategoryId_Storefront = "Storefront";
-    const AddressCategoryId_MainOffice = "MainOffice";
-    const AddressCategoryId_Warehouse = "Warehouse";
-    const AddressCategoryId_Salesperson = "Salesperson";
-    const AddressCategoryId_Other = "Other";
+    const ADDRESSCATEGORYID_STOREFRONT = "Storefront";
+    const ADDRESSCATEGORYID_MAINOFFICE = "MainOffice";
+    const ADDRESSCATEGORYID_WAREHOUSE = "Warehouse";
+    const ADDRESSCATEGORYID_SALESPERSON = "Salesperson";
+    const ADDRESSCATEGORYID_OTHER = "Other";
 
     /**
      * Enumerated values defined for JurisTypeId
      */
 
-    const JurisTypeId_STA = "STA";
-    const JurisTypeId_CTY = "CTY";
-    const JurisTypeId_CIT = "CIT";
-    const JurisTypeId_STJ = "STJ";
-    const JurisTypeId_CNT = "CNT";
+    const JURISTYPEID_STA = "STA";
+    const JURISTYPEID_CTY = "CTY";
+    const JURISTYPEID_CIT = "CIT";
+    const JURISTYPEID_STJ = "STJ";
+    const JURISTYPEID_CNT = "CNT";
 
     /**
      * Enumerated values defined for NexusTypeId
      */
 
-    const NexusTypeId_None = "None";
-    const NexusTypeId_SalesOrSellersUseTax = "SalesOrSellersUseTax";
-    const NexusTypeId_SalesTax = "SalesTax";
-    const NexusTypeId_SSTVolunteer = "SSTVolunteer";
-    const NexusTypeId_SSTNonVolunteer = "SSTNonVolunteer";
+    const NEXUSTYPEID_NONE = "None";
+    const NEXUSTYPEID_SALESORSELLERSUSETAX = "SalesOrSellersUseTax";
+    const NEXUSTYPEID_SALESTAX = "SalesTax";
+    const NEXUSTYPEID_SSTVOLUNTEER = "SSTVolunteer";
+    const NEXUSTYPEID_SSTNONVOLUNTEER = "SSTNonVolunteer";
 
     /**
      * Enumerated values defined for Sourcing
      */
 
-    const Sourcing_Mixed = "Mixed";
-    const Sourcing_Destination = "Destination";
-    const Sourcing_Origin = "Origin";
+    const SOURCING_MIXED = "Mixed";
+    const SOURCING_DESTINATION = "Destination";
+    const SOURCING_ORIGIN = "Origin";
 
     /**
      * Enumerated values defined for LocalNexusTypeId
      */
 
-    const LocalNexusTypeId_Selected = "Selected";
-    const LocalNexusTypeId_StateAdministered = "StateAdministered";
-    const LocalNexusTypeId_All = "All";
+    const LOCALNEXUSTYPEID_SELECTED = "Selected";
+    const LOCALNEXUSTYPEID_STATEADMINISTERED = "StateAdministered";
+    const LOCALNEXUSTYPEID_ALL = "All";
 
     /**
      * Enumerated values defined for MatchingTaxType
      */
 
-    const MatchingTaxType_All = "All";
-    const MatchingTaxType_BothSalesAndUseTax = "BothSalesAndUseTax";
-    const MatchingTaxType_ConsumerUseTax = "ConsumerUseTax";
-    const MatchingTaxType_MedicalExcise = "MedicalExcise";
-    const MatchingTaxType_Fee = "Fee";
-    const MatchingTaxType_VATInputTax = "VATInputTax";
-    const MatchingTaxType_VATNonrecoverableInputTax = "VATNonrecoverableInputTax";
-    const MatchingTaxType_VATOutputTax = "VATOutputTax";
-    const MatchingTaxType_Rental = "Rental";
-    const MatchingTaxType_SalesTax = "SalesTax";
-    const MatchingTaxType_UseTax = "UseTax";
+    const MATCHINGTAXTYPE_ALL = "All";
+    const MATCHINGTAXTYPE_BOTHSALESANDUSETAX = "BothSalesAndUseTax";
+    const MATCHINGTAXTYPE_CONSUMERUSETAX = "ConsumerUseTax";
+    const MATCHINGTAXTYPE_MEDICALEXCISE = "MedicalExcise";
+    const MATCHINGTAXTYPE_FEE = "Fee";
+    const MATCHINGTAXTYPE_VATINPUTTAX = "VATInputTax";
+    const MATCHINGTAXTYPE_VATNONRECOVERABLEINPUTTAX = "VATNonrecoverableInputTax";
+    const MATCHINGTAXTYPE_VATOUTPUTTAX = "VATOutputTax";
+    const MATCHINGTAXTYPE_RENTAL = "Rental";
+    const MATCHINGTAXTYPE_SALESTAX = "SalesTax";
+    const MATCHINGTAXTYPE_USETAX = "UseTax";
 
     /**
      * Enumerated values defined for RateType
      */
 
-    const RateType_ReducedA = "ReducedA";
-    const RateType_ReducedB = "ReducedB";
-    const RateType_Food = "Food";
-    const RateType_General = "General";
-    const RateType_IncreasedStandard = "IncreasedStandard";
-    const RateType_LinenRental = "LinenRental";
-    const RateType_Medical = "Medical";
-    const RateType_Parking = "Parking";
-    const RateType_SuperReduced = "SuperReduced";
-    const RateType_ReducedR = "ReducedR";
-    const RateType_Standard = "Standard";
-    const RateType_Zero = "Zero";
+    const RATETYPE_REDUCEDA = "ReducedA";
+    const RATETYPE_REDUCEDB = "ReducedB";
+    const RATETYPE_FOOD = "Food";
+    const RATETYPE_GENERAL = "General";
+    const RATETYPE_INCREASEDSTANDARD = "IncreasedStandard";
+    const RATETYPE_LINENRENTAL = "LinenRental";
+    const RATETYPE_MEDICAL = "Medical";
+    const RATETYPE_PARKING = "Parking";
+    const RATETYPE_SUPERREDUCED = "SuperReduced";
+    const RATETYPE_REDUCEDR = "ReducedR";
+    const RATETYPE_STANDARD = "Standard";
+    const RATETYPE_ZERO = "Zero";
 
     /**
      * Enumerated values defined for TaxRuleTypeId
      */
 
-    const TaxRuleTypeId_RateRule = "RateRule";
-    const TaxRuleTypeId_RateOverrideRule = "RateOverrideRule";
-    const TaxRuleTypeId_BaseRule = "BaseRule";
-    const TaxRuleTypeId_ExemptEntityRule = "ExemptEntityRule";
-    const TaxRuleTypeId_ProductTaxabilityRule = "ProductTaxabilityRule";
-    const TaxRuleTypeId_NexusRule = "NexusRule";
+    const TAXRULETYPEID_RATERULE = "RateRule";
+    const TAXRULETYPEID_RATEOVERRIDERULE = "RateOverrideRule";
+    const TAXRULETYPEID_BASERULE = "BaseRule";
+    const TAXRULETYPEID_EXEMPTENTITYRULE = "ExemptEntityRule";
+    const TAXRULETYPEID_PRODUCTTAXABILITYRULE = "ProductTaxabilityRule";
+    const TAXRULETYPEID_NEXUSRULE = "NexusRule";
 
     /**
      * Enumerated values defined for ParameterBagDataType
      */
 
-    const ParameterBagDataType_String = "String";
-    const ParameterBagDataType_Boolean = "Boolean";
-    const ParameterBagDataType_Numeric = "Numeric";
+    const PARAMETERBAGDATATYPE_STRING = "String";
+    const PARAMETERBAGDATATYPE_BOOLEAN = "Boolean";
+    const PARAMETERBAGDATATYPE_NUMERIC = "Numeric";
 
     /**
      * Enumerated values defined for WorksheetTypeId
      */
 
-    const WorksheetTypeId_Original = "Original";
-    const WorksheetTypeId_Amended = "Amended";
-    const WorksheetTypeId_Test = "Test";
+    const WORKSHEETTYPEID_ORIGINAL = "Original";
+    const WORKSHEETTYPEID_AMENDED = "Amended";
+    const WORKSHEETTYPEID_TEST = "Test";
 
     /**
      * Enumerated values defined for WorksheetStatusId
      */
 
-    const WorksheetStatusId_PendingApproval = "PendingApproval";
-    const WorksheetStatusId_Dirty = "Dirty";
-    const WorksheetStatusId_ApprovedToFile = "ApprovedToFile";
-    const WorksheetStatusId_PendingFiling = "PendingFiling";
-    const WorksheetStatusId_PendingFilingOnBehalf = "PendingFilingOnBehalf";
-    const WorksheetStatusId_Filed = "Filed";
-    const WorksheetStatusId_FiledOnBehalf = "FiledOnBehalf";
-    const WorksheetStatusId_ReturnAccepted = "ReturnAccepted";
-    const WorksheetStatusId_ReturnAcceptedOnBehalf = "ReturnAcceptedOnBehalf";
-    const WorksheetStatusId_PaymentRemitted = "PaymentRemitted";
-    const WorksheetStatusId_Voided = "Voided";
-    const WorksheetStatusId_PendingReturn = "PendingReturn";
-    const WorksheetStatusId_PendingReturnOnBehalf = "PendingReturnOnBehalf";
-    const WorksheetStatusId_DoNotFile = "DoNotFile";
-    const WorksheetStatusId_ReturnRejected = "ReturnRejected";
-    const WorksheetStatusId_ReturnRejectedOnBehalf = "ReturnRejectedOnBehalf";
-    const WorksheetStatusId_ApprovedToFileOnBehalf = "ApprovedToFileOnBehalf";
+    const WORKSHEETSTATUSID_PENDINGAPPROVAL = "PendingApproval";
+    const WORKSHEETSTATUSID_DIRTY = "Dirty";
+    const WORKSHEETSTATUSID_APPROVEDTOFILE = "ApprovedToFile";
+    const WORKSHEETSTATUSID_PENDINGFILING = "PendingFiling";
+    const WORKSHEETSTATUSID_PENDINGFILINGONBEHALF = "PendingFilingOnBehalf";
+    const WORKSHEETSTATUSID_FILED = "Filed";
+    const WORKSHEETSTATUSID_FILEDONBEHALF = "FiledOnBehalf";
+    const WORKSHEETSTATUSID_RETURNACCEPTED = "ReturnAccepted";
+    const WORKSHEETSTATUSID_RETURNACCEPTEDONBEHALF = "ReturnAcceptedOnBehalf";
+    const WORKSHEETSTATUSID_PAYMENTREMITTED = "PaymentRemitted";
+    const WORKSHEETSTATUSID_VOIDED = "Voided";
+    const WORKSHEETSTATUSID_PENDINGRETURN = "PendingReturn";
+    const WORKSHEETSTATUSID_PENDINGRETURNONBEHALF = "PendingReturnOnBehalf";
+    const WORKSHEETSTATUSID_DONOTFILE = "DoNotFile";
+    const WORKSHEETSTATUSID_RETURNREJECTED = "ReturnRejected";
+    const WORKSHEETSTATUSID_RETURNREJECTEDONBEHALF = "ReturnRejectedOnBehalf";
+    const WORKSHEETSTATUSID_APPROVEDTOFILEONBEHALF = "ApprovedToFileOnBehalf";
 
     /**
      * Enumerated values defined for FilingFrequencyId
      */
 
-    const FilingFrequencyId_Monthly = "Monthly";
-    const FilingFrequencyId_Quarterly = "Quarterly";
-    const FilingFrequencyId_SemiAnnually = "SemiAnnually";
-    const FilingFrequencyId_Annually = "Annually";
-    const FilingFrequencyId_Bimonthly = "Bimonthly";
-    const FilingFrequencyId_Occasional = "Occasional";
-    const FilingFrequencyId_InverseQuarterly = "InverseQuarterly";
+    const FILINGFREQUENCYID_MONTHLY = "Monthly";
+    const FILINGFREQUENCYID_QUARTERLY = "Quarterly";
+    const FILINGFREQUENCYID_SEMIANNUALLY = "SemiAnnually";
+    const FILINGFREQUENCYID_ANNUALLY = "Annually";
+    const FILINGFREQUENCYID_BIMONTHLY = "Bimonthly";
+    const FILINGFREQUENCYID_OCCASIONAL = "Occasional";
+    const FILINGFREQUENCYID_INVERSEQUARTERLY = "InverseQuarterly";
 
     /**
      * Enumerated values defined for FilingTypeId
      */
 
-    const FilingTypeId_PaperReturn = "PaperReturn";
-    const FilingTypeId_ElectronicReturn = "ElectronicReturn";
-    const FilingTypeId_SER = "SER";
-    const FilingTypeId_EFTPaper = "EFTPaper";
-    const FilingTypeId_PhonePaper = "PhonePaper";
-    const FilingTypeId_SignatureReady = "SignatureReady";
-    const FilingTypeId_EfileCheck = "EfileCheck";
+    const FILINGTYPEID_PAPERRETURN = "PaperReturn";
+    const FILINGTYPEID_ELECTRONICRETURN = "ElectronicReturn";
+    const FILINGTYPEID_SER = "SER";
+    const FILINGTYPEID_EFTPAPER = "EFTPaper";
+    const FILINGTYPEID_PHONEPAPER = "PhonePaper";
+    const FILINGTYPEID_SIGNATUREREADY = "SignatureReady";
+    const FILINGTYPEID_EFILECHECK = "EfileCheck";
 
     /**
      * Enumerated values defined for PointOfSaleFileType
      */
 
-    const PointOfSaleFileType_Json = "Json";
-    const PointOfSaleFileType_Csv = "Csv";
-    const PointOfSaleFileType_Xml = "Xml";
+    const POINTOFSALEFILETYPE_JSON = "Json";
+    const POINTOFSALEFILETYPE_CSV = "Csv";
+    const POINTOFSALEFILETYPE_XML = "Xml";
 
     /**
      * Enumerated values defined for DocumentStatus
      */
 
-    const DocumentStatus_Temporary = "Temporary";
-    const DocumentStatus_Saved = "Saved";
-    const DocumentStatus_Posted = "Posted";
-    const DocumentStatus_Committed = "Committed";
-    const DocumentStatus_Cancelled = "Cancelled";
-    const DocumentStatus_Adjusted = "Adjusted";
-    const DocumentStatus_Queued = "Queued";
-    const DocumentStatus_PendingApproval = "PendingApproval";
-    const DocumentStatus_Any = "Any";
+    const DOCUMENTSTATUS_TEMPORARY = "Temporary";
+    const DOCUMENTSTATUS_SAVED = "Saved";
+    const DOCUMENTSTATUS_POSTED = "Posted";
+    const DOCUMENTSTATUS_COMMITTED = "Committed";
+    const DOCUMENTSTATUS_CANCELLED = "Cancelled";
+    const DOCUMENTSTATUS_ADJUSTED = "Adjusted";
+    const DOCUMENTSTATUS_QUEUED = "Queued";
+    const DOCUMENTSTATUS_PENDINGAPPROVAL = "PendingApproval";
+    const DOCUMENTSTATUS_ANY = "Any";
 
     /**
      * Enumerated values defined for DocumentType
      */
 
-    const DocumentType_SalesOrder = "SalesOrder";
-    const DocumentType_SalesInvoice = "SalesInvoice";
-    const DocumentType_PurchaseOrder = "PurchaseOrder";
-    const DocumentType_PurchaseInvoice = "PurchaseInvoice";
-    const DocumentType_ReturnOrder = "ReturnOrder";
-    const DocumentType_ReturnInvoice = "ReturnInvoice";
-    const DocumentType_InventoryTransferOrder = "InventoryTransferOrder";
-    const DocumentType_InventoryTransferInvoice = "InventoryTransferInvoice";
-    const DocumentType_ReverseChargeOrder = "ReverseChargeOrder";
-    const DocumentType_ReverseChargeInvoice = "ReverseChargeInvoice";
-    const DocumentType_Any = "Any";
+    const DOCUMENTTYPE_SALESORDER = "SalesOrder";
+    const DOCUMENTTYPE_SALESINVOICE = "SalesInvoice";
+    const DOCUMENTTYPE_PURCHASEORDER = "PurchaseOrder";
+    const DOCUMENTTYPE_PURCHASEINVOICE = "PurchaseInvoice";
+    const DOCUMENTTYPE_RETURNORDER = "ReturnOrder";
+    const DOCUMENTTYPE_RETURNINVOICE = "ReturnInvoice";
+    const DOCUMENTTYPE_INVENTORYTRANSFERORDER = "InventoryTransferOrder";
+    const DOCUMENTTYPE_INVENTORYTRANSFERINVOICE = "InventoryTransferInvoice";
+    const DOCUMENTTYPE_REVERSECHARGEORDER = "ReverseChargeOrder";
+    const DOCUMENTTYPE_REVERSECHARGEINVOICE = "ReverseChargeInvoice";
+    const DOCUMENTTYPE_ANY = "Any";
 
     /**
      * Enumerated values defined for TaxOverrideTypeId
      */
 
-    const TaxOverrideTypeId_None = "None";
-    const TaxOverrideTypeId_TaxAmount = "TaxAmount";
-    const TaxOverrideTypeId_Exemption = "Exemption";
-    const TaxOverrideTypeId_TaxDate = "TaxDate";
-    const TaxOverrideTypeId_AccruedTaxAmount = "AccruedTaxAmount";
+    const TAXOVERRIDETYPEID_NONE = "None";
+    const TAXOVERRIDETYPEID_TAXAMOUNT = "TaxAmount";
+    const TAXOVERRIDETYPEID_EXEMPTION = "Exemption";
+    const TAXOVERRIDETYPEID_TAXDATE = "TaxDate";
+    const TAXOVERRIDETYPEID_ACCRUEDTAXAMOUNT = "AccruedTaxAmount";
 
     /**
      * Enumerated values defined for AdjustmentReason
      */
 
-    const AdjustmentReason_NotAdjusted = "NotAdjusted";
-    const AdjustmentReason_SourcingIssue = "SourcingIssue";
-    const AdjustmentReason_ReconciledWithGeneralLedger = "ReconciledWithGeneralLedger";
-    const AdjustmentReason_ExemptCertApplied = "ExemptCertApplied";
-    const AdjustmentReason_PriceAdjusted = "PriceAdjusted";
-    const AdjustmentReason_ProductReturned = "ProductReturned";
-    const AdjustmentReason_ProductExchanged = "ProductExchanged";
-    const AdjustmentReason_BadDebt = "BadDebt";
-    const AdjustmentReason_Other = "Other";
-    const AdjustmentReason_Offline = "Offline";
+    const ADJUSTMENTREASON_NOTADJUSTED = "NotAdjusted";
+    const ADJUSTMENTREASON_SOURCINGISSUE = "SourcingIssue";
+    const ADJUSTMENTREASON_RECONCILEDWITHGENERALLEDGER = "ReconciledWithGeneralLedger";
+    const ADJUSTMENTREASON_EXEMPTCERTAPPLIED = "ExemptCertApplied";
+    const ADJUSTMENTREASON_PRICEADJUSTED = "PriceAdjusted";
+    const ADJUSTMENTREASON_PRODUCTRETURNED = "ProductReturned";
+    const ADJUSTMENTREASON_PRODUCTEXCHANGED = "ProductExchanged";
+    const ADJUSTMENTREASON_BADDEBT = "BadDebt";
+    const ADJUSTMENTREASON_OTHER = "Other";
+    const ADJUSTMENTREASON_OFFLINE = "Offline";
 
     /**
      * Enumerated values defined for BoundaryLevel
      */
 
-    const BoundaryLevel_Address = "Address";
-    const BoundaryLevel_Zip9 = "Zip9";
-    const BoundaryLevel_Zip5 = "Zip5";
+    const BOUNDARYLEVEL_ADDRESS = "Address";
+    const BOUNDARYLEVEL_ZIP9 = "Zip9";
+    const BOUNDARYLEVEL_ZIP5 = "Zip5";
 
     /**
      * Enumerated values defined for TaxType
      */
 
-    const TaxType_ConsumerUse = "ConsumerUse";
-    const TaxType_Excise = "Excise";
-    const TaxType_Fee = "Fee";
-    const TaxType_Input = "Input";
-    const TaxType_Nonrecoverable = "Nonrecoverable";
-    const TaxType_Output = "Output";
-    const TaxType_Rental = "Rental";
-    const TaxType_Sales = "Sales";
-    const TaxType_Use = "Use";
+    const TAXTYPE_CONSUMERUSE = "ConsumerUse";
+    const TAXTYPE_EXCISE = "Excise";
+    const TAXTYPE_FEE = "Fee";
+    const TAXTYPE_INPUT = "Input";
+    const TAXTYPE_NONRECOVERABLE = "Nonrecoverable";
+    const TAXTYPE_OUTPUT = "Output";
+    const TAXTYPE_RENTAL = "Rental";
+    const TAXTYPE_SALES = "Sales";
+    const TAXTYPE_USE = "Use";
 
     /**
      * Enumerated values defined for TransactionAddressType
@@ -2901,65 +2778,65 @@ class Constants
      * Enumerated values defined for ServiceMode
      */
 
-    const ServiceMode_Automatic = "Automatic";
-    const ServiceMode_Local = "Local";
-    const ServiceMode_Remote = "Remote";
+    const SERVICEMODE_AUTOMATIC = "Automatic";
+    const SERVICEMODE_LOCAL = "Local";
+    const SERVICEMODE_REMOTE = "Remote";
 
     /**
      * Enumerated values defined for TaxDebugLevel
      */
 
-    const TaxDebugLevel_Normal = "Normal";
-    const TaxDebugLevel_Diagnostic = "Diagnostic";
+    const TAXDEBUGLEVEL_NORMAL = "Normal";
+    const TAXDEBUGLEVEL_DIAGNOSTIC = "Diagnostic";
 
     /**
      * Enumerated values defined for TaxOverrideType
      */
 
-    const TaxOverrideType_None = "None";
-    const TaxOverrideType_TaxAmount = "TaxAmount";
-    const TaxOverrideType_Exemption = "Exemption";
-    const TaxOverrideType_TaxDate = "TaxDate";
-    const TaxOverrideType_AccruedTaxAmount = "AccruedTaxAmount";
-    const TaxOverrideType_DeriveTaxable = "DeriveTaxable";
+    const TAXOVERRIDETYPE_NONE = "None";
+    const TAXOVERRIDETYPE_TAXAMOUNT = "TaxAmount";
+    const TAXOVERRIDETYPE_EXEMPTION = "Exemption";
+    const TAXOVERRIDETYPE_TAXDATE = "TaxDate";
+    const TAXOVERRIDETYPE_ACCRUEDTAXAMOUNT = "AccruedTaxAmount";
+    const TAXOVERRIDETYPE_DERIVETAXABLE = "DeriveTaxable";
 
     /**
      * Enumerated values defined for VoidReasonCode
      */
 
-    const VoidReasonCode_Unspecified = "Unspecified";
-    const VoidReasonCode_PostFailed = "PostFailed";
-    const VoidReasonCode_DocDeleted = "DocDeleted";
-    const VoidReasonCode_DocVoided = "DocVoided";
-    const VoidReasonCode_AdjustmentCancelled = "AdjustmentCancelled";
+    const VOIDREASONCODE_UNSPECIFIED = "Unspecified";
+    const VOIDREASONCODE_POSTFAILED = "PostFailed";
+    const VOIDREASONCODE_DOCDELETED = "DocDeleted";
+    const VOIDREASONCODE_DOCVOIDED = "DocVoided";
+    const VOIDREASONCODE_ADJUSTMENTCANCELLED = "AdjustmentCancelled";
 
     /**
      * Enumerated values defined for CompanyAccessLevel
      */
 
-    const CompanyAccessLevel_None = "None";
-    const CompanyAccessLevel_SingleCompany = "SingleCompany";
-    const CompanyAccessLevel_SingleAccount = "SingleAccount";
-    const CompanyAccessLevel_AllCompanies = "AllCompanies";
+    const COMPANYACCESSLEVEL_NONE = "None";
+    const COMPANYACCESSLEVEL_SINGLECOMPANY = "SingleCompany";
+    const COMPANYACCESSLEVEL_SINGLEACCOUNT = "SingleAccount";
+    const COMPANYACCESSLEVEL_ALLCOMPANIES = "AllCompanies";
 
     /**
      * Enumerated values defined for AuthenticationTypeId
      */
 
-    const AuthenticationTypeId_None = "None";
-    const AuthenticationTypeId_UsernamePassword = "UsernamePassword";
-    const AuthenticationTypeId_AccountIdLicenseKey = "AccountIdLicenseKey";
-    const AuthenticationTypeId_OpenIdBearerToken = "OpenIdBearerToken";
+    const AUTHENTICATIONTYPEID_NONE = "None";
+    const AUTHENTICATIONTYPEID_USERNAMEPASSWORD = "UsernamePassword";
+    const AUTHENTICATIONTYPEID_ACCOUNTIDLICENSEKEY = "AccountIdLicenseKey";
+    const AUTHENTICATIONTYPEID_OPENIDBEARERTOKEN = "OpenIdBearerToken";
 
     /**
      * Enumerated values defined for TransactionAddressType
      */
 
-    const TransactionAddressType_ShipFrom = "ShipFrom";
-    const TransactionAddressType_ShipTo = "ShipTo";
-    const TransactionAddressType_PointOfOrderAcceptance = "PointOfOrderAcceptance";
-    const TransactionAddressType_PointOfOrderOrigin = "PointOfOrderOrigin";
-    const TransactionAddressType_SingleLocation = "SingleLocation";
+    const TRANSACTIONADDRESSTYPE_SHIPFROM = "ShipFrom";
+    const TRANSACTIONADDRESSTYPE_SHIPTO = "ShipTo";
+    const TRANSACTIONADDRESSTYPE_POINTOFORDERACCEPTANCE = "PointOfOrderAcceptance";
+    const TRANSACTIONADDRESSTYPE_POINTOFORDERORIGIN = "PointOfOrderOrigin";
+    const TRANSACTIONADDRESSTYPE_SINGLELOCATION = "SingleLocation";
 }
 
 /*****************************************************************************
@@ -2991,7 +2868,7 @@ class TransactionBuilder
      *
      * @param AvaTaxClient  $client        The AvaTaxClient object to use to create this transaction
      * @param string        $companyCode   The code of the company for this transaction
-     * @param DocumentType  $type          The type of transaction to create. See Constants.DocumentType_* for allowable values.
+     * @param DocumentType  $type          The type of transaction to create. See Constants.DOCUMENTTYPE_* for allowable values.
      * @param string        $customerCode  The customer code for this transaction
      */
     public function __construct($client, $companyCode, $type, $customerCode)
@@ -3025,14 +2902,14 @@ class TransactionBuilder
      */
     public function withDiagnostics()
     {
-        $this->_model['debugLevel'] = Constants::TaxDebugLevel_Diagnostic;
+        $this->_model['debugLevel'] = Constants::TAXDEBUGLEVEL_DIAGNOSTIC;
         return $this;
     }
 
     /**
      * Set a specific discount amount
      *
-     * @param   decimal             $discount
+     * @param   float               $discount
      * @return  TransactionBuilder
      */
     public function withDiscountAmount($discount)
@@ -3069,7 +2946,7 @@ class TransactionBuilder
     /**
      * Set the document type
      *
-     * @param   string              type    See Constants::DocumentType_* for a list of values
+     * @param   string              type    See Constants::DOCUMENTTYPE_* for a list of values
      * @return  TransactionBuilder
      */
     public function withType($type)
@@ -3110,7 +2987,7 @@ class TransactionBuilder
     /**
      * Add an address to this transaction
      *
-     * @param   string              type          Address Type - see Constants::AddressType_* for acceptable values
+     * @param   string              type          Address Type - see Constants::ADDRESSTYPE_* for acceptable values
      * @param   string              line1         The street address, attention line, or business name of the location.
      * @param   string              line2         The street address, business name, or apartment/unit number of the location.
      * @param   string              line3         The street address or apartment/unit number of the location.
@@ -3139,9 +3016,9 @@ class TransactionBuilder
     /**
      * Add a lat/long coordinate to this transaction
      *
-     * @param   string              $type       Address Type - see Constants::AddressType_* for acceptable values
-     * @param   decimal             $latitude   The latitude of the geolocation for this transaction
-     * @param   decimal             $longitude  The longitude of the geolocation for this transaction
+     * @param   string              $type       Address Type - see Constants::ADDRESSTYPE_* for acceptable values
+     * @param   float               $latitude   The latitude of the geolocation for this transaction
+     * @param   float               $longitude  The longitude of the geolocation for this transaction
      * @return  TransactionBuilder
      */
      public function withLatLong($type, $latitude, $longitude)
@@ -3156,7 +3033,7 @@ class TransactionBuilder
     /**
      * Add an address to this line
      *
-     * @param   string              type        Address Type - see Constants::AddressType_* for acceptable values
+     * @param   string              type        Address Type - see Constants::ADDRESSTYPE_* for acceptable values
      * @param   string              line1       The street address, attention line, or business name of the location.
      * @param   string              line2       The street address, business name, or apartment/unit number of the location.
      * @param   string              line3       The street address or apartment/unit number of the location.
@@ -3186,9 +3063,9 @@ class TransactionBuilder
      *  - A TaxDate override requires a valid DateTime object to be passed.
      * TODO: Verify Tax Override constraints and add exceptions.
      *
-     * @param   string              $type       Type of the Tax Override. See Constants::TaxOverrideType_* for a list of allowable values.
+     * @param   string              $type       Type of the Tax Override. See Constants::TAXOVERRIDETYPE_* for a list of allowable values.
      * @param   string              $reason     Reason of the Tax Override.
-     * @param   decimal             $taxAmount  Amount of tax to apply. Required for a TaxAmount Override.
+     * @param   float               $taxAmount  Amount of tax to apply. Required for a TaxAmount Override.
      * @param   date                $taxDate    Date of a Tax Override. Required for a TaxDate Override.
      * @return  TransactionBuilder
      */
@@ -3210,16 +3087,16 @@ class TransactionBuilder
      *  - A TaxDate override requires a valid DateTime object to be passed.
      * TODO: Verify Tax Override constraints and add exceptions.
      *
-     * @param   string              $type        Type of the Tax Override. See Constants::TaxOverrideType_* for a list of allowable values.
+     * @param   string              $type        Type of the Tax Override. See Constants::TAXOVERRIDETYPE_* for a list of allowable values.
      * @param   string              $reason      Reason of the Tax Override.
-     * @param   decimal             $taxAmount   Amount of tax to apply. Required for a TaxAmount Override.
+     * @param   float               $taxAmount   Amount of tax to apply. Required for a TaxAmount Override.
      * @param   date                $taxDate     Date of a Tax Override. Required for a TaxDate Override.
      * @return  TransactionBuilder
      */
     public function withLineTaxOverride($type, $reason, $taxAmount, $taxDate)
     {
         // Address the DateOverride constraint.
-        if (($type == Constants::TaxOverrideType_TaxDate) && (empty($taxDate))) {
+        if (($type == Constants::TAXOVERRIDETYPE_TAXDATE) && (empty($taxDate))) {
             throw new Exception("A valid date is required for a Tax Date Tax Override.");
         }
 
@@ -3238,8 +3115,8 @@ class TransactionBuilder
     /**
      * Add a line to this transaction
      *
-     * @param   decimal             $amount      Value of the item.
-     * @param   decimal             $quantity    Quantity of the item.
+     * @param   float               $amount      Value of the item.
+     * @param   float               $quantity    Quantity of the item.
      * @param   string              $taxCode     Tax Code of the item. If left blank, the default item (P0000000) is assumed.
      * @return  TransactionBuilder
      */
@@ -3261,8 +3138,8 @@ class TransactionBuilder
     /**
      * Add a line to this transaction
      *
-     * @param   decimal             $amount      Value of the line
-     * @param   string              $type        Address Type - see Constants::AddressType_* for acceptable values
+     * @param   float               $amount      Value of the line
+     * @param   string              $type        Address Type - see Constants::ADDRESSTYPE_* for acceptable values
      * @param   string              $line1       The street address, attention line, or business name of the location.
      * @param   string              $line2       The street address, business name, or apartment/unit number of the location.
      * @param   string              $line3       The street address or apartment/unit number of the location.
@@ -3302,7 +3179,7 @@ class TransactionBuilder
     /**
      * Add a line with an exemption to this transaction
      *
-     * @param   decimal             $amount         The amount of this line item
+     * @param   float               $amount         The amount of this line item
      * @param   string              $exemptionCode  The exemption code for this line item
      * @return  TransactionBuilder
      */
