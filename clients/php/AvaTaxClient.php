@@ -76,8 +76,8 @@ class AvaTaxClient
     /**
      * Configure this client to use the specified username/password security settings
      *
-     * @param string $username     The username for your AvaTax user account
-     * @param string $password     The password for your AvaTax user account
+     * @param  string          $username   The username for your AvaTax user account
+     * @param  string          $password   The password for your AvaTax user account
      * @return AvaTaxClient
      */
     public function withSecurity($username, $password)
@@ -89,8 +89,8 @@ class AvaTaxClient
     /**
      * Configure this client to use Account ID / License Key security
      *
-     * @param int $accountId       The account ID for your AvaTax account
-     * @param string $licenseKey   The private license key for your AvaTax account
+     * @param  int             $accountId      The account ID for your AvaTax account
+     * @param  string          $licenseKey     The private license key for your AvaTax account
      * @return AvaTaxClient
      */
     public function withLicenseKey($accountId, $licenseKey)
@@ -104,11 +104,11 @@ class AvaTaxClient
     /**
      * Retrieve all accounts
      * 
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<AccountModel>
      */
     public function queryAccounts($include, $filter, $top, $skip, $orderBy)
@@ -142,10 +142,10 @@ class AvaTaxClient
     /**
      * Retrieve subscriptions for this account
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<SubscriptionModel>
      */
     public function listSubscriptionsByAccount($accountId, $filter, $top, $skip, $orderBy)
@@ -228,11 +228,11 @@ class AvaTaxClient
     /**
      * Retrieve users for this account
      * 
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<UserModel>
      */
     public function listUsersByAccount($accountId, $include, $filter, $top, $skip, $orderBy)
@@ -266,7 +266,7 @@ class AvaTaxClient
     /**
      * Retrieve a single user
      * 
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
      * @return UserModel
      */
     public function getUser($id, $accountId, $include)
@@ -332,7 +332,7 @@ class AvaTaxClient
     /**
      * Retrieve a single account
      * 
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
      * @return AccountModel
      */
     public function getAccount($id, $include)
@@ -399,13 +399,13 @@ class AvaTaxClient
     /**
      * Retrieve geolocation information for a specified address
      * 
-     * @param String $line1 Line 1
-     * @param String $line2 Line 2
-     * @param String $line3 Line 3
-     * @param String $city City
-     * @param String $region State / Province / Region
-     * @param String $postalCode Postal Code / Zip Code
-     * @param String $country Two character ISO 3166 Country Code (see /api/v2/definitions/countries for a full list)
+     * @param string $line1 Line 1
+     * @param string $line2 Line 2
+     * @param string $line3 Line 3
+     * @param string $city City
+     * @param string $region State / Province / Region
+     * @param string $postalCode Postal Code / Zip Code
+     * @param string $country Two character ISO 3166 Country Code (see /api/v2/definitions/countries for a full list)
      * @param Decimal? $latitude Geospatial latitude measurement
      * @param Decimal? $longitude Geospatial longitude measurement
      * @return AddressResolutionModel
@@ -441,11 +441,11 @@ class AvaTaxClient
     /**
      * Retrieve all batches
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<BatchModel>
      */
     public function queryBatches($filter, $include, $top, $skip, $orderBy)
@@ -462,11 +462,11 @@ class AvaTaxClient
     /**
      * Retrieve all companies
      * 
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<CompanyModel>
      */
     public function queryCompanies($include, $filter, $top, $skip, $orderBy)
@@ -500,11 +500,11 @@ class AvaTaxClient
     /**
      * Retrieve all transactions
      * 
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<TransactionModel>
      */
     public function listTransactionsByCompany($companyCode, $include, $filter, $top, $skip, $orderBy)
@@ -521,7 +521,7 @@ class AvaTaxClient
     /**
      * Retrieve a single transaction by code
      * 
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
      * @return TransactionModel
      */
     public function getTransactionByCode($companyCode, $transactionCode, $include)
@@ -640,11 +640,11 @@ class AvaTaxClient
     /**
      * Retrieve all batches for this company
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<BatchModel>
      */
     public function listBatchesByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
@@ -727,11 +727,11 @@ class AvaTaxClient
     /**
      * Retrieve contacts for this company
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<ContactModel>
      */
     public function listContactsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
@@ -962,11 +962,11 @@ class AvaTaxClient
     /**
      * Retrieve items for this company
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<ItemModel>
      */
     public function listItemsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
@@ -1049,11 +1049,11 @@ class AvaTaxClient
     /**
      * Retrieve locations for this company
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<LocationModel>
      */
     public function listLocationsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
@@ -1136,10 +1136,10 @@ class AvaTaxClient
     /**
      * Point of sale data file generation
      * 
-     * @param DateTime? $date The date for which point-of-sale data would be calculated (today by default)
-     * @param String $format The format of the file (JSON by default)
-     * @param Int32? $partnerId If specified, requests a custom partner-formatted version of the file.
-     * @param Boolean? $includeJurisCodes When true, the file will include jurisdiction codes in the result.
+     * @param string $date The date for which point-of-sale data would be calculated (today by default)
+     * @param string $format The format of the file (JSON by default)
+     * @param int $partnerId If specified, requests a custom partner-formatted version of the file.
+     * @param boolean $includeJurisCodes When true, the file will include jurisdiction codes in the result.
      * @return String
      */
     public function buildPointOfSaleDataForLocation($companyId, $id, $date, $format, $partnerId, $includeJurisCodes)
@@ -1172,11 +1172,11 @@ class AvaTaxClient
     /**
      * Retrieve nexus for this company
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<NexusModel>
      */
     public function listNexusByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
@@ -1259,11 +1259,11 @@ class AvaTaxClient
     /**
      * Retrieve all settings for this company
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<SettingModel>
      */
     public function listSettingsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
@@ -1346,11 +1346,11 @@ class AvaTaxClient
     /**
      * Retrieve tax codes for this company
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<TaxCodeModel>
      */
     public function listTaxCodesByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
@@ -1433,11 +1433,11 @@ class AvaTaxClient
     /**
      * Retrieve tax rules for this company
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<TaxRuleModel>
      */
     public function listTaxRules($companyId, $filter, $include, $top, $skip, $orderBy)
@@ -1520,11 +1520,11 @@ class AvaTaxClient
     /**
      * Retrieve UPCs for this company
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<UPCModel>
      */
     public function listUPCsByCompany($companyId, $filter, $include, $top, $skip, $orderBy)
@@ -1607,7 +1607,7 @@ class AvaTaxClient
     /**
      * Retrieve a single company
      * 
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
      * @return CompanyModel
      */
     public function getCompany($id, $include)
@@ -1674,11 +1674,11 @@ class AvaTaxClient
     /**
      * Retrieve all contacts
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<ContactModel>
      */
     public function queryContacts($filter, $include, $top, $skip, $orderBy)
@@ -1743,13 +1743,13 @@ class AvaTaxClient
     /**
      * Retrieve the list of questions that are required for a tax location
      * 
-     * @param String $line1 The first line of this location's address.
-     * @param String $line2 The second line of this location's address.
-     * @param String $line3 The third line of this location's address.
-     * @param String $city The city part of this location's address.
-     * @param String $region The region, state, or province part of this location's address.
-     * @param String $postalCode The postal code of this location's address.
-     * @param String $country The country part of this location's address.
+     * @param string $line1 The first line of this location's address.
+     * @param string $line2 The second line of this location's address.
+     * @param string $line3 The third line of this location's address.
+     * @param string $city The city part of this location's address.
+     * @param string $region The region, state, or province part of this location's address.
+     * @param string $postalCode The postal code of this location's address.
+     * @param string $country The country part of this location's address.
      * @param Decimal? $latitude Optionally identify the location via latitude/longitude instead of via address.
      * @param Decimal? $longitude Optionally identify the location via latitude/longitude instead of via address.
      * @return FetchResult<LocationQuestionModel>
@@ -1816,13 +1816,13 @@ class AvaTaxClient
     /**
      * List all nexus that apply to a specific address.
      * 
-     * @param String $line1 The first address line portion of this address.
-     * @param String $line2 The first address line portion of this address.
-     * @param String $line3 The first address line portion of this address.
-     * @param String $city The city portion of this address.
-     * @param String $region The region, state, or province code portion of this address.
-     * @param String $postalCode The postal code or zip code portion of this address.
-     * @param String $country The two-character ISO-3166 code of the country portion of this address.
+     * @param string $line1 The first address line portion of this address.
+     * @param string $line2 The first address line portion of this address.
+     * @param string $line3 The first address line portion of this address.
+     * @param string $city The city portion of this address.
+     * @param string $region The region, state, or province code portion of this address.
+     * @param string $postalCode The postal code or zip code portion of this address.
+     * @param string $country The two-character ISO-3166 code of the country portion of this address.
      * @return FetchResult<NexusModel>
      */
     public function listNexusByAddress($line1, $line2, $line3, $city, $region, $postalCode, $country)
@@ -2015,11 +2015,11 @@ class AvaTaxClient
     /**
      * Retrieve all items
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<ItemModel>
      */
     public function queryItems($filter, $include, $top, $skip, $orderBy)
@@ -2036,11 +2036,11 @@ class AvaTaxClient
     /**
      * Retrieve all locations
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<LocationModel>
      */
     public function queryLocations($filter, $include, $top, $skip, $orderBy)
@@ -2057,11 +2057,11 @@ class AvaTaxClient
     /**
      * Retrieve all nexus
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<NexusModel>
      */
     public function queryNexus($filter, $include, $top, $skip, $orderBy)
@@ -2129,11 +2129,11 @@ class AvaTaxClient
     /**
      * Retrieve all settings
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<SettingModel>
      */
     public function querySettings($filter, $include, $top, $skip, $orderBy)
@@ -2150,10 +2150,10 @@ class AvaTaxClient
     /**
      * Retrieve all subscriptions
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<SubscriptionModel>
      */
     public function querySubscriptions($filter, $top, $skip, $orderBy)
@@ -2170,11 +2170,11 @@ class AvaTaxClient
     /**
      * Retrieve all tax codes
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<TaxCodeModel>
      */
     public function queryTaxCodes($filter, $include, $top, $skip, $orderBy)
@@ -2191,13 +2191,13 @@ class AvaTaxClient
     /**
      * Retrieve tax rates for a specified address
      * 
-     * @param String $line1 The street address of the location.
-     * @param String $line2 The street address of the location.
-     * @param String $line3 The street address of the location.
-     * @param String $city The city name of the location.
-     * @param String $region The state or region of the location
-     * @param String $postalCode The postal code of the location.
-     * @param String $country The two letter ISO-3166 country code.
+     * @param string $line1 The street address of the location.
+     * @param string $line2 The street address of the location.
+     * @param string $line3 The street address of the location.
+     * @param string $city The city name of the location.
+     * @param string $region The state or region of the location
+     * @param string $postalCode The postal code of the location.
+     * @param string $country The two letter ISO-3166 country code.
      * @return TaxRateModel
      */
     public function taxRatesByAddress($line1, $line2, $line3, $city, $region, $postalCode, $country)
@@ -2214,8 +2214,8 @@ class AvaTaxClient
     /**
      * Retrieve tax rates for a specified country and postal code
      * 
-     * @param String $country The two letter ISO-3166 country code.
-     * @param String $postalCode The postal code of the location.
+     * @param string $country The two letter ISO-3166 country code.
+     * @param string $postalCode The postal code of the location.
      * @return TaxRateModel
      */
     public function taxRatesByPostalCode($country, $postalCode)
@@ -2232,11 +2232,11 @@ class AvaTaxClient
     /**
      * Retrieve all tax rules
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<TaxRuleModel>
      */
     public function queryTaxRules($filter, $include, $top, $skip, $orderBy)
@@ -2253,7 +2253,7 @@ class AvaTaxClient
     /**
      * Retrieve a single transaction by ID
      * 
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
      * @return TransactionModel
      */
     public function getTransactionById($id, $include)
@@ -2287,11 +2287,11 @@ class AvaTaxClient
     /**
      * Retrieve all UPCs
      * 
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<UPCModel>
      */
     public function queryUPCs($filter, $include, $top, $skip, $orderBy)
@@ -2308,11 +2308,11 @@ class AvaTaxClient
     /**
      * Retrieve all users
      * 
-     * @param String $include A comma separated list of child objects to return underneath the primary object.
-     * @param String $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
-     * @param Int32? $top If nonzero, return no more than this number of results.
-     * @param Int32? $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
-     * @param String $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $include A comma separated list of child objects to return underneath the primary object.
+     * @param string $filter A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .
+     * @param int $top If nonzero, return no more than this number of results.
+     * @param int $skip A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
+     * @param string $orderBy A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.
      * @return FetchResult<UserModel>
      */
     public function queryUsers($include, $filter, $top, $skip, $orderBy)
@@ -3333,7 +3333,7 @@ class TransactionBuilder
             throw new Exception("No lines have been added. The $memberName method applies to the most recent line.  To use this function, first add a line.");
         }
 
-        return $this->_model['lines'][$c];
+        return $this->_model['lines'][$c-1];
     }
 
     /**

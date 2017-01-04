@@ -115,12 +115,19 @@ namespace ClientApiGenerator
         {
             return s[0].ToString().ToLower() + s.Substring(1);
         }
+
         public static string PhpTypeName(string typename)
         {
-            if (typename == "Int32" || typename == "Int32?") {
+            if (String.Equals(typename, "Int32", StringComparison.CurrentCultureIgnoreCase) || String.Equals(typename, "Int32?", StringComparison.CurrentCultureIgnoreCase)) {
                 return "int";
-            } else if (typename == "String") {
+            } else if (String.Equals(typename, "String", StringComparison.CurrentCultureIgnoreCase)) {
                 return "string";
+            } else if (String.Equals(typename, "Boolean", StringComparison.CurrentCultureIgnoreCase) || String.Equals(typename, "Boolean?", StringComparison.CurrentCultureIgnoreCase)) {
+                return "boolean";
+            } else if (String.Equals(typename, "DateTime", StringComparison.CurrentCultureIgnoreCase) || String.Equals(typename, "DateTime?", StringComparison.CurrentCultureIgnoreCase)) {
+                return "string";
+            } else if (String.Equals(typename, "Decimal", StringComparison.CurrentCultureIgnoreCase) || String.Equals(typename, "Int32?", StringComparison.CurrentCultureIgnoreCase)) {
+                return "float";
             }
             return typename;
         }
