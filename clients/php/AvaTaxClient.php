@@ -6771,7 +6771,7 @@ class TransactionBuilder
      *
      * @param AvaTaxClient  $client        The AvaTaxClient object to use to create this transaction
      * @param string        $companyCode   The code of the company for this transaction
-     * @param DocumentType  $type          The type of transaction to create. See Constants.DOCUMENTTYPE_* for allowable values.
+     * @param DocumentType  $type          The type of transaction to create. See DocumentType::* for allowable values.
      * @param string        $customerCode  The customer code for this transaction
      */
     public function __construct($client, $companyCode, $type, $customerCode)
@@ -6849,7 +6849,7 @@ class TransactionBuilder
     /**
      * Set the document type
      *
-     * @param   string              type    See Constants::DOCUMENTTYPE_* for a list of values
+     * @param   string              type    See DocumentType::* for a list of values
      * @return  TransactionBuilder
      */
     public function withType($type)
@@ -6890,7 +6890,7 @@ class TransactionBuilder
     /**
      * Add an address to this transaction
      *
-     * @param   string              type          Address Type - see Constants::ADDRESSTYPE_* for acceptable values
+     * @param   string              type          Address Type - see AddressType::* for acceptable values
      * @param   string              line1         The street address, attention line, or business name of the location.
      * @param   string              line2         The street address, business name, or apartment/unit number of the location.
      * @param   string              line3         The street address or apartment/unit number of the location.
@@ -6919,7 +6919,7 @@ class TransactionBuilder
     /**
      * Add a lat/long coordinate to this transaction
      *
-     * @param   string              $type       Address Type - see Constants::ADDRESSTYPE_* for acceptable values
+     * @param   string              $type       Address Type - see AddressType::* for acceptable values
      * @param   float               $latitude   The latitude of the geolocation for this transaction
      * @param   float               $longitude  The longitude of the geolocation for this transaction
      * @return  TransactionBuilder
@@ -6936,7 +6936,7 @@ class TransactionBuilder
     /**
      * Add an address to this line
      *
-     * @param   string              type        Address Type - see Constants::ADDRESSTYPE_* for acceptable values
+     * @param   string              type        Address Type - see AddressType::* for acceptable values
      * @param   string              line1       The street address, attention line, or business name of the location.
      * @param   string              line2       The street address, business name, or apartment/unit number of the location.
      * @param   string              line3       The street address or apartment/unit number of the location.
@@ -6966,7 +6966,7 @@ class TransactionBuilder
      *  - A TaxDate override requires a valid DateTime object to be passed.
      * TODO: Verify Tax Override constraints and add exceptions.
      *
-     * @param   string              $type       Type of the Tax Override. See Constants::TAXOVERRIDETYPE_* for a list of allowable values.
+     * @param   string              $type       Type of the Tax Override. See TaxOverrideType::* for a list of allowable values.
      * @param   string              $reason     Reason of the Tax Override.
      * @param   float               $taxAmount  Amount of tax to apply. Required for a TaxAmount Override.
      * @param   date                $taxDate    Date of a Tax Override. Required for a TaxDate Override.
@@ -6990,7 +6990,7 @@ class TransactionBuilder
      *  - A TaxDate override requires a valid DateTime object to be passed.
      * TODO: Verify Tax Override constraints and add exceptions.
      *
-     * @param   string              $type        Type of the Tax Override. See Constants::TAXOVERRIDETYPE_* for a list of allowable values.
+     * @param   string              $type        Type of the Tax Override. See TaxOverrideType::* for a list of allowable values.
      * @param   string              $reason      Reason of the Tax Override.
      * @param   float               $taxAmount   Amount of tax to apply. Required for a TaxAmount Override.
      * @param   date                $taxDate     Date of a Tax Override. Required for a TaxDate Override.
@@ -7042,7 +7042,7 @@ class TransactionBuilder
      * Add a line to this transaction
      *
      * @param   float               $amount      Value of the line
-     * @param   string              $type        Address Type - see Constants::ADDRESSTYPE_* for acceptable values
+     * @param   string              $type        Address Type - see AddressType::* for acceptable values
      * @param   string              $line1       The street address, attention line, or business name of the location.
      * @param   string              $line2       The street address, business name, or apartment/unit number of the location.
      * @param   string              $line3       The street address or apartment/unit number of the location.
