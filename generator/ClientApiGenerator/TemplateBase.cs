@@ -99,27 +99,39 @@ namespace ClientApiGenerator
         #endregion
 
         #region Fixups
-        public static string CSharpComment(string c)
+        public string CSharpComment(string c)
         {
             if (String.IsNullOrEmpty(c)) return "";
-            return c.Replace("\r\n", "\r\n        /// ");
+            return FixWhitespace(c).Replace("\r\n", "\r\n        /// ");
         }
 
-        public static string CleanParameterName(string p)
+        public string CleanParameterName(string p)
         {
             if (String.IsNullOrEmpty(p)) return "";
             return p.Replace("$", "");
         }
 
-        public static string FirstCharLower(string s)
+        public string FirstCharLower(string s)
         {
             return s[0].ToString().ToLower() + s.Substring(1);
         }
 
-        public static string PhpTypeName(string typename)
+        public string PhpTypeName(string typename)
         {
+            // Is this an enum?  If so, convert it to a string - we'll add a comment later
+            if (IsEnumType(typename)) {
+                return "string";
+            }
+
+            // Otherwise handle it here
             if (String.Equals(typename, "Int32", StringComparison.CurrentCultureIgnoreCase)
-                || String.Equals(typename, "Int32?", StringComparison.CurrentCultureIgnoreCase)) {
+                || String.Equals(typename, "Int32?", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Int64", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Int64?", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Byte", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Byte?", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Int16", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Int16?", StringComparison.CurrentCultureIgnoreCase)) {
                 return "int";
             } else if (String.Equals(typename, "String", StringComparison.CurrentCultureIgnoreCase)) {
                 return "string";
@@ -136,8 +148,52 @@ namespace ClientApiGenerator
                 return "FetchResult";
             } else if (typename.StartsWith("List<")) {
                 return typename.Substring(5, typename.Length - 6) + "[]";
+            } else if (SwaggerModel.Models.Any(m => m.SchemaName == typename)) {
+                return typename;
+
+                // Json byte arrays are in Base64 encoded text
+            } else if (typename == "Byte[]") {
+                return "string";
+            } else if (typename.StartsWith("Dictionary<")) {
+                return "object";
             }
             return typename;
+        }
+
+        private bool IsEnumType(string typename)
+        {
+            if (typename.EndsWith("?")) {
+                typename = typename.Substring(0, typename.Length - 1);
+            }
+            return (SwaggerModel.Enums.Any(e => e.EnumDataType == typename));
+        }
+
+        public string PhpComment(string c)
+        {
+            if (String.IsNullOrEmpty(c)) return "";
+            return FixWhitespace(c).Replace("\r\n", "\r\n *");
+        }
+
+        public string FixWhitespace(string s)
+        {
+            return String.Join(" ", s.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)).Trim();
+        }
+
+        public string PhpTypeComment(SwaggerInfo s, ParameterInfo p)
+        {
+            string comment = "";
+            if (p.Comment != null) {
+                comment = FixWhitespace(p.Comment).Replace("\r\n", " ");
+            }
+
+            // Is this an enum?  If so, convert it to a string - we'll add a comment later
+            if (IsEnumType(p.TypeName)) {
+                return comment + " (See " + p.TypeName.Replace("?", "") + "::* for a list of allowable values)";
+            } else if (p.TypeName == "Byte[]") {
+                return comment + " (This value is encoded as a Base64 string)";
+            }
+
+            return comment;
         }
         #endregion
     }
