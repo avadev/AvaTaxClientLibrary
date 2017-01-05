@@ -147,7 +147,8 @@ namespace ClientApiGenerator
             } else if (typename.StartsWith("FetchResult<")) {
                 return "FetchResult";
             } else if (typename.StartsWith("List<")) {
-                return typename.Substring(5, typename.Length - 6) + "[]";
+                string innertype = typename.Substring(5, typename.Length - 6);
+                return PhpTypeName(innertype) + "[]";
             } else if (SwaggerModel.Models.Any(m => m.SchemaName == typename)) {
                 return typename;
 

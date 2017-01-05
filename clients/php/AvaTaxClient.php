@@ -4384,7 +4384,7 @@ class EntityUseCodeModel
     public $description;
 
     /**
-     * @var String[] A list of countries where this use code is valid
+     * @var string[] A list of countries where this use code is valid
      */
     public $validCountries;
 
@@ -4678,12 +4678,12 @@ class PointOfSaleDataRequestModel
     public $responseType;
 
     /**
-     * @var String[] A list of tax codes to include in this point-of-sale file. If no tax codes are specified, response will include all distinct tax codes associated with the Items within your company.
+     * @var string[] A list of tax codes to include in this point-of-sale file. If no tax codes are specified, response will include all distinct tax codes associated with the Items within your company.
      */
     public $taxCodes;
 
     /**
-     * @var String[] A list of location codes to include in this point-of-sale file. If no location codes are specified, response will include all locations within your company.
+     * @var string[] A list of location codes to include in this point-of-sale file. If no location codes are specified, response will include all locations within your company.
      */
     public $locationCodes;
 
@@ -5981,7 +5981,7 @@ class UserEntitlementModel
 {
 
     /**
-     * @var String[] List of API names and categories that this user is permitted to access
+     * @var string[] List of API names and categories that this user is permitted to access
      */
     public $permissions;
 
@@ -5991,7 +5991,7 @@ class UserEntitlementModel
     public $accessLevel;
 
     /**
-     * @var Int32[] The identities of all companies this user is permitted to access
+     * @var int[] The identities of all companies this user is permitted to access
      */
     public $companies;
 
@@ -6655,6 +6655,11 @@ class TaxType
  */
 class TransactionAddressType
 {
+    const C_SHIPFROM = "ShipFrom";
+    const C_SHIPTO = "ShipTo";
+    const C_POINTOFORDERACCEPTANCE = "PointOfOrderAcceptance";
+    const C_POINTOFORDERORIGIN = "PointOfOrderOrigin";
+    const C_SINGLELOCATION = "SingleLocation";
 
 }
 
@@ -6733,20 +6738,6 @@ class AuthenticationTypeId
     const C_USERNAMEPASSWORD = "UsernamePassword";
     const C_ACCOUNTIDLICENSEKEY = "AccountIdLicenseKey";
     const C_OPENIDBEARERTOKEN = "OpenIdBearerToken";
-
-}
-
-
-/**
- * Lists of acceptable values for the enumerated data type TransactionAddressType
- */
-class TransactionAddressType
-{
-    const C_SHIPFROM = "ShipFrom";
-    const C_SHIPTO = "ShipTo";
-    const C_POINTOFORDERACCEPTANCE = "PointOfOrderAcceptance";
-    const C_POINTOFORDERORIGIN = "PointOfOrderOrigin";
-    const C_SINGLELOCATION = "SingleLocation";
 
 }
 

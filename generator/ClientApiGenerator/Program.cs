@@ -158,17 +158,20 @@ Arguments:
 
             // Now add the enums we know we need.
             // Because of the complex way this Dictionary<> is rendered in Swagger, it's hard to pick up the correct values.
-            var tat = new EnumInfo()
-            {
-                EnumDataType = "TransactionAddressType",
-                Items = new List<EnumItem>()
-            };
+            var tat = (from e in result.Enums where e.EnumDataType == "TransactionAddressType" select e).FirstOrDefault();
+            if (tat == null) {
+                tat = new EnumInfo()
+                {
+                    EnumDataType = "TransactionAddressType",
+                    Items = new List<EnumItem>()
+                };
+                result.Enums.Add(tat);
+            }
             tat.AddItem("ShipFrom", "This is the location from which the product was shipped");
             tat.AddItem("ShipTo", "This is the location to which the product was shipped");
             tat.AddItem("PointOfOrderAcceptance", "Location where the order was accepted; typically the call center, business office where purchase orders are accepted, server locations where orders are processed and accepted");
             tat.AddItem("PointOfOrderOrigin", "Location from which the order was placed; typically the customer's home or business location");
             tat.AddItem("SingleLocation", "Only used if all addresses for this transaction were identical; e.g. if this was a point-of-sale physical transaction");
-            result.Enums.Add(tat);
 
             // Here's your processed API
             return result;
