@@ -44,17 +44,19 @@ class AvaTaxClient
     /**
      * Construct a new AvaTaxClient 
      *
-     * @@param string $environment  Indicates which server to use; acceptable values are "sandbox" or "production"
      * @@param string $appName      Specify the name of your application here.  Should not contain any semicolons.
      * @@param string $appVersion   Specify the version number of your application here.  Should not contain any semicolons.
      * @@param string $machineName  Specify the machine name of the machine on which this code is executing here.  Should not contain any semicolons.
+     * @@param string $environment  Indicates which server to use; acceptable values are "sandbox" or "production", or the full URL of your AvaTax instance.
      */
-    public function __construct($environment, $appName, $appVersion, $machineName)
+    public function __construct($appName, $appVersion, $machineName, $environment)
     {
         // Determine startup environment
         $env = 'https://rest.avatax.com';
         if ($environment == "sandbox") {
             $env = 'https://sandbox-rest.avatax.com';
+        } else if (substr($environment, 0, 8) == 'https://') || substr($environment, 0, 7) == 'http://') {
+            $env = $environment;
         }
 
         // Configure the HTTP client

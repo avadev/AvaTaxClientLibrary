@@ -4,7 +4,7 @@
 include_once __DIR__.'/lib/AvaTaxClient.php';
 
 // Create a new client
-$client = new Avalara\AvaTaxClient('sandbox', 'phpTestApp', '1.0', 'localhost');
+$client = new Avalara\AvaTaxClient('phpTestApp', '1.0', 'localhost', 'sandbox');
 $client->withSecurity('username', 'password');
 
 // Fetch companies
