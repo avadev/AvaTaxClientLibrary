@@ -55,7 +55,7 @@ class AvaTaxClient
         $env = 'https://rest.avatax.com';
         if ($environment == "sandbox") {
             $env = 'https://sandbox-rest.avatax.com';
-        } else if (substr($environment, 0, 8) == 'https://') || substr($environment, 0, 7) == 'http://') {
+        } else if ((substr($environment, 0, 8) == 'https://') || (substr($environment, 0, 7) == 'http://')) {
             $env = $environment;
         }
 
@@ -69,8 +69,8 @@ class AvaTaxClient
             'Accept' => 'application/json',
             'X-Avalara-Client' => "{$appName}; {$appVersion}; PhpRestClient; @SwaggerModel.ApiVersion; {$machineName}"));
             
-        // For some reason, Guzzle reports that 'https://sandbox-rest.avatax.com' is a self signed certificate, even though Verisign issued it
-        if ($environment == "sandbox") {
+        // For some reason, Guzzle/CURL reports that 'https://sandbox-rest.avatax.com' is a self signed certificate, even though Verisign issued it
+        if ($env == 'https://sandbox-rest.avatax.com') {
             $this->client->setDefaultOption('verify', false);
         }
     }

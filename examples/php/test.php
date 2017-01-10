@@ -7,9 +7,13 @@ include_once __DIR__.'/lib/AvaTaxClient.php';
 $client = new Avalara\AvaTaxClient('phpTestApp', '1.0', 'localhost', 'sandbox');
 $client->withSecurity('username', 'password');
 
+// Call 'Ping' to verify that we are connected
+$p = $client->Ping();
+echo '<pre>' . json_encode($p, JSON_PRETTY_PRINT) . '</pre>';
+
 // Fetch companies
 $companies = $client->queryCompanies(null, null, 10, null, null);
-echo json_encode($companies, JSON_PRETTY_PRINT);
+echo '<pre>' . json_encode($companies, JSON_PRETTY_PRINT) . '</pre>';
 
 // Construct a new transaction
 $tb = new Avalara\TransactionBuilder($client, 'DEFAULT', Avalara\DocumentType::C_SALESINVOICE, 'ABC');
@@ -23,6 +27,6 @@ $t = $tb->withAddress('ShipFrom', '123 Main Street', null, null, 'Irvine', 'CA',
     ->withLineAddress(Avalara\TransactionAddressType::C_SHIPTO, "1500 Broadway", null, null, "New York", "NY", "10019", "US")
     ->withLine(50.0, 1, "FR010000")
     ->create();
-echo json_encode($t, JSON_PRETTY_PRINT);
+echo '<pre>' . json_encode($t, JSON_PRETTY_PRINT) . '</pre>';
 
 ?>
