@@ -5,19 +5,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a single security role.
+    /// Represents the current status of a funding ESign method
     /// </summary>
-    public class SecurityRoleModel
+    public class FundingESignMethodReturn
     {
         /// <summary>
-        /// The unique ID number of this security role.
+        /// Method
         /// </summary>
-        public Byte? id { get; set; }
+        public String method { get; set; }
 
         /// <summary>
-        /// A description of this security role
+        /// JavaScriptReady
         /// </summary>
-        public String description { get; set; }
+        public Boolean? javaScriptReady { get; set; }
+
+        /// <summary>
+        /// The actual javascript to use to render this object
+        /// </summary>
+        public String javaScript { get; set; }
 
 
         /// <summary>

@@ -18,9 +18,13 @@ namespace Avalara;
  * @@link       https://github.com/avadev/AvaTaxClientLibrary
  */
 
-include_once __DIR__."/vendor/autoload.php";
+require_once __DIR__."/vendor/autoload.php";
 
 use GuzzleHttp\Client;
+
+/*****************************************************************************
+ *                              API Section                                  *
+ *****************************************************************************/
 
 /**
  * An AvaTaxClient object that handles connectivity to the AvaTax v2 API server.
@@ -40,17 +44,19 @@ class AvaTaxClient
     /**
      * Construct a new AvaTaxClient 
      *
-     * @@param string $environment  Indicates which server to use; acceptable values are "sandbox" or "production"
      * @@param string $appName      Specify the name of your application here.  Should not contain any semicolons.
      * @@param string $appVersion   Specify the version number of your application here.  Should not contain any semicolons.
      * @@param string $machineName  Specify the machine name of the machine on which this code is executing here.  Should not contain any semicolons.
+     * @@param string $environment  Indicates which server to use; acceptable values are "sandbox" or "production", or the full URL of your AvaTax instance.
      */
-    public function __construct($environment, $appName, $appVersion, $machineName)
+    public function __construct($appName, $appVersion, $machineName, $environment)
     {
         // Determine startup environment
         $env = 'https://rest.avatax.com';
         if ($environment == "sandbox") {
             $env = 'https://sandbox-rest.avatax.com';
+        } else if ((substr($environment, 0, 8) == 'https://') || (substr($environment, 0, 7) == 'http://')) {
+            $env = $environment;
         }
 
         // Configure the HTTP client
@@ -63,8 +69,8 @@ class AvaTaxClient
             'Accept' => 'application/json',
             'X-Avalara-Client' => "{$appName}; {$appVersion}; PhpRestClient; @SwaggerModel.ApiVersion; {$machineName}"));
             
-        // For some reason, Guzzle reports that 'https://sandbox-rest.avatax.com' is a self signed certificate, even though Verisign issued it
-        if ($environment == "sandbox") {
+        // For some reason, Guzzle/CURL reports that 'https://sandbox-rest.avatax.com' is a self signed certificate, even though Verisign issued it
+        if ($env == 'https://sandbox-rest.avatax.com') {
             $this->client->setDefaultOption('verify', false);
         }
     }
@@ -72,8 +78,8 @@ class AvaTaxClient
     /**
      * Configure this client to use the specified username/password security settings
      *
-     * @@param string $username     The username for your AvaTax user account
-     * @@param string $password     The password for your AvaTax user account
+     * @@param  string          $username   The username for your AvaTax user account
+     * @@param  string          $password   The password for your AvaTax user account
      * @@return AvaTaxClient
      */
     public function withSecurity($username, $password)
@@ -85,8 +91,8 @@ class AvaTaxClient
     /**
      * Configure this client to use Account ID / License Key security
      *
-     * @@param int $accountId       The account ID for your AvaTax account
-     * @@param string $licenseKey   The private license key for your AvaTax account
+     * @@param  int             $accountId      The account ID for your AvaTax account
+     * @@param  string          $licenseKey     The private license key for your AvaTax account
      * @@return AvaTaxClient
      */
     public function withLicenseKey($accountId, $licenseKey)
@@ -111,14 +117,14 @@ class AvaTaxClient
         paramlist.Append(p.CleanParamName);
         paramlist.Append(", ");
         guzzleparamlist.Append("'" + p.ParamName + "' => $" + p.CleanParamName + ", ");
-        paramcomments.Add("\r\n     * @param " + p.TypeName + " $" + p.CleanParamName + " " + p.Comment.Replace("\r\n", " "));
+        paramcomments.Add("\r\n     * @param " + PhpTypeName(p.TypeName) + " $" + p.CleanParamName + " " + PhpTypeComment(SwaggerModel, p));
     }
     if (m.BodyParam != null) {
         paramlist.Append("$");
         paramlist.Append(m.BodyParam.CleanParamName);
         paramlist.Append(", ");
-        payload = "$" + m.BodyParam.CleanParamName;
-        paramcomments.Add("\r\n     * @param " + m.BodyParam.TypeName + " $" + m.BodyParam.CleanParamName + " " + m.BodyParam.Comment.Replace("\r\n", " "));
+        payload = "json_encode($" + m.BodyParam.CleanParamName + ")";
+        paramcomments.Add("\r\n     * @param " + PhpTypeName(m.BodyParam.TypeName) + " $" + m.BodyParam.CleanParamName + " " + PhpTypeComment(SwaggerModel, m.BodyParam));
     }
     if (paramlist.Length > 0) paramlist.Length -= 2;
     if (guzzleparamlist.Length > 0) guzzleparamlist.Length -= 2;
@@ -127,13 +133,12 @@ class AvaTaxClient
     /**
      * @m.Comment
      * </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
-     * @@return @m.TypeName
+     * @@return @PhpTypeName(m.TypeName)
      */
     public function @{Write(FirstCharLower(m.Name) + "(" + paramlist.ToString() + ")");}
     {
         $path = "@m.URI.Replace("{", "{$")";
         $guzzleParams = [
-            'auth' => $this->auth,
             'query' => [@guzzleparamlist.ToString()],
             'body' => @payload
         ];
@@ -150,6 +155,12 @@ class AvaTaxClient
      */
     private function restCall($apiUrl, $verb, $guzzleParams)
     {
+        // Set authentication on the parameters
+        if (!isset($guzzleParams['auth'])){
+            $guzzleParams['auth'] = $this->auth;
+        }
+    
+        // Contact the server
         try {
             $request = $this->client->createRequest($verb, $apiUrl, $guzzleParams);
             $response = $this->client->send($request);
@@ -159,5 +170,447 @@ class AvaTaxClient
         } catch (\Exception $e) {
             return $e->getMessage();
         }
+    }
+}
+
+/*****************************************************************************
+ *                              Object Models                                *
+ *****************************************************************************/
+
+@foreach(var m in SwaggerModel.Models) {
+    if (m.SchemaName.StartsWith("FetchResult")) continue;
+<text>
+/**
+ * @PhpComment(m.Comment)
+ */
+class @m.SchemaName
+{</text>
+    foreach (var p in m.Properties) {
+<text>
+    /**
+     * @@var @PhpTypeName(p.TypeName) @PhpTypeComment(SwaggerModel, p)
+     */
+    public $@p.CleanParamName;</text>
+    }
+<text>
+}</text>
+}
+
+
+/*****************************************************************************
+ *                              Enumerated constants                         *
+ *****************************************************************************/
+
+@foreach(var i in SwaggerModel.Enums) {
+<text>
+/**
+ * Lists of acceptable values for the enumerated data type @i.EnumDataType
+ */
+class @i.EnumDataType
+{</text>
+    foreach (var v in i.Items) {
+        Write("    const C_" + v.Value.ToUpper() + " = \"" + v.Value + "\";\r\n");
+    }
+<text>
+}
+</text>
+}
+
+/*****************************************************************************
+ *                              Transaction Builder                          *
+ *****************************************************************************/
+
+/**
+ * TransactionBuilder helps you construct a new transaction using a literate interface
+ */
+class TransactionBuilder
+{
+    /**
+     * The in-progress model
+     */
+    private $_model;
+
+    /**
+     * Keeps track of the line number when adding multiple lines
+     */
+    private $_line_number;
+    
+    /**
+     * The client that will be used to create the transaction
+     */
+    private $_client;
+        
+    /**
+     * TransactionBuilder helps you construct a new transaction using a literate interface
+     *
+     * @@param AvaTaxClient  $client        The AvaTaxClient object to use to create this transaction
+     * @@param string        $companyCode   The code of the company for this transaction
+     * @@param DocumentType  $type          The type of transaction to create (See DocumentType::* for a list of allowable values)
+     * @@param string        $customerCode  The customer code for this transaction
+     */
+    public function __construct($client, $companyCode, $type, $customerCode)
+    {
+        $this->_client = $client;
+        $this->_line_number = 1;
+        $this->_model = [
+            'companyCode' => $companyCode,
+            'customerCode' => $customerCode,
+            'date' => date('Y-m-d H:i:s'),
+            'type' => $type,
+            'lines' => [],
+        ];
+    }
+
+    /**
+     * Set the commit flag of the transaction.
+     *
+     * @@return
+     */
+    public function withCommit()
+    {
+        $this->_model['commit'] = true;
+        return $this;
+    }
+
+    /**
+     * Enable diagnostic information
+     *
+     * @@return  TransactionBuilder
+     */
+    public function withDiagnostics()
+    {
+        $this->_model['debugLevel'] = Constants::TAXDEBUGLEVEL_DIAGNOSTIC;
+        return $this;
+    }
+
+    /**
+     * Set a specific discount amount
+     *
+     * @@param   float               $discount
+     * @@return  TransactionBuilder
+     */
+    public function withDiscountAmount($discount)
+    {
+        $this->_model['discount'] = $discount;
+        return $this;
+    }
+
+    /**
+     * Set if discount is applicable for the current line
+     *
+     * @@param   boolean             discounted
+     * @@return  TransactionBuilder
+     */
+    public function withItemDiscount($discounted)
+    {
+        $l = GetMostRecentLine("WithItemDiscount");
+        $l['discounted'] = $discounted;
+        return $this;
+    }
+
+    /**
+     * Set a specific transaction code
+     *
+     * @@param   string              code
+     * @@return  TransactionBuilder
+     */
+    public function withTransactionCode($code)
+    {
+        $this->_model['code'] = $code;
+        return $this;
+    }
+
+    /**
+     * Set the document type
+     *
+     * @@param   string              type    (See DocumentType::* for a list of allowable values)
+     * @@return  TransactionBuilder
+     */
+    public function withType($type)
+    {
+        $this->_model['type'] = $type;
+        return $this;
+    }
+
+    /**
+     * Add a parameter at the document level
+     *
+     * @@param   string              name
+     * @@param   string              value
+     * @@return  TransactionBuilder
+     */
+    public function withParameter($name, $value)
+    {
+        if (empty($this->_model['parameters'])) $this->_model['parameters'] = [];
+        $this->_model['parameters'][$name] = $value;
+        return $this;
+    }
+
+    /**
+     * Add a parameter to the current line
+     *
+     * @@param   string              name
+     * @@param   string              value
+     * @@return  TransactionBuilder
+     */
+    public function withLineParameter($name, $value)
+    {
+        $l = GetMostRecentLine("WithLineParameter");
+        if (empty($l['parameters'])) $l['parameters'] = [];
+        $l[$name] = $value;
+        return $this;
+    }
+
+    /**
+     * Add an address to this transaction
+     *
+     * @@param   string              type          Address Type (See AddressType::* for a list of allowable values)
+     * @@param   string              line1         The street address, attention line, or business name of the location.
+     * @@param   string              line2         The street address, business name, or apartment/unit number of the location.
+     * @@param   string              line3         The street address or apartment/unit number of the location.
+     * @@param   string              city          City of the location.
+     * @@param   string              region        State or Region of the location.
+     * @@param   string              postalCode    Postal/zip code of the location.
+     * @@param   string              country       The two-letter country code of the location.
+     * @@return  TransactionBuilder
+     */
+    public function withAddress($type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
+    {
+        if (empty($this->_model['addresses'])) $this->_model['addresses'] = [];
+        $ai = [
+            'line1' => $line1,
+            'line2' => $line2,
+            'line3' => $line3,
+            'city' => $city,
+            'region' => $region,
+            'postalCode' => $postalCode,
+            'country' => $country
+        ];
+        $this->_model['addresses'][$type] = $ai;
+        return $this;
+    }
+
+    /**
+     * Add a lat/long coordinate to this transaction
+     *
+     * @@param   string              $type       Address Type (See AddressType::* for a list of allowable values)
+     * @@param   float               $latitude   The latitude of the geolocation for this transaction
+     * @@param   float               $longitude  The longitude of the geolocation for this transaction
+     * @@return  TransactionBuilder
+     */
+     public function withLatLong($type, $latitude, $longitude)
+    {
+        $this->_model['addresses'][$type] = [
+            'latitude' => $latitude,
+            'longitude' => $longitude
+        ];
+        return $this;
+    }
+
+    /**
+     * Add an address to this line
+     *
+     * @@param   string              type        Address Type (See AddressType::* for a list of allowable values)
+     * @@param   string              line1       The street address, attention line, or business name of the location.
+     * @@param   string              line2       The street address, business name, or apartment/unit number of the location.
+     * @@param   string              line3       The street address or apartment/unit number of the location.
+     * @@param   string              city        City of the location.
+     * @@param   string              region      State or Region of the location.
+     * @@param   string              postalCode  Postal/zip code of the location.
+     * @@param   string              country     The two-letter country code of the location.
+     * @@return  TransactionBuilder
+     */
+    public function withLineAddress($type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
+    {
+        $line = $this->GetMostRecentLine("WithLineAddress");
+        $line['addresses'][$type] = [
+            'line1' => $line1,
+            'line2' => $line2,
+            'line3' => $line3,
+            'city' => $city,
+            'region' => $region,
+            'postalCode' => $postalCode,
+            'country' => $country
+        ];
+        return $this;
+    }
+
+    /**
+     * Add a document-level Tax Override to the transaction.
+     *  - A TaxDate override requires a valid DateTime object to be passed.
+     * TODO: Verify Tax Override constraints and add exceptions.
+     *
+     * @@param   string              $type       Type of the Tax Override (See TaxOverrideType::* for a list of allowable values)
+     * @@param   string              $reason     Reason of the Tax Override.
+     * @@param   float               $taxAmount  Amount of tax to apply. Required for a TaxAmount Override.
+     * @@param   date                $taxDate    Date of a Tax Override. Required for a TaxDate Override.
+     * @@return  TransactionBuilder
+     */
+    public function withTaxOverride($type, $reason, $taxAmount, $taxDate)
+    {
+        $this->_model['taxOverride'] = [
+            'type' => $type,
+            'reason' => $reason,
+            'taxAmount' => $taxAmount,
+            'taxDate' => $taxDate
+        ];
+
+        // Continue building
+        return $this;
+    }
+
+    /**
+     * Add a line-level Tax Override to the current line.
+     *  - A TaxDate override requires a valid DateTime object to be passed.
+     * TODO: Verify Tax Override constraints and add exceptions.
+     *
+     * @@param   string              $type        Type of the Tax Override (See TaxOverrideType::* for a list of allowable values)
+     * @@param   string              $reason      Reason of the Tax Override.
+     * @@param   float               $taxAmount   Amount of tax to apply. Required for a TaxAmount Override.
+     * @@param   date                $taxDate     Date of a Tax Override. Required for a TaxDate Override.
+     * @@return  TransactionBuilder
+     */
+    public function withLineTaxOverride($type, $reason, $taxAmount, $taxDate)
+    {
+        // Address the DateOverride constraint.
+        if (($type == Constants::TAXOVERRIDETYPE_TAXDATE) && (empty($taxDate))) {
+            throw new Exception("A valid date is required for a Tax Date Tax Override.");
+        }
+
+        $line = $this->GetMostRecentLine("WithLineTaxOverride");
+        $line['taxOverride'] = [
+            'type' => $type,
+            'reason' => $reason,
+            'taxAmount' => $taxAmount,
+            'taxDate' => $taxDate
+        ];
+
+        // Continue building
+        return $this;
+    }
+
+    /**
+     * Add a line to this transaction
+     *
+     * @@param   float               $amount      Value of the item.
+     * @@param   float               $quantity    Quantity of the item.
+     * @@param   string              $taxCode     Tax Code of the item. If left blank, the default item (P0000000) is assumed.
+     * @@return  TransactionBuilder
+     */
+    public function withLine($amount, $quantity, $taxCode)
+    {
+        $l = [
+            'number' => $this->_line_number,
+            'quantity' => $quantity,
+            'amount' => $amount,
+            'taxCode' => $taxCode
+        ];
+        array_push($this->_model['lines'], $l);
+        $this->_line_number++;
+
+        // Continue building
+        return $this;
+    }
+
+    /**
+     * Add a line to this transaction
+     *
+     * @@param   float               $amount      Value of the line
+     * @@param   string              $type        Address Type  (See AddressType::* for a list of allowable values)
+     * @@param   string              $line1       The street address, attention line, or business name of the location.
+     * @@param   string              $line2       The street address, business name, or apartment/unit number of the location.
+     * @@param   string              $line3       The street address or apartment/unit number of the location.
+     * @@param   string              $city        City of the location.
+     * @@param   string              $region      State or Region of the location.
+     * @@param   string              $postalCode  Postal/zip code of the location.
+     * @@param   string              $country     The two-letter country code of the location.
+     * @@return  TransactionBuilder
+     */
+    public function withSeparateAddressLine($amount, $type, $line1, $line2, $line3, $city, $region, $postalCode, $country)
+    {
+        $l = [
+            'number' => $this->_line_number,
+            'quantity' => 1,
+            'amount' => $amount,
+            'addresses' => [
+                $type => [
+                    'line1' => $line1,
+                    'line2' => $line2,
+                    'line3' => $line3,
+                    'city' => $city,
+                    'region' => $region,
+                    'postalCode' => $postalCode,
+                    'country' => $country
+                ]
+            ]
+        ];
+
+        // Put this line in the model
+        array_push($this->_model['lines'], $l);
+        $this->_line_number++;
+
+        // Continue building
+        return $this;
+    }
+
+    /**
+     * Add a line with an exemption to this transaction
+     *
+     * @@param   float               $amount         The amount of this line item
+     * @@param   string              $exemptionCode  The exemption code for this line item
+     * @@return  TransactionBuilder
+     */
+    public function withExemptLine($amount, $exemptionCode)
+    {
+        $l = [
+            'number' => $this->_line_number,
+            'quantity' => 1,
+            'amount' => $amount,
+            'exemptionCode' => $exemptionCode
+        ];
+        array_push($this->_model['lines'], $l); 
+        $this->_line_number++;
+
+        // Continue building
+        return $this;
+    }
+
+    /**
+     * Checks to see if the current model has a line.
+     *
+     * @@return  TransactionBuilder
+     */
+    private function getMostRecentLine($memberName)
+    {
+        $c = count($this->_model['lines']);
+        if ($c <= 0) {
+            throw new Exception("No lines have been added. The $memberName method applies to the most recent line.  To use this function, first add a line.");
+        }
+
+        return $this->_model['lines'][$c-1];
+    }
+
+    /**
+     * Create this transaction
+     *
+     * @@return  TransactionModel
+     */
+    public function create()
+    {
+        return $this->_client->createTransaction($this->_model);
+    }
+
+    /**
+     * Create a transaction adjustment request that can be used with the AdjustTransaction() API call
+     *
+     * @@return  AdjustTransactionModel
+     */
+    public function createAdjustmentRequest($desc, $reason)
+    {
+        return [
+            'newTransaction' => $this->_model,
+            'adjustmentDescription' => $desc,
+            'adjustmentReason' => $reason
+        ];
     }
 }

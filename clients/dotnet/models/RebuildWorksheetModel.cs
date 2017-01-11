@@ -5,19 +5,14 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a single security role.
+    /// Commit a worksheet for rebuilding
     /// </summary>
-    public class SecurityRoleModel
+    public class RebuildWorksheetModel
     {
         /// <summary>
-        /// The unique ID number of this security role.
+        /// Set this value to true in order to rebuild the worksheets.
         /// </summary>
-        public Byte? id { get; set; }
-
-        /// <summary>
-        /// A description of this security role
-        /// </summary>
-        public String description { get; set; }
+        public Boolean commit { get; set; }
 
 
         /// <summary>

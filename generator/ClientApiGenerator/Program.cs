@@ -158,17 +158,20 @@ Arguments:
 
             // Now add the enums we know we need.
             // Because of the complex way this Dictionary<> is rendered in Swagger, it's hard to pick up the correct values.
-            var tat = new EnumInfo()
-            {
-                EnumDataType = "TransactionAddressType",
-                Items = new List<EnumItem>()
-            };
+            var tat = (from e in result.Enums where e.EnumDataType == "TransactionAddressType" select e).FirstOrDefault();
+            if (tat == null) {
+                tat = new EnumInfo()
+                {
+                    EnumDataType = "TransactionAddressType",
+                    Items = new List<EnumItem>()
+                };
+                result.Enums.Add(tat);
+            }
             tat.AddItem("ShipFrom", "This is the location from which the product was shipped");
             tat.AddItem("ShipTo", "This is the location to which the product was shipped");
             tat.AddItem("PointOfOrderAcceptance", "Location where the order was accepted; typically the call center, business office where purchase orders are accepted, server locations where orders are processed and accepted");
             tat.AddItem("PointOfOrderOrigin", "Location from which the order was placed; typically the customer's home or business location");
             tat.AddItem("SingleLocation", "Only used if all addresses for this transaction were identical; e.g. if this was a point-of-sale physical transaction");
-            result.Enums.Add(tat);
 
             // Here's your processed API
             return result;
@@ -203,10 +206,16 @@ Arguments:
 
             // Handle integers / int64s
             if (prop.type == "integer") {
-                if (prop.format == "int64") {
+                if (String.Equals(prop.format, "int64", StringComparison.CurrentCultureIgnoreCase)) {
                     typename.Append("Int64");
-                } else {
+                } else if (String.Equals(prop.format, "byte", StringComparison.CurrentCultureIgnoreCase)) {
+                    typename.Append("Byte");
+                } else if (String.Equals(prop.format, "int16", StringComparison.CurrentCultureIgnoreCase)) {
+                    typename.Append("Int16");
+                } else if (prop.format == null || String.Equals(prop.format, "int32", StringComparison.CurrentCultureIgnoreCase)) {
                     typename.Append("Int32");
+                } else {
+                    Console.WriteLine("Unknown typename");
                 }
                 isValueType = true;
 
@@ -227,7 +236,11 @@ Arguments:
 
                 // Handle strings, and enums, which are represented as strings
             } else if (prop.type == "string") {
-                if (prop.EnumDataType == null) {
+
+                // Base64 encoded bytes
+                if (String.Equals(prop.format, "byte", StringComparison.CurrentCultureIgnoreCase)) {
+                    typename.Append("Byte[]");
+                } else if (prop.EnumDataType == null) {
                     return "String";
                 } else {
                     typename.Append(prop.EnumDataType);

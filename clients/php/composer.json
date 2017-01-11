@@ -1,13 +1,14 @@
 {
 	"name": "Avalara/AvaTaxApi-php",
-	"description": "Avalara AvaTax PHP Client Library",
+	"description": "Client library for Avalara's AvaTax suite of business tax calculation and processing services. Uses the REST v2 API.",
 	"keywords": [
         "tax",
         "AvaTax",
         "Avalara",
 		"sales compliance",
 		"taxes",
-		"tax calculation"
+		"tax calculation",
+		"ecommerce"
 	],
     "authors": [
         {

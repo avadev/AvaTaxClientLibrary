@@ -14,12 +14,15 @@ namespace ClientApiGenerator.Swagger
         public bool required { get; set; }
         public string type { get; set; }
         public string format { get; set; }
-        public string EnumDataType { get; set; }
+
         public bool readOnly { get; set; }
         public object example { get; set; }
 
         public SwaggerProperty schema { get; set; }
         public SwaggerProperty items { get; set; }
+
+        [JsonProperty("x-enum-type")]
+        public string EnumDataType { get; set; }
 
         [JsonProperty("$ref")]
         public string schemaref { get; set; }
@@ -29,7 +32,6 @@ namespace ClientApiGenerator.Swagger
 
         [JsonProperty("default")]
         public string defaultValue { get; set; }
-
 
         [JsonProperty("enum")]
         public List<string> enumValues { get; set; }

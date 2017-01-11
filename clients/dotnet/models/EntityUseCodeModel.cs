@@ -5,19 +5,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a single security role.
+    /// Represents a code describing the intended use for a product that may affect its taxability
     /// </summary>
-    public class SecurityRoleModel
+    public class EntityUseCodeModel
     {
         /// <summary>
-        /// The unique ID number of this security role.
+        /// The Avalara-recognized entity use code for this definition
         /// </summary>
-        public Byte? id { get; set; }
+        public String code { get; set; }
 
         /// <summary>
-        /// A description of this security role
+        /// The name of this entity use code
+        /// </summary>
+        public String name { get; set; }
+
+        /// <summary>
+        /// Text describing the meaning of this use code
         /// </summary>
         public String description { get; set; }
+
+        /// <summary>
+        /// A list of countries where this use code is valid
+        /// </summary>
+        public List<String> validCountries { get; set; }
 
 
         /// <summary>

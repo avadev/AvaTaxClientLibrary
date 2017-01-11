@@ -2,6 +2,9 @@
 
 namespace Avalara.AvaTax.RestClient
 {
+    /// <summary>
+    /// Represents an error returned by AvaTax
+    /// </summary>
     public class AvaTaxError : Exception
     {
         /// <summary>

@@ -81,6 +81,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
@@ -95,12 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\php_api_class.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\php_enum_class.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\php_model_class.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

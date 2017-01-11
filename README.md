@@ -16,24 +16,36 @@ Online swagger documentation is always available at https://sandbox-rest.avatax.
     </tr>
     <tr>
         <td>C# / DotNet Portable</td>
-        <td>2.16.12.3</td>
+        <td>2.16.12.30</td>
         <td>Live</td>
         <td><a href="https://www.nuget.org/packages/Avalara.AvaTax/">nuget.org</a></td>
     </tr>
     <tr>
         <td>Java</td>
-        <td>2.16.12</td>
-        <td>In Development</td>
-        <td></td>
+        <td>2.16.12.3</td>
+        <td>Live</td>
+        <td><a href="https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.avalara.avatax%22">maven.org</a></td>
+    </tr>
+    <tr>
+        <td>Scala</td>
+        <td>2.16.12.3</td>
+        <td>Live</td>
+        <td><a href="https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.avalara.avatax%22">maven.org</a></td>
     </tr>
     <tr>
         <td>PHP</td>
-        <td>2.16.12</td>
+        <td>2.17.1</td>
         <td>In Development</td>
         <td></td>
     </tr>
     <tr>
         <td>JavaScript</td>
+        <td>TBD</td>
+        <td>Research</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Python</td>
         <td>TBD</td>
         <td>Research</td>
         <td></td>

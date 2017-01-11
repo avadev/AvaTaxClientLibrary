@@ -7,8 +7,14 @@ namespace Avalara.AvaTax.RestClient
     /// <summary>
     /// Represents an address to resolve.
     /// </summary>
-    public class AddressInfo
+    public class AddressLocationInfo
     {
+        /// <summary>
+        /// If you wish to use the address of an existing location for this company, specify the address here.
+        ///             Otherwise, leave this value empty.
+        /// </summary>
+        public String locationCode { get; set; }
+
         /// <summary>
         /// Line1
         /// </summary>
