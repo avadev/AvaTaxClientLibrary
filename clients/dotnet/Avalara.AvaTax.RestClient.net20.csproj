@@ -61,6 +61,8 @@
     <Compile Include="enums\DocumentType.cs" />
     <Compile Include="enums\ErrorCodeId.cs" />
     <Compile Include="enums\ErrorTargetCode.cs" />
+    <Compile Include="enums\FilingFrequencyId.cs" />
+    <Compile Include="enums\FilingTypeId.cs" />
     <Compile Include="enums\JurisdictionType.cs" />
     <Compile Include="enums\JurisTypeId.cs" />
     <Compile Include="enums\LocalNexusTypeId.cs" />
@@ -84,9 +86,12 @@
     <Compile Include="enums\TaxType.cs" />
     <Compile Include="enums\TransactionAddressType.cs" />
     <Compile Include="enums\VoidReasonCode.cs" />
+    <Compile Include="enums\WorksheetStatusId.cs" />
+    <Compile Include="enums\WorksheetTypeId.cs" />
     <Compile Include="FetchResult.cs" />
     <Compile Include="models\AccountModel.cs" />
     <Compile Include="models\AddressInfo.cs" />
+    <Compile Include="models\AddressLocationInfo.cs" />
     <Compile Include="models\AddressResolutionModel.cs" />
     <Compile Include="models\AdjustTransactionModel.cs" />
     <Compile Include="models\AvaTaxMessage.cs" />
@@ -99,9 +104,13 @@
     <Compile Include="models\ContactModel.cs" />
     <Compile Include="models\CoordinateInfo.cs" />
     <Compile Include="models\CreateTransactionModel.cs" />
+    <Compile Include="models\EntityUseCodeModel.cs" />
     <Compile Include="models\ErrorDetail.cs" />
     <Compile Include="models\ErrorInfo.cs" />
     <Compile Include="models\ErrorResult.cs" />
+    <Compile Include="models\FundingESignMethodReturn.cs" />
+    <Compile Include="models\FundingInitiateModel.cs" />
+    <Compile Include="models\FundingStatusModel.cs" />
     <Compile Include="models\IsoCountryModel.cs" />
     <Compile Include="models\IsoRegionModel.cs" />
     <Compile Include="models\ItemModel.cs" />
@@ -117,6 +126,7 @@
     <Compile Include="models\PingResultModel.cs" />
     <Compile Include="models\PointOfSaleDataRequestModel.cs" />
     <Compile Include="models\RateModel.cs" />
+    <Compile Include="models\RebuildWorksheetModel.cs" />
     <Compile Include="models\ResetLicenseKeyModel.cs" />
     <Compile Include="models\SecurityRoleModel.cs" />
     <Compile Include="models\SetPasswordModel.cs" />
@@ -142,7 +152,10 @@
     <Compile Include="models\UserModel.cs" />
     <Compile Include="models\VerifyTransactionModel.cs" />
     <Compile Include="models\VoidTransactionModel.cs" />
-    <Compile Include="TransactionExtensions.cs" />
+    <Compile Include="models\WorksheetBucketModel.cs" />
+    <Compile Include="models\WorksheetModel.cs" />
+    <Compile Include="models\WorksheetReturnModel.cs" />
+    <Compile Include="TransactionBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
