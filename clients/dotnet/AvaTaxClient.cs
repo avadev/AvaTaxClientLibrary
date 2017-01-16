@@ -21,13 +21,9 @@ namespace Avalara.AvaTax.RestClient
     /// </remarks>
     public partial class AvaTaxClient
     {
-#if PORTABLE
-        private HttpClient _client;
-#else
         private string _credentials;
         private string _clientHeader;
         private Uri _envUri;
-#endif
 
         #region Constructor
         /// <summary>
@@ -62,17 +58,12 @@ namespace Avalara.AvaTax.RestClient
 
         private void SetupClient(string appName, string appVersion, string machineName, Uri envUri)
         {
-#if PORTABLE
-            _client = new HttpClient();
-            _client.BaseAddress = envUri;
-#else
             _envUri = envUri;
-#endif
 
             // Setup client identifier
             WithClientIdentifier(appName, appVersion, machineName);
         }
-#endregion
+        #endregion
 
         #region Security
         /// <summary>
@@ -81,11 +72,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="headerString"></param>
         public AvaTaxClient WithSecurity(string headerString)
         {
-#if PORTABLE
-            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", headerString);
-#else
-            _credentials = "Basic " + headerString;
-#endif
+            _credentials = headerString;
             return this;
         }
 
@@ -126,15 +113,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public AvaTaxClient WithClientIdentifier(string appName, string appVersion, string machineName)
         {
-            string clientId = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
-#if PORTABLE
-            if (_client.DefaultRequestHeaders.Any(h => h.Key == "X-Avalara-Client")) {
-                _client.DefaultRequestHeaders.Remove("X-Avalara-Client");
-            }
-            _client.DefaultRequestHeaders.Add("X-Avalara-Client", clientId);
-#else
-            _clientHeader = clientId;
-#endif
+            _clientHeader = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
             return this;
         }
         #endregion
@@ -181,28 +160,34 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private async Task<string> RestCallStringAsync(string verb, AvaTaxPath uri, object payload = null)
         {
-            // Make the request
-            HttpResponseMessage result = null;
-            string json = null;
-            if (verb == "get") {
-                result = await _client.GetAsync(uri.ToString());
-            } else if (verb == "post") {
-                json = JsonConvert.SerializeObject(payload, SerializerSettings);
-                result = await _client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
-            } else if (verb == "put") {
-                json = JsonConvert.SerializeObject(payload, SerializerSettings);
-                result = await _client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
-            } else if (verb == "delete") {
-                result = await _client.DeleteAsync(uri.ToString());
-            }
+            using (var client = new HttpClient()) {
+                client.BaseAddress = _envUri;
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", _credentials);
+                client.DefaultRequestHeaders.Add("X-Avalara-Client", _clientHeader);
 
-            // Read the result
-            var s = await result.Content.ReadAsStringAsync();
-            if (result.IsSuccessStatusCode) {
-                return s;
-            } else {
-                var err = JsonConvert.DeserializeObject<ErrorResult>(s);
-                throw new AvaTaxError(err);
+                // Make the request
+                HttpResponseMessage result = null;
+                string json = null;
+                if (verb == "get") {
+                    result = await client.GetAsync(uri.ToString());
+                } else if (verb == "post") {
+                    json = JsonConvert.SerializeObject(payload, SerializerSettings);
+                    result = await client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
+                } else if (verb == "put") {
+                    json = JsonConvert.SerializeObject(payload, SerializerSettings);
+                    result = await client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
+                } else if (verb == "delete") {
+                    result = await client.DeleteAsync(uri.ToString());
+                }
+
+                // Read the result
+                var s = await result.Content.ReadAsStringAsync();
+                if (result.IsSuccessStatusCode) {
+                    return s;
+                } else {
+                    var err = JsonConvert.DeserializeObject<ErrorResult>(s);
+                    throw new AvaTaxError(err);
+                }
             }
         }
 
@@ -272,7 +257,7 @@ namespace Avalara.AvaTax.RestClient
 
             // Construct the basic auth, if required
             if (!String.IsNullOrEmpty(_credentials)) {
-                wr.Headers[HttpRequestHeader.Authorization] = _credentials;
+                wr.Headers[HttpRequestHeader.Authorization] = "Basic " + _credentials;
             }
             if (!String.IsNullOrEmpty(_clientHeader)) {
                 wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
