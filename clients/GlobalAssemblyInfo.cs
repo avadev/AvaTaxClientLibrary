@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Avalara.AvaTax.RestClient")]
-[assembly: AssemblyCopyright("Copyright (C) 2004 - 2016")]
+[assembly: AssemblyCopyright("Copyright (C) 2004 - 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("2.16.12.30")]
-[assembly: AssemblyFileVersion("2.16.12.30")]
+[assembly: AssemblyVersion("2.17.1.32")]
+[assembly: AssemblyFileVersion("2.17.1.32")]
