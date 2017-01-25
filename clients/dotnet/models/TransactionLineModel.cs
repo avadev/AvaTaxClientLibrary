@@ -30,7 +30,7 @@ namespace Avalara.AvaTax.RestClient
         public Int32? boundaryOverrideId { get; set; }
 
         /// <summary>
-        /// The customer usage type for this line item.  Usage type often affects taxability rules.
+        /// The customer usage type for this line item. Usage type often affects taxability rules.
         /// </summary>
         public String customerUsageType { get; set; }
 
@@ -41,21 +41,21 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The unique ID number of the destination address where this line was delivered or sold.
-        ///             In the case of a point-of-sale transaction, the destination address and origin address will be the same.
-        ///             In the case of a shipped transaction, they will be different.
+        /// In the case of a point-of-sale transaction, the destination address and origin address will be the same.
+        /// In the case of a shipped transaction, they will be different.
         /// </summary>
         public Int64? destinationAddressId { get; set; }
 
         /// <summary>
         /// The unique ID number of the origin address where this line was delivered or sold.
-        ///             In the case of a point-of-sale transaction, the origin address and destination address will be the same.
-        ///             In the case of a shipped transaction, they will be different.
+        /// In the case of a point-of-sale transaction, the origin address and destination address will be the same.
+        /// In the case of a shipped transaction, they will be different.
         /// </summary>
         public Int64? originAddressId { get; set; }
 
         /// <summary>
-        /// The amount of discount that was applied to this line item.  This represents the difference between list price and sale price of the item.
-        ///             In general, a discount represents money that did not change hands; tax is calculated on only the amount of money that changed hands.
+        /// The amount of discount that was applied to this line item. This represents the difference between list price and sale price of the item.
+        /// In general, a discount represents money that did not change hands; tax is calculated on only the amount of money that changed hands.
         /// </summary>
         public Decimal? discountAmount { get; set; }
 
@@ -95,8 +95,8 @@ namespace Avalara.AvaTax.RestClient
         public String itemCode { get; set; }
 
         /// <summary>
-        /// The total amount of the transaction, including both taxable and exempt.  This is the total price for all items.
-        ///             To determine the individual item price, divide this by quantity.
+        /// The total amount of the transaction, including both taxable and exempt. This is the total price for all items.
+        /// To determine the individual item price, divide this by quantity.
         /// </summary>
         public Decimal? lineAmount { get; set; }
 
@@ -116,8 +116,8 @@ namespace Avalara.AvaTax.RestClient
         public String ref2 { get; set; }
 
         /// <summary>
-        /// The date when this transaction should be reported.  By default, all transactions are reported on the date when the actual transaction took place.
-        ///             In some cases, line items may be reported later due to delayed shipments or other business reasons.
+        /// The date when this transaction should be reported. By default, all transactions are reported on the date when the actual transaction took place.
+        /// In some cases, line items may be reported later due to delayed shipments or other business reasons.
         /// </summary>
         public DateTime? reportingDate { get; set; }
 
@@ -142,7 +142,7 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? taxableAmount { get; set; }
 
         /// <summary>
-        /// The tax calculated for this line by Avalara.  If the transaction was calculated with a tax override, this amount will be different from the "tax" value.
+        /// The tax calculated for this line by Avalara. If the transaction was calculated with a tax override, this amount will be different from the "tax" value.
         /// </summary>
         public Decimal? taxCalculated { get; set; }
 
@@ -157,9 +157,9 @@ namespace Avalara.AvaTax.RestClient
         public Int32? taxCodeId { get; set; }
 
         /// <summary>
-        /// The date that was used for calculating tax amounts for this line item.  By default, this date should be the same as the document date.
-        ///             In some cases, for example when a consumer returns a product purchased previously, line items may be calculated using a tax date in the past
-        ///             so that the consumer can receive a refund for the correct tax amount that was charged when the item was originally purchased.
+        /// The date that was used for calculating tax amounts for this line item. By default, this date should be the same as the document date.
+        /// In some cases, for example when a consumer returns a product purchased previously, line items may be calculated using a tax date in the past
+        /// so that the consumer can receive a refund for the correct tax amount that was charged when the item was originally purchased.
         /// </summary>
         public DateTime? taxDate { get; set; }
 
@@ -189,7 +189,7 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? taxIncluded { get; set; }
 
         /// <summary>
-        /// Optional: A list of tax details for this line item.  To fetch this list, add the query string "?$include=Details" to your URL.
+        /// Optional: A list of tax details for this line item. To fetch this list, add the query string "?$include=Details" to your URL.
         /// </summary>
         public List<TransactionLineDetailModel> details { get; set; }
 

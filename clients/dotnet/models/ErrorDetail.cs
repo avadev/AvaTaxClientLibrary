@@ -40,7 +40,7 @@ namespace Avalara.AvaTax.RestClient
         public String helpLink { get; set; }
 
         /// <summary>
-        /// Item the message refers to, if applicable.  This is used to indicate a missing or incorrect value.
+        /// Item the message refers to, if applicable. This is used to indicate a missing or incorrect value.
         /// </summary>
         public String refersTo { get; set; }
 

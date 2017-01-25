@@ -131,7 +131,10 @@ class AvaTaxClient
 
 <text>
     /**
-     * @m.Comment
+     * @m.Summary
+     *
+     * @PhpComment(m.Description, 4)
+     *
      * </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
      * @@return @PhpTypeName(m.TypeName)
      */
@@ -181,7 +184,7 @@ class AvaTaxClient
     if (m.SchemaName.StartsWith("FetchResult")) continue;
 <text>
 /**
- * @PhpComment(m.Comment)
+ * @PhpComment(m.Comment, 0)
  */
 class @m.SchemaName
 {</text>

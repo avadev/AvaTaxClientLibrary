@@ -15,12 +15,12 @@ namespace Avalara.AvaTax.RestClient
         public Int64? id { get; set; }
 
         /// <summary>
-        /// The service category of this property.  Some properties may require that you subscribe to certain features of avatax before they can be used.
+        /// The service category of this property. Some properties may require that you subscribe to certain features of avatax before they can be used.
         /// </summary>
         public String category { get; set; }
 
         /// <summary>
-        /// The name of the property.  To use this property, add a field on the "properties" object of a /api/v2/companies/(code)/transactions/create call.
+        /// The name of the property. To use this property, add a field on the "properties" object of a /api/v2/companies/(code)/transactions/create call.
         /// </summary>
         public String name { get; set; }
 

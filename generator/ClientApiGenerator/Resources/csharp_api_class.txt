@@ -14,11 +14,13 @@ namespace Avalara.AvaTax.RestClient
         public static string API_VERSION { get { return "@SwaggerModel.ApiVersion"; } }
 
 #region Methods
-@foreach(var m in SwaggerModel.Methods) {
-    WriteLine("        /// <summary>");
-    WriteLine("        /// " + CSharpComment(m.Comment));
-    WriteLine("        /// </summary>");
-
+@foreach(var m in SwaggerModel.Methods) {<text>
+        /// <summary>
+        /// @CSharpComment(m.Summary)
+        /// </summary>
+        /// <remarks>
+        /// @CSharpComment(m.Description)
+        /// </remarks></text>
     foreach (var p in m.Params) {
         WriteLine("        /// <param name=\"" + p.CleanParamName + "\">" + p.Comment + "</param>");
     }
@@ -71,12 +73,13 @@ namespace Avalara.AvaTax.RestClient
 
 #region Asynchronous
 #if PORTABLE
-@foreach(var m in SwaggerModel.Methods) {
-
-    WriteLine("        /// <summary>");
-    WriteLine("        /// " + CSharpComment(m.Comment));
-    WriteLine("        /// </summary>");
-
+@foreach(var m in SwaggerModel.Methods) {<text>
+        /// <summary>
+        /// @CSharpComment(m.Summary);
+        /// </summary>
+        /// <remarks>
+        /// @CSharpComment(m.Description);
+        /// </remarks></text>
     foreach (var p in m.Params) {
         WriteLine("        /// <param name=\"" + p.CleanParamName + "\">" + p.Comment + "</param>");
     }

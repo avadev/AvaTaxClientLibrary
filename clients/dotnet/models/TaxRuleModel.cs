@@ -21,13 +21,13 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The unique ID number of the tax code for this rule.
-        ///             When creating or updating a tax rule, you may specify either the taxCodeId value or the taxCode value.
+        /// When creating or updating a tax rule, you may specify either the taxCodeId value or the taxCode value.
         /// </summary>
         public Int32? taxCodeId { get; set; }
 
         /// <summary>
         /// The code string of the tax code for this rule.
-        ///             When creating or updating a tax rule, you may specify either the taxCodeId value or the taxCode value.
+        /// When creating or updating a tax rule, you may specify either the taxCodeId value or the taxCode value.
         /// </summary>
         public String taxCode { get; set; }
 
@@ -68,9 +68,9 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// This type value determines the behavior of the tax rule.
-        ///             You can specify that this rule controls the product's taxability or exempt / nontaxable status, the product's rate 
-        ///             (for example, if you have been granted an official ruling for your product's rate that differs from the official rate), 
-        ///             or other types of behavior.
+        /// You can specify that this rule controls the product's taxability or exempt / nontaxable status, the product's rate 
+        /// (for example, if you have been granted an official ruling for your product's rate that differs from the official rate), 
+        /// or other types of behavior.
         /// </summary>
         public TaxRuleTypeId? taxRuleTypeId { get; set; }
 
@@ -100,12 +100,12 @@ namespace Avalara.AvaTax.RestClient
         public String options { get; set; }
 
         /// <summary>
-        /// The first date at which this rule applies.  If null, this rule will apply to all dates prior to the end date.
+        /// The first date at which this rule applies. If null, this rule will apply to all dates prior to the end date.
         /// </summary>
         public DateTime? effectiveDate { get; set; }
 
         /// <summary>
-        /// The last date for which this rule applies.  If null, this rule will apply to all dates after the effective date.
+        /// The last date for which this rule applies. If null, this rule will apply to all dates after the effective date.
         /// </summary>
         public DateTime? endDate { get; set; }
 

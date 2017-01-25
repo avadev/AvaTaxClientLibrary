@@ -6,7 +6,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Represents a tax code that can be applied to items on a transaction.
-        ///             A tax code can have specific rules for specific jurisdictions that change the tax calculation behavior.
+        /// A tax code can have specific rules for specific jurisdictions that change the tax calculation behavior.
     /// </summary>
     public class TaxCodeModel
     {
@@ -62,7 +62,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// True if this tax code has been certified by the Streamlined Sales Tax governing board.
-        ///             By default, you should leave this value empty.
+        /// By default, you should leave this value empty.
         /// </summary>
         public Boolean? isSSTCertified { get; set; }
 

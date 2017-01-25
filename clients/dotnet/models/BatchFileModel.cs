@@ -35,7 +35,7 @@ namespace Avalara.AvaTax.RestClient
         public Int32? contentLength { get; set; }
 
         /// <summary>
-        /// Content mime type (e.g. text/csv).  This is used for HTTP downloading.
+        /// Content mime type (e.g. text/csv). This is used for HTTP downloading.
         /// </summary>
         public String contentType { get; set; }
 

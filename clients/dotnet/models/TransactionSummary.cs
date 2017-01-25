@@ -80,7 +80,7 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? tax { get; set; }
 
         /// <summary>
-        /// Tax Calculated by Avalara AvaTax.  This may be overriden by a TaxOverride.TaxAmount.
+        /// Tax Calculated by Avalara AvaTax. This may be overriden by a TaxOverride.TaxAmount.
         /// </summary>
         public Decimal? taxCalculated { get; set; }
 

@@ -68,7 +68,8 @@ Arguments:
                     MethodInfo api = new MethodInfo();
                     api.URI = path.Key;
                     api.HttpVerb = verb.Key;
-                    api.Comment = verb.Value.summary;
+                    api.Summary = verb.Value.summary;
+                    api.Description = verb.Value.description;
                     api.Params = new List<ParameterInfo>();
                     api.QueryParams = new List<ParameterInfo>();
                     api.Category = verb.Value.tags.FirstOrDefault();

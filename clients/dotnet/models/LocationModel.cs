@@ -6,7 +6,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// A location where this company does business.
-        ///             Some jurisdictions may require you to list all locations where your company does business.
+        /// Some jurisdictions may require you to list all locations where your company does business.
     /// </summary>
     public class LocationModel
     {
@@ -21,7 +21,7 @@ namespace Avalara.AvaTax.RestClient
         public Int32 companyId { get; set; }
 
         /// <summary>
-        /// A code that identifies this location.  Must be unique within your company.
+        /// A code that identifies this location. Must be unique within your company.
         /// </summary>
         public String locationCode { get; set; }
 
@@ -61,7 +61,7 @@ namespace Avalara.AvaTax.RestClient
         public String city { get; set; }
 
         /// <summary>
-        /// The county name of the physical address of this location.  Not required.
+        /// The county name of the physical address of this location. Not required.
         /// </summary>
         public String county { get; set; }
 
@@ -111,12 +111,12 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? endDate { get; set; }
 
         /// <summary>
-        /// The most recent date when a transaction was processed for this location.  Set by AvaTax.
+        /// The most recent date when a transaction was processed for this location. Set by AvaTax.
         /// </summary>
         public DateTime? lastTransactionDate { get; set; }
 
         /// <summary>
-        /// The date when this location was registered with a tax authority.  Not required.
+        /// The date when this location was registered with a tax authority. Not required.
         /// </summary>
         public DateTime? registeredDate { get; set; }
 
@@ -142,8 +142,8 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Extra information required by certain jurisdictions for filing.
-        ///             For a list of settings recognized by Avalara, query the endpoint "/api/v2/definitions/locationquestions". 
-        ///             To determine the list of settings required for this location, query the endpoint "/api/v2/companies/(id)/locations/(id)/validate".
+        /// For a list of settings recognized by Avalara, query the endpoint "/api/v2/definitions/locationquestions". 
+        /// To determine the list of settings required for this location, query the endpoint "/api/v2/companies/(id)/locations/(id)/validate".
         /// </summary>
         public List<LocationSettingModel> settings { get; set; }
 

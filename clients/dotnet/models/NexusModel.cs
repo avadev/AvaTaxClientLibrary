@@ -45,7 +45,7 @@ namespace Avalara.AvaTax.RestClient
         public String jurisName { get; set; }
 
         /// <summary>
-        /// The date when this nexus began.  If not known, set to null.
+        /// The date when this nexus began. If not known, set to null.
         /// </summary>
         public DateTime? effectiveDate { get; set; }
 
@@ -81,13 +81,13 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// True if you are also declaring local nexus within this jurisdiction.
-        ///             Many U.S. states have options for declaring nexus in local jurisdictions as well as within the state.
+        /// Many U.S. states have options for declaring nexus in local jurisdictions as well as within the state.
         /// </summary>
         public Boolean? hasLocalNexus { get; set; }
 
         /// <summary>
         /// If you are declaring local nexus within this jurisdiction, this indicates whether you are declaring only 
-        ///             a specified list of local jurisdictions, all state-administered local jurisdictions, or all local jurisdictions.
+        /// a specified list of local jurisdictions, all state-administered local jurisdictions, or all local jurisdictions.
         /// </summary>
         public LocalNexusTypeId? localNexusTypeId { get; set; }
 
