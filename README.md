@@ -7,7 +7,10 @@ Online swagger documentation is always available at https://sandbox-rest.avatax.
 
 # Current Status
 
-* Java [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11)
+|Client|Version|Status|
+|Java|[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11)|Live|
+|C#|[![NuGet](https://img.shields.io/nuget/v/Avalara.AvaTax.svg)](https://www.nuget.org/packages/Avalara.AvaTax/)|Live|
+
 * DotNet
 
 <table>
