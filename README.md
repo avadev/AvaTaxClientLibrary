@@ -22,7 +22,9 @@ Online swagger documentation is always available at https://sandbox-rest.avatax.
     </tr>
     <tr>
         <td>Java</td>
-        <td>[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11)</td>
+        <td>
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11)
+        </td>
         <td>Live</td>
         <td><a href="https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22net.avalara.avatax%22">maven.org</a></td>
     </tr>
