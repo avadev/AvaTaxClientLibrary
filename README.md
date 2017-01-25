@@ -14,7 +14,7 @@ Avalara maintains and publishes SDKs for our current REST v2 API for the followi
 | C# | [![NuGet](https://img.shields.io/nuget/v/Avalara.AvaTax.svg)](https://www.nuget.org/packages/Avalara.AvaTax/) | Live |
 | Java | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11) | Live
 | JavaScript | | Research |
-| PHP | | In Beta |
+| PHP | | Research |
 | Python | | Research |
 | Scala | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11) | Live |
 
