@@ -24,6 +24,6 @@ The AvaTax SOAP SDK exists for backward compatibility with older software.  User
 
 | Client | Version |
 |--------|---------|
-| C# | [![NuGet](https://img.shields.io/nuget/v/Avalara.AvaTax.svg)](https://www.nuget.org/packages/Avalara.AvaTax.SoapClient/) |
+| C# | [![NuGet](https://img.shields.io/nuget/v/Avalara.AvaTax.SoapClient.svg)](https://www.nuget.org/packages/Avalara.AvaTax.SoapClient/) |
 | JavaScript | [![npm](https://img.shields.io/npm/v/avalara.svg)](https://www.npmjs.com/package/avalara) |
 | PHP | [![Packagist](https://img.shields.io/packagist/v/avalara/avatax.svg)](https://packagist.org/packages/avalara/avatax) |
