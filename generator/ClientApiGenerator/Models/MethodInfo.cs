@@ -10,7 +10,8 @@ namespace ClientApiGenerator.Models
     {
         public string Name { get; set; }
         public string URI { get; set; }
-        public string Comment { get; set; }
+        public string Summary { get; set; }
+        public string Description { get; set; }
         public string Category { get; set; }
         public string TypeName { get; set; }
         public string HttpVerb { get; set; }

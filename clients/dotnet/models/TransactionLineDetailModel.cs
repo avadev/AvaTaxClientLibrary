@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An individual tax detail element.  Represents the amount of tax calculated for a particular jurisdiction, for a particular line in an invoice.
+    /// An individual tax detail element. Represents the amount of tax calculated for a particular jurisdiction, for a particular line in an invoice.
     /// </summary>
     public class TransactionLineDetailModel
     {
@@ -145,7 +145,7 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? taxableAmount { get; set; }
 
         /// <summary>
-        /// The type of tax that was calculated.  Depends on the company's nexus settings as well as the jurisdiction's tax laws.
+        /// The type of tax that was calculated. Depends on the company's nexus settings as well as the jurisdiction's tax laws.
         /// </summary>
         public TaxType? taxType { get; set; }
 
@@ -165,9 +165,9 @@ namespace Avalara.AvaTax.RestClient
         public Int32? taxRegionId { get; set; }
 
         /// <summary>
-        /// The amount of tax that was calculated.  This amount may be different if a tax override was used.
-        ///             If the customer specified a tax override, this calculated tax value represents the amount of tax that would
-        ///             have been charged if Avalara had calculated the tax for the rule.
+        /// The amount of tax that was calculated. This amount may be different if a tax override was used.
+        /// If the customer specified a tax override, this calculated tax value represents the amount of tax that would
+        /// have been charged if Avalara had calculated the tax for the rule.
         /// </summary>
         public Decimal? taxCalculated { get; set; }
 

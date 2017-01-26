@@ -6,7 +6,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Information about Avalara-defined tax code types.
-        ///             This list is used when creating tax codes and tax rules.
+        /// This list is used when creating tax codes and tax rules.
     /// </summary>
     public class TaxCodeTypesModel
     {

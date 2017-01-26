@@ -75,7 +75,7 @@ namespace Avalara.AvaTax.RestClient
         public String ref2 { get; set; }
 
         /// <summary>
-        /// Item description.  This is required for SST transactions if an unmapped ItemCode is used.
+        /// Item description. This is required for SST transactions if an unmapped ItemCode is used.
         /// </summary>
         public String description { get; set; }
 
@@ -91,7 +91,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Special parameters that apply to this line within this transaction.
-        ///                 To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
+        /// To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
         /// </summary>
         public Dictionary<string, string> parameters { get; set; }
 

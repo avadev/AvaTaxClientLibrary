@@ -102,7 +102,7 @@ namespace ClientApiGenerator
         public string CSharpComment(string c)
         {
             if (String.IsNullOrEmpty(c)) return "";
-            return FixWhitespace(c).Replace("\r\n", "\r\n        /// ");
+            return FixWhitespace(c).Replace("\r\n", "\r\n        ///");
         }
 
         public string CleanParameterName(string p)
@@ -169,10 +169,16 @@ namespace ClientApiGenerator
             return (SwaggerModel.Enums.Any(e => e.EnumDataType == typename));
         }
 
-        public string PhpComment(string c)
+        public string PhpComment(string c, int indent)
         {
             if (String.IsNullOrEmpty(c)) return "";
-            return FixWhitespace(c).Replace("\r\n", "\r\n *");
+            StringBuilder sb = new StringBuilder();
+            sb.Append("\r\n");
+            for (int i = 0; i < indent; i++) {
+                sb.Append(' ');
+            }
+            sb.Append(" *");
+            return FixWhitespace(c).Replace("\r\n", sb.ToString());
         }
 
         public string FixWhitespace(string s)

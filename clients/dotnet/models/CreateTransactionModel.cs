@@ -15,14 +15,14 @@ namespace Avalara.AvaTax.RestClient
         public DocumentType? type { get; set; }
 
         /// <summary>
-        /// Transaction Code - the internal reference code used by the client application.  This is used for operations such as
-        ///                 Get, Adjust, Settle, and Void.  If you leave the transaction code blank, a GUID will be assigned to each transaction.
+        /// Transaction Code - the internal reference code used by the client application. This is used for operations such as
+        /// Get, Adjust, Settle, and Void. If you leave the transaction code blank, a GUID will be assigned to each transaction.
         /// </summary>
         public String code { get; set; }
 
         /// <summary>
-        /// Company Code - Specify the code of the company creating this transaction here.  If you leave this value null,
-        ///                 your account's default company will be used instead.
+        /// Company Code - Specify the code of the company creating this transaction here. If you leave this value null,
+        /// your account's default company will be used instead.
         /// </summary>
         public String companyCode { get; set; }
 
@@ -73,7 +73,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Special parameters for this transaction.
-        ///                 To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
+        /// To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
         /// </summary>
         public Dictionary<string, string> parameters { get; set; }
 

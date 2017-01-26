@@ -395,6 +395,21 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        ReportingEntityError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidReturnOperationError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotDeleteCompany,
+
+        /// <summary>
+        /// 
+        /// </summary>
         BatchSalesAuditMustBeZippedError,
 
         /// <summary>
@@ -486,6 +501,16 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         SubscriptionRequired,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AccountExists,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvitationOnly,
 
     }
 }

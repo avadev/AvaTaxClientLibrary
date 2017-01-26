@@ -55,12 +55,12 @@ namespace Avalara.AvaTax.RestClient
         public Int32? modifiedUserId { get; set; }
 
         /// <summary>
-        /// Optional: A list of subscriptions granted to this account.  To fetch this list, add the query string "?$include=Subscriptions" to your URL.
+        /// Optional: A list of subscriptions granted to this account. To fetch this list, add the query string "?$include=Subscriptions" to your URL.
         /// </summary>
         public List<SubscriptionModel> subscriptions { get; set; }
 
         /// <summary>
-        /// Optional: A list of all the users belonging to this account.  To fetch this list, add the query string "?$include=Users" to your URL.
+        /// Optional: A list of all the users belonging to this account. To fetch this list, add the query string "?$include=Users" to your URL.
         /// </summary>
         public List<UserModel> users { get; set; }
 

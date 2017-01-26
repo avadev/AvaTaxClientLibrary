@@ -11,6 +11,7 @@ namespace ClientApiGenerator.Swagger
     {
         public List<string> tags { get; set; }
         public string summary { get; set; }
+        public string description { get; set; }
         public string operationId { get; set; }
         public List<string> consumes { get; set; }
         public List<string> produces { get; set; }

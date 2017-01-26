@@ -40,7 +40,7 @@ namespace Avalara.AvaTax.RestClient
         public String lastName { get; set; }
 
         /// <summary>
-        /// The email address to be used to contact this user.  If the user has forgotten a password, an email can be sent to this email address with information on how to reset this password.
+        /// The email address to be used to contact this user. If the user has forgotten a password, an email can be sent to this email address with information on how to reset this password.
         /// </summary>
         public String email { get; set; }
 
