@@ -16,7 +16,7 @@ Avalara maintains and publishes SDKs for our current REST v2 API for the followi
 | JavaScript | | Research | [https://github.com/avadev/AvaTax-REST-V2-JS-SDK](https://github.com/avadev/AvaTax-REST-V2-JS-SDK) |
 | PHP | | Research | [https://github.com/avadev/AvaTaxClientLibrary](https://github.com/avadev/AvaTaxClientLibrary) |
 | Python | | Research | |
-| Scala | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11) | Live | https://github.com/avadev/AvaTax-REST-V2-JRE-SDK](https://github.com/avadev/AvaTax-REST-V2-JRE-SDK) |
+| Scala | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11) | Live | [https://github.com/avadev/AvaTax-REST-V2-JRE-SDK](https://github.com/avadev/AvaTax-REST-V2-JRE-SDK) |
 
 # SOAP v1 SDK Library Status
 
