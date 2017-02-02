@@ -11,10 +11,10 @@ Avalara maintains and publishes SDKs for our current REST v2 API for the followi
 
 | Client | Version | Status | GitHub |
 |--------|---------|--------|--------|
-| C# | [![NuGet](https://img.shields.io/nuget/v/Avalara.AvaTax.svg)](https://www.nuget.org/packages/Avalara.AvaTax/) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-DotNet-SDK.svg?branch=master&style=plastic) | |
+| C# | [![NuGet](https://img.shields.io/nuget/v/Avalara.AvaTax.svg)](https://www.nuget.org/packages/Avalara.AvaTax/) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-DotNet-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-DotNet-SDK) | |
 | Java | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11) | Live | [https://github.com/avadev/AvaTax-REST-V2-JRE-SDK](https://github.com/avadev/AvaTax-REST-V2-JRE-SDK) |
-| JavaScript | | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-JRE-SDK.svg?branch=master&style=plastic)] | [https://github.com/avadev/AvaTax-REST-V2-JS-SDK](https://github.com/avadev/AvaTax-REST-V2-JS-SDK) |
-| PHP | [![Packagist](https://img.shields.io/packagist/v/avalara/avataxclient.svg?style=plastic)](https://packagist.org/packages/avalara/avataxclient) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-PHP-SDK.svg?branch=master&style=plastic)] | [https://github.com/avadev/AvaTaxClientLibrary](https://github.com/avadev/AvaTaxClientLibrary) |
+| JavaScript | | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-JRE-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-JS-SDK) | [https://github.com/avadev/AvaTax-REST-V2-JS-SDK](https://github.com/avadev/AvaTax-REST-V2-JS-SDK) |
+| PHP | [![Packagist](https://img.shields.io/packagist/v/avalara/avataxclient.svg?style=plastic)](https://packagist.org/packages/avalara/avataxclient) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-PHP-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-PHP-SDK) | [https://github.com/avadev/AvaTaxClientLibrary](https://github.com/avadev/AvaTaxClientLibrary) |
 | Python | | Research | |
 | Scala | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11) | Live | [https://github.com/avadev/AvaTax-REST-V2-JRE-SDK](https://github.com/avadev/AvaTax-REST-V2-JRE-SDK) |
 
