@@ -3,7 +3,7 @@ namespace Avalara;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2016 Avalara, Inc.
+ * (c) 2004-2017 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,13 +12,11 @@ namespace Avalara;
  * @@package    Avalara.AvaTaxClient
  * @@author     Ted Spence <ted.spence@@avalara.com>
  * @@author     Bob Maidens <bob.maidens@@avalara.com>
- * @@copyright  2004-2016 Avalara, Inc.
+ * @@copyright  2004-2017 Avalara, Inc.
  * @@license    https://www.apache.org/licenses/LICENSE-2.0
  * @@version    @SwaggerModel.ApiVersion
  * @@link       https://github.com/avadev/AvaTaxClientLibrary
  */
-
-require_once __DIR__."/vendor/autoload.php";
 
 use GuzzleHttp\Client;
 
@@ -68,11 +66,6 @@ class AvaTaxClient
         $this->client->setDefaultOption('headers', array(
             'Accept' => 'application/json',
             'X-Avalara-Client' => "{$appName}; {$appVersion}; PhpRestClient; @SwaggerModel.ApiVersion; {$machineName}"));
-            
-        // For some reason, Guzzle/CURL reports that 'https://sandbox-rest.avatax.com' is a self signed certificate, even though Verisign issued it
-        if ($env == 'https://sandbox-rest.avatax.com') {
-            $this->client->setDefaultOption('verify', false);
-        }
     }
 
     /**
