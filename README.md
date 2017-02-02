@@ -21,7 +21,18 @@ Avalara maintains and publishes SDKs for our current REST v2 API for the followi
 
 The AvaTax SOAP SDK exists for backward compatibility with older software.  Users are encouraged to upgrade to the REST v2 SDK when possible.
 
-| Client | Version | GitHub |
+| Client | Package Manager | GitHub |
 |--------|---------|--------|
 | C# | [![NuGet](https://img.shields.io/nuget/v/Avalara.AvaTax.SoapClient.svg)](https://www.nuget.org/packages/Avalara.AvaTax.SoapClient/) | [AvaTax-Calc-AccountSvc-SOAP-csharp](https://github.com/avadev/AvaTax-Calc-AccountSvc-SOAP-csharp) |
 | PHP | [![Packagist](https://img.shields.io/packagist/v/avalara/avatax.svg)](https://packagist.org/packages/avalara/avatax) | [AvaTax-Calc-SOAP-PHP](https://github.com/avadev/AvaTax-Calc-SOAP-PHP) |
+| PHP | n/a | [AvaTax-Calc-REST-PHP](https://github.com/avadev/AvaTax-Calc-REST-PHP) |
+| PHP | n/a | [AvaTax-SOAP-PHP-SDK](https://github.com/avadev/AvaTax-SOAP-PHP-SDK) |
+| PHP | n/a | [AvaTax-SOAP-PHP-SDK](https://github.com/avadev/AvaTax-SOAP-PHP-SDK) |
+| Ruby | n/a | [AvaTax-Calc-REST-Ruby](https://github.com/avadev/AvaTax-Calc-REST-Ruby) |
+| IBM iSeries | n/a | [AvaTax-Calc-SOAP-IBMi](https://github.com/avadev/AvaTax-Calc-SOAP-IBMi) |
+| Salesforce Apex | n/a | [AvaTax-SOAP-SF-SDK](https://github.com/avadev/AvaTax-SOAP-SF-SDK) |
+| CURL | n/a | [AvaTax-Calc-REST-cURL](https://github.com/avadev/AvaTax-Calc-REST-cURL) |
+| JavaScript | n/a | [AvaTax-Calc-REST-JavaScript](https://github.com/avadev/AvaTax-Calc-REST-JavaScript) |
+| iOS | n/a | [AvaTax-Calc-SDK-iOS](https://github.com/avadev/AvaTax-Calc-SDK-iOS) |
+| C++ | n/a | [AvaTax-Calc-SOAP-CPP](https://github.com/avadev/AvaTax-Calc-SOAP-CPP) |
+| Python | n/a | [AvaTax-Calc-REST-Python](https://github.com/avadev/AvaTax-Calc-REST-Python) |
