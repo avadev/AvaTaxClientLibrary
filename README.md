@@ -1,7 +1,7 @@
 # AvaTaxClientLibrary
 Client libraries for AvaTax REST v2
 
-This repository contains the open source implementation of a standard client library for AvaTax.  For more information, please see https://developer.avatax.com .
+This repository contains the open source implementation of a standard client library for AvaTax.  For more information, please see https://developer.avalara.com .
 
 Online swagger documentation is always available at https://sandbox-rest.avatax.com/swagger/ui/index.html .
 
