@@ -1,7 +1,7 @@
 <?php 
 namespace Avalara;
 /*
- * AvaTax API Client Library
+ * AvaTax Software Development Kit for PHP
  *
  * (c) 2004-2017 Avalara, Inc.
  *
@@ -15,8 +15,10 @@ namespace Avalara;
  * @@copyright  2004-2017 Avalara, Inc.
  * @@license    https://www.apache.org/licenses/LICENSE-2.0
  * @@version    @SwaggerModel.ApiVersion
- * @@link       https://github.com/avadev/AvaTaxClientLibrary
+ * @@link       https://github.com/avadev/AvaTax-REST-V2-PHP-SDK
  */
+
+require __DIR__ . '/vendor/autoload.php';
 
 use GuzzleHttp\Client;
 

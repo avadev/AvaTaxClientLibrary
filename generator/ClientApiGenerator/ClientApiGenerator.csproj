@@ -77,6 +77,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Resources\php_api_class.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource1.resx">
@@ -95,7 +96,7 @@
     <None Include="Resources\csharp_enum_class.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\php_api_class.txt" />
+    <None Include="Resources\javascript_api_class.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

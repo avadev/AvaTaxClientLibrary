@@ -67,19 +67,24 @@ namespace ClientApiGenerator {
         ///using System.Threading.Tasks;
         ///#endif
         ///
+        ////*
+        /// * AvaTax API Client Library
+        /// *
+        /// * (c) 2004-2017 Avalara, Inc.
+        /// *
+        /// * For the full copyright and license information, please view the LICENSE
+        /// * file that was distributed with this source code.
+        /// *
+        /// * @@author Ted Spence
+        /// * @@author Zhenya Frolov
+        /// */
+        ///
         ///namespace Avalara.AvaTax.RestClient
         ///{
         ///    public partial class AvaTaxClient
         ///    {
         ///        /// &lt;summary&gt;
-        ///        /// Returns the version number of the API used to generate this class
-        ///        /// &lt;/summary&gt;
-        ///        public static string API_VERSION { get { return &quot;@SwaggerModel.ApiVersion&quot;; } }
-        ///
-        ///#region Methods
-        ///@foreach(var m in SwaggerModel.Methods) {
-        ///    WriteLine(&quot;        /// &lt;summary&gt;&quot;);
-        ///    [rest of string was truncated]&quot;;.
+        ///        /// Returns the version n [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string csharp_api_class {
             get {
@@ -90,6 +95,18 @@ namespace ClientApiGenerator {
         /// <summary>
         ///   Looks up a localized string similar to using System;
         ///
+        ////*
+        /// * AvaTax API Client Library
+        /// *
+        /// * (c) 2004-2017 Avalara, Inc.
+        /// *
+        /// * For the full copyright and license information, please view the LICENSE
+        /// * file that was distributed with this source code.
+        /// *
+        /// * @@author Ted Spence
+        /// * @@author Zhenya Frolov
+        /// */
+        ///
         ///namespace Avalara.AvaTax.RestClient
         ///{
         ///    /// &lt;summary&gt;
@@ -98,15 +115,7 @@ namespace ClientApiGenerator {
         ///    public enum @EnumModel.EnumDataType
         ///    {
         ///@foreach(var v in EnumModel.Items) {
-        ///WriteLine(&quot;        /// &lt;summary&gt;&quot;);
-        ///WriteLine(&quot;        /// &quot; + CSharpComment(v.Comment));
-        ///WriteLine(&quot;        /// &lt;/summary&gt;&quot;);
-        ///WriteLine(&quot;        {0},&quot;, v.Value);
-        ///WriteLine(&quot;&quot;);
-        ///}
-        ///    }
-        ///}
-        ///.
+        ///WriteLine(&quot;        /// &lt;summary&gt; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string csharp_enum_class {
             get {
@@ -119,6 +128,18 @@ namespace ClientApiGenerator {
         ///using System.Collections.Generic;
         ///using Newtonsoft.Json;
         ///
+        ////*
+        /// * AvaTax API Client Library
+        /// *
+        /// * (c) 2004-2017 Avalara, Inc.
+        /// *
+        /// * For the full copyright and license information, please view the LICENSE
+        /// * file that was distributed with this source code.
+        /// *
+        /// * @@author Ted Spence
+        /// * @@author Zhenya Frolov
+        /// */
+        ///
         ///namespace Avalara.AvaTax.RestClient
         ///{
         ///    /// &lt;summary&gt;
@@ -126,11 +147,7 @@ namespace ClientApiGenerator {
         ///    /// &lt;/summary&gt;
         ///    public class @ClassModel.SchemaName
         ///    {
-        ///@foreach(var p in ClassModel.Properties) {
-        ///    WriteLine(&quot;        /// &lt;summary&gt;&quot;);
-        ///    WriteLine(&quot;        /// &quot; + CSharpComment(p.Comment));
-        ///    WriteLine(&quot;        /// &lt;/summary&gt;&quot;);
-        ///    WriteLine(&quot;        public &quot; + p.TypeName + &quot; &quot; + p.CleanParamName + &quot; { get [rest of string was truncated]&quot;;.
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string csharp_model_class {
             get {
@@ -144,7 +161,7 @@ namespace ClientApiGenerator {
         ////*
         /// * AvaTax API Client Library
         /// *
-        /// * (c) 2004-2016 Avalara, Inc.
+        /// * (c) 2004-2017 Avalara, Inc.
         /// *
         /// * For the full copyright and license information, please view the LICENSE
         /// * file that was distributed with this source code.
@@ -153,7 +170,31 @@ namespace ClientApiGenerator {
         /// * @@package    Avalara.AvaTaxClient
         /// * @@author     Ted Spence &lt;ted.spence@@avalara.com&gt;
         /// * @@author     Bob Maidens &lt;bob.maidens@@avalara.com&gt;
-        /// * @@copyright  2004-2016 Avalara, Inc.
+        /// * @@copyright  2004-2017 Avalara, Inc.
+        /// * @@license    https://www.apache.org/licenses [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string javascript_api_class {
+            get {
+                return ResourceManager.GetString("javascript_api_class", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?php 
+        ///namespace Avalara;
+        ////*
+        /// * AvaTax API Client Library
+        /// *
+        /// * (c) 2004-2017 Avalara, Inc.
+        /// *
+        /// * For the full copyright and license information, please view the LICENSE
+        /// * file that was distributed with this source code.
+        /// *
+        /// * @@category   AvaTax client libraries
+        /// * @@package    Avalara.AvaTaxClient
+        /// * @@author     Ted Spence &lt;ted.spence@@avalara.com&gt;
+        /// * @@author     Bob Maidens &lt;bob.maidens@@avalara.com&gt;
+        /// * @@copyright  2004-2017 Avalara, Inc.
         /// * @@license    https://www.apache.org/licenses [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string php_api_class {
