@@ -60,6 +60,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\BaseRenderTarget.cs" />
+    <Compile Include="Render\JavascriptTarget.cs" />
     <Compile Include="Render\PHPTarget.cs" />
     <Compile Include="Render\DotNetStandard.cs" />
     <Compile Include="Resource1.Designer.cs">

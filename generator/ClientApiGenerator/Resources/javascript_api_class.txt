@@ -17,62 +17,131 @@
 import fetch from 'isomorphic-fetch';
 import { createBasicAuthHeader } from './utils/basic_auth';
 
-export default class AvaTaxClient {
+export default class AvaTaxClient 
+{
+    /**
+     * Construct a new AvaTaxClient 
+     *
+     * @@param string appName      Specify the name of your application here.  Should not contain any semicolons.
+     * @@param string appVersion   Specify the version number of your application here.  Should not contain any semicolons.
+     * @@param string machineName  Specify the machine name of the machine on which this code is executing here.  Should not contain any semicolons.
+     * @@param string environment  Indicates which server to use; acceptable values are "sandbox" or "production", or the full URL of your AvaTax instance.
+     */
+    constructor(appName, appVersion, machineName, environment) 
+    {
+        this.baseUrl = "https://rest.avatax.com";
+        if (environment == "sandbox") {
+            this.baseUrl = "https://sandbox-rest.avatax.com";
+        } else if ((environment.substring(0, 8) == "https://") || (environment.substring(0, 7) == "http://")) {
+            this.baseUrl = environment;
+        }
+        this.clientId = appName + "; " + appVersion + "; JavascriptSdk; @SwaggerModel.ApiVersion; " + machineName;
+    }
 
-  constructor(options) {
-    this.account = options.account;
-    this.licenseKey = options.licenseKey;
-  }
+    /**
+     * Configure this client to use the specified username/password security settings
+     *
+     * @@param  string          username   The username for your AvaTax user account
+     * @@param  string          password   The password for your AvaTax user account
+     * @@return AvaTaxClient
+     */
+    withSecurity(username, password)
+    {
+        this.auth = createBasicAuthHeader(username, password);
+        return this;
+    }
 
-  makeGetRequest(url) {
-    return fetch(url, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': createBasicAuthHeader(this.account, this.licenseKey)
-      }
-    })
-    .then(res => res.json());
-  }
+    /**
+     * Configure this client to use the specified username/password security settings
+     *
+     * @@param  int             accountId    The account ID of your avatax account
+     * @@param  string          licenseKey   The license key of your avatax account
+     * @@return AvaTaxClient
+     */
+    withSecurity(accountId, licenseKey)
+    {
+        this.auth = createBasicAuthHeader(accountId, licenseKey);
+        return this;
+    }
 
-  getCompanyById({ id }) {
-    const url = `https://sandbox-rest.avatax.com/api/v2/companies/${id}`;
-    return this.makeGetRequest(url);
-  }
+    /**
+     * Make a single REST call to the AvaTax v2 API server
+     *
+     * @@param   string  apiUrl  The relative path of the API on the server
+     * @@param   string  verb    The HTTP verb being used in this request
+     * @@param   string  payload The request body, if this is being sent to a POST/PUT API call
+     */
+    restCall(url, verb, payload) 
+    {
+        return fetch(url, {
+            method: verb,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': this.auth
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json());
+    }
 
-  listCompanies() {
-    const url = 'https://sandbox-rest.avatax.com/api/v2/companies';
-    return this.makeGetRequest(url);
-  }
+    /**
+     * Construct a URL with query string parameters
+     *
+     * @@param   string  url            The root URL of the API being called
+     * @@param   string  parameters     A list of name-value pairs in a javascript object to create as query string parameters
+     */
+    function buildUrl(url, parameters)
+    {
+        var qs = "";
+        for (var key in parameters) {
+            var value = parameters[key];
+            qs += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
+        }
+        if (qs.length > 0) {
+            qs = qs.substring(0, qs.length-1); //chop off last "&"
+            url = url + "?" + qs;
+        }
+        return this.baseUrl + url;
+    }
 
-  getAccountById({ id }) {
-    const url = `https://sandbox-rest.avatax.com/api/v2/accounts/${id}`;
-    return fetch(url, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': createBasicAuthHeader(this.account, this.licenseKey)
-      }
-    })
-      .then(res => res.json());
-  }
+@foreach(var m in SwaggerModel.Methods) {
+    var paramlist = new System.Text.StringBuilder();
+    var queryparamlist = new System.Text.StringBuilder();
+    var paramcomments = new System.Collections.Generic.List<string>();
+    string payload = "null";
+    foreach (var p in m.Params) {
+        paramlist.Append(p.CleanParamName);
+        paramlist.Append(", ");
+    }
+    foreach (var p in m.QueryParams) {
+        paramlist.Append(p.CleanParamName);
+        paramlist.Append(", ");
+        queryparamlist.Append(p.CleanParamName + ": " + p.CleanParamName + ", ");
+        paramcomments.Add("\r\n     * @param " + PhpTypeName(p.TypeName) + " " + p.CleanParamName + " " + PhpTypeComment(SwaggerModel, p));
+    }
+    if (m.BodyParam != null) {
+        paramlist.Append(m.BodyParam.CleanParamName);
+        paramlist.Append(", ");
+        payload = m.BodyParam.CleanParamName;
+        paramcomments.Add("\r\n     * @param " + PhpTypeName(m.BodyParam.TypeName) + " " + m.BodyParam.CleanParamName + " " + PhpTypeComment(SwaggerModel, m.BodyParam));
+    }
+    if (paramlist.Length > 0) paramlist.Length -= 2;
+    if (queryparamlist.Length > 0) queryparamlist.Length -= 2;
 
-  createTransaction(transactionRequest) {
-    const url = 'https://sandbox-rest.avatax.com/api/v2/transactions/create';
-    return fetch(url, { 
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': createBasicAuthHeader(this.account, this.licenseKey)
-      },
-      body: JSON.stringify(transactionRequest)
-    })
-      .then(res => res.json());
-  }
-
-  listTransactions({ companyCode }) {
-    const url = `https://sandbox-rest.avatax.com/api/v2/companies/${companyCode}/transactions`;
-    return this.makeGetRequest(url);
-  }
+<text>
+    /**
+     * @m.Summary
+     *
+     * @PhpComment(m.Description, 4)
+     *
+     * </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
+     * @@return @PhpTypeName(m.TypeName)
+     */
+    @{Write("    " + FirstCharLower(m.Name) + "(" + paramlist.ToString() + ")");}
+    {
+        var path = buildUrl('@m.URI', { @queryparamlist })
+        return this.restCall(path, '@m.HttpVerb.ToLower()', @payload);
+    }
+</text>}
 }

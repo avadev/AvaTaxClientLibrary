@@ -8,18 +8,18 @@ using System.IO;
 
 namespace ClientApiGenerator.Render
 {
-    public class PHPTarget : BaseRenderTarget
+    public class JavascriptTarget : BaseRenderTarget
     {
         public override void Render(SwaggerInfo model, string rootPath)
         {
-            string php = Path.Combine(rootPath, "php");
+            string php = Path.Combine(rootPath, "javascript");
             Directory.CreateDirectory(php);
 
             // Set up the razor scripts
-            var apiTask = this.MakeRazorTemplate(Resource1.php_api_class);
+            var apiTask = this.MakeRazorTemplate(Resource1.javascript_api_class);
 
             // Now spit out a coherent single file for the PHP API
-            File.WriteAllText(Path.Combine(rootPath, "AvaTax-REST-V2-PHP-SDK\\src\\AvaTaxClient.php"),
+            File.WriteAllText(Path.Combine(rootPath, "AvaTax-REST-V2-JS-SDK\\lib\\AvaTaxClient.js"),
                 apiTask.ExecuteTemplate(model, null, null));
         }
     }
