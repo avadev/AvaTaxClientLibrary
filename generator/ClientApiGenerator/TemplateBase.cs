@@ -177,7 +177,7 @@ namespace ClientApiGenerator
             for (int i = 0; i < indent; i++) {
                 sb.Append(' ');
             }
-            sb.Append(" *");
+            sb.Append(" * ");
             return FixWhitespace(c).Replace("\r\n", sb.ToString());
         }
 
