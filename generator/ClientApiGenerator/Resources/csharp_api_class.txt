@@ -78,6 +78,8 @@ namespace Avalara.AvaTax.RestClient
     
     if (m.TypeName == "String") {
         WriteLine("            return RestCallString(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+    } else if (m.TypeName == "FileResult") {
+        WriteLine("            return RestCallFile(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     } else {
         WriteLine("            return RestCall<" + m.TypeName + ">(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     }
