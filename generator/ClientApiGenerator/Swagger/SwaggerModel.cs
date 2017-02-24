@@ -16,7 +16,7 @@ namespace ClientApiGenerator.Swagger
         public Dictionary<string, SwaggerDefinition> definitions { get; set; }
         public Dictionary<string, object> securityDefinitions { get; set; }
 
-        [JsonProperty("x-api-version")]
+        [JsonProperty("x-avalara-version")]
         public string ApiVersion { get; set; }
         
         [JsonExtensionData]
