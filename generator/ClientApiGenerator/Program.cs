@@ -115,11 +115,7 @@ Arguments:
                     // Now figure out the response type
                     SwaggerResult ok = null;
                     if (verb.Value.responses.TryGetValue("200", out ok)) {
-                        if (ok.schema == null) {
-                            api.TypeName = "String";
-                        } else {
-                            api.TypeName = ResolveType(ok.schema);
-                        }
+                        api.TypeName = ResolveType(ok.schema);
                     } else if (verb.Value.responses.TryGetValue("201", out ok)) {
                         api.TypeName = ResolveType(ok.schema);
                     }
@@ -204,6 +200,9 @@ Arguments:
         {
             StringBuilder typename = new StringBuilder();
             bool isValueType = false;
+
+            // If this API produces a file download
+            if (prop == null) return "FileResult";
 
             // Handle integers / int64s
             if (prop.type == "integer") {
