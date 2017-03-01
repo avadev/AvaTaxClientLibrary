@@ -22,18 +22,33 @@ namespace ClientApiGenerator.Render
                 apiTask.ExecuteTemplate(model, null, null));
 
             // Next let's assemble the model files
+            var modelDir = CleanFolder(rootPath, "AvaTax-REST-V2-DotNet-SDK\\src\\models");
             foreach (var m in model.Models) {
                 if (!m.SchemaName.StartsWith("FetchResult")) {
-                    File.WriteAllText(Path.Combine(rootPath, "AvaTax-REST-V2-DotNet-SDK\\src\\models\\" + m.SchemaName + ".cs"),
+                    File.WriteAllText(Path.Combine(modelDir, m.SchemaName + ".cs"),
                         modelTask.ExecuteTemplate(model, m, null));
                 }
             }
 
             // Finally assemble the enums
+            var enumDir = CleanFolder(rootPath, "AvaTax-REST-V2-DotNet-SDK\\src\\enums");
             foreach (var e in model.Enums) {
-                File.WriteAllText(Path.Combine(rootPath, "AvaTax-REST-V2-DotNet-SDK\\src\\enums\\" + e.EnumDataType + ".cs"),
+                File.WriteAllText(Path.Combine(enumDir, e.EnumDataType + ".cs"),
                     enumTask.ExecuteTemplate(model, null, e));
             }
+        }
+
+        private string CleanFolder(string rootPath, string relativePath)
+        {
+            var dir = Path.Combine(rootPath, relativePath);
+            if (!Directory.Exists(dir)) {
+                Directory.CreateDirectory(dir);
+            } else {
+                foreach (var f in Directory.GetFiles(dir)) {
+                    File.Delete(f);
+                }
+            }
+            return dir;
         }
     }
 }
