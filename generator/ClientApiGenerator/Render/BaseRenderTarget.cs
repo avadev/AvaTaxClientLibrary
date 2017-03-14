@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Razor;
 
@@ -104,6 +105,25 @@ namespace ClientApiGenerator.Render
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Replace a regex in a file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="oldRegex"></param>
+        /// <param name="newString"></param>
+        protected void ReplaceStringInFile(string path, string oldRegex, string newString)
+        {
+            // Read in the global assembly info file
+            string contents = File.ReadAllText(path, System.Text.Encoding.UTF8);
+
+            // Replace assembly version and assembly file version
+            Regex r = new Regex(oldRegex);
+            contents = r.Replace(contents, newString);
+
+            // Write the file back
+            File.WriteAllText(path, contents, System.Text.Encoding.UTF8);
         }
         #endregion
     }
