@@ -25,6 +25,7 @@ The AvaTax SOAP SDK exists for backward compatibility with older software.  User
 | Client | Package Manager | GitHub |
 |--------|---------|--------|
 | C# | [![NuGet](https://img.shields.io/nuget/v/Avalara.AvaTax.SoapClient.svg)](https://www.nuget.org/packages/Avalara.AvaTax.SoapClient/) | [AvaTax-Calc-AccountSvc-SOAP-csharp](https://github.com/avadev/AvaTax-Calc-AccountSvc-SOAP-csharp) |
+| Java | n/a | [AvaTax-SOAP-Java-SDK](https://github.com/avadev/AvaTax-SOAP-Java-SDK) |
 | PHP | [![Packagist](https://img.shields.io/packagist/v/avalara/avatax.svg)](https://packagist.org/packages/avalara/avatax) | [AvaTax-Calc-SOAP-PHP](https://github.com/avadev/AvaTax-Calc-SOAP-PHP) |
 | PHP | n/a | [AvaTax-Calc-REST-PHP](https://github.com/avadev/AvaTax-Calc-REST-PHP) |
 | PHP | n/a | [AvaTax-SOAP-PHP-SDK](https://github.com/avadev/AvaTax-SOAP-PHP-SDK) |
