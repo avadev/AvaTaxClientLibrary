@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ClientApiGenerator.Models;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ClientApiGenerator.Render
 {
@@ -36,6 +37,16 @@ namespace ClientApiGenerator.Render
                 File.WriteAllText(Path.Combine(enumDir, e.EnumDataType + ".cs"),
                     enumTask.ExecuteTemplate(model, null, e));
             }
+
+            // Update the version number in the assembly info file
+            FixupGlobalAssembly(rootPath, model.ApiVersion);
+        }
+
+        private void FixupGlobalAssembly(string rootPath, string version)
+        {
+            string path = Path.Combine(rootPath, "AvaTax-REST-V2-DotNet-SDK\\GlobalAssemblyInfo.cs");
+            ReplaceStringInFile(path, "\\[assembly: AssemblyVersion\\(\".*\"\\)\\]", "[assembly: AssemblyVersion(\"" + version.Replace("-", ".") + "\")]");
+            ReplaceStringInFile(path, "\\[assembly: AssemblyFileVersion\\(\".*\"\\)\\]", "[assembly: AssemblyFileVersion(\"" + version.Replace("-", ".") + "\")]");
         }
 
         private string CleanFolder(string rootPath, string relativePath)

@@ -21,6 +21,10 @@ namespace ClientApiGenerator.Render
             // Now spit out a coherent single file for the PHP API
             File.WriteAllText(Path.Combine(rootPath, "AvaTax-REST-V2-PHP-SDK\\src\\AvaTaxClient.php"),
                 apiTask.ExecuteTemplate(model, null, null));
+
+            // Fixup the composer.json file
+            var fn = Path.Combine(rootPath, "AvaTax-REST-V2-PHP-SDK\\composer.json");
+            ReplaceStringInFile(fn, "\"version\": \".*\",", "\"version\": \"" + model.ApiVersion.Replace("-", ".") + "\",");
         }
     }
 }

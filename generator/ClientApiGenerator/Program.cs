@@ -202,7 +202,9 @@ Arguments:
             bool isValueType = false;
 
             // If this API produces a file download
-            if (prop == null) return "FileResult";
+            if (prop == null || prop.type == "file") {
+                return "FileResult";
+            }
 
             // Handle integers / int64s
             if (prop.type == "integer") {
@@ -262,7 +264,7 @@ Arguments:
                 }
                 typename.Append(schema);
 
-            // Is this a nested swagger element?
+                // Is this a nested swagger element?
             } else if (prop.schema != null) {
                 typename.Append(ResolveType(prop.schema));
 
@@ -274,9 +276,13 @@ Arguments:
             } else if (prop.description == "Specify any differences for addresses between this line and the rest of the document") {
                 typename.Append("Dictionary<TransactionAddressType, AddressInfo>");
 
-            // All else is just a generic object
-            } else {
+                // All else is just a generic object
+            } else if (prop.type == "object") {
                 typename.Append("Dictionary<string, string>");
+
+            // Catch severe problems or weird/unknown types
+            } else {
+                throw new NotImplementedException($"Type {prop.type} not implemented");
             }
 
             // Is this a basic value type that's not required?  Make it nullable
