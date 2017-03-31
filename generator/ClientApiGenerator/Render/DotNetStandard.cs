@@ -39,14 +39,19 @@ namespace ClientApiGenerator.Render
             }
 
             // Update the version number in the assembly info file
-            FixupGlobalAssembly(rootPath, model.ApiVersion);
+            Fixup(rootPath, model.ApiVersion);
         }
 
-        private void FixupGlobalAssembly(string rootPath, string version)
+        private void Fixup(string rootPath, string version)
         {
+            // Fixup the global assembly
             string path = Path.Combine(rootPath, "AvaTax-REST-V2-DotNet-SDK\\GlobalAssemblyInfo.cs");
-            ReplaceStringInFile(path, "\\[assembly: AssemblyVersion\\(\".*\"\\)\\]", "[assembly: AssemblyVersion(\"" + version.Replace("-", ".") + "\")]");
-            ReplaceStringInFile(path, "\\[assembly: AssemblyFileVersion\\(\".*\"\\)\\]", "[assembly: AssemblyFileVersion(\"" + version.Replace("-", ".") + "\")]");
+            ReplaceStringInFile(path, "\\[assembly: AssemblyVersion\\(\".*\"\\)\\]", "[assembly: AssemblyVersion(\"" + version.Replace("-", ".") + "\")]", System.Text.Encoding.UTF8);
+            ReplaceStringInFile(path, "\\[assembly: AssemblyFileVersion\\(\".*\"\\)\\]", "[assembly: AssemblyFileVersion(\"" + version.Replace("-", ".") + "\")]", System.Text.Encoding.UTF8);
+
+            // Fixup the .nuspec file
+            path = Path.Combine(rootPath, "AvaTax-REST-V2-DotNet-SDK\\src\\Avalara.AvaTax.RestClient.nuspec");
+            ReplaceStringInFile(path, "<version>(.*)</version>", "<version>" + version.Replace("-", ".") + "</version>", System.Text.Encoding.UTF8);
         }
 
         private string CleanFolder(string rootPath, string relativePath)
