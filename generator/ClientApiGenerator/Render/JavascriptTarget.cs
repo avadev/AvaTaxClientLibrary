@@ -12,7 +12,7 @@ namespace ClientApiGenerator.Render
     {
         public override void Render(SwaggerInfo model, string rootPath)
         {
-            string php = Path.Combine(rootPath, "javascript");
+            string php = Path.Combine(rootPath, "AvaTax-REST-V2-JS-SDK\\lib");
             Directory.CreateDirectory(php);
 
             // Set up the razor scripts
