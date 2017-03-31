@@ -24,7 +24,7 @@ namespace ClientApiGenerator.Render
 
             // Fixup the composer.json file
             var fn = Path.Combine(rootPath, "AvaTax-REST-V2-PHP-SDK\\composer.json");
-            ReplaceStringInFile(fn, "\"version\": \".*\",", "\"version\": \"" + model.ApiVersion.Replace("-", ".") + "\",");
+            ReplaceStringInFile(fn, "\"version\": \".*\",", "\"version\": \"" + model.ApiVersion.Replace("-", ".") + "\",", System.Text.Encoding.ASCII);
         }
     }
 }

@@ -113,7 +113,8 @@ namespace ClientApiGenerator.Render
         /// <param name="path"></param>
         /// <param name="oldRegex"></param>
         /// <param name="newString"></param>
-        protected void ReplaceStringInFile(string path, string oldRegex, string newString)
+        /// <param name="encoding"></param>
+        protected void ReplaceStringInFile(string path, string oldRegex, string newString, Encoding encoding)
         {
             // Read in the global assembly info file
             string contents = File.ReadAllText(path, System.Text.Encoding.UTF8);
@@ -123,7 +124,7 @@ namespace ClientApiGenerator.Render
             contents = r.Replace(contents, newString);
 
             // Write the file back
-            File.WriteAllText(path, contents, System.Text.Encoding.UTF8);
+            File.WriteAllText(path, contents, encoding);
         }
         #endregion
     }
