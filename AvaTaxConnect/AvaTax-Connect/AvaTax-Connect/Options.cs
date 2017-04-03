@@ -15,10 +15,10 @@ namespace AvaTax_Connect
         [Option(shortName: 'c', Required = true, HelpText = "Number of calls to make to AvaTax.  If null, will continue until cancelled.")]
         public int? Calls { get; set; }
 
-        [Option(shortName: 'e', Required = false, HelpText = "AvaTax environment to call.")]
+        [Option(shortName: 'e', DefaultValue = AvaTaxEnvironment.Sandbox, Required = false, HelpText = "AvaTax environment to call.")]
         public AvaTaxEnvironment Environment { get; set; }
 
-        [Option(shortName: 'l', Required = false, HelpText = "Number of lines to include in each tax transaction (Default 1).")]
+        [Option(shortName: 'l', DefaultValue = 1, Required = false, HelpText = "Number of lines to include in each tax transaction (Default 1).")]
         public int Lines { get; set; }
 
         /// <summary>
