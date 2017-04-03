@@ -45,7 +45,7 @@ namespace AvaTax_Connect
 
                 // Make one tax transaction
                 DateTime start = DateTime.UtcNow;
-                var t = client.CreateTransaction(ctm);
+                var t = client.CreateTransaction(null, ctm);
                 TimeSpan ts = DateTime.UtcNow - start;
 
                 // Write some information
