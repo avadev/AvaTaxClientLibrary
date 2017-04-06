@@ -78,11 +78,11 @@ namespace Avalara.AvaTax.RestClient
     }
     
     if (m.TypeName == "String") {
-        WriteLine("            return RestCallString(HttpMethod." + FirstCharUpper(m.HttpVerb) + ", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return RestCallString(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     } else if (m.TypeName == "FileResult") {
-        WriteLine("            return RestCallFile(HttpMethod." + FirstCharUpper(m.HttpVerb) + ", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return RestCallFile(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     } else {
-        WriteLine("            return RestCall<" + m.TypeName + ">(HttpMethod." + FirstCharUpper(m.HttpVerb) + ", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return RestCall<" + m.TypeName + ">(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     }
 
     WriteLine("        }");
@@ -138,9 +138,9 @@ namespace Avalara.AvaTax.RestClient
         WriteLine("            path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
     }
     if (m.TypeName == "String") {
-        WriteLine("            return await RestCallStringAsync(HttpMethod." + FirstCharUpper(m.HttpVerb) + ", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return await RestCallStringAsync(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     } else {
-        WriteLine("            return await RestCallAsync<" + m.TypeName + ">(HttpMethod." + FirstCharUpper(m.HttpVerb) + ", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return await RestCallAsync<" + m.TypeName + ">(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     }
     WriteLine("        }");
     WriteLine("");
