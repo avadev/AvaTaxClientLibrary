@@ -116,6 +116,11 @@ namespace ClientApiGenerator
             return s[0].ToString().ToLower() + s.Substring(1);
         }
 
+        public string FirstCharUpper(string s)
+        {
+            return s[0].ToString().ToUpper() + s.Substring(1);
+        }
+
         public string PhpTypeName(string typename)
         {
             // Is this an enum?  If so, convert it to a string - we'll add a comment later
