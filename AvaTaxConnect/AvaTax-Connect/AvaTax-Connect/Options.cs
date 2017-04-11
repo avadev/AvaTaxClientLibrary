@@ -15,10 +15,16 @@ namespace AvaTax_Connect
         [Option(shortName: 'c', Required = true, HelpText = "Number of calls to make to AvaTax.  If null, will continue until cancelled.")]
         public int? Calls { get; set; }
 
-        [Option(shortName: 'e', DefaultValue = AvaTaxEnvironment.Sandbox, Required = false, HelpText = "AvaTax environment to call.")]
-        public AvaTaxEnvironment Environment { get; set; }
+        [Option(shortName: 'd', Required = false, DefaultValue =true, HelpText = "Discard first API call.  The first API call includes lots of overhead.  Default: true.")]
+        public bool? DiscardFirstCall { get; set; }
 
-        [Option(shortName: 'l', DefaultValue = 1, Required = false, HelpText = "Number of lines to include in each tax transaction (Default 1).")]
+        [Option(shortName: 'e', DefaultValue = "https://sandbox-rest.avatax.com", Required = false, HelpText = "AvaTax environment to call.  Default: https://sandbox-rest.avatax.com")]
+        public string Environment { get; set; }
+
+        [Option(shortName: 't', DefaultValue = DocumentType.SalesOrder, Required = false, HelpText = "Type of document to create.  Default: SalesOrder.")]
+        public DocumentType DocType { get; set; }
+
+        [Option(shortName: 'l', DefaultValue = 1, Required = false, HelpText = "Number of lines to include in each tax transaction.  Default: 1.")]
         public int Lines { get; set; }
 
         /// <summary>
