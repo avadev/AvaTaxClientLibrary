@@ -130,8 +130,8 @@ export default class AvaTaxClient
      * </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
      * @@return @PhpTypeName(m.TypeName)
      */
-    @{Write("    " + FirstCharLower(m.Name) + "({ " + paramlist.ToString() + " })");} {
-        var path = this.buildUrl({ url: '@m.URI', parameters: { 
+    @{Write("    " + FirstCharLower(m.Name) + "({ " + paramlist.ToString() + " } = {})");} {
+        var path = this.buildUrl({ url: `@m.URI.Replace("{", "${")`, parameters: { 
             @queryparamlist 
         }});
         return this.restCall({ url: path, verb: '@m.HttpVerb.ToLower()', payload: @payload });

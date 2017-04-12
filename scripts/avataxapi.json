@@ -1,0 +1,86 @@
+{
+    "swaggerUri": "https://sandbox-rest.avatax.com/swagger/v2/swagger.json",
+    "targets": [
+        {
+            "name": "CSharp",
+            "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-DotNet-SDK",
+            "templates": [
+                {
+                    "file": "templates\\csharp_api_class.txt",
+                    "type": "singleFile",
+                    "output": "src\\AvaTaxApi.cs"
+                },
+                {
+                    "file": "templates\\csharp_model_class.txt",
+                    "type": "uniqueModels",
+                    "output": "src\\models\\{model}.cs"
+                },
+                {
+                    "file": "templates\\csharp_enum_class.txt",
+                    "type": "enums",
+                    "output": "src\\enums\\{enum}.cs"
+                }
+            ],
+            "fixups": [
+                {
+                    "filePath": "GlobalAssemblyInfo.cs",
+                    "encoding": "UTF8",
+                    "regex": "[assembly: AssemblyVersion(\".*\")]",
+                    "replacement": "[assembly: AssemblyVersion(\"@@versionNumberWithPeriods@@\")]"
+                },
+                {
+                    "file": "GlobalAssemblyInfo.cs",
+                    "encoding": "UTF8",
+                    "regex": "[assembly: AssemblyFileVersion(\".*\")]",
+                    "replacement": "[assembly: AssemblyFileVersion(\"@@versionNumberWithPeriods@@\")]"
+                },
+                {
+                    "file": "src\\Avalara.AvaTax.RestClient.nuspec",
+                    "encoding": "UTF8",
+                    "regex": "<version>(.*)</version>",
+                    "replacement": "<version>@@versionNumberWithPeriods@@</version>"
+                }
+            ]
+        },
+        {
+            "name": "DeveloperPages",
+            "rootFolder": "C:\\git\\develop\\developer-dot",
+            "templates": [
+                {
+                    "file": "templates\\api_index_markdown.txt",
+                    "type": "methodCategories",
+                    "output": "avatax\\{category}\\index.md"
+                },
+                {
+                    "file": "templates\\rest_navigation.txt",
+                    "type": "singleFile",
+                    "output": "_includes\\rest_navigation.html"
+                },
+                {
+                    "file": "templates\\method_markdown.txt",
+                    "type": "methods",
+                    "output": "avatax\\{category}\\{method}.md"
+                },
+                {
+                    "file": "templates\\model_markdown.txt",
+                    "type": "uniqueModels",
+                    "output": "avatax\\models\\{model}.md"
+                },
+                {
+                    "file": "templates\\enum_markdown.txt",
+                    "type": "enums",
+                    "output": "avatax\\enums\\{enum}.md"
+                }
+            ]
+        },
+        {
+            "name": "PHP",
+        },
+        {
+            "name": "JavaScript",
+        },
+        {
+            "name": "Ruby",
+        }
+    ]
+}
