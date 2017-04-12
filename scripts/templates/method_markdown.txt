@@ -18,14 +18,20 @@ disqus: 1
 
 ### Request
 
-For sandbox accounts:
-
-`@MethodModel.HttpVerb.ToUpper() https://sandbox-rest.avatax.com@MethodModel.URI`
-
-For production accounts: 
-
-`@MethodModel.HttpVerb.ToUpper() https://rest.avatax.com@MethodModel.URI`
-
+@{
+    string sampleQueryString = "";
+    if (MethodModel.QueryParams.Count > 0) {
+        sampleQueryString = "?";
+        foreach (var p in MethodModel.QueryParams) {
+            sampleQueryString = sampleQueryString + p.ParamName + "=value&";
+        }
+    }
+    WriteLine("For sandbox accounts:");
+    WriteLine("`" + MethodModel.HttpVerb.ToUpper() + " https://sandbox-rest.avatax.com" + MethodModel.URI + sampleQueryString + "`");
+    WriteLine("");
+    WriteLine("For production accounts:");
+    WriteLine("`" + MethodModel.HttpVerb.ToUpper() + " https://rest.avatax.com" + MethodModel.URI + sampleQueryString + "`");
+}
 @if (MethodModel.BodyParam != null) {
 <text>
 ### Body
@@ -34,7 +40,6 @@ For production accounts:
 @GetExample(MethodModel.BodyParam.TypeName)
 ```</text>
 }
-
 @{
 WriteLine("<div class=\"btn-callout\"><a href=\"https://sandbox-rest.avatax.com/swagger/ui/index.html#!/" + MethodModel.Category + "/" + MethodModel.Name + "\" role=\"button\">Try It Now</a></div>");
 }
@@ -52,13 +57,7 @@ curl
 }
 @{
     Write("    'https://sandbox-rest.avatax.com");
-    Write(MethodModel.URI);
-    if (MethodModel.QueryParams.Count > 0) {
-        Write("?");
-        foreach (var p in MethodModel.QueryParams) {
-            Write(p.ParamName + "=value&");
-        }
-    }
+    Write(MethodModel.URI + sampleQueryString);
 }
 ```
 <br clear="all"/>
