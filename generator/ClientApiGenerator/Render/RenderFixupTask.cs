@@ -11,7 +11,7 @@ namespace ClientApiGenerator.Render
         /// <summary>
         /// The path of the file on which to execute a fixup
         /// </summary>
-        public string filePath { get; set; }
+        public string file { get; set; }
 
         /// <summary>
         /// The file encoding of the file (e.g. UTF8 or ASCII)

@@ -216,6 +216,18 @@ namespace ClientApiGenerator
             return FixWhitespace(c).Replace("\r\n", sb.ToString());
         }
 
+        public string RubyComment(string c, int indent)
+        {
+            if (String.IsNullOrEmpty(c)) return "";
+            StringBuilder sb = new StringBuilder();
+            sb.Append("\r\n");
+            for (int i = 0; i < indent; i++) {
+                sb.Append(' ');
+            }
+            sb.Append("# ");
+            return FixWhitespace(c).Replace("\r\n", sb.ToString());
+        }
+
         public string FixWhitespace(string s)
         {
             return String.Join(" ", s.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)).Trim();
