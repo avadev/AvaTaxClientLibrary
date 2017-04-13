@@ -12,19 +12,19 @@ namespace AvaTax_Connect
         [Option(shortName: 'p', Required = true, HelpText = "Password for AvaTax.")]
         public string Password { get; set; }
 
-        [Option(shortName: 'c', Required = true, HelpText = "Number of calls to make to AvaTax.  If null, will continue until cancelled.")]
+        [Option(shortName: 'c', Required = false, DefaultValue = null, HelpText = "Number of calls to make to AvaTax.  If null, will continue until cancelled.")]
         public int? Calls { get; set; }
 
-        [Option(shortName: 'd', Required = false, DefaultValue =true, HelpText = "Discard first API call.  The first API call includes lots of overhead.  Default: true.")]
+        [Option(shortName: 'd', Required = false, DefaultValue = true, HelpText = "Discard first API call.  The first API call includes lots of overhead.")]
         public bool? DiscardFirstCall { get; set; }
 
-        [Option(shortName: 'e', DefaultValue = "https://sandbox-rest.avatax.com", Required = false, HelpText = "AvaTax environment to call.  Default: https://sandbox-rest.avatax.com")]
+        [Option(shortName: 'e', DefaultValue = "https://sandbox-rest.avatax.com", Required = false, HelpText = "URL of the AvaTax environment to call.")]
         public string Environment { get; set; }
 
-        [Option(shortName: 't', DefaultValue = DocumentType.SalesOrder, Required = false, HelpText = "Type of document to create.  Default: SalesOrder.")]
+        [Option(shortName: 't', DefaultValue = DocumentType.SalesOrder, Required = false, HelpText = "Type of document to create.")]
         public DocumentType DocType { get; set; }
 
-        [Option(shortName: 'l', DefaultValue = 1, Required = false, HelpText = "Number of lines to include in each tax transaction.  Default: 1.")]
+        [Option(shortName: 'l', DefaultValue = 1, Required = false, HelpText = "Number of lines to include in each tax transaction.")]
         public int Lines { get; set; }
 
         /// <summary>
