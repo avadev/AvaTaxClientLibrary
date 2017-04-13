@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.CSharp;
 using System.Dynamic;
 using ClientApiGenerator.Models;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace ClientApiGenerator
 {
@@ -26,7 +28,13 @@ namespace ClientApiGenerator
         public ModelInfo ClassModel { get; set; }
 
         [Browsable(false)]
+        public MethodInfo MethodModel { get; set; }
+
+        [Browsable(false)]
         public EnumInfo EnumModel { get; set; }
+
+        [Browsable(false)]
+        public string Category { get; set; }
 
         public TemplateBase()
         {
@@ -87,12 +95,13 @@ namespace ClientApiGenerator
         /// <param name="m"></param>
         /// <param name="e"></param>
         /// <returns></returns>
-        public virtual string ExecuteTemplate(SwaggerInfo api, ModelInfo m, EnumInfo e)
+        public virtual string ExecuteTemplate(SwaggerInfo api, MethodInfo method, ModelInfo model, EnumInfo enumDataType)
         {
             Buffer.Clear();
             SwaggerModel = api;
-            ClassModel = m;
-            EnumModel = e;
+            MethodModel = method;
+            ClassModel = model;
+            EnumModel = enumDataType;
             Execute();
             return Buffer.ToString();
         }
@@ -111,6 +120,11 @@ namespace ClientApiGenerator
             return p.Replace("$", "");
         }
 
+        public string HtmlEncode(string s)
+        {
+            return WebUtility.HtmlEncode(s);
+        }
+
         public string FirstCharLower(string s)
         {
             return s[0].ToString().ToLower() + s.Substring(1);
@@ -119,6 +133,22 @@ namespace ClientApiGenerator
         public string FirstCharUpper(string s)
         {
             return s[0].ToString().ToUpper() + s.Substring(1);
+        }
+
+        public ModelInfo GetModel(string typename)
+        {
+            return (from m in SwaggerModel.Models where String.Equals(m.SchemaName, typename, StringComparison.CurrentCultureIgnoreCase) select m).FirstOrDefault();
+        }
+
+        public string GetExample(string typename)
+        {
+            // Is this one of our documented types?
+            var matchingModel = GetModel(typename);
+            if ((matchingModel == null) || (matchingModel.Example == null)) return "";
+
+            // Otherwise here's our example
+            var example = JsonConvert.SerializeObject(matchingModel.Example, Formatting.Indented) ?? "";
+            return example;
         }
 
         public string PhpTypeName(string typename)

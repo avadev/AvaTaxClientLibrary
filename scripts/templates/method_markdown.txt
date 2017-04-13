@@ -1,0 +1,119 @@
+---
+layout: page
+title: @MethodModel.Name API
+categories: [AvaTax API Reference]
+product: avaTax
+doctype: restapi
+nav: apis
+disqus: 1
+---
+
+@MethodModel.Summary
+
+## Description
+
+@MethodModel.Description
+
+## Example
+
+### Request
+
+@{
+    string sampleQueryString = "";
+    if (MethodModel.QueryParams.Count > 0) {
+        sampleQueryString = "?";
+        foreach (var p in MethodModel.QueryParams) {
+            sampleQueryString = sampleQueryString + p.ParamName + "=value&";
+        }
+    }
+    WriteLine("For sandbox accounts:");
+    WriteLine("`" + MethodModel.HttpVerb.ToUpper() + " https://sandbox-rest.avatax.com" + MethodModel.URI + sampleQueryString + "`");
+    WriteLine("");
+    WriteLine("For production accounts:");
+    WriteLine("`" + MethodModel.HttpVerb.ToUpper() + " https://rest.avatax.com" + MethodModel.URI + sampleQueryString + "`");
+}
+@if (MethodModel.BodyParam != null) {
+<text>
+### Body
+
+```json
+@GetExample(MethodModel.BodyParam.TypeName)
+```</text>
+}
+@{
+WriteLine("<div class=\"btn-callout\"><a href=\"https://sandbox-rest.avatax.com/swagger/ui/index.html#!/" + MethodModel.Category + "/" + MethodModel.Name + "\" role=\"button\">Try It Now</a></div>");
+}
+
+### Using CURL
+
+```
+curl 
+    -X @MethodModel.HttpVerb.ToUpper() 
+    --header 'Accept: application/json' 
+    --header 'Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ='
+    --header 'X-Avalara-Client: AvaTax API Example; 2.17.4-60; CURL; 1.0' 
+@if (MethodModel.BodyParam != null) {
+    WriteLine("    -d '" + GetExample(MethodModel.BodyParam.TypeName).Replace("\r\n"," ") + "'");
+}
+@{
+    Write("    'https://sandbox-rest.avatax.com");
+    Write(MethodModel.URI + sampleQueryString);
+}
+```
+<br clear="all"/>
+
+## Parameters
+
+<table class="styled-table">
+	<thead>
+		<tr>
+			<th>Parameter</th>
+			<th>Type</th>
+			<th>Location</th>
+			<th>Summary</th>
+		</tr>
+	</thead>
+	<tbody>
+@foreach(var p in MethodModel.Params) {
+    WriteLine("<tr>");
+    WriteLine("<td>" + p.CleanParamName + "</td>");
+    var model = GetModel(p.TypeName);
+    if (model == null) {
+        WriteLine("<td>" + p.TypeName + "</td>");
+    } else {
+        WriteLine("<td><a href=\"../../models/" + p.TypeName.ToLower() + "\">" + p.TypeName + "</a></td>");
+    }
+    WriteLine("<td>URL Path</td>");
+    WriteLine("<td>" + p.Comment + "</td>");
+    WriteLine("</tr>");
+}
+@foreach(var p in MethodModel.QueryParams) {
+    WriteLine("<tr>");
+    WriteLine("<td>" + p.CleanParamName + "</td>");
+    var model = GetModel(p.TypeName);
+    if (model == null) {
+        WriteLine("<td>" + p.TypeName + "</td>");
+    } else {
+        WriteLine("<td><a href=\"../../models/" + p.TypeName.ToLower() + "\">" + p.TypeName + "</a></td>");
+    }
+    WriteLine("<td>Query String</td>");
+    WriteLine("<td>" + p.Comment + "</td>");
+    WriteLine("</tr>");
+}
+@if (MethodModel.BodyParam != null) {
+    WriteLine("<tr>");
+    WriteLine("<td>" + MethodModel.BodyParam.CleanParamName + "</td>");
+    var model = GetModel(MethodModel.BodyParam.TypeName);
+    if (model == null) {
+        WriteLine("<td>" + HtmlEncode(MethodModel.BodyParam.TypeName) + "</td>");
+    } else {
+        WriteLine("<td><a href=\"../../models/" + MethodModel.BodyParam.TypeName.ToLower() + "\">" + MethodModel.BodyParam.TypeName + "</a></td>");
+    }
+    WriteLine("<td>Request Body</td>");
+    WriteLine("<td>" + MethodModel.BodyParam.Comment + "</td>");
+    WriteLine("</tr>");
+}
+    </tbody>
+</table>
+
+<br/>

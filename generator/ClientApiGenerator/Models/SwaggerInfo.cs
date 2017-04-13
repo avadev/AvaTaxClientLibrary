@@ -11,6 +11,7 @@ namespace ClientApiGenerator.Models
         public List<MethodInfo> Methods { get; set; }
         public List<EnumInfo> Enums { get; set; }
         public List<ModelInfo> Models { get; set; }
+        public List<string> Categories { get; set; }
 
         public string ApiVersion { get; set; }
 

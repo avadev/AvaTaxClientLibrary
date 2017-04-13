@@ -1,0 +1,43 @@
+---
+layout: page
+title: @ClassModel.SchemaName
+categories: [AvaTax API Reference]
+product: avaTax
+doctype: restapi
+nav: apis
+disqus: 1
+---
+
+## Description
+
+@ClassModel.Comment
+
+## Fields
+
+<table class="styled-table">
+	<thead>
+		<tr>
+			<th>Parameter</th>
+			<th>Type</th>
+			<th>Location</th>
+			<th>Summary</th>
+		</tr>
+	</thead>
+	<tbody>
+@foreach(var p in ClassModel.Properties) {
+    WriteLine("<tr>");
+    WriteLine("<td>" + p.CleanParamName + "</td>");
+    var model = GetModel(p.TypeName);
+    if (model == null) {
+        WriteLine("<td>" + p.TypeName + "</td>");
+    } else {
+        WriteLine("<td><a href=\"../../models/" + p.TypeName.ToLower() + "\">" + p.TypeName + "</a></td>");
+    }
+    WriteLine("<td>URL Path</td>");
+    WriteLine("<td>" + p.Comment + "</td>");
+    WriteLine("</tr>");
+}
+    </tbody>
+</table>
+
+<br/>

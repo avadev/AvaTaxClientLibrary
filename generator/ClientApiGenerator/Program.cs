@@ -1,61 +1,126 @@
 ﻿using ClientApiGenerator.Models;
 using ClientApiGenerator.Render;
 using ClientApiGenerator.Swagger;
+using CommandLine;
+using CommandLine.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 
 namespace ClientApiGenerator
 {
     class Program
     {
+        public static HttpClient _client = new HttpClient();
+
         static void Main(string[] args)
         {
-            ProcessSwagger(args[0], args[1]);
-        }
-
-        public static void ProcessSwagger(string swaggerFile, string clientPath)
-        {
-            if (!File.Exists(swaggerFile) || !Directory.Exists(clientPath)) {
-                Console.WriteLine(@"ClientApiGenerator.exe {swaggerFile} {clientPath}
-
-Arguments:
-    {swaggerFile} - The path to the Avalara.AvaTax.RestClient.json file
-    {clientPath}  - The path to the clients folder where the structure will be created
-
-");
+            // Parse options and show helptext if insufficient
+            Options o = new Options();
+            Parser.Default.ParseArguments(args, o);
+            if (!o.IsValid()) {
+                var help = HelpText.AutoBuild(o);
+                Console.WriteLine(help.ToString());
                 return;
             }
 
-            // Read in the swagger object
-            Console.WriteLine("***** Parsing file {0}", swaggerFile);
-            var json = File.ReadAllText(swaggerFile);
-            var settings = new JsonSerializerSettings();
-            settings.MetadataPropertyHandling = MetadataPropertyHandling.Ignore;
-            var obj = JsonConvert.DeserializeObject<Swagger.SwaggerModel>(json, settings);
-            var api = ParseSwagger(obj);
+            // First parse the file
+            SwaggerRenderTask task = ParseRenderTask(o);
+            if (task == null) return;
 
-            // Render each target
-            foreach (var type in typeof(Program).Assembly.GetTypes()) {
-                if (type.IsSubclassOf(typeof(BaseRenderTarget))) {
-                    var target = Activator.CreateInstance(type) as BaseRenderTarget;
-                    if (target != null) {
-                        Console.WriteLine("***** Rendering {0}", type.Name);
-                        target.Render(api, clientPath);
-                    }
+            // Download the swagger file
+            SwaggerInfo api = DownloadSwaggerJson(o, task);
+            if (api == null) return;
+
+            // Render output
+            Console.WriteLine($"***** Beginning render stage");
+            Render(task, api);
+        }
+
+        private static SwaggerInfo DownloadSwaggerJson(Options o, SwaggerRenderTask task)
+        {
+            string swaggerJson = null;
+            SwaggerInfo api = null;
+
+            // Download the swagger JSON file from the server
+            try {
+                Console.WriteLine($"***** Downloading swagger JSON from {o.SwaggerRenderPath}");
+                var response = _client.GetAsync(task.swaggerUri).Result;
+                swaggerJson = response.Content.ReadAsStringAsync().Result;
+            } catch (Exception ex) {
+                Console.WriteLine($"Exception downloading swagger JSON file: {ex.ToString()}");
+                return null;
+            }
+
+            // Parse the swagger JSON file
+            try {
+                Console.WriteLine($"***** Processing swagger JSON");
+                api = ProcessSwagger(swaggerJson);
+            } catch (Exception ex) {
+                Console.WriteLine($"Exception processing swagger JSON file: {ex.ToString()}");
+            }
+            return api;
+        }
+
+        private static SwaggerRenderTask ParseRenderTask(Options o)
+        {
+            SwaggerRenderTask task = null;
+            try {
+                Console.WriteLine($"***** Parsing render file: {o.SwaggerRenderPath}");
+                var contents = File.ReadAllText(o.SwaggerRenderPath);
+                task = JsonConvert.DeserializeObject<SwaggerRenderTask>(contents);
+
+                // Create all razor templates
+                string baseFolder = Path.GetDirectoryName(o.SwaggerRenderPath);
+                foreach (var target in task.targets) {
+                    target.ParseRazorTemplates(baseFolder);
                 }
+                return task;
+
+            // If anything blew up, refuse to continue
+            } catch (Exception ex) {
+                Console.WriteLine($"Exception parsing render task: {ex.ToString()}");
+                return null;
+            }
+        }
+
+        #region Render targets
+        public static void Render(SwaggerRenderTask task, SwaggerInfo api)
+        {
+            // Render each target
+            foreach (var target in task.targets) {
+                Console.WriteLine($"***** Rendering {target.name}");
+                target.Render(api);
             }
 
             // Done
             Console.WriteLine("***** Done");
         }
+        #endregion
 
-        #region Parsing
-        private static SwaggerInfo ParseSwagger(SwaggerModel obj)
+        #region Parse swagger
+        public static SwaggerInfo ProcessSwagger(string swagger)
+        {
+            // Read in the swagger object
+            var settings = new JsonSerializerSettings();
+            settings.MetadataPropertyHandling = MetadataPropertyHandling.Ignore;
+            var obj = JsonConvert.DeserializeObject<Swagger.SwaggerModel>(swagger, settings);
+            var api = Cleanup(obj);
+
+            // Sort methods by category name and by name
+            api.Methods = (from m in api.Methods orderby m.Category, m.Name select m).ToList();
+
+            // Produce a distinct list of categories to simplify work
+            api.Categories = (from m in api.Methods orderby m.Category select m.Category).Distinct().ToList();
+            return api;
+        }
+
+        private static SwaggerInfo Cleanup(SwaggerModel obj)
         {
             SwaggerInfo result = new SwaggerInfo();
             result.ApiVersion = obj.ApiVersion;
@@ -73,7 +138,7 @@ Arguments:
                     api.Params = new List<ParameterInfo>();
                     api.QueryParams = new List<ParameterInfo>();
                     api.Category = verb.Value.tags.FirstOrDefault();
-                    api.Name = verb.Value.operationId.Replace("ApiV2", "");
+                    api.Name = verb.Value.operationId;
 
                     // Now figure out all the URL parameters
                     foreach (var parameter in verb.Value.parameters) {
@@ -131,6 +196,10 @@ Arguments:
                 {
                     SchemaName = def.Key,
                     Comment = def.Value.description,
+                    Example = def.Value.example,
+                    Description = def.Value.description,
+                    Required = def.Value.required,
+                    Type = def.Value.type,
                     Properties = new List<ParameterInfo>()
                 };
                 foreach (var prop in def.Value.properties) {
@@ -153,22 +222,22 @@ Arguments:
                 result.Models.Add(m);
             }
 
-            // Now add the enums we know we need.
-            // Because of the complex way this Dictionary<> is rendered in Swagger, it's hard to pick up the correct values.
-            var tat = (from e in result.Enums where e.EnumDataType == "TransactionAddressType" select e).FirstOrDefault();
-            if (tat == null) {
-                tat = new EnumInfo()
-                {
-                    EnumDataType = "TransactionAddressType",
-                    Items = new List<EnumItem>()
-                };
-                result.Enums.Add(tat);
-            }
-            tat.AddItem("ShipFrom", "This is the location from which the product was shipped");
-            tat.AddItem("ShipTo", "This is the location to which the product was shipped");
-            tat.AddItem("PointOfOrderAcceptance", "Location where the order was accepted; typically the call center, business office where purchase orders are accepted, server locations where orders are processed and accepted");
-            tat.AddItem("PointOfOrderOrigin", "Location from which the order was placed; typically the customer's home or business location");
-            tat.AddItem("SingleLocation", "Only used if all addresses for this transaction were identical; e.g. if this was a point-of-sale physical transaction");
+            //// Now add the enums we know we need.
+            //// Because of the complex way this Dictionary<> is rendered in Swagger, it's hard to pick up the correct values.
+            //var tat = (from e in result.Enums where e.EnumDataType == "TransactionAddressType" select e).FirstOrDefault();
+            //if (tat == null) {
+            //    tat = new EnumInfo()
+            //    {
+            //        EnumDataType = "TransactionAddressType",
+            //        Items = new List<EnumItem>()
+            //    };
+            //    result.Enums.Add(tat);
+            //}
+            //tat.AddItem("ShipFrom", "This is the location from which the product was shipped");
+            //tat.AddItem("ShipTo", "This is the location to which the product was shipped");
+            //tat.AddItem("PointOfOrderAcceptance", "Location where the order was accepted; typically the call center, business office where purchase orders are accepted, server locations where orders are processed and accepted");
+            //tat.AddItem("PointOfOrderOrigin", "Location from which the order was placed; typically the customer's home or business location");
+            //tat.AddItem("SingleLocation", "Only used if all addresses for this transaction were identical; e.g. if this was a point-of-sale physical transaction");
 
             // Here's your processed API
             return result;
