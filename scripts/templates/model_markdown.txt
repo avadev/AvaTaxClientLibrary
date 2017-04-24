@@ -54,6 +54,7 @@ foreach(var p in ClassModel.Properties) {
     } else {
         props.Add("Optional");
     }
+    if (p.IsArrayType) props.Add("Array");
     if (p.ReadOnly) props.Add("ReadOnly");
     if (p.MinLength != null) props.Add("Minimum length: " + p.MinLength.Value.ToString());
     if (p.MaxLength != null) props.Add("Maximum length: " + p.MaxLength.Value.ToString());
