@@ -239,11 +239,24 @@ namespace ClientApiGenerator
 
         private static void ExtractEnum(List<EnumInfo> enums, SwaggerProperty prop)
         {
+            // Determine enum value comments and description, if any
+            string xEnumDescription = null;
+            Dictionary<string, string> xEnumValueComments = null;
+            if (prop != null && prop.Extended != null) {
+                xEnumDescription = prop.Extended["x-enum-description"] as string;
+                JObject j = prop.Extended["x-enum-value-comments"] as JObject;
+                if (j != null) {
+                    xEnumValueComments = j.ToObject<Dictionary<string, string>>();
+                }
+            }
+
+            // Load up the enum
             var enumType = (from e in enums where e.EnumDataType == prop.EnumDataType select e).FirstOrDefault();
             if (enumType == null) {
                 enumType = new EnumInfo()
                 {
                     EnumDataType = prop.EnumDataType,
+                    Comment = xEnumDescription,
                     Items = new List<EnumItem>()
                 };
                 enums.Add(enumType);
@@ -253,7 +266,13 @@ namespace ClientApiGenerator
             if (prop.enumValues != null) {
                 foreach (var s in prop.enumValues) {
                     if (!enumType.Items.Any(i => i.Value == s)) {
-                        enumType.Items.Add(new EnumItem() { Value = s });
+
+                        // Figure out the comment for the enum, if one is available
+                        string comment = null;
+                        if (xEnumValueComments != null) {
+                            xEnumValueComments.TryGetValue(s, out comment);
+                        }
+                        enumType.Items.Add(new EnumItem() { Value = s, Comment = comment });
                     }
                 }
             }
