@@ -13,7 +13,8 @@ namespace ClientApiGenerator.Models
         public string Summary { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
-        public string TypeName { get; set; }
+        public string ResponseType { get; set; }
+        public string ResponseTypeName { get; set; }
         public string HttpVerb { get; set; }
         public ParameterInfo BodyParam { get; set; }
         public List<ParameterInfo> Params { get; set; }

@@ -19,23 +19,49 @@ disqus: 1
 		<tr>
 			<th>Parameter</th>
 			<th>Type</th>
-			<th>Location</th>
+			<th>Properties</th>
 			<th>Summary</th>
+			<th>Example</th>
 		</tr>
 	</thead>
 	<tbody>
-@foreach(var p in ClassModel.Properties) {
-    WriteLine("<tr>");
-    WriteLine("<td>" + p.CleanParamName + "</td>");
-    var model = GetModel(p.TypeName);
-    if (model == null) {
-        WriteLine("<td>" + p.TypeName + "</td>");
+@{
+string typelink, elementtype;
+foreach(var p in ClassModel.Properties) {
+    WriteLine("    <tr>");
+    WriteLine("        <td>" + p.CleanParamName + "</td>");
+    typelink = null;
+    
+    // Determine root type
+    if (p.IsArrayType) {
+        elementtype = p.ArrayElementType;
     } else {
-        WriteLine("<td><a href=\"../../models/" + p.TypeName.ToLower() + "\">" + p.TypeName + "</a></td>");
+        elementtype = p.TypeName.Replace("?", "");
     }
-    WriteLine("<td>URL Path</td>");
-    WriteLine("<td>" + p.Comment + "</td>");
-    WriteLine("</tr>");
+    var model = GetModel(elementtype);
+    if (model != null) typelink = "../../models/" + elementtype;
+    if (IsEnumType(elementtype)) typelink = "../../enums/" + elementtype;
+    if (typelink == null) {
+        WriteLine("        <td>" + elementtype + (p.IsArrayType ? "[]" : "") + "</td>");
+    } else {
+        WriteLine("        <td><a href=\"" + typelink + "\">" + elementtype + (p.IsArrayType ? "[]" : "") + "</a></td>");
+    }
+    
+    // Assemble API properties
+    var props = new System.Collections.Generic.List<string>();
+    if (p.Required) {
+        props.Add("<b>Required</b>");
+    } else {
+        props.Add("Optional");
+    }
+    if (p.ReadOnly) props.Add("ReadOnly");
+    if (p.MinLength != null) props.Add("Minimum length: " + p.MinLength.Value.ToString());
+    if (p.MaxLength != null) props.Add("Maximum length: " + p.MaxLength.Value.ToString());
+    WriteLine("        <td>" + String.Join(", ", props) + "</td>");
+    WriteLine("        <td>" + p.Comment + "</td>");
+    WriteLine("        <td>" + (String.IsNullOrEmpty(p.Example) ? "" : "<pre class=\"highlight\">" + p.Example + "</pre>") + "</td>");
+    WriteLine("    </tr>");
+}
 }
     </tbody>
 </table>

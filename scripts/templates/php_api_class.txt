@@ -129,7 +129,7 @@ class AvaTaxClient
      * @PhpComment(m.Description, 4)
      *
      * </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
-     * @@return @PhpTypeName(m.TypeName)
+     * @@return @PhpTypeName(m.ResponseTypeName)
      */
     public function @{Write(FirstCharLower(m.Name) + "(" + paramlist.ToString() + ")");}
     {

@@ -211,7 +211,7 @@ namespace ClientApiGenerator.Render
                     contents = File.ReadAllText(templatePath);
                     template.razor = MakeRazorTemplate(contents);
                 } catch (Exception ex) {
-                    Console.WriteLine($"Exception parsing {template.file}: {ex.ToString()}");
+                    Console.WriteLine($"Exception parsing {template.file}: {ex.Message}");
                     throw ex;
                 }
             }

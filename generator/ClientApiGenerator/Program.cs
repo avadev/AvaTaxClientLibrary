@@ -31,11 +31,15 @@ namespace ClientApiGenerator
 
             // First parse the file
             SwaggerRenderTask task = ParseRenderTask(o);
-            if (task == null) return;
+            if (task == null) {
+                return;
+            }
 
             // Download the swagger file
             SwaggerInfo api = DownloadSwaggerJson(o, task);
-            if (api == null) return;
+            if (api == null) {
+                return;
+            }
 
             // Render output
             Console.WriteLine($"***** Beginning render stage");
@@ -84,7 +88,7 @@ namespace ClientApiGenerator
 
             // If anything blew up, refuse to continue
             } catch (Exception ex) {
-                Console.WriteLine($"Exception parsing render task: {ex.ToString()}");
+                Console.WriteLine($"Exception parsing render task: {ex.Message}");
                 return null;
             }
         }
@@ -143,32 +147,21 @@ namespace ClientApiGenerator
                     // Now figure out all the URL parameters
                     foreach (var parameter in verb.Value.parameters) {
 
+                        // Construct parameter
+                        var pi = ResolveType(parameter);
+
                         // Query String Parameters
                         if (parameter.paramIn == "query") {
-                            api.QueryParams.Add(new ParameterInfo()
-                            {
-                                Comment = parameter.description ?? "",
-                                ParamName = parameter.name,
-                                TypeName = ResolveType(parameter)
-                            });
+                            api.QueryParams.Add(pi);
 
                             // URL Path parameters
                         } else if (parameter.paramIn == "path") {
-                            api.Params.Add(new ParameterInfo()
-                            {
-                                Comment = parameter.description ?? "",
-                                ParamName = parameter.name,
-                                TypeName = ResolveType(parameter)
-                            });
+                            api.Params.Add(pi);
 
                             // Body parameters
                         } else if (parameter.paramIn == "body") {
-                            api.BodyParam = new ParameterInfo()
-                            {
-                                Comment = parameter.description ?? "",
-                                ParamName = "model",
-                                TypeName = ResolveType(parameter)
-                            };
+                            pi.ParamName = "model";
+                            api.BodyParam = pi;
                         }
 
                         // Is this property an enum?
@@ -180,9 +173,11 @@ namespace ClientApiGenerator
                     // Now figure out the response type
                     SwaggerResult ok = null;
                     if (verb.Value.responses.TryGetValue("200", out ok)) {
-                        api.TypeName = ResolveType(ok.schema);
+                        api.ResponseType = ok.schema == null ? null : ok.schema.type;
+                        api.ResponseTypeName = ResolveTypeName(ok.schema);
                     } else if (verb.Value.responses.TryGetValue("201", out ok)) {
-                        api.TypeName = ResolveType(ok.schema);
+                        api.ResponseType = ok.schema == null ? null : ok.schema.type;
+                        api.ResponseTypeName = ResolveTypeName(ok.schema);
                     }
 
                     // Done with this API
@@ -206,12 +201,11 @@ namespace ClientApiGenerator
                     if (!prop.Value.required && def.Value.required != null) {
                         prop.Value.required = def.Value.required.Contains(prop.Key);
                     }
-                    m.Properties.Add(new ParameterInfo()
-                    {
-                        Comment = prop.Value.description,
-                        ParamName = prop.Key,
-                        TypeName = ResolveType(prop.Value)
-                    });
+
+                    // Construct property
+                    var pi = ResolveType(prop.Value);
+                    pi.ParamName = prop.Key;
+                    m.Properties.Add(pi);
 
                     // Is this property an enum?
                     if (prop.Value.EnumDataType != null) {
@@ -265,7 +259,28 @@ namespace ClientApiGenerator
             }
         }
 
-        private static string ResolveType(SwaggerProperty prop)
+        private static ParameterInfo ResolveType(SwaggerProperty prop)
+        {
+            var pi = new ParameterInfo()
+            {
+                Comment = prop.description ?? "",
+                ParamName = prop.name,
+                Type = prop.type,
+                TypeName = ResolveTypeName(prop),
+                Required = prop.required,
+                ReadOnly = prop.readOnly,
+                MaxLength = prop.maxLength,
+                MinLength = prop.minLength,
+                Example = prop.example == null ? "" : prop.example.ToString()
+            };
+            if (prop.type == "array") {
+                pi.IsArrayType = true;
+                pi.ArrayElementType = ResolveTypeName(prop.items).Replace("?", "");
+            }
+            return pi;
+        }
+
+        private static string ResolveTypeName(SwaggerProperty prop)
         {
             StringBuilder typename = new StringBuilder();
             bool isValueType = false;
@@ -321,7 +336,7 @@ namespace ClientApiGenerator
                 // But, if this is an array, nest it
             } else if (prop.type == "array") {
                 typename.Append("List<");
-                typename.Append(ResolveType(prop.items).Replace("?", ""));
+                typename.Append(ResolveTypeName(prop.items).Replace("?", ""));
                 typename.Append(">");
 
                 // Is it a custom object?
@@ -335,7 +350,7 @@ namespace ClientApiGenerator
 
                 // Is this a nested swagger element?
             } else if (prop.schema != null) {
-                typename.Append(ResolveType(prop.schema));
+                typename.Append(ResolveTypeName(prop.schema));
 
                 // Custom hack for objects that aren't represented correctly in swagger at the moment - still have to fix this in REST v2
             } else if (prop.description == "Default addresses for all lines in this document") {

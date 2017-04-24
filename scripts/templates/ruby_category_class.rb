@@ -34,7 +34,7 @@ module AvaTax
       # 
       # @RubyComment(m.Description, 6)
       # </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
-      # @@return @PhpTypeName(m.TypeName)
+      # @@return @PhpTypeName(m.ResponseTypeName)
       def @{Write(FirstCharLower(m.Name) + "(" + paramlist.ToString() + ")");}
         path = '@m.URI.Replace("{", "#{")';
         @m.HttpVerb (path)

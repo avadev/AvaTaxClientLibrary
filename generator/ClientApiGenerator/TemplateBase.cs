@@ -196,7 +196,7 @@ namespace ClientApiGenerator
             return typename;
         }
 
-        private bool IsEnumType(string typename)
+        public bool IsEnumType(string typename)
         {
             if (typename.EndsWith("?")) {
                 typename = typename.Substring(0, typename.Length - 1);

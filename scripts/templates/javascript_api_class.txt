@@ -128,7 +128,7 @@ export default class AvaTaxClient
      * @PhpComment(m.Description, 4)
      *
      * </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
-     * @@return @PhpTypeName(m.TypeName)
+     * @@return @PhpTypeName(m.ResponseTypeName)
      */
     @{Write("    " + FirstCharLower(m.Name) + "({ " + paramlist.ToString() + " } = {})");} {
         var path = this.buildUrl({ url: `@m.URI.Replace("{", "${")`, parameters: { 

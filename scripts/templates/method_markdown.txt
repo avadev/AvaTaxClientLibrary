@@ -1,23 +1,12 @@
 ---
 layout: page
-title: @MethodModel.Name API
+title: @MethodModel.Name
 categories: [AvaTax API Reference]
 product: avaTax
 doctype: restapi
 nav: apis
 disqus: 1
 ---
-
-@MethodModel.Summary
-
-## Description
-
-@MethodModel.Description
-
-## Example
-
-### Request
-
 @{
     string sampleQueryString = "";
     if (MethodModel.QueryParams.Count > 0) {
@@ -25,44 +14,60 @@ disqus: 1
         foreach (var p in MethodModel.QueryParams) {
             sampleQueryString = sampleQueryString + p.ParamName + "=value&";
         }
+        sampleQueryString = sampleQueryString.Substring(0, sampleQueryString.Length - 1);
     }
-    WriteLine("For sandbox accounts:");
-    WriteLine("`" + MethodModel.HttpVerb.ToUpper() + " https://sandbox-rest.avatax.com" + MethodModel.URI + sampleQueryString + "`");
-    WriteLine("");
-    WriteLine("For production accounts:");
-    WriteLine("`" + MethodModel.HttpVerb.ToUpper() + " https://rest.avatax.com" + MethodModel.URI + sampleQueryString + "`");
-}
-@if (MethodModel.BodyParam != null) {
-<text>
-### Body
-
-```json
-@GetExample(MethodModel.BodyParam.TypeName)
-```</text>
-}
-@{
-WriteLine("<div class=\"btn-callout\"><a href=\"https://sandbox-rest.avatax.com/swagger/ui/index.html#!/" + MethodModel.Category + "/" + MethodModel.Name + "\" role=\"button\">Try It Now</a></div>");
 }
 
-### Using CURL
-
-```
-curl 
-    -X @MethodModel.HttpVerb.ToUpper() 
-    --header 'Accept: application/json' 
-    --header 'Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ='
-    --header 'X-Avalara-Client: AvaTax API Example; 2.17.4-60; CURL; 1.0' 
-@if (MethodModel.BodyParam != null) {
-    WriteLine("    -d '" + GetExample(MethodModel.BodyParam.TypeName).Replace("\r\n"," ") + "'");
+<table class="styled-table">
+    <thead>
+    <tr>
+        <th>API</th>
+        <td>@MethodModel.Name</td>
+    </tr>
+    <tr>
+        <th>Purpose</th>
+        <td>@MethodModel.Summary</td>
+    </tr>
+    <tr>
+        <th>HTTP Verb</th>
+        <td>@MethodModel.HttpVerb.ToUpper()</td>
+    </tr>
+    <tr>
+        <th>REST Path</th>
+        <td>@MethodModel.URI</td>
+    </tr>
+    <tr>
+        <th>URL (Sandbox)</th>
+        <td>@{ Write("https://sandbox-rest.avatax.com" + MethodModel.URI); }</td>
+    </tr>
+    <tr>
+        <th>URL (Production)</th>
+        <td>@{ Write("https://rest.avatax.com" + MethodModel.URI); }</td>
+    </tr>
+    <tr>
+        <th>Query String</th>
+        <td>@sampleQueryString</td>
+    </tr>
+    <tr>
+        <th>Response Type</th>
+@if (GetModel(MethodModel.ResponseTypeName) != null) {
+    Write("        <td><a href=\"../../models/" + MethodModel.ResponseTypeName.ToLower() + "\">" + MethodModel.ResponseTypeName + "</a></td>");
+} else {
+    Write("        <td>" + MethodModel.ResponseTypeName + "</td>");
 }
-@{
-    Write("    'https://sandbox-rest.avatax.com");
-    Write(MethodModel.URI + sampleQueryString);
-}
-```
-<br clear="all"/>
+    </tr>
+    <tr>
+        <th>Content-Type</th>
+        <td>@if (MethodModel.ResponseTypeName == "FileResult") { Write("application/octet-stream"); } else { Write("application/json"); }</td>
+    </tr>
+    </thead>
+</table>
 
-## Parameters
+### Description
+
+@MethodModel.Description
+
+### Parameters
 
 <table class="styled-table">
 	<thead>
@@ -76,7 +81,7 @@ curl
 	<tbody>
 @foreach(var p in MethodModel.Params) {
     WriteLine("<tr>");
-    WriteLine("<td>" + p.CleanParamName + "</td>");
+    WriteLine("<td>" + p.ParamName + "</td>");
     var model = GetModel(p.TypeName);
     if (model == null) {
         WriteLine("<td>" + p.TypeName + "</td>");
@@ -89,7 +94,7 @@ curl
 }
 @foreach(var p in MethodModel.QueryParams) {
     WriteLine("<tr>");
-    WriteLine("<td>" + p.CleanParamName + "</td>");
+    WriteLine("<td>" + p.ParamName + "</td>");
     var model = GetModel(p.TypeName);
     if (model == null) {
         WriteLine("<td>" + p.TypeName + "</td>");
@@ -102,7 +107,7 @@ curl
 }
 @if (MethodModel.BodyParam != null) {
     WriteLine("<tr>");
-    WriteLine("<td>" + MethodModel.BodyParam.CleanParamName + "</td>");
+    WriteLine("<td>" + MethodModel.BodyParam.ParamName + "</td>");
     var model = GetModel(MethodModel.BodyParam.TypeName);
     if (model == null) {
         WriteLine("<td>" + HtmlEncode(MethodModel.BodyParam.TypeName) + "</td>");
@@ -115,5 +120,47 @@ curl
 }
     </tbody>
 </table>
+
+@{
+WriteLine("<div class=\"btn-callout\"><a href=\"https://sandbox-rest.avatax.com/swagger/ui/index.html#!/" + MethodModel.Category + "/" + MethodModel.Name + "\" role=\"button\">Try It Now</a></div>");
+}
+
+@if (MethodModel.BodyParam != null) {
+<text>
+### Example Request
+
+@{ Write("<code class='highlight-rouge'>" + MethodModel.HttpVerb.ToUpper() + "https://sandbox-rest.avatax.com" + MethodModel.URI + "</code>"); }
+
+<pre class="highlight" style="overflow:scroll; height:400px;">
+@GetExample(MethodModel.BodyParam.TypeName)
+</pre>
+</text>
+}
+
+### Example Response
+
+@{
+if (GetModel(MethodModel.ResponseTypeName) != null) {
+    WriteLine("<pre class=\"highlight\" style=\"overflow:scroll; height:400px;\">\r\n" + GetExample(MethodModel.ResponseTypeName) + "\r\n</pre>");
+}
+}
+
+### Example Using CURL
+
+<pre class="highlight" style="overflow:scroll; height:400px;">
+curl 
+    -X @MethodModel.HttpVerb.ToUpper() 
+    --header 'Accept: application/json' 
+    --header 'Authorization: Basic VVNFUk5BTUU6UEFTU1dPUkQ='
+    --header 'X-Avalara-Client: AvaTax API Example; 2.17.4-60; CURL; 1.0' 
+@if (MethodModel.BodyParam != null) {
+    WriteLine("    -d '" + GetExample(MethodModel.BodyParam.TypeName) + "'");
+}
+@{
+    Write("    'https://sandbox-rest.avatax.com");
+    Write(MethodModel.URI + sampleQueryString);
+}
+</pre>
+<br clear="all"/>
 
 <br/>

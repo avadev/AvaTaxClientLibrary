@@ -48,7 +48,7 @@ namespace Avalara.AvaTax.RestClient
         WriteLine("        /// <param name=\"" + m.BodyParam.CleanParamName + "\">" + m.BodyParam.Comment + "</param>");
     }
 
-    Write("        public " + m.TypeName + " " + m.Name + "(");
+    Write("        public " + m.ResponseTypeName + " " + m.Name + "(");
 
     bool any = false;
     foreach (var p in m.Params) {
@@ -77,12 +77,12 @@ namespace Avalara.AvaTax.RestClient
         WriteLine("            path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
     }
     
-    if (m.TypeName == "String") {
+    if (m.ResponseTypeName == "String") {
         WriteLine("            return RestCallString(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
-    } else if (m.TypeName == "FileResult") {
+    } else if (m.ResponseTypeName == "FileResult") {
         WriteLine("            return RestCallFile(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     } else {
-        WriteLine("            return RestCall<" + m.TypeName + ">(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return RestCall<" + m.ResponseTypeName + ">(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     }
 
     WriteLine("        }");
@@ -109,7 +109,7 @@ namespace Avalara.AvaTax.RestClient
         WriteLine("        /// <param name=\"" + m.BodyParam.CleanParamName + "\">" + m.BodyParam.Comment + "</param>");
     }
 
-    Write("        public async Task<" + m.TypeName + "> " + m.Name + "Async(");
+    Write("        public async Task<" + m.ResponseTypeName + "> " + m.Name + "Async(");
 
     bool any = false;
     foreach (var p in m.Params) {
@@ -137,10 +137,10 @@ namespace Avalara.AvaTax.RestClient
     foreach (var p in m.QueryParams) {
         WriteLine("            path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
     }
-    if (m.TypeName == "String") {
+    if (m.ResponseTypeName == "String") {
         WriteLine("            return await RestCallStringAsync(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     } else {
-        WriteLine("            return await RestCallAsync<" + m.TypeName + ">(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return await RestCallAsync<" + m.ResponseTypeName + ">(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     }
     WriteLine("        }");
     WriteLine("");
