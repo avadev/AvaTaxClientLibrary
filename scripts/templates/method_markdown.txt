@@ -129,7 +129,7 @@ WriteLine("<div class=\"btn-callout\"><a href=\"https://sandbox-rest.avatax.com/
 <text>
 ### Example Request
 
-@{ Write("<code class='highlight-rouge'>" + MethodModel.HttpVerb.ToUpper() + "https://sandbox-rest.avatax.com" + MethodModel.URI + "</code>"); }
+@{ Write("<code class='highlight-rouge'>" + MethodModel.HttpVerb.ToUpper() + " https://sandbox-rest.avatax.com" + MethodModel.URI + "</code>"); }
 
 <pre class="highlight" style="overflow:scroll; height:400px;">
 @GetExample(MethodModel.BodyParam.TypeName)
