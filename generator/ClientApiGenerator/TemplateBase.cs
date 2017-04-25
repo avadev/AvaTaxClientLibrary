@@ -111,7 +111,10 @@ namespace ClientApiGenerator
         public string CSharpComment(string c)
         {
             if (String.IsNullOrEmpty(c)) return "";
-            return FixWhitespace(c).Replace("\r\n", "\r\n        ///");
+            return FixWhitespace(c)
+                .Replace("\r\n", "\r\n        ///")
+                .Replace("\r", "\r        ///")
+                .Replace("\n", "\n        ///");
         }
 
         public string CleanParameterName(string p)
