@@ -11,15 +11,5 @@ namespace ClientApiGenerator.Models
         public string EnumDataType { get; set; }
         public string Comment { get; set; }
         public List<EnumItem> Items { get; set; }
-
-        public void AddItem(string value, string comment)
-        {
-            if (this.Items == null) this.Items = new List<EnumItem>();
-            Items.Add(new EnumItem()
-            {
-                Value = value,
-                Comment = comment
-            });
-        }
     }
 }
