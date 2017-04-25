@@ -292,9 +292,14 @@ namespace ClientApiGenerator
                 MinLength = prop.minLength,
                 Example = prop.example == null ? "" : prop.example.ToString()
             };
+
+            // Is this an array?
             if (prop.type == "array") {
                 pi.IsArrayType = true;
                 pi.ArrayElementType = ResolveTypeName(prop.items).Replace("?", "");
+            } else if (pi.TypeName.StartsWith("List<")) {
+                pi.IsArrayType = true;
+                pi.ArrayElementType = pi.TypeName.Substring(5, pi.TypeName.Length - 6);
             }
             return pi;
         }

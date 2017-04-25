@@ -19,7 +19,7 @@ disqus: 1
 		<tr>
 			<th>Parameter</th>
 			<th>Type</th>
-			<th>Properties</th>
+			<th>Attributes</th>
 			<th>Summary</th>
 			<th>Example</th>
 		</tr>
