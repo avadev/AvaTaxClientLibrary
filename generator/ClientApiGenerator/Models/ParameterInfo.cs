@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ClientApiGenerator.TemplateBase;
 
 namespace ClientApiGenerator.Models
 {
@@ -19,6 +20,7 @@ namespace ClientApiGenerator.Models
         public string Type { get; set; }
         public string TypeName { get; set; }
         public string Comment { get; set; }
+        public ParameterLocationType ParameterLocation { get; set; }
 
         public bool IsArrayType { get; set; }
         public string ArrayElementType { get; set; }

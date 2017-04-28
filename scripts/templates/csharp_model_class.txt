@@ -17,13 +17,13 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// @CSharpComment(ClassModel.Comment)
+    /// @CSharpComment(ClassModel.Comment, 4)
     /// </summary>
     public class @ClassModel.SchemaName
     {
 @foreach(var p in ClassModel.Properties) {
     WriteLine("        /// <summary>");
-    WriteLine("        /// " + CSharpComment(p.Comment));
+    WriteLine("        /// " + CSharpComment(p.Comment, 8));
     WriteLine("        /// </summary>");
     WriteLine("        public " + p.TypeName + " " + p.CleanParamName + " { get; set; }");
     WriteLine("");

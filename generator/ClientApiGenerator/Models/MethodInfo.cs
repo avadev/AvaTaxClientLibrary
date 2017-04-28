@@ -18,6 +18,5 @@ namespace ClientApiGenerator.Models
         public string HttpVerb { get; set; }
         public ParameterInfo BodyParam { get; set; }
         public List<ParameterInfo> Params { get; set; }
-        public List<ParameterInfo> QueryParams { get; set; }
     }
 }

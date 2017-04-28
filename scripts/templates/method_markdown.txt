@@ -9,12 +9,15 @@ disqus: 1
 ---
 @{
     string sampleQueryString = "";
-    if (MethodModel.QueryParams.Count > 0) {
-        sampleQueryString = "?";
-        foreach (var p in MethodModel.QueryParams) {
-            sampleQueryString = sampleQueryString + p.ParamName + "=value&";
+    if (MethodModel.Params.Count > 0) {
+        foreach (var p in MethodModel.Params) {
+            if (p.ParameterLocation == ParameterLocationType.QueryString) {
+                sampleQueryString = sampleQueryString + p.ParamName + "=value&";
+            }
         }
-        sampleQueryString = sampleQueryString.Substring(0, sampleQueryString.Length - 1);
+        if (sampleQueryString.Length > 0) {
+            sampleQueryString = "?" + sampleQueryString.Substring(0, sampleQueryString.Length - 1);
+        }
     }
 }
 
@@ -113,86 +116,7 @@ disqus: 1
         
         // Print out the line
         WriteLine("<tr>");
-        WriteLine("    <td>URL Path</td>");
-        WriteLine("    <td>" + p.ParamName + "</td>");
-        if (typelink == null) {
-            WriteLine("    <td>" + elementtype + (p.IsArrayType ? "[]" : "") + "</td>");
-        } else {
-            WriteLine("    <td><a href=\"" + typelink + "\">" + elementtype + (p.IsArrayType ? "[]" : "") + "</a></td>");
-        }
-        WriteLine("    <td>" + String.Join(", ", props) + "</td>");
-        WriteLine("    <td>" + p.Comment + "</td>");
-        WriteLine("    <td>" + (String.IsNullOrEmpty(p.Example) ? "" : "<pre class=\"highlight\">" + p.Example + "</pre>") + "</td>");
-        WriteLine("</tr>");
-    }
-    foreach (var p in MethodModel.QueryParams) {
-        typelink = null;
-            
-        // Determine root type
-        if (p.IsArrayType) {
-            elementtype = p.ArrayElementType;
-        } else {
-            elementtype = p.TypeName.Replace("?", "");
-        }
-        var model = GetModel(elementtype);
-        if (model != null) typelink = "../../models/" + elementtype;
-        if (IsEnumType(elementtype)) typelink = "../../enums/" + elementtype;
-        
-        // Assemble API properties
-        var props = new System.Collections.Generic.List<string>();
-        if (p.Required) {
-            props.Add("<b>Required</b>");
-        } else {
-            props.Add("Optional");
-        }
-        if (p.IsArrayType) props.Add("Array");
-        if (p.ReadOnly) props.Add("ReadOnly");
-        if (p.MinLength != null) props.Add("Minimum length: " + p.MinLength.Value.ToString());
-        if (p.MaxLength != null) props.Add("Maximum length: " + p.MaxLength.Value.ToString());
-
-        // Print out the line
-        WriteLine("<tr>");
-        WriteLine("    <td>Query String</td>");
-        WriteLine("    <td>" + p.ParamName + "</td>");
-        if (typelink == null) {
-            WriteLine("    <td>" + elementtype + (p.IsArrayType ? "[]" : "") + "</td>");
-        } else {
-            WriteLine("    <td><a href=\"" + typelink + "\">" + elementtype + (p.IsArrayType ? "[]" : "") + "</a></td>");
-        }
-        WriteLine("    <td>" + String.Join(", ", props) + "</td>");
-        WriteLine("    <td>" + p.Comment + "</td>");
-        WriteLine("    <td>" + (String.IsNullOrEmpty(p.Example) ? "" : "<pre class=\"highlight\">" + p.Example + "</pre>") + "</td>");
-        WriteLine("</tr>");
-    }
-    if (MethodModel.BodyParam != null) {
-        var p = MethodModel.BodyParam;
-        typelink = null;
-            
-        // Determine root type
-        if (p.IsArrayType) {
-            elementtype = p.ArrayElementType;
-        } else {
-            elementtype = p.TypeName.Replace("?", "");
-        }
-        var model = GetModel(elementtype);
-        if (model != null) typelink = "../../models/" + elementtype;
-        if (IsEnumType(elementtype)) typelink = "../../enums/" + elementtype;
-        
-        // Assemble API properties
-        var props = new System.Collections.Generic.List<string>();
-        if (p.Required) {
-            props.Add("<b>Required</b>");
-        } else {
-            props.Add("Optional");
-        }
-        if (p.IsArrayType) props.Add("Array");
-        if (p.ReadOnly) props.Add("ReadOnly");
-        if (p.MinLength != null) props.Add("Minimum length: " + p.MinLength.Value.ToString());
-        if (p.MaxLength != null) props.Add("Maximum length: " + p.MaxLength.Value.ToString());
-
-        // Print out the line
-        WriteLine("<tr>");
-        WriteLine("    <td>Request Body</td>");
+        WriteLine("    <td>" + p.ParameterLocation.ToString() + "</td>");
         WriteLine("    <td>" + p.ParamName + "</td>");
         if (typelink == null) {
             WriteLine("    <td>" + elementtype + (p.IsArrayType ? "[]" : "") + "</td>");

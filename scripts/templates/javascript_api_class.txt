@@ -105,18 +105,14 @@ export default class AvaTaxClient
     foreach (var p in m.Params) {
         paramlist.Append(p.CleanParamName);
         paramlist.Append(", ");
-    }
-    foreach (var p in m.QueryParams) {
-        paramlist.Append(p.CleanParamName);
-        paramlist.Append(", ");
-        queryparamlist.Append("\"" + p.ParamName + "\": " + p.CleanParamName + ",\r\n            ");
         paramcomments.Add("\r\n     * @param " + PhpTypeName(p.TypeName) + " " + p.CleanParamName + " " + PhpTypeComment(SwaggerModel, p));
-    }
-    if (m.BodyParam != null) {
-        paramlist.Append(m.BodyParam.CleanParamName);
-        paramlist.Append(", ");
-        payload = m.BodyParam.CleanParamName;
-        paramcomments.Add("\r\n     * @param " + PhpTypeName(m.BodyParam.TypeName) + " " + m.BodyParam.CleanParamName + " " + PhpTypeComment(SwaggerModel, m.BodyParam));
+        
+        if (p.ParameterLocation == ParameterLocationType.QueryString) {
+            queryparamlist.Append("\"" + p.ParamName + "\": " + p.CleanParamName + ",\r\n            ");
+        }
+        if (p.ParameterLocation == ParameterLocationType.RequestBody) {
+            payload = p.CleanParamName;
+        }
     }
     if (paramlist.Length > 0) paramlist.Length -= 2;
     if (queryparamlist.Length > 0) queryparamlist.Length -= 15;

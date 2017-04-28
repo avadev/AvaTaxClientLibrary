@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using static ClientApiGenerator.TemplateBase;
 
 namespace ClientApiGenerator
 {
@@ -129,6 +130,19 @@ namespace ClientApiGenerator
             SwaggerInfo result = new SwaggerInfo();
             result.ApiVersion = obj.ApiVersion;
 
+            // Set up alternative version numbers: This one does not permit dashes
+            result.ApiVersionPeriodsOnly = result.ApiVersion.Replace("-", ".");
+
+            // Set up alternative version numbers: This one permits only three segments
+            var sb = new StringBuilder();
+            int numPeriods = 0;
+            foreach (char c in obj.ApiVersion) {
+                if (c == '.') numPeriods++;
+                if (numPeriods > 3 || c == '-') break;
+                sb.Append(c);
+            }
+            result.ApiVersionThreeSegmentsOnly = sb.ToString();
+
             // Loop through all paths and spit them out to the console
             foreach (var path in (from p in obj.paths orderby p.Key select p)) {
                 foreach (var verb in path.Value) {
@@ -140,7 +154,6 @@ namespace ClientApiGenerator
                     api.Summary = verb.Value.summary;
                     api.Description = verb.Value.description;
                     api.Params = new List<ParameterInfo>();
-                    api.QueryParams = new List<ParameterInfo>();
                     api.Category = verb.Value.tags.FirstOrDefault();
                     api.Name = verb.Value.operationId;
 
@@ -152,17 +165,23 @@ namespace ClientApiGenerator
 
                         // Query String Parameters
                         if (parameter.paramIn == "query") {
-                            api.QueryParams.Add(pi);
+                            pi.ParameterLocation = ParameterLocationType.QueryString;
 
                             // URL Path parameters
                         } else if (parameter.paramIn == "path") {
-                            api.Params.Add(pi);
+                            pi.ParameterLocation = ParameterLocationType.UriPath;
 
                             // Body parameters
                         } else if (parameter.paramIn == "body") {
                             pi.ParamName = "model";
+                            pi.ParameterLocation = ParameterLocationType.RequestBody;
                             api.BodyParam = pi;
+                        } else if (parameter.paramIn == "header") {
+                            pi.ParameterLocation = ParameterLocationType.Header;
+                        } else {
+                            throw new Exception("Unrecognized parameter location: " + parameter.paramIn);
                         }
+                        api.Params.Add(pi);
 
                         // Is this property an enum?
                         if (parameter.EnumDataType != null) {
@@ -178,6 +197,12 @@ namespace ClientApiGenerator
                     } else if (verb.Value.responses.TryGetValue("201", out ok)) {
                         api.ResponseType = ok.schema == null ? null : ok.schema.type;
                         api.ResponseTypeName = ResolveTypeName(ok.schema);
+                    }
+
+                    // Ensure that body parameters are always last for consistency
+                    if (api.BodyParam != null) {
+                        api.Params.Remove(api.BodyParam);
+                        api.Params.Add(api.BodyParam);
                     }
 
                     // Done with this API

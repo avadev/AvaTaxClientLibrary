@@ -11,20 +11,13 @@ module AvaTax
         paramlist.Append("$");
         paramlist.Append(p.CleanParamName);
         paramlist.Append(", ");
-    }
-    foreach (var p in m.QueryParams) {
-        paramlist.Append("$");
-        paramlist.Append(p.CleanParamName);
-        paramlist.Append(", ");
-        guzzleparamlist.Append("'" + p.ParamName + "' => $" + p.CleanParamName + ", ");
         paramcomments.Add("\r\n      # @param " + PhpTypeName(p.TypeName) + " $" + p.CleanParamName + " " + PhpTypeComment(SwaggerModel, p));
-    }
-    if (m.BodyParam != null) {
-        paramlist.Append("$");
-        paramlist.Append(m.BodyParam.CleanParamName);
-        paramlist.Append(", ");
-        payload = "json_encode($" + m.BodyParam.CleanParamName + ")";
-        paramcomments.Add("\r\n      # @param " + PhpTypeName(m.BodyParam.TypeName) + " $" + m.BodyParam.CleanParamName + " " + PhpTypeComment(SwaggerModel, m.BodyParam));
+        if (p.ParameterLocation == ParameterLocationType.QueryString) {
+            guzzleparamlist.Append("'" + p.ParamName + "' => $" + p.CleanParamName + ", ");
+        }
+        if (p.ParameterLocation == ParameterLocationType.RequestBody) {
+            payload = "json_encode($" + p.CleanParamName + ")";
+        }
     }
     if (paramlist.Length > 0) paramlist.Length -= 2;
     if (guzzleparamlist.Length > 0) guzzleparamlist.Length -= 2;

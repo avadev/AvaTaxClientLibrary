@@ -13,12 +13,12 @@
                 {
                     "file": "templates\\csharp_model_class.txt",
                     "type": "uniqueModels",
-                    "output": "src\\models\\{model}.cs"
+                    "output": "src\\models\\{SchemaName}.cs"
                 },
                 {
                     "file": "templates\\csharp_enum_class.txt",
                     "type": "enums",
-                    "output": "src\\enums\\{enumDataType}.cs"
+                    "output": "src\\enums\\{EnumDataType}.cs"
                 }
             ],
             "fixups": [
@@ -26,19 +26,19 @@
                     "file": "GlobalAssemblyInfo.cs",
                     "encoding": "UTF8",
                     "regex": "\\[assembly: AssemblyVersion\\(\".*\"\\)\\]",
-                    "replacement": "[assembly: AssemblyVersion(\"@@versionNumberWithPeriods@@\")]"
+                    "replacement": "[assembly: AssemblyVersion(\"{ApiVersionPeriodsOnly}\")]"
                 },
                 {
                     "file": "GlobalAssemblyInfo.cs",
                     "encoding": "UTF8",
                     "regex": "\\[assembly: AssemblyFileVersion\\(\".*\"\\)\\]",
-                    "replacement": "[assembly: AssemblyFileVersion(\"@@versionNumberWithPeriods@@\")]"
+                    "replacement": "[assembly: AssemblyFileVersion(\"{ApiVersionPeriodsOnly}\")]"
                 },
                 {
-                    "file": "src\\Avalara.AvaTax.RestClient.nuspec",
+                    "file": "src\\Avalara.AvaTax.nuspec",
                     "encoding": "UTF8",
                     "regex": "<version>(.*)</version>",
-                    "replacement": "<version>@@versionNumberWithPeriods@@</version>"
+                    "replacement": "<version>{ApiVersionPeriodsOnly}</version>"
                 }
             ]
         },
@@ -49,7 +49,7 @@
                 {
                     "file": "templates\\api_index_markdown.txt",
                     "type": "methodCategories",
-                    "output": "avatax\\{category}\\index.md"
+                    "output": "avatax\\methods\\{Category}\\index.md"
                 },
                 {
                     "file": "templates\\rest_navigation.txt",
@@ -59,17 +59,17 @@
                 {
                     "file": "templates\\method_markdown.txt",
                     "type": "methods",
-                    "output": "avatax\\{category}\\{method}.md"
+                    "output": "avatax\\methods\\{Category}\\{Name}.md"
                 },
                 {
                     "file": "templates\\model_markdown.txt",
                     "type": "uniqueModels",
-                    "output": "avatax\\models\\{model}.md"
+                    "output": "avatax\\models\\{SchemaName}.md"
                 },
                 {
                     "file": "templates\\enum_markdown.txt",
                     "type": "enums",
-                    "output": "avatax\\enums\\{enumDataType}.md"
+                    "output": "avatax\\enums\\{EnumDataType}.md"
                 }
             ]
         },
@@ -88,7 +88,7 @@
                     "file": "composer.json",
                     "encoding": "ASCII",
                     "regex": "\"version\": \".*\",",
-                    "replacement": "\"version\": \"@@versionNumberWithPeriods@@\","
+                    "replacement": "\"version\": \"{ApiVersionPeriodsOnly}\","
                 }
             ]
         },
@@ -107,7 +107,7 @@
                     "file": "package.json",
                     "encoding": "UTF8",
                     "regex": "\"version\": \".*\",",
-                    "replacement": "\"version\": \"@@versionNumberThreeSegment@@\","
+                    "replacement": "\"version\": \"{ApiVersionThreeSegmentsOnly}\","
                 }
             ]
         },
@@ -118,7 +118,7 @@
                 {
                     "file": "templates\\ruby_category_class.rb",
                     "type": "methodCategories",
-                    "output": "lib\\avatax\\client\\{category}.rb"
+                    "output": "lib\\avatax\\client\\{category_lower}.rb"
                 }
             ],
             "fixups": [
@@ -126,7 +126,7 @@
                     "file": "lib\\avatax\\version.rb",
                     "encoding": "UTF8",
                     "regex": "VERSION = '.*'",
-                    "replacement": "VERSION = '@@versionNumberThreeSegment@@'"
+                    "replacement": "VERSION = '{ApiVersionThreeSegmentsOnly}'"
                 }
             ]
         }

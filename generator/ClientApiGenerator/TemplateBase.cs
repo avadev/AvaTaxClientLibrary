@@ -10,11 +10,20 @@ using System.Dynamic;
 using ClientApiGenerator.Models;
 using Newtonsoft.Json;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace ClientApiGenerator
 {
     public abstract class TemplateBase
     {
+        public enum ParameterLocationType
+        {
+            RequestBody = 0,
+            UriPath = 1,
+            QueryString = 2,
+            Header = 3,
+        }
+
         [Browsable(false)]
         public StringBuilder Buffer { get; set; }
 
@@ -108,13 +117,32 @@ namespace ClientApiGenerator
         #endregion
 
         #region Fixups
-        public string CSharpComment(string c)
+        public string CSharpComment(string c, int indent)
         {
-            if (String.IsNullOrEmpty(c)) return "";
-            return FixWhitespace(c)
-                .Replace("\r\n", "\r\n        ///")
-                .Replace("\r", "\r        ///")
-                .Replace("\n", "\n        ///");
+            return CommentLine(c, "/// ", indent);
+        }
+
+        private string CommentLine(string originalComment, string commentPrefix, int indent)
+        {
+            if (String.IsNullOrEmpty(originalComment)) return "";
+
+            // Calculate the correct indent level
+            StringBuilder sb = new StringBuilder();
+            sb.Append("\r\n");
+            for (int i = 0; i < indent; i++) {
+                sb.Append(' ');
+            }
+            sb.Append(commentPrefix);
+            var replacement = sb.ToString();
+
+            // Fix whitespace and replace any CR/LF in the stream with new comment lines
+            return FixNewlines(FixWhitespace(originalComment))
+                .Replace("\r\n", replacement);
+        }
+
+        private string FixNewlines(string originalString)
+        {
+            return Regex.Replace(originalString, @"\r\n|\n\r|\n|\r", "\r\n");
         }
 
         public string CleanParameterName(string p)
@@ -209,26 +237,12 @@ namespace ClientApiGenerator
 
         public string PhpComment(string c, int indent)
         {
-            if (String.IsNullOrEmpty(c)) return "";
-            StringBuilder sb = new StringBuilder();
-            sb.Append("\r\n");
-            for (int i = 0; i < indent; i++) {
-                sb.Append(' ');
-            }
-            sb.Append(" * ");
-            return FixWhitespace(c).Replace("\r\n", sb.ToString());
+            return CommentLine(c, "* ", indent);
         }
 
         public string RubyComment(string c, int indent)
         {
-            if (String.IsNullOrEmpty(c)) return "";
-            StringBuilder sb = new StringBuilder();
-            sb.Append("\r\n");
-            for (int i = 0; i < indent; i++) {
-                sb.Append(' ');
-            }
-            sb.Append("# ");
-            return FixWhitespace(c).Replace("\r\n", sb.ToString());
+            return CommentLine(c, "# ", indent);
         }
 
         public string FixWhitespace(string s)
@@ -240,7 +254,7 @@ namespace ClientApiGenerator
         {
             string comment = "";
             if (p.Comment != null) {
-                comment = FixWhitespace(p.Comment).Replace("\r\n", " ");
+                comment = FixNewlines(FixWhitespace(p.Comment));
             }
 
             // Is this an enum?  If so, convert it to a string - we'll add a comment later

@@ -101,20 +101,8 @@ namespace ClientApiGenerator.Render
                 Console.WriteLine(" File not found!");
             } else {
 
-                // Figure out what a three-segment version number is
-                var sb = new StringBuilder();
-                int numPeriods = 0;
-                foreach (char c in api.ApiVersion) {
-                    if (c == '.') numPeriods++;
-                    if (numPeriods > 3 || c == '-') break;
-                    sb.Append(c);
-                }
-
                 // Determine what the new string is
-                var newstring = fixup.replacement
-                    .Replace("@@versionNumberWithPeriods@@", api.ApiVersion.Replace("-", "."))
-                    .Replace("@@versionNumber@@", api.ApiVersion)
-                    .Replace("@@versionNumberThreeSegment@@", sb.ToString());
+                var newstring = QuickStringMerge(fixup.replacement, api);
 
                 // What encoding did they want - basically everyone SHOULD want UTF8, but ascii is possible I guess
                 Encoding e = Encoding.UTF8;
@@ -131,7 +119,7 @@ namespace ClientApiGenerator.Render
         private void RenderEnums(SwaggerInfo api, RenderTemplateTask template)
         {
             foreach (var enumDataType in api.Enums) {
-                var outputPath = Path.Combine(rootFolder, template.output.Replace("{enumDataType}", enumDataType.EnumDataType.ToLower()));
+                var outputPath = Path.Combine(rootFolder, QuickStringMerge(template.output, enumDataType));
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
                 var output = template.razor.ExecuteTemplate(api, null, null, enumDataType);
                 File.WriteAllText(outputPath, output);
@@ -143,7 +131,7 @@ namespace ClientApiGenerator.Render
             var oldModels = api.Models;
             api.Models = (from m in api.Models where !m.SchemaName.StartsWith("FetchResult") select m).ToList();
             foreach (var model in api.Models) {
-                var outputPath = Path.Combine(rootFolder, template.output.Replace("{model}", model.SchemaName.ToLower()));
+                var outputPath = Path.Combine(rootFolder, QuickStringMerge(template.output, model));
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
                 var output = template.razor.ExecuteTemplate(api, null, model, null);
                 File.WriteAllText(outputPath, output);
@@ -154,7 +142,7 @@ namespace ClientApiGenerator.Render
         private void RenderModels(SwaggerInfo api, RenderTemplateTask template)
         {
             foreach (var model in api.Models) {
-                var outputPath = Path.Combine(rootFolder, template.output.Replace("{model}", model.SchemaName.ToLower()));
+                var outputPath = Path.Combine(rootFolder, QuickStringMerge(template.output, model));
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
                 var output = template.razor.ExecuteTemplate(api, null, model, null);
                 File.WriteAllText(outputPath, output);
@@ -164,7 +152,7 @@ namespace ClientApiGenerator.Render
         private void RenderMethods(SwaggerInfo api, RenderTemplateTask template)
         {
             foreach (var method in api.Methods) {
-                var outputPath = Path.Combine(rootFolder, template.output.Replace("{method}", method.Name.ToLower()).Replace("{category}", method.Category.ToLower()));
+                var outputPath = Path.Combine(rootFolder, QuickStringMerge(template.output, method));
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
                 var output = template.razor.ExecuteTemplate(api, method, null, null);
                 File.WriteAllText(outputPath, output);
@@ -177,7 +165,7 @@ namespace ClientApiGenerator.Render
             foreach (var c in categories) {
                 var oldMethods = api.Methods;
                 api.Methods = (from m in api.Methods where m.Category == c select m).ToList();
-                var outputPath = Path.Combine(rootFolder, template.output.Replace("{category}", c.ToLower()));
+                var outputPath = Path.Combine(rootFolder, QuickStringMerge(template.output, c));
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
                 template.razor.Category = c;
                 var output = template.razor.ExecuteTemplate(api, null, null, null);
@@ -319,6 +307,52 @@ namespace ClientApiGenerator.Render
 
             // Write the file back
             File.WriteAllText(path, contents, encoding);
+        }
+        #endregion
+
+        #region String merge function
+        private string QuickStringMerge(string template, object mergeSource)
+        {
+            Regex r = new Regex("{.+?}");
+            var matches = r.Matches(template);
+            foreach (Match m in matches) {
+
+                // Split into function and field
+                string field = m.Value.Substring(1, m.Value.Length - 2);
+                string func = null;
+                int p = field.IndexOf('.');
+                if (p >= 0) {
+                    func = field.Substring(p + 1);
+                    field = field.Substring(0, p);
+                }
+
+                // If we're merging with a plain string, just use that
+                string mergeString;
+                if (mergeSource is string) {
+                    mergeString = mergeSource as string;
+
+                // Find this value in the merge data
+                } else {
+                    PropertyInfo pi = mergeSource.GetType().GetProperty(field);
+                    if (pi == null) {
+                        throw new Exception($"Field '{field}' not found when merging filenames.");
+                    }
+                    object mergeValue = pi.GetValue(mergeSource);
+                    mergeString = mergeValue == null ? "" : mergeValue.ToString();
+                }
+
+                // Apply function, if any
+                switch (func) {
+                    case "trim": mergeString = mergeString.Trim(); break;
+                    case "lower": mergeString = mergeString.ToLower(); break;
+                }
+
+                // Merge this value into the template
+                template = template.Replace(m.Value, mergeString);
+            }
+
+            // Here's the merged template
+            return template;
         }
         #endregion
     }
