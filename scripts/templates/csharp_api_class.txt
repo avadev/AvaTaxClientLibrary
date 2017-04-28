@@ -96,6 +96,7 @@ namespace Avalara.AvaTax.RestClient
 
     bool any = false;
     foreach (var p in m.Params) {
+        if (p.CleanParamName == "X-Avalara-Client") continue;
         Write(p.TypeName + " " + p.CleanParamName + ", ");
         any = true;
     }

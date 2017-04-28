@@ -5,7 +5,7 @@
         <div id="bootstrap-scrollspy" style="padding-left: 10px">
             <ul class="api-ref-side-nav nav nav-pills nav-stacked hidden-xs hidden-sm">
 @foreach (var c in SwaggerModel.Categories) {
-    WriteLine("            <li {% if page.url == \"/avatax/" + c.ToLower() + "/\" %}class=\"active\"{% endif %}><a href=\"/avatax/" + c.ToLower() + "/\">" + c + "</a></li>");
+    WriteLine("            <li {% if page.url == \"/avatax/methods/" + c.ToLower() + "/\" %}class=\"active\"{% endif %}><a href=\"/avatax/methods/" + c.ToLower() + "/\">" + c + "</a></li>");
 }
             </ul>
         </div>
@@ -16,7 +16,7 @@
     <button id="use-case-nav" type="button" data-toggle="dropdown">AvaTax REST API</button>
     <ul class="dropdown-menu" aria-labelledby="use-case-nav">
 @foreach (var c in SwaggerModel.Categories) {
-    WriteLine("        <li><a href=\"/avatax/" + c.ToLower() + "\">" + c + "</a></li>");
+    WriteLine("        <li><a href=\"/avatax/methods/" + c.ToLower() + "\">" + c + "</a></li>");
 }
     </ul>
 </div>

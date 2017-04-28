@@ -79,7 +79,7 @@
             "templates": [
                 {
                     "file": "templates\\php_api_class.txt",
-                    "type": "methodCategories",
+                    "type": "singleFile",
                     "output": "src\\AvaTaxClient.php"
                 }
             ],

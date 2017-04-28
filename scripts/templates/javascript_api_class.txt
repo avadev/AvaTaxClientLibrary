@@ -103,6 +103,7 @@ export default class AvaTaxClient
     var paramcomments = new System.Collections.Generic.List<string>();
     string payload = "null";
     foreach (var p in m.Params) {
+        if (p.CleanParamName == "X-Avalara-Client") continue;
         paramlist.Append(p.CleanParamName);
         paramlist.Append(", ");
         paramcomments.Add("\r\n     * @param " + PhpTypeName(p.TypeName) + " " + p.CleanParamName + " " + PhpTypeComment(SwaggerModel, p));
@@ -121,7 +122,7 @@ export default class AvaTaxClient
     /**
      * @m.Summary
      *
-     * @PhpComment(m.Description, 4)
+     * @PhpComment(m.Description, 5)
      *
      * </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
      * @@return @PhpTypeName(m.ResponseTypeName)

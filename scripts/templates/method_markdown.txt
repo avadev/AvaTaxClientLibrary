@@ -54,10 +54,10 @@ disqus: 1
     <tr>
         <th>Response Type</th>
 @if (GetModel(MethodModel.ResponseTypeName) != null) {
-    Write("        <td><a href=\"../../models/" + MethodModel.ResponseTypeName.ToLower() + "\">" + MethodModel.ResponseTypeName + "</a></td>");
+    Write("        <td><a href=\"/avatax/models/" + MethodModel.ResponseTypeName.ToLower() + "\">" + MethodModel.ResponseTypeName + "</a></td>");
 } else if (MethodModel.ResponseTypeName.StartsWith("FetchResult<")) {
     var innerTypeName = MethodModel.ResponseTypeName.Substring(12, MethodModel.ResponseTypeName.Length - 13);
-    Write("        <td><a href=\"../../models/FetchResult\">FetchResult</a> containing an array of <a href=\"../../models/" + innerTypeName + "\">" + innerTypeName + "</a></td>");
+    Write("        <td><a href=\"/avatax/models/FetchResult\">FetchResult</a> containing an array of <a href=\"/avatax/models/" + innerTypeName + "\">" + innerTypeName + "</a></td>");
 } else {
     Write("        <td>" + MethodModel.ResponseTypeName + "</td>");
 }
@@ -99,8 +99,8 @@ disqus: 1
             elementtype = p.TypeName.Replace("?", "");
         }
         var model = GetModel(elementtype);
-        if (model != null) typelink = "../../models/" + elementtype;
-        if (IsEnumType(elementtype)) typelink = "../../enums/" + elementtype;
+        if (model != null) typelink = "/avatax/models/" + elementtype;
+        if (IsEnumType(elementtype)) typelink = "/avatax/enums/" + elementtype;
         
         // Assemble API properties
         var props = new System.Collections.Generic.List<string>();

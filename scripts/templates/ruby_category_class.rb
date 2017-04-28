@@ -8,6 +8,7 @@ module AvaTax
     var paramcomments = new System.Collections.Generic.List<string>();
     string payload = "null";
     foreach (var p in m.Params) {
+        if (p.CleanParamName == "X-Avalara-Client") continue;
         paramlist.Append("$");
         paramlist.Append(p.CleanParamName);
         paramlist.Append(", ");
