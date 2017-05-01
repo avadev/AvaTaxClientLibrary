@@ -12,22 +12,42 @@ disqus: 1
 
 @ClassModel.Comment
 
+## Used By
+
+This model is used in the following APIs:
+
+<ul class="normal">
+@{
+    foreach (var m in SwaggerModel.Methods) {
+        bool used = ((m.ResponseTypeName == ClassModel.SchemaName) || (m.ResponseTypeName.Contains("<" + ClassModel.SchemaName + ">")));
+        foreach (var p in m.Params) {
+            if (p.TypeName == ClassModel.SchemaName) {
+                used = true;
+                break;
+            }
+        }
+        if (used) {
+            WriteLine("<li><a href=\"/avatax/methods/" + m.Category + "/" + m.Name + "\">" + m.Name + "</a></li>");
+        }
+    }
+}
+</ul>
+
 ## Fields
 
 <table class="styled-table">
 	<thead>
 		<tr>
 			<th>Parameter</th>
-			<th>Type</th>
 			<th>Attributes</th>
 			<th>Summary</th>
-			<th>Example</th>
 		</tr>
 	</thead>
 	<tbody>
 @{
 string typelink, elementtype;
 foreach(var p in ClassModel.Properties) {
+    var props = new System.Collections.Generic.List<string>();
     WriteLine("    <tr>");
     WriteLine("        <td>" + p.CleanParamName + "</td>");
     typelink = null;
@@ -42,13 +62,12 @@ foreach(var p in ClassModel.Properties) {
     if (model != null) typelink = "../../models/" + elementtype;
     if (IsEnumType(elementtype)) typelink = "../../enums/" + elementtype;
     if (typelink == null) {
-        WriteLine("        <td>" + elementtype + (p.IsArrayType ? "[]" : "") + "</td>");
+        props.Add(elementtype + (p.IsArrayType ? "[]" : ""));
     } else {
-        WriteLine("        <td><a href=\"" + typelink + "\">" + elementtype + (p.IsArrayType ? "[]" : "") + "</a></td>");
+        props.Add("<a href=\"" + typelink + "\">" + elementtype + (p.IsArrayType ? "[]" : "") + "</a>");
     }
     
     // Assemble API properties
-    var props = new System.Collections.Generic.List<string>();
     if (p.Required) {
         props.Add("<b>Required</b>");
     } else {
@@ -58,9 +77,14 @@ foreach(var p in ClassModel.Properties) {
     if (p.ReadOnly) props.Add("ReadOnly");
     if (p.MinLength != null) props.Add("Minimum length: " + p.MinLength.Value.ToString());
     if (p.MaxLength != null) props.Add("Maximum length: " + p.MaxLength.Value.ToString());
-    WriteLine("        <td>" + String.Join(", ", props) + "</td>");
-    WriteLine("        <td>" + p.Comment + "</td>");
-    WriteLine("        <td>" + (String.IsNullOrEmpty(p.Example) ? "" : "<pre class=\"highlight\">" + p.Example + "</pre>") + "</td>");
+    WriteLine("        <td>" + String.Join("<br/>", props) + "</td>");
+    WriteLine("        <td>" + p.Comment);
+    if (!String.IsNullOrEmpty(p.Example)) {
+        WriteLine("            <br/><br/>");
+        WriteLine("            <b>Example:</b><br/>");
+        WriteLine("<pre class=\"highlight\">" + p.Example + "</pre>");
+    }
+    WriteLine("</td>");
     WriteLine("    </tr>");
 }
 }

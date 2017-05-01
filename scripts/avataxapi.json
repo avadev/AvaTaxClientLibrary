@@ -52,6 +52,21 @@
                     "output": "avatax\\methods\\{Category}\\index.md"
                 },
                 {
+                    "file": "templates\\api_model_index.md",
+                    "type": "singleFile",
+                    "output": "avatax\\models\\index.md"
+                },
+                {
+                    "file": "templates\\api_category_index.md",
+                    "type": "singleFile",
+                    "output": "avatax\\methods\\index.md"
+                },
+                {
+                    "file": "templates\\api_enum_index.md",
+                    "type": "singleFile",
+                    "output": "avatax\\enums\\index.md"
+                },
+                {
                     "file": "templates\\rest_navigation.txt",
                     "type": "singleFile",
                     "output": "_includes\\rest_navigation.html"

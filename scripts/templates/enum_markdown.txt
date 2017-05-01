@@ -8,7 +8,42 @@ nav: apis
 disqus: 1
 ---
 
+## Description
+
 @EnumModel.Comment
+
+## Used By
+
+This model is used in the following APIs:
+
+<ul class="normal">
+@{
+    foreach (var m in SwaggerModel.Methods) {
+        bool used = false;
+        foreach (var p in m.Params) {
+            if (p.TypeName == EnumModel.EnumDataType) {
+                used = true;
+                break;
+            }
+        }
+        if (used) {
+            WriteLine("<li><a href=\"/avatax/methods/" + m.Category + "/" + m.Name + "\">" + m.Name + "</a></li>");
+        }
+    }
+    foreach (var m in SwaggerModel.Models) {
+        bool used = false;
+        foreach (var p in m.Properties) {
+            if (p.TypeName == EnumModel.EnumDataType) {
+                used = true;
+                break;
+            }
+        }
+        if (used) {
+            WriteLine("<li><a href=\"/avatax/models/" + m.SchemaName + "\">" + m.SchemaName + "</a></li>");
+        }
+    }
+}
+</ul>
 
 ## Example
 

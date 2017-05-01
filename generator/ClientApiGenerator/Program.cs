@@ -54,7 +54,7 @@ namespace ClientApiGenerator
 
             // Download the swagger JSON file from the server
             try {
-                Console.WriteLine($"***** Downloading swagger JSON from {o.SwaggerRenderPath}");
+                Console.WriteLine($"***** Downloading swagger JSON from {task.swaggerUri}");
                 var response = _client.GetAsync(task.swaggerUri).Result;
                 swaggerJson = response.Content.ReadAsStringAsync().Result;
             } catch (Exception ex) {
