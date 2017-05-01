@@ -80,10 +80,8 @@ disqus: 1
 		<tr>
 			<th>Location</th>
 			<th>Parameter</th>
-			<th>Type</th>
             <th>Attributes</th>
 			<th>Summary</th>
-            <th>Example</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -119,13 +117,18 @@ disqus: 1
         WriteLine("    <td>" + p.ParameterLocation.ToString() + "</td>");
         WriteLine("    <td>" + p.ParamName + "</td>");
         if (typelink == null) {
-            WriteLine("    <td>" + elementtype + (p.IsArrayType ? "[]" : "") + "</td>");
+            props.Add(elementtype + (p.IsArrayType ? "[]" : ""));
         } else {
-            WriteLine("    <td><a href=\"" + typelink + "\">" + elementtype + (p.IsArrayType ? "[]" : "") + "</a></td>");
+            props.Add("<a href=\"" + typelink + "\">" + elementtype + (p.IsArrayType ? "[]" : "") + "</a>");
         }
         WriteLine("    <td>" + String.Join(", ", props) + "</td>");
-        WriteLine("    <td>" + p.Comment + "</td>");
-        WriteLine("    <td>" + (String.IsNullOrEmpty(p.Example) ? "" : "<pre class=\"highlight\">" + p.Example + "</pre>") + "</td>");
+        WriteLine("    <td>" + p.Comment);
+        if (!String.IsNullOrEmpty(p.Example) && (model == null)) {
+            WriteLine("            <br/><br/>");
+            WriteLine("            <b>Example:</b><br/>");
+            WriteLine("<pre class=\"highlight\">" + p.Example + "</pre>");
+        }
+        WriteLine("</td>");
         WriteLine("</tr>");
     }
 }

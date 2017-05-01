@@ -12,7 +12,7 @@ disqus: 1
 
 @ClassModel.Comment
 
-## Used By
+## References
 
 This model is used in the following APIs:
 
@@ -28,6 +28,18 @@ This model is used in the following APIs:
         }
         if (used) {
             WriteLine("<li><a href=\"/avatax/methods/" + m.Category + "/" + m.Name + "\">" + m.Name + "</a></li>");
+        }
+    }
+    foreach (var m in SwaggerModel.Models) {
+        bool used = false;
+        foreach (var p in m.Properties) {
+            if ((p.TypeName == ClassModel.SchemaName) || (p.TypeName.Contains("<" + ClassModel.SchemaName + ">"))) {
+                used = true;
+                break;
+            }
+        }
+        if (used) {
+            WriteLine("<li><a href=\"/avatax/models/" + m.SchemaName + "\">" + m.SchemaName + "</a></li>");
         }
     }
 }
@@ -79,7 +91,7 @@ foreach(var p in ClassModel.Properties) {
     if (p.MaxLength != null) props.Add("Maximum length: " + p.MaxLength.Value.ToString());
     WriteLine("        <td>" + String.Join("<br/>", props) + "</td>");
     WriteLine("        <td>" + p.Comment);
-    if (!String.IsNullOrEmpty(p.Example)) {
+    if (!String.IsNullOrEmpty(p.Example) && (model == null)) {
         WriteLine("            <br/><br/>");
         WriteLine("            <b>Example:</b><br/>");
         WriteLine("<pre class=\"highlight\">" + p.Example + "</pre>");
@@ -90,5 +102,11 @@ foreach(var p in ClassModel.Properties) {
 }
     </tbody>
 </table>
+
+## Example @ClassModel.SchemaName
+
+@{
+    WriteLine("<pre class=\"highlight\">\r\n" + GetExample(ClassModel.SchemaName) + "\r\n</pre>");
+}
 
 <br/>
