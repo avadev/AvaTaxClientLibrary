@@ -4,24 +4,26 @@ module AvaTax
 
 @foreach(var m in SwaggerModel.Methods) {
     var paramlist = new System.Text.StringBuilder();
-    var guzzleparamlist = new System.Text.StringBuilder();
     var paramcomments = new System.Collections.Generic.List<string>();
-    string payload = "null";
+    string querystringoptions = "";
+    string callwithquerystring = "";
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
-        paramlist.Append("$");
-        paramlist.Append(p.CleanParamName);
-        paramlist.Append(", ");
-        paramcomments.Add("\r\n      # @param " + PhpTypeName(p.TypeName) + " $" + p.CleanParamName + " " + PhpTypeComment(SwaggerModel, p));
-        if (p.ParameterLocation == ParameterLocationType.QueryString) {
-            guzzleparamlist.Append("'" + p.ParamName + "' => $" + p.CleanParamName + ", ");
+        if (p.ParameterLocation == ParameterLocationType.UriPath || p.ParameterLocation == ParameterLocationType.RequestBody) {
+            paramlist.Append(p.CleanParamName);
+            paramlist.Append(", ");
         }
-        if (p.ParameterLocation == ParameterLocationType.RequestBody) {
-            payload = "json_encode($" + p.CleanParamName + ")";
+        paramcomments.Add("\r\n      # @param " + PhpTypeName(p.TypeName) + " " + p.CleanParamName + " " + PhpTypeComment(SwaggerModel, p));
+        if (p.ParameterLocation == ParameterLocationType.QueryString) {
+            querystringoptions = "options={}";
+            callwithquerystring = "options";
         }
     }
+    if (!String.IsNullOrEmpty(querystringoptions)) {
+        paramlist.Append(querystringoptions);
+        paramlist.Append(", ");
+    }
     if (paramlist.Length > 0) paramlist.Length -= 2;
-    if (guzzleparamlist.Length > 0) guzzleparamlist.Length -= 2;
 
 <text>
       # @m.Summary
@@ -29,9 +31,20 @@ module AvaTax
       # @RubyComment(m.Description, 6)
       # </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
       # @@return @PhpTypeName(m.ResponseTypeName)
-      def @{Write(FirstCharLower(m.Name) + "(" + paramlist.ToString() + ")");}
-        path = '@m.URI.Replace("{", "#{")';
-        @m.HttpVerb (path)
+      def @{Write(SnakeCase(m.Name) + "(" + paramlist.ToString() + ")");}
+        path = "@m.URI.Replace("{", "#{")"
+        
+@{
+Write("        " + m.HttpVerb + "(path");
+
+if (m.BodyParam != null) {
+    Write(", model");
+}
+if (!String.IsNullOrEmpty(callwithquerystring)) {
+    Write(", " + callwithquerystring);
+}
+Write(")");
+}
       end
 </text>
 }

@@ -8,8 +8,6 @@ nav: apis
 disqus: 1
 ---
 
-## Models
-
 <table class="styled-table">
 	<thead>
 		<tr>

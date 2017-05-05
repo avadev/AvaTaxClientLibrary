@@ -9,8 +9,11 @@
 }
             </ul>
         </div>
+
     </li>
-    
+    <li><a href="/avatax/api-reference/account/soap/">Accounts SOAP API</a></li>
+    <li><a href="/avatax/api-reference/batch/soap/">Batch SOAP API</a></li>
+    <li><a href="/avatax/api-reference/tax/soap/">Tax SOAP API</a></li>    
 </ul>
 <div class="sm-section-nav dropdown visible-xs-block visible-sm-block">
     <button id="use-case-nav" type="button" data-toggle="dropdown">AvaTax REST API</button>
@@ -19,6 +22,10 @@
     WriteLine("        <li><a href=\"/avatax/methods/" + c.ToLower() + "\">" + c + "</a></li>");
 }
     </ul>
+    
+    <button id="use-case-nav" type="button"><a href="/avatax/api-reference/account/soap/">Accounts SOAP API</a></button>
+    <button id="use-case-nav" type="button"><a href="/avatax/api-reference/batch/soap/">Batch SOAP API</a></button>
+    <button id="use-case-nav" type="button"><a href="/avatax/api-reference/tax/soap/">Tax SOAP API</a></button>
 </div>
 
 <br/>

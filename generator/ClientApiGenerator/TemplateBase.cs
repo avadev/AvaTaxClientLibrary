@@ -166,6 +166,18 @@ namespace ClientApiGenerator
             return s[0].ToString().ToUpper() + s.Substring(1);
         }
 
+        public string SnakeCase(string s)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var c in s) {
+                if (Char.IsUpper(c) && sb.Length > 0) {
+                    sb.Append('_');
+                }
+                sb.Append(Char.ToLower(c));
+            }
+            return sb.ToString();
+        }
+
         public ModelInfo GetModel(string typename)
         {
             return (from m in SwaggerModel.Models where String.Equals(m.SchemaName, typename, StringComparison.CurrentCultureIgnoreCase) select m).FirstOrDefault();
