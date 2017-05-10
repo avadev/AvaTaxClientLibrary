@@ -68,9 +68,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\AvaTax-REST-V2-DotNet-SDK\src\Avalara.AvaTax.RestClient.netstandard.csproj">
-      <Project>{917bdeca-be80-4b2e-b69e-7f5e67ae84c3}</Project>
-      <Name>Avalara.AvaTax.RestClient.netstandard</Name>
+    <ProjectReference Include="..\..\..\..\AvaTax-REST-V2-DotNet-SDK\src\Avalara.AvaTax.net45.csproj">
+      <Project>{66ced0ca-099d-4db6-8dac-5c84d575a4c3}</Project>
+      <Name>Avalara.AvaTax.net45</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
