@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using static ClientApiGenerator.TemplateBase;
 
 namespace ClientApiGenerator
 {
@@ -31,11 +32,15 @@ namespace ClientApiGenerator
 
             // First parse the file
             SwaggerRenderTask task = ParseRenderTask(o);
-            if (task == null) return;
+            if (task == null) {
+                return;
+            }
 
             // Download the swagger file
             SwaggerInfo api = DownloadSwaggerJson(o, task);
-            if (api == null) return;
+            if (api == null) {
+                return;
+            }
 
             // Render output
             Console.WriteLine($"***** Beginning render stage");
@@ -49,7 +54,7 @@ namespace ClientApiGenerator
 
             // Download the swagger JSON file from the server
             try {
-                Console.WriteLine($"***** Downloading swagger JSON from {o.SwaggerRenderPath}");
+                Console.WriteLine($"***** Downloading swagger JSON from {task.swaggerUri}");
                 var response = _client.GetAsync(task.swaggerUri).Result;
                 swaggerJson = response.Content.ReadAsStringAsync().Result;
             } catch (Exception ex) {
@@ -84,7 +89,7 @@ namespace ClientApiGenerator
 
             // If anything blew up, refuse to continue
             } catch (Exception ex) {
-                Console.WriteLine($"Exception parsing render task: {ex.ToString()}");
+                Console.WriteLine($"Exception parsing render task: {ex.Message}");
                 return null;
             }
         }
@@ -125,6 +130,19 @@ namespace ClientApiGenerator
             SwaggerInfo result = new SwaggerInfo();
             result.ApiVersion = obj.ApiVersion;
 
+            // Set up alternative version numbers: This one does not permit dashes
+            result.ApiVersionPeriodsOnly = result.ApiVersion.Replace("-", ".");
+
+            // Set up alternative version numbers: This one permits only three segments
+            var sb = new StringBuilder();
+            int numPeriods = 0;
+            foreach (char c in obj.ApiVersion) {
+                if (c == '.') numPeriods++;
+                if (numPeriods > 3 || c == '-') break;
+                sb.Append(c);
+            }
+            result.ApiVersionThreeSegmentsOnly = sb.ToString();
+
             // Loop through all paths and spit them out to the console
             foreach (var path in (from p in obj.paths orderby p.Key select p)) {
                 foreach (var verb in path.Value) {
@@ -136,40 +154,34 @@ namespace ClientApiGenerator
                     api.Summary = verb.Value.summary;
                     api.Description = verb.Value.description;
                     api.Params = new List<ParameterInfo>();
-                    api.QueryParams = new List<ParameterInfo>();
                     api.Category = verb.Value.tags.FirstOrDefault();
                     api.Name = verb.Value.operationId;
 
                     // Now figure out all the URL parameters
                     foreach (var parameter in verb.Value.parameters) {
 
+                        // Construct parameter
+                        var pi = ResolveType(parameter);
+
                         // Query String Parameters
                         if (parameter.paramIn == "query") {
-                            api.QueryParams.Add(new ParameterInfo()
-                            {
-                                Comment = parameter.description ?? "",
-                                ParamName = parameter.name,
-                                TypeName = ResolveType(parameter)
-                            });
+                            pi.ParameterLocation = ParameterLocationType.QueryString;
 
                             // URL Path parameters
                         } else if (parameter.paramIn == "path") {
-                            api.Params.Add(new ParameterInfo()
-                            {
-                                Comment = parameter.description ?? "",
-                                ParamName = parameter.name,
-                                TypeName = ResolveType(parameter)
-                            });
+                            pi.ParameterLocation = ParameterLocationType.UriPath;
 
                             // Body parameters
                         } else if (parameter.paramIn == "body") {
-                            api.BodyParam = new ParameterInfo()
-                            {
-                                Comment = parameter.description ?? "",
-                                ParamName = "model",
-                                TypeName = ResolveType(parameter)
-                            };
+                            pi.ParamName = "model";
+                            pi.ParameterLocation = ParameterLocationType.RequestBody;
+                            api.BodyParam = pi;
+                        } else if (parameter.paramIn == "header") {
+                            pi.ParameterLocation = ParameterLocationType.Header;
+                        } else {
+                            throw new Exception("Unrecognized parameter location: " + parameter.paramIn);
                         }
+                        api.Params.Add(pi);
 
                         // Is this property an enum?
                         if (parameter.EnumDataType != null) {
@@ -180,9 +192,17 @@ namespace ClientApiGenerator
                     // Now figure out the response type
                     SwaggerResult ok = null;
                     if (verb.Value.responses.TryGetValue("200", out ok)) {
-                        api.TypeName = ResolveType(ok.schema);
+                        api.ResponseType = ok.schema == null ? null : ok.schema.type;
+                        api.ResponseTypeName = ResolveTypeName(ok.schema);
                     } else if (verb.Value.responses.TryGetValue("201", out ok)) {
-                        api.TypeName = ResolveType(ok.schema);
+                        api.ResponseType = ok.schema == null ? null : ok.schema.type;
+                        api.ResponseTypeName = ResolveTypeName(ok.schema);
+                    }
+
+                    // Ensure that body parameters are always last for consistency
+                    if (api.BodyParam != null) {
+                        api.Params.Remove(api.BodyParam);
+                        api.Params.Add(api.BodyParam);
                     }
 
                     // Done with this API
@@ -206,12 +226,11 @@ namespace ClientApiGenerator
                     if (!prop.Value.required && def.Value.required != null) {
                         prop.Value.required = def.Value.required.Contains(prop.Key);
                     }
-                    m.Properties.Add(new ParameterInfo()
-                    {
-                        Comment = prop.Value.description,
-                        ParamName = prop.Key,
-                        TypeName = ResolveType(prop.Value)
-                    });
+
+                    // Construct property
+                    var pi = ResolveType(prop.Value);
+                    pi.ParamName = prop.Key;
+                    m.Properties.Add(pi);
 
                     // Is this property an enum?
                     if (prop.Value.EnumDataType != null) {
@@ -245,11 +264,24 @@ namespace ClientApiGenerator
 
         private static void ExtractEnum(List<EnumInfo> enums, SwaggerProperty prop)
         {
+            // Determine enum value comments and description, if any
+            string xEnumDescription = null;
+            Dictionary<string, string> xEnumValueComments = null;
+            if (prop != null && prop.Extended != null) {
+                xEnumDescription = prop.Extended["x-enum-description"] as string;
+                JObject j = prop.Extended["x-enum-value-comments"] as JObject;
+                if (j != null) {
+                    xEnumValueComments = j.ToObject<Dictionary<string, string>>();
+                }
+            }
+
+            // Load up the enum
             var enumType = (from e in enums where e.EnumDataType == prop.EnumDataType select e).FirstOrDefault();
             if (enumType == null) {
                 enumType = new EnumInfo()
                 {
                     EnumDataType = prop.EnumDataType,
+                    Comment = xEnumDescription,
                     Items = new List<EnumItem>()
                 };
                 enums.Add(enumType);
@@ -259,13 +291,45 @@ namespace ClientApiGenerator
             if (prop.enumValues != null) {
                 foreach (var s in prop.enumValues) {
                     if (!enumType.Items.Any(i => i.Value == s)) {
-                        enumType.Items.Add(new EnumItem() { Value = s });
+
+                        // Figure out the comment for the enum, if one is available
+                        string comment = null;
+                        if (xEnumValueComments != null) {
+                            xEnumValueComments.TryGetValue(s, out comment);
+                        }
+                        enumType.Items.Add(new EnumItem() { Value = s, Comment = comment });
                     }
                 }
             }
         }
 
-        private static string ResolveType(SwaggerProperty prop)
+        private static ParameterInfo ResolveType(SwaggerProperty prop)
+        {
+            var pi = new ParameterInfo()
+            {
+                Comment = prop.description ?? "",
+                ParamName = prop.name,
+                Type = prop.type,
+                TypeName = ResolveTypeName(prop),
+                Required = prop.required,
+                ReadOnly = prop.readOnly,
+                MaxLength = prop.maxLength,
+                MinLength = prop.minLength,
+                Example = prop.example == null ? "" : prop.example.ToString()
+            };
+
+            // Is this an array?
+            if (prop.type == "array") {
+                pi.IsArrayType = true;
+                pi.ArrayElementType = ResolveTypeName(prop.items).Replace("?", "");
+            } else if (pi.TypeName.StartsWith("List<")) {
+                pi.IsArrayType = true;
+                pi.ArrayElementType = pi.TypeName.Substring(5, pi.TypeName.Length - 6);
+            }
+            return pi;
+        }
+
+        private static string ResolveTypeName(SwaggerProperty prop)
         {
             StringBuilder typename = new StringBuilder();
             bool isValueType = false;
@@ -321,7 +385,7 @@ namespace ClientApiGenerator
                 // But, if this is an array, nest it
             } else if (prop.type == "array") {
                 typename.Append("List<");
-                typename.Append(ResolveType(prop.items).Replace("?", ""));
+                typename.Append(ResolveTypeName(prop.items).Replace("?", ""));
                 typename.Append(">");
 
                 // Is it a custom object?
@@ -335,7 +399,7 @@ namespace ClientApiGenerator
 
                 // Is this a nested swagger element?
             } else if (prop.schema != null) {
-                typename.Append(ResolveType(prop.schema));
+                typename.Append(ResolveTypeName(prop.schema));
 
                 // Custom hack for objects that aren't represented correctly in swagger at the moment - still have to fix this in REST v2
             } else if (prop.description == "Default addresses for all lines in this document") {

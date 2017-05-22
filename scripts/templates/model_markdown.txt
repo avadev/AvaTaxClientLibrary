@@ -12,32 +12,101 @@ disqus: 1
 
 @ClassModel.Comment
 
+## References
+
+This model is used in the following APIs:
+
+<ul class="normal">
+@{
+    foreach (var m in SwaggerModel.Methods) {
+        bool used = ((m.ResponseTypeName == ClassModel.SchemaName) || (m.ResponseTypeName.Contains("<" + ClassModel.SchemaName + ">")));
+        foreach (var p in m.Params) {
+            if (p.TypeName == ClassModel.SchemaName) {
+                used = true;
+                break;
+            }
+        }
+        if (used) {
+            WriteLine("<li><a href=\"/avatax/methods/" + m.Category + "/" + m.Name + "\">" + m.Name + "</a></li>");
+        }
+    }
+    foreach (var m in SwaggerModel.Models) {
+        bool used = false;
+        foreach (var p in m.Properties) {
+            if ((p.TypeName == ClassModel.SchemaName) || (p.TypeName.Contains("<" + ClassModel.SchemaName + ">"))) {
+                used = true;
+                break;
+            }
+        }
+        if (used) {
+            WriteLine("<li><a href=\"/avatax/models/" + m.SchemaName + "\">" + m.SchemaName + "</a></li>");
+        }
+    }
+}
+</ul>
+
 ## Fields
 
 <table class="styled-table">
 	<thead>
 		<tr>
 			<th>Parameter</th>
-			<th>Type</th>
-			<th>Location</th>
+			<th>Attributes</th>
 			<th>Summary</th>
 		</tr>
 	</thead>
 	<tbody>
-@foreach(var p in ClassModel.Properties) {
-    WriteLine("<tr>");
-    WriteLine("<td>" + p.CleanParamName + "</td>");
-    var model = GetModel(p.TypeName);
-    if (model == null) {
-        WriteLine("<td>" + p.TypeName + "</td>");
+@{
+string typelink, elementtype;
+foreach(var p in ClassModel.Properties) {
+    var props = new System.Collections.Generic.List<string>();
+    WriteLine("    <tr>");
+    WriteLine("        <td>" + p.CleanParamName + "</td>");
+    typelink = null;
+    
+    // Determine root type
+    if (p.IsArrayType) {
+        elementtype = p.ArrayElementType;
     } else {
-        WriteLine("<td><a href=\"../../models/" + p.TypeName.ToLower() + "\">" + p.TypeName + "</a></td>");
+        elementtype = p.TypeName.Replace("?", "");
     }
-    WriteLine("<td>URL Path</td>");
-    WriteLine("<td>" + p.Comment + "</td>");
-    WriteLine("</tr>");
+    var model = GetModel(elementtype);
+    if (model != null) typelink = "../../models/" + elementtype;
+    if (IsEnumType(elementtype)) typelink = "../../enums/" + elementtype;
+    if (typelink == null) {
+        props.Add(elementtype + (p.IsArrayType ? "[]" : ""));
+    } else {
+        props.Add("<a href=\"" + typelink + "\">" + elementtype + (p.IsArrayType ? "[]" : "") + "</a>");
+    }
+    
+    // Assemble API properties
+    if (p.Required) {
+        props.Add("<b>Required</b>");
+    } else {
+        props.Add("Optional");
+    }
+    if (p.IsArrayType) props.Add("Array");
+    if (p.ReadOnly) props.Add("ReadOnly");
+    if (p.MinLength != null) props.Add("Minimum length: " + p.MinLength.Value.ToString());
+    if (p.MaxLength != null) props.Add("Maximum length: " + p.MaxLength.Value.ToString());
+    WriteLine("        <td>" + String.Join("<br/>", props) + "</td>");
+    WriteLine("        <td>" + p.Comment);
+    if (!String.IsNullOrEmpty(p.Example) && (model == null)) {
+        WriteLine("            <br/><br/>");
+        WriteLine("            <b>Example:</b><br/>");
+        WriteLine("<pre class=\"highlight\">" + p.Example + "</pre>");
+    }
+    WriteLine("</td>");
+    WriteLine("    </tr>");
+}
 }
     </tbody>
 </table>
+
+## Example @ClassModel.SchemaName
+
+@{
+    WriteLine("<pre class=\"highlight\">\r\n" + GetExample(ClassModel.SchemaName) + "\r\n</pre>");
+}
 
 <br/>

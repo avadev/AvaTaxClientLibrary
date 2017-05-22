@@ -37,7 +37,7 @@ namespace AvaTax_Connect
             Console.WriteLine($"    Tax Lines: {o.Lines}");
             Console.WriteLine($"         Type: {o.DocType}");
             Console.WriteLine();
-            Console.WriteLine("    Call    Server         Transit        Overhead       Total");
+            Console.WriteLine("    Call    Server         Network        Client         Total");
 
             // Use transaction builder
             var tb = new TransactionBuilder(client, "DEFAULT", o.DocType, "ABC")
@@ -66,15 +66,19 @@ namespace AvaTax_Connect
                 }
 
                 // Make one tax transaction
-                DateTime start = DateTime.UtcNow;
-                var t = client.CreateTransaction(null, ctm);
-                TimeSpan ts = DateTime.UtcNow - start;
-                total.Combine(client.LastCallTime);
-                totalms += ts.Milliseconds;
+                try {
+                    DateTime start = DateTime.UtcNow;
+                    var t = client.CreateTransaction(null, ctm);
+                    TimeSpan ts = DateTime.UtcNow - start;
+                    total.Combine(client.LastCallTime);
+                    totalms += ts.Milliseconds;
 
-                // Write some information
-                var cd = client.LastCallTime;
-                Console.WriteLine($"    {count.ToString("0000")}    {cd.ServerDuration.TotalMilliseconds.ToString("0000.0000")}ms    {cd.TransitDuration.TotalMilliseconds.ToString("0000.0000")}ms    {(cd.SetupDuration.TotalMilliseconds + cd.ParseDuration.TotalMilliseconds).ToString("0000.0000")}ms    {ts.TotalMilliseconds.ToString("0000.0000")}ms");
+                    // Write some information
+                    var cd = client.LastCallTime;
+                    Console.WriteLine($"    {count.ToString("0000")}    {cd.ServerDuration.TotalMilliseconds.ToString("0000.0000")}ms    {cd.TransitDuration.TotalMilliseconds.ToString("0000.0000")}ms    {(cd.SetupDuration.TotalMilliseconds + cd.ParseDuration.TotalMilliseconds).ToString("0000.0000")}ms    {ts.TotalMilliseconds.ToString("0000.0000")}ms");
+                } catch (Exception ex) {
+                    Console.WriteLine($"    {count.ToString("0000")}    FAILED: {ex.Message}");
+                }
             }
 
             // Compute some averages

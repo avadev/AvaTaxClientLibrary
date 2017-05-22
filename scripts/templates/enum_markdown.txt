@@ -8,64 +8,62 @@ nav: apis
 disqus: 1
 ---
 
-## Summary
+## Description
 
-The specified location code does not exist.
+@EnumModel.Comment
+
+## References
+
+This model is used in the following APIs:
+
+<ul class="normal">
+@{
+    foreach (var m in SwaggerModel.Methods) {
+        bool used = false;
+        foreach (var p in m.Params) {
+            if (p.TypeName == EnumModel.EnumDataType) {
+                used = true;
+                break;
+            }
+        }
+        if (used) {
+            WriteLine("<li><a href=\"/avatax/methods/" + m.Category + "/" + m.Name + "\">" + m.Name + "</a></li>");
+        }
+    }
+    foreach (var m in SwaggerModel.Models) {
+        bool used = false;
+        foreach (var p in m.Properties) {
+            if (p.TypeName == EnumModel.EnumDataType) {
+                used = true;
+                break;
+            }
+        }
+        if (used) {
+            WriteLine("<li><a href=\"/avatax/models/" + m.SchemaName + "\">" + m.SchemaName + "</a></li>");
+        }
+    }
+}
+</ul>
 
 ## Example
 
-```json
-{
-  "code": "AddressLocationNotFound",
-  "target": "Unknown",
-  "details": [
-    {
-      "code": "AddressLocationNotFound",
-      "number": 310,
-      "message": "The location code was not found.",
-      "description": "The location code -2- could not be found within company -1- and account -0-.",
-      "faultCode": "Client",
-      "helpLink": "http://developer.avalara.com/avatax/errors/AddressLocationNotFound",
-      "severity": "Error"
-    }
-  ]
+<table class="styled-table">
+	<thead>
+		<tr>
+			<th>Value</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+    <tbody>
+@foreach(var v in EnumModel.Items) {
+<text>
+        <tr>
+            <td>@v.Value</td>
+            <td>@v.Comment</td>
+        </tr>
+</text>
 }
-```
+    </tbody>
+</table>
 
-## Explanation
-
-You attempted to use a location code with an AvaTax API, but that location code could not be found.  For example, here's one way to use an address in the Transaction Create API:
-
-```json
-{
-  "type": "SalesInvoice",
-  "companyCode": "DEFAULT",
-  "date": "2016-12-30T00:00:00-08:00",
-  "customerCode": "ABC",
-  "addresses": {
-    "ShipFrom": {
-      "locationCode": "MAINOFFICE"
-    },
-    "ShipTo": {
-      "line1": "123 Main Street",
-      "city": "Irvine",
-      "region": "CA",
-      "postalCode": "92615",
-      "country": "US"
-    }
-  },
-  "lines": [
-    {
-      "amount": 100
-    }
-  ]
-}
-```
-
-Some steps to check:
-
-<ul class="normal">
-    <li>Did you use the correct company code when creating the transaction?</li>
-    <li>Did you use the correct location code?</li>
-    <li>Can you fetch the location using the <a href="https://sandbox-rest.avatax.com/swagger/ui/index.html#!/Locations/QueryLocations">QueryLocations API</a>?</li>
-</ul>
+<br clear="all"/>

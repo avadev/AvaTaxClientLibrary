@@ -1,5 +1,5 @@
 {
-    "swaggerUri": "https://sandbox-rest.avatax.com/swagger/v2/swagger.json",
+    "swaggerUri": "http://192.168.10.101:8020/swagger/v2/swagger.json",
     "targets": [
         {
             "name": "CSharp",
@@ -13,32 +13,32 @@
                 {
                     "file": "templates\\csharp_model_class.txt",
                     "type": "uniqueModels",
-                    "output": "src\\models\\{model}.cs"
+                    "output": "src\\models\\{SchemaName}.cs"
                 },
                 {
                     "file": "templates\\csharp_enum_class.txt",
                     "type": "enums",
-                    "output": "src\\enums\\{enum}.cs"
+                    "output": "src\\enums\\{EnumDataType}.cs"
                 }
             ],
             "fixups": [
                 {
-                    "filePath": "GlobalAssemblyInfo.cs",
+                    "file": "GlobalAssemblyInfo.cs",
                     "encoding": "UTF8",
-                    "regex": "[assembly: AssemblyVersion(\".*\")]",
-                    "replacement": "[assembly: AssemblyVersion(\"@@versionNumberWithPeriods@@\")]"
+                    "regex": "\\[assembly: AssemblyVersion\\(\".*\"\\)\\]",
+                    "replacement": "[assembly: AssemblyVersion(\"{ApiVersionPeriodsOnly}\")]"
                 },
                 {
                     "file": "GlobalAssemblyInfo.cs",
                     "encoding": "UTF8",
-                    "regex": "[assembly: AssemblyFileVersion(\".*\")]",
-                    "replacement": "[assembly: AssemblyFileVersion(\"@@versionNumberWithPeriods@@\")]"
+                    "regex": "\\[assembly: AssemblyFileVersion\\(\".*\"\\)\\]",
+                    "replacement": "[assembly: AssemblyFileVersion(\"{ApiVersionPeriodsOnly}\")]"
                 },
                 {
-                    "file": "src\\Avalara.AvaTax.RestClient.nuspec",
+                    "file": "src\\Avalara.AvaTax.nuspec",
                     "encoding": "UTF8",
                     "regex": "<version>(.*)</version>",
-                    "replacement": "<version>@@versionNumberWithPeriods@@</version>"
+                    "replacement": "<version>{ApiVersionPeriodsOnly}</version>"
                 }
             ]
         },
@@ -49,7 +49,22 @@
                 {
                     "file": "templates\\api_index_markdown.txt",
                     "type": "methodCategories",
-                    "output": "avatax\\{category}\\index.md"
+                    "output": "avatax\\methods\\{Category}\\index.md"
+                },
+                {
+                    "file": "templates\\api_model_index.md",
+                    "type": "singleFile",
+                    "output": "avatax\\models\\index.md"
+                },
+                {
+                    "file": "templates\\api_category_index.md",
+                    "type": "singleFile",
+                    "output": "avatax\\methods\\index.md"
+                },
+                {
+                    "file": "templates\\api_enum_index.md",
+                    "type": "singleFile",
+                    "output": "avatax\\enums\\index.md"
                 },
                 {
                     "file": "templates\\rest_navigation.txt",
@@ -59,28 +74,76 @@
                 {
                     "file": "templates\\method_markdown.txt",
                     "type": "methods",
-                    "output": "avatax\\{category}\\{method}.md"
+                    "output": "avatax\\methods\\{Category}\\{Name}.md"
                 },
                 {
                     "file": "templates\\model_markdown.txt",
                     "type": "uniqueModels",
-                    "output": "avatax\\models\\{model}.md"
+                    "output": "avatax\\models\\{SchemaName}.md"
                 },
                 {
                     "file": "templates\\enum_markdown.txt",
                     "type": "enums",
-                    "output": "avatax\\enums\\{enum}.md"
+                    "output": "avatax\\enums\\{EnumDataType}.md"
                 }
             ]
         },
         {
             "name": "PHP",
+            "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-PHP-SDK",
+            "templates": [
+                {
+                    "file": "templates\\php_api_class.txt",
+                    "type": "singleFile",
+                    "output": "src\\AvaTaxClient.php"
+                }
+            ],
+            "fixups": [
+                {
+                    "file": "composer.json",
+                    "encoding": "ASCII",
+                    "regex": "\"version\": \".*\",",
+                    "replacement": "\"version\": \"{ApiVersionPeriodsOnly}\","
+                }
+            ]
         },
         {
             "name": "JavaScript",
+            "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-JS-SDK",
+            "templates": [
+                {
+                    "file": "templates\\javascript_api_class.txt",
+                    "type": "singleFile",
+                    "output": "lib\\AvaTaxClient.js"
+                }
+            ],
+            "fixups": [
+                {
+                    "file": "package.json",
+                    "encoding": "UTF8",
+                    "regex": "\"version\": \".*\",",
+                    "replacement": "\"version\": \"{ApiVersionThreeSegmentsOnly}\","
+                }
+            ]
         },
         {
             "name": "Ruby",
+            "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-Ruby-SDK",
+            "templates": [
+                {
+                    "file": "templates\\ruby_category_class.rb",
+                    "type": "methodCategories",
+                    "output": "lib\\avatax\\client\\{category_lower}.rb"
+                }
+            ],
+            "fixups": [
+                {
+                    "file": "lib\\avatax\\version.rb",
+                    "encoding": "UTF8",
+                    "regex": "VERSION = '.*'",
+                    "replacement": "VERSION = '{ApiVersionThreeSegmentsOnly}'"
+                }
+            ]
         }
     ]
 }

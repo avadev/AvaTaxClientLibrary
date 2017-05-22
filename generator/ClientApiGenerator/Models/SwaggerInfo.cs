@@ -14,6 +14,8 @@ namespace ClientApiGenerator.Models
         public List<string> Categories { get; set; }
 
         public string ApiVersion { get; set; }
+        public string ApiVersionPeriodsOnly { get; set; }
+        public string ApiVersionThreeSegmentsOnly { get; set; }
 
         public SwaggerInfo()
         {

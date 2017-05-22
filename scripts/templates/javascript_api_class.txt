@@ -103,20 +103,17 @@ export default class AvaTaxClient
     var paramcomments = new System.Collections.Generic.List<string>();
     string payload = "null";
     foreach (var p in m.Params) {
+        if (p.CleanParamName == "X-Avalara-Client") continue;
         paramlist.Append(p.CleanParamName);
         paramlist.Append(", ");
-    }
-    foreach (var p in m.QueryParams) {
-        paramlist.Append(p.CleanParamName);
-        paramlist.Append(", ");
-        queryparamlist.Append("\"" + p.ParamName + "\": " + p.CleanParamName + ",\r\n            ");
         paramcomments.Add("\r\n     * @param " + PhpTypeName(p.TypeName) + " " + p.CleanParamName + " " + PhpTypeComment(SwaggerModel, p));
-    }
-    if (m.BodyParam != null) {
-        paramlist.Append(m.BodyParam.CleanParamName);
-        paramlist.Append(", ");
-        payload = m.BodyParam.CleanParamName;
-        paramcomments.Add("\r\n     * @param " + PhpTypeName(m.BodyParam.TypeName) + " " + m.BodyParam.CleanParamName + " " + PhpTypeComment(SwaggerModel, m.BodyParam));
+        
+        if (p.ParameterLocation == ParameterLocationType.QueryString) {
+            queryparamlist.Append("\"" + p.ParamName + "\": " + p.CleanParamName + ",\r\n            ");
+        }
+        if (p.ParameterLocation == ParameterLocationType.RequestBody) {
+            payload = p.CleanParamName;
+        }
     }
     if (paramlist.Length > 0) paramlist.Length -= 2;
     if (queryparamlist.Length > 0) queryparamlist.Length -= 15;
@@ -125,10 +122,10 @@ export default class AvaTaxClient
     /**
      * @m.Summary
      *
-     * @PhpComment(m.Description, 4)
+     * @PhpComment(m.Description, 5)
      *
      * </text>@foreach (var pc in paramcomments) { Write(pc);}<text>
-     * @@return @PhpTypeName(m.TypeName)
+     * @@return @PhpTypeName(m.ResponseTypeName)
      */
     @{Write("    " + FirstCharLower(m.Name) + "({ " + paramlist.ToString() + " } = {})");} {
         var path = this.buildUrl({ url: `@m.URI.Replace("{", "${")`, parameters: { 

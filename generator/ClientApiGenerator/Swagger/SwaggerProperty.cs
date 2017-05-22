@@ -17,6 +17,8 @@ namespace ClientApiGenerator.Swagger
 
         public bool readOnly { get; set; }
         public object example { get; set; }
+        public int? maxLength { get; set; }
+        public int? minLength { get; set; }
 
         public SwaggerProperty schema { get; set; }
         public SwaggerProperty items { get; set; }

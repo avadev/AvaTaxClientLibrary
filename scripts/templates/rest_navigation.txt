@@ -1,24 +1,31 @@
 <ul class="api-ref-side-nav nav nav-pills nav-stacked hidden-xs hidden-sm">
 
     <li>
-        <a href="#top">Methods</a>
+        <a href="#top">AvaTax REST API</a>
         <div id="bootstrap-scrollspy" style="padding-left: 10px">
             <ul class="api-ref-side-nav nav nav-pills nav-stacked hidden-xs hidden-sm">
 @foreach (var c in SwaggerModel.Categories) {
-    WriteLine("            <li {% if page.url == \"/avatax/" + c.ToLower() + "/\" %}class=\"active\"{% endif %}><a href=\"/avatax/" + c.ToLower() + "/\">" + c + "</a></li>");
+    WriteLine("            <li {% if page.url == \"/avatax/methods/" + c.ToLower() + "/\" %}class=\"active\"{% endif %}><a href=\"/avatax/methods/" + c.ToLower() + "/\">" + c + "</a></li>");
 }
             </ul>
         </div>
+
     </li>
-    
+    <li><a href="/avatax/api-reference/account/soap/">Accounts SOAP API</a></li>
+    <li><a href="/avatax/api-reference/batch/soap/">Batch SOAP API</a></li>
+    <li><a href="/avatax/api-reference/tax/soap/">Tax SOAP API</a></li>    
 </ul>
 <div class="sm-section-nav dropdown visible-xs-block visible-sm-block">
-    <button id="use-case-nav" type="button" data-toggle="dropdown">AvaTax API</button>
+    <button id="use-case-nav" type="button" data-toggle="dropdown">AvaTax REST API</button>
     <ul class="dropdown-menu" aria-labelledby="use-case-nav">
 @foreach (var c in SwaggerModel.Categories) {
-    WriteLine("        <li><a href=\"/avatax/" + c.ToLower() + "\">" + c + "</a></li>");
+    WriteLine("        <li><a href=\"/avatax/methods/" + c.ToLower() + "\">" + c + "</a></li>");
 }
     </ul>
+    
+    <button id="use-case-nav" type="button"><a href="/avatax/api-reference/account/soap/">Accounts SOAP API</a></button>
+    <button id="use-case-nav" type="button"><a href="/avatax/api-reference/batch/soap/">Batch SOAP API</a></button>
+    <button id="use-case-nav" type="button"><a href="/avatax/api-reference/tax/soap/">Tax SOAP API</a></button>
 </div>
 
 <br/>
