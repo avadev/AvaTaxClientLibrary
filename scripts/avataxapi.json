@@ -1,5 +1,5 @@
 {
-    "swaggerUri": "http://192.168.10.101:8020/swagger/v2/swagger.json",
+    "swaggerUri": "https://sandbox-rest.avatax.com/swagger/v2/swagger.json",
     "targets": [
         {
             "name": "CSharp",
