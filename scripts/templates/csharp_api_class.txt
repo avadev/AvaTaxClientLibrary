@@ -115,9 +115,9 @@ namespace Avalara.AvaTax.RestClient
         }
     }
     if (m.ResponseTypeName == "String") {
-        WriteLine("            return await RestCallStringAsync(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return await RestCallStringAsync(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
     } else {
-        WriteLine("            return await RestCallAsync<" + m.ResponseTypeName + ">(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return await RestCallAsync<" + m.ResponseTypeName + ">(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
     }
     WriteLine("        }");
     WriteLine("");
