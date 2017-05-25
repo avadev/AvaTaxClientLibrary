@@ -126,11 +126,11 @@ public class AvaTaxClient {
     
     // Async version of the same API
     Write(JavadocComment(m, 4));
-    Write("    public " + m.ResponseTypeName + " " + FirstCharLower(m.Name) + "Async(");
+    Write("    public " + JavaTypeName(m.ResponseTypeName) + " " + FirstCharLower(m.Name) + "Async(");
 
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
-        Write(p.TypeName + " " + p.CleanParamName + ", ");
+        Write(JavaTypeName(p.TypeName) + " " + p.CleanParamName + ", ");
     }
     if (any) {
         Backtrack(2);

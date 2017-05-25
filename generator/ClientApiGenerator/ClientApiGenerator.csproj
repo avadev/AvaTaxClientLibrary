@@ -74,6 +74,7 @@
     <Compile Include="Swagger\SwaggerProperty.cs" />
     <Compile Include="Swagger\SwaggerResult.cs" />
     <Compile Include="TemplateBase.cs" />
+    <Compile Include="TypeMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

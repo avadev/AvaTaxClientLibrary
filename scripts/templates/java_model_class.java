@@ -31,22 +31,24 @@ public class @ClassModel.SchemaName {
 
 @foreach(var p in ClassModel.Properties) {
 <text>
-    private @p.TypeName @FirstCharLower(p.CleanParamName);
+    private @JavaTypeName(p.TypeName) @FirstCharLower(p.CleanParamName);
 
     /**
-     * Getter for @FirstCharLower(p.CleanParamName);
+     * Getter for @FirstCharLower(p.CleanParamName)
+     *
      * @PhpComment(p.Comment, 4)
      */
-    public @p.TypeName @Emit("get" + p.CleanParamName + "() {");
-        return @Emit("this." + FirstCharLower(p.CleanParamName) + ";");
+    public @JavaTypeName(p.TypeName) @Emit("get" + FirstCharUpper(p.CleanParamName) + "() {")
+        return @Emit("this." + FirstCharLower(p.CleanParamName) + ";")
     }
 
     /**
-     * Setter for @FirstCharLower(p.CleanParamName);
+     * Setter for @FirstCharLower(p.CleanParamName)
+     *
      * @PhpComment(p.Comment, 4)
      */
-    public void @Emit("set" + p.CleanParamName + "(" + p.TypeName + " value) {");
-        @Emit("this." + FirstCharLower(p.CleanParamName) + " = value;");
+    public void @Emit("set" + FirstCharUpper(p.CleanParamName) + "(" + JavaTypeName(p.TypeName) + " value) {")
+        @Emit("this." + FirstCharLower(p.CleanParamName) + " = value;")
     }
 </text>
 }
