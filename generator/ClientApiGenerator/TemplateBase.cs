@@ -63,6 +63,11 @@ namespace ClientApiGenerator
             WriteLiteral(value);
         }
 
+        public string Emit(string s)
+        {
+            return s;
+        }
+
         /// <summary>
         /// Writes a CRLF at the end
         /// </summary>
@@ -239,12 +244,114 @@ namespace ClientApiGenerator
             return typename;
         }
 
+
+        public string JavaTypeName(string typename)
+        {
+            // Is this an enum?  If so, convert it to a string - we'll add a comment later
+            if (IsEnumType(typename)) {
+                return typename;
+            }
+
+            // Otherwise handle it here
+            if (String.Equals(typename, "Int32", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Int32?", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Int64", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Int64?", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Byte", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Byte?", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Int16", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Int16?", StringComparison.CurrentCultureIgnoreCase)) {
+                return "int";
+            } else if (String.Equals(typename, "String", StringComparison.CurrentCultureIgnoreCase)) {
+                return "string";
+            } else if (String.Equals(typename, "Boolean", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Boolean?", StringComparison.CurrentCultureIgnoreCase)) {
+                return "boolean";
+            } else if (String.Equals(typename, "DateTime", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "DateTime?", StringComparison.CurrentCultureIgnoreCase)) {
+                return "string";
+            } else if (String.Equals(typename, "Decimal", StringComparison.CurrentCultureIgnoreCase)
+                || String.Equals(typename, "Decimal?", StringComparison.CurrentCultureIgnoreCase)) {
+                return "float";
+            } else if (typename.StartsWith("FetchResult<")) {
+                return "FetchResult";
+            } else if (typename.StartsWith("List<")) {
+                string innertype = typename.Substring(5, typename.Length - 6);
+                return PhpTypeName(innertype) + "[]";
+            } else if (SwaggerModel.Models.Any(m => m.SchemaName == typename)) {
+                return typename;
+
+                // Json byte arrays are in Base64 encoded text
+            } else if (typename == "Byte[]") {
+                return "string";
+            } else if (typename.StartsWith("Dictionary<")) {
+                return "object";
+            }
+            return typename;
+        }
         public bool IsEnumType(string typename)
         {
             if (typename.EndsWith("?")) {
                 typename = typename.Substring(0, typename.Length - 1);
             }
             return (SwaggerModel.Enums.Any(e => e.EnumDataType == typename));
+        }
+
+        public string JavadocComment(MethodInfo method, int indent)
+        {
+            List<string> lines = new List<string>();
+            lines.Add(method.Summary);
+            lines.Add("");
+
+            // Break apart description into multiple lines
+            var descriptionLines = SplitLines(method.Description);
+            if (descriptionLines.Count > 0) {
+                lines.AddRange(descriptionLines);
+                lines.Add("");
+            }
+
+            // Add one line for each parameter
+            foreach (var pc in method.Params) {
+                if (pc.CleanParamName != "X-Avalara-Client") {
+                    lines.Add("@param " + PhpTypeName(pc.TypeName) + " " + pc.CleanParamName + " " + PhpTypeComment(SwaggerModel, pc));
+                }
+            }
+
+            // Add the "return" value
+            lines.Add("@return " + PhpTypeName(method.ResponseTypeName));
+
+            // Construct an indent
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < indent; i++) sb.Append(' ');
+            var indentString = sb.ToString();
+
+            // Now turn these lines into a JavaDoc
+            indentString = indentString + " ";
+            sb.AppendLine("/**");
+            foreach (var l in lines) {
+                sb.Append(indentString);
+                sb.Append("* ");
+                sb.AppendLine(l);
+            }
+            sb.Append(indentString);
+            sb.AppendLine("*/");
+            return sb.ToString();
+        }
+
+        private static List<string> SplitLines(string raw)
+        {
+            List<string> results = new List<string>();
+            StringBuilder sb = new StringBuilder();
+            foreach (var c in raw) {
+                if (c == '\n') {
+                    results.Add(sb.ToString());
+                    sb.Length = 0;
+                } else if (c != '\r') {
+                    sb.Append(c);
+                }
+            }
+
+            return results;
         }
 
         public string PhpComment(string c, int indent)
