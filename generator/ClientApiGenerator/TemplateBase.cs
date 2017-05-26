@@ -248,23 +248,24 @@ namespace ClientApiGenerator
 
             // Fetch results are always named classes
             if (typename.StartsWith("FetchResult<")) {
-                return "FetchResult";
+                string innertype = typename.Substring(5, typename.Length - 6);
+                return "FetchResult<" + JavaTypeName(innertype) + ">";
             }
 
             // Handle arrays
             if (typename.StartsWith("List<")) {
                 string innertype = typename.Substring(5, typename.Length - 6);
-                return JavaTypeName(innertype) + "[]";
+                return "ArrayList<" + JavaTypeName(innertype) + ">";
             }
 
             // Blob arrays are considered strings in Java
             if (typename == "Byte[]") {
-                return "string";
+                return "String";
             }
 
             // Map the type as best as possible
             var mapped = GetTypeMap(typename);
-            if (mapped == null) return "object";
+            if (mapped == null) return "HashMap<String, String>";
             return mapped.Java;
         }
 

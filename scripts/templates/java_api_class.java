@@ -93,29 +93,26 @@ public class AvaTaxClient {
     bool any = false;
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
-        Write(p.TypeName + " " + p.CleanParamName + ", ");
+        Write(JavaTypeName(p.TypeName) + " " + p.CleanParamName + ", ");
         any = true;
     }
     if (any) {
         Backtrack(2);
     }
 
-    WriteLine(")");
-    WriteLine("    {");
+    WriteLine(") throws Exception {");
     WriteLine("        AvaTaxPath path = new AvaTaxPath(\"" + m.URI + "\");");
     foreach (var p in m.Params) {
         if (p.ParameterLocation == ParameterLocationType.UriPath) {
-            WriteLine("        path.ApplyField(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+            WriteLine("        path.applyField(\"{0}\", {1});", p.ParamName, p.CleanParamName);
         } else if (p.ParameterLocation == ParameterLocationType.QueryString) {
-            WriteLine("        path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+            WriteLine("        path.addQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
         }
     }
     
     if (m.ResponseTypeName == "String") {
-//        WriteLine("            return RestCallString(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
         WriteLine("        return ((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){})).call();");
     } else if (m.ResponseTypeName == "FileResult") {
-//        WriteLine("            return RestCallFile(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
         WriteLine("        return ((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){})).call();");
     } else {
         WriteLine("        return ((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){})).call();");
@@ -126,7 +123,7 @@ public class AvaTaxClient {
     
     // Async version of the same API
     Write(JavadocComment(m, 4));
-    Write("    public " + JavaTypeName(m.ResponseTypeName) + " " + FirstCharLower(m.Name) + "Async(");
+    Write("    public Future<" + JavaTypeName(m.ResponseTypeName) + "> " + FirstCharLower(m.Name) + "Async(");
 
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
@@ -136,25 +133,22 @@ public class AvaTaxClient {
         Backtrack(2);
     }
 
-    WriteLine(")");
-    WriteLine("    {");
+    WriteLine(") {");
     WriteLine("        AvaTaxPath path = new AvaTaxPath(\"" + m.URI + "\");");
     foreach (var p in m.Params) {
         if (p.ParameterLocation == ParameterLocationType.UriPath) {
-            WriteLine("        path.ApplyField(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+            WriteLine("        path.applyField(\"{0}\", {1});", p.ParamName, p.CleanParamName);
         } else if (p.ParameterLocation == ParameterLocationType.QueryString) {
-            WriteLine("        path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+            WriteLine("        path.addQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
         }
     }
     
     if (m.ResponseTypeName == "String") {
-//        WriteLine("            return RestCallString(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
-        WriteLine("        return ((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){})).call();");
+        WriteLine("        return this.threadPool.submit((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){}));");
     } else if (m.ResponseTypeName == "FileResult") {
-//        WriteLine("            return RestCallFile(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
-        WriteLine("        return ((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){})).call();");
+        WriteLine("        return this.threadPool.submit((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){}));");
     } else {
-        WriteLine("        return ((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){})).call();");
+        WriteLine("        return this.threadPool.submit((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){}));");
     }
 
     WriteLine("    }");

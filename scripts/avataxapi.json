@@ -55,6 +55,11 @@
                     "file": "templates\\java_model_class.java",
                     "type": "uniqueModels",
                     "output": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\models\\{SchemaName}.java"
+                },
+                {
+                    "file": "templates\\java_enum_class.java",
+                    "type": "enums",
+                    "output": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\enums\\{EnumDataType}.java"
                 }
             ],
             "fixups": [
