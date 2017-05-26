@@ -248,7 +248,7 @@ namespace ClientApiGenerator
 
             // Fetch results are always named classes
             if (typename.StartsWith("FetchResult<")) {
-                string innertype = typename.Substring(5, typename.Length - 6);
+                string innertype = typename.Substring(12, typename.Length - 13);
                 return "FetchResult<" + JavaTypeName(innertype) + ">";
             }
 
@@ -263,9 +263,16 @@ namespace ClientApiGenerator
                 return "String";
             }
 
+            // FileResults get returned
+            if (typename == "FileResult") {
+                return "String";
+            }
+
             // Map the type as best as possible
             var mapped = GetTypeMap(typename);
-            if (mapped == null) return "HashMap<String, String>";
+            if (mapped == null) {
+                return "HashMap<String, String>";
+            }
             return mapped.Java;
         }
 
