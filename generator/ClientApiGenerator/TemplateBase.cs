@@ -301,7 +301,7 @@ namespace ClientApiGenerator
             // Add one line for each parameter
             foreach (var pc in method.Params) {
                 if (pc.CleanParamName != "X-Avalara-Client") {
-                    lines.Add("@param " + JavaTypeName(pc.TypeName) + " " + pc.CleanParamName + " " + PhpTypeComment(SwaggerModel, pc));
+                    lines.Add("@param " + pc.CleanParamName + " " + PhpTypeComment(SwaggerModel, pc));
                 }
             }
 

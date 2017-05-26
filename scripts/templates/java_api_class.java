@@ -88,7 +88,7 @@ public class AvaTaxClient {
 //region Methods
 @foreach(var m in SwaggerModel.Methods) {
     Write(JavadocComment(m, 4));
-    Write("    public " + m.ResponseTypeName + " " + FirstCharLower(m.Name) + "(");
+    Write("    public " + JavaTypeName(m.ResponseTypeName) + " " + FirstCharLower(m.Name) + "(");
 
     bool any = false;
     foreach (var p in m.Params) {
@@ -111,11 +111,11 @@ public class AvaTaxClient {
     }
     
     if (m.ResponseTypeName == "String") {
-        WriteLine("        return ((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){})).call();");
+        WriteLine("        return ((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){})).call();");
     } else if (m.ResponseTypeName == "FileResult") {
-        WriteLine("        return ((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){})).call();");
+        WriteLine("        return ((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){})).call();");
     } else {
-        WriteLine("        return ((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){})).call();");
+        WriteLine("        return ((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){})).call();");
     }
 
     WriteLine("    }");
@@ -144,11 +144,11 @@ public class AvaTaxClient {
     }
     
     if (m.ResponseTypeName == "String") {
-        WriteLine("        return this.threadPool.submit((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){}));");
+        WriteLine("        return this.threadPool.submit((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){}));");
     } else if (m.ResponseTypeName == "FileResult") {
-        WriteLine("        return this.threadPool.submit((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){}));");
+        WriteLine("        return this.threadPool.submit((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){}));");
     } else {
-        WriteLine("        return this.threadPool.submit((RestCall<" + m.ResponseTypeName + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + m.ResponseTypeName + ">(){}));");
+        WriteLine("        return this.threadPool.submit((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){}));");
     }
 
     WriteLine("    }");
