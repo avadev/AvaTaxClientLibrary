@@ -111,11 +111,11 @@ public class AvaTaxClient {
     }
     
     if (m.ResponseTypeName == "String") {
-        WriteLine("        return ((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){})).call();");
+        WriteLine("        return ((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){})).call();");
     } else if (m.ResponseTypeName == "FileResult") {
-        WriteLine("        return ((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){})).call();");
+        WriteLine("        return ((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){})).call();");
     } else {
-        WriteLine("        return ((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){})).call();");
+        WriteLine("        return ((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){})).call();");
     }
 
     WriteLine("    }");
@@ -144,11 +144,11 @@ public class AvaTaxClient {
     }
     
     if (m.ResponseTypeName == "String") {
-        WriteLine("        return this.threadPool.submit((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){}));");
+        WriteLine("        return this.threadPool.submit((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){}));");
     } else if (m.ResponseTypeName == "FileResult") {
-        WriteLine("        return this.threadPool.submit((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){}));");
+        WriteLine("        return this.threadPool.submit((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){}));");
     } else {
-        WriteLine("        return this.threadPool.submit((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){}));");
+        WriteLine("        return this.threadPool.submit((RestCall<" + JavaTypeName(m.ResponseTypeName) + ">)restCallFactory.createRestCall(\"" + m.HttpVerb + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", new TypeToken<" + JavaTypeName(m.ResponseTypeName) + ">(){}));");
     }
 
     WriteLine("    }");
