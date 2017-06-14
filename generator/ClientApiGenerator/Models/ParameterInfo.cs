@@ -17,6 +17,16 @@ namespace ClientApiGenerator.Models
                 return ParamName.Replace("$", "");
             }
         }
+
+        public string StrippedPackageParamName
+        {
+            get
+            {
+                var cleanedParam = CleanParamName;
+                var index = cleanedParam.LastIndexOf(".") + 1;
+                return cleanedParam.Substring(index, cleanedParam.Length - index);
+            }
+        }
         public string Type { get; set; }
         public string TypeName { get; set; }
         public string Comment { get; set; }
