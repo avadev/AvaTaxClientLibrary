@@ -25,7 +25,13 @@ namespace Avalara.AvaTax.RestClient
     WriteLine("        /// <summary>");
     WriteLine("        /// " + CSharpComment(p.Comment, 8));
     WriteLine("        /// </summary>");
-    WriteLine("        public " + p.TypeName + " " + p.CleanParamName + " { get; set; }");
+    if(p.CleanParamName.Contains(".")) {
+      WriteLine("        [JsonProperty(PropertyName = \"" + p.CleanParamName + "\")]");
+      WriteLine("        public " + p.TypeName + " " + p.StrippedPackageParamName + " { get; set; }");
+    } else {
+      WriteLine("        public " + p.TypeName + " " + p.CleanParamName + " { get; set; }");
+    }
+    
     WriteLine("");
 }
 
