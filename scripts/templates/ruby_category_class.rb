@@ -13,7 +13,7 @@ module AvaTax
             paramlist.Append(p.CleanParamName);
             paramlist.Append(", ");
         }
-        paramcomments.Add("      # @param " + PhpTypeName(p.TypeName) + " " + p.CleanParamName + " " + PhpTypeComment(SwaggerModel, p) + "\r\n");
+        paramcomments.Add("      # @param " + p.CleanParamName + " [" + RubyTypeName(p.TypeName) + "] " + PhpTypeComment(SwaggerModel, p) + "\r\n");
         if (p.ParameterLocation == ParameterLocationType.QueryString) {
             querystringoptions = "options={}";
             callwithquerystring = "options";
@@ -34,7 +34,7 @@ module AvaTax
         Write(pc);
     }
 }
-      # @@return @PhpTypeName(m.ResponseTypeName)
+      # @@return [@RubyTypeName(m.ResponseTypeName)]
       def @{Write(SnakeCase(m.Name) + "(" + paramlist.ToString() + ")");}
         path = "@m.URI.Replace("{", "#{")"
 @{
