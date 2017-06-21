@@ -17,6 +17,7 @@ Avalara maintains and publishes SDKs for our current REST v2 API for the followi
 | PHP | [![Packagist](https://img.shields.io/packagist/v/avalara/avataxclient.svg?style=plastic)](https://packagist.org/packages/avalara/avataxclient) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-PHP-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-PHP-SDK) | [AvaTax-REST-V2-PHP-SDK](https://github.com/avadev/AvaTax-REST-V2-PHP-SDK) |
 | Scala | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/net.avalara.avatax/avatax-rest-v2-api-java_2.11) [![Sonatype Snapshots](https://img.shields.io/badge/Sonatype%20Snapshots-2.17.3.48--SNAPSHOT-blue.svg?style=plastic)](https://oss.sonatype.org/#nexus-search;gav~net.avalara.avatax~avatax-rest-v2-api-java_2.11~2.17.3.48-SNAPSHOT~~) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-JRE-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-JRE-SDK)  | [AvaTax-REST-V2-JRE-SDK](https://github.com/avadev/AvaTax-REST-V2-JRE-SDK) |
 | Ruby | [![Ruby Gem](https://img.shields.io/gem/v/avatax.svg?style=plastic)](https://rubygems.org/gems/avatax) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-Ruby-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-Ruby-SDK) | [AvaTax-REST-V2-Ruby-SDK](https://github.com/avadev/AvaTax-REST-V2-Ruby-SDK) |
+| IBMi RPG | | | [Avatax-REST-V2-RPGLE-SDK](https://github.com/avadev/Avatax-REST-V2-RPGLE-SDK) |
 | SalesForce Apex | | | [AvaTax-REST-V2-Apex-SDK](https://github.com/avadev/AvaTax-REST-V2-Apex-SDK) |
 
 # SOAP v1 SDK Library Status
@@ -31,7 +32,7 @@ The AvaTax SOAP SDK exists for backward compatibility with older software.  User
 | PHP | n/a | [AvaTax-Calc-REST-PHP](https://github.com/avadev/AvaTax-Calc-REST-PHP) |
 | PHP | n/a | [AvaTax-SOAP-PHP-SDK](https://github.com/avadev/AvaTax-SOAP-PHP-SDK) |
 | Ruby | n/a | [AvaTax-Calc-REST-Ruby](https://github.com/avadev/AvaTax-Calc-REST-Ruby) |
-| IBM iSeries | n/a | [AvaTax-Calc-SOAP-IBMi](https://github.com/avadev/AvaTax-Calc-SOAP-IBMi) |
+| IBMi RPG | n/a | [AvaTax-Calc-SOAP-IBMi](https://github.com/avadev/AvaTax-Calc-SOAP-IBMi) |
 | Salesforce Apex | n/a | [AvaTax-SOAP-SF-SDK](https://github.com/avadev/AvaTax-SOAP-SF-SDK) |
 | CURL | n/a | [AvaTax-Calc-REST-cURL](https://github.com/avadev/AvaTax-Calc-REST-cURL) |
 | JavaScript | n/a | [AvaTax-Calc-REST-JavaScript](https://github.com/avadev/AvaTax-Calc-REST-JavaScript) |
