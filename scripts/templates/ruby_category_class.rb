@@ -26,7 +26,7 @@ module AvaTax
     if (paramlist.Length > 0) paramlist.Length -= 2;
 
 <text>
-      # @m.Summary
+      # @RubyComment(m.Summary, 6)
       #
       # @RubyComment(m.Description, 6)
 @if (paramcomments.Count > 0) {

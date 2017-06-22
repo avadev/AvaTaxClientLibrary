@@ -457,7 +457,7 @@ namespace ClientApiGenerator
         {
             string comment = "";
             if (p.Comment != null) {
-                comment = FixNewlines(FixWhitespace(p.Comment));
+                comment = NoNewlines(FixWhitespace(p.Comment));
             }
 
             // Is this an enum?  If so, convert it to a string - we'll add a comment later
@@ -468,6 +468,11 @@ namespace ClientApiGenerator
             }
 
             return comment;
+        }
+
+        private string NoNewlines(string v)
+        {
+            return v.Replace('\r', ' ').Replace('\n', ' ');
         }
         #endregion
     }

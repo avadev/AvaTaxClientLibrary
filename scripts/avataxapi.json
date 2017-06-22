@@ -97,7 +97,7 @@
             "fixups": [
                 {
                     "file": "package.json",
-                    "encoding": "UTF8",
+                    "encoding": "ASCII",
                     "regex": "\"version\": \".*\",",
                     "replacement": "\"version\": \"{ApiVersionThreeSegmentsOnly}\","
                 }

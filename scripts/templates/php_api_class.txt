@@ -119,7 +119,7 @@ class AvaTaxClient
 
 <text>
     /**
-     * @m.Summary
+     * @PhpComment(m.Summary, 5)
      *
      * @PhpComment(m.Description, 5)
      *
