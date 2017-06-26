@@ -233,6 +233,40 @@ namespace ClientApiGenerator
             return mapped.PHP;
         }
 
+        /// <summary>
+        /// Convert a CSharp type name into a Ruby type name
+        /// </summary>
+        /// <param name="typename"></param>
+        /// <returns></returns>
+        public string RubyTypeName(string typename)
+        {
+            // Is this an enum?  If so, convert it to a string - we'll add a comment later
+            if (IsEnumType(typename)) {
+                return "String";
+            }
+
+            // Is this a JSON byte array, for example, for a file download or large blob?
+            if (typename == "Byte[]") {
+                return "String";
+            }
+
+            // Is this a fetch result of other objects?
+            if (typename.StartsWith("FetchResult<")) {
+                return "FetchResult";
+            }
+
+            // Is this an array?
+            if (typename.StartsWith("List<")) {
+                string innertype = typename.Substring(5, typename.Length - 6);
+                return PhpTypeName(innertype) + "[]";
+            }
+
+            // Map the type as best as possible
+            var mapped = GetTypeMap(typename);
+            if (mapped == null) return "Object";
+            return mapped.Ruby;
+        }
+
         private TypeMap GetTypeMap(string typename)
         {
             var fixedTypeName = typename;
@@ -377,6 +411,9 @@ namespace ClientApiGenerator
         private static List<string> SplitLines(string raw)
         {
             List<string> results = new List<string>();
+            if (raw == null) {
+                return results;
+            }
             StringBuilder sb = new StringBuilder();
             foreach (var c in raw) {
                 if (c == '\n') {
@@ -420,7 +457,7 @@ namespace ClientApiGenerator
         {
             string comment = "";
             if (p.Comment != null) {
-                comment = FixNewlines(FixWhitespace(p.Comment));
+                comment = NoNewlines(FixWhitespace(p.Comment));
             }
 
             // Is this an enum?  If so, convert it to a string - we'll add a comment later
@@ -431,6 +468,11 @@ namespace ClientApiGenerator
             }
 
             return comment;
+        }
+
+        private string NoNewlines(string v)
+        {
+            return v.Replace('\r', ' ').Replace('\n', ' ');
         }
         #endregion
     }

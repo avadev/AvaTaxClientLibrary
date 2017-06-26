@@ -66,52 +66,6 @@
             ]
         },
         {
-            "name": "DeveloperPages",
-            "rootFolder": "C:\\git\\develop\\developer-dot",
-            "templates": [
-                {
-                    "file": "templates\\api_index_markdown.txt",
-                    "type": "methodCategories",
-                    "output": "avatax\\methods\\{Category}\\index.md"
-                },
-                {
-                    "file": "templates\\api_model_index.md",
-                    "type": "singleFile",
-                    "output": "avatax\\models\\index.md"
-                },
-                {
-                    "file": "templates\\api_category_index.md",
-                    "type": "singleFile",
-                    "output": "avatax\\methods\\index.md"
-                },
-                {
-                    "file": "templates\\api_enum_index.md",
-                    "type": "singleFile",
-                    "output": "avatax\\enums\\index.md"
-                },
-                {
-                    "file": "templates\\rest_navigation.txt",
-                    "type": "singleFile",
-                    "output": "_includes\\rest_navigation.html"
-                },
-                {
-                    "file": "templates\\method_markdown.txt",
-                    "type": "methods",
-                    "output": "avatax\\methods\\{Category}\\{Name}.md"
-                },
-                {
-                    "file": "templates\\model_markdown.txt",
-                    "type": "uniqueModels",
-                    "output": "avatax\\models\\{SchemaName}.md"
-                },
-                {
-                    "file": "templates\\enum_markdown.txt",
-                    "type": "enums",
-                    "output": "avatax\\enums\\{EnumDataType}.md"
-                }
-            ]
-        },
-        {
             "name": "PHP",
             "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-PHP-SDK",
             "templates": [
@@ -143,7 +97,7 @@
             "fixups": [
                 {
                     "file": "package.json",
-                    "encoding": "UTF8",
+                    "encoding": "ASCII",
                     "regex": "\"version\": \".*\",",
                     "replacement": "\"version\": \"{ApiVersionThreeSegmentsOnly}\","
                 }
@@ -156,7 +110,7 @@
                 {
                     "file": "templates\\ruby_category_class.rb",
                     "type": "methodCategories",
-                    "output": "lib\\avatax\\client\\{category_lower}.rb"
+                    "output": "lib\\avatax\\client\\{category.lower}.rb"
                 }
             ],
             "fixups": [
