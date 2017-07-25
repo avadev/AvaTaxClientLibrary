@@ -178,6 +178,8 @@ namespace ClientApiGenerator
                             api.BodyParam = pi;
                         } else if (parameter.paramIn == "header") {
                             pi.ParameterLocation = ParameterLocationType.Header;
+                        } else if (parameter.paramIn == "formData") {
+                            pi.ParameterLocation = ParameterLocationType.FormData;
                         } else {
                             throw new Exception("Unrecognized parameter location: " + parameter.paramIn);
                         }

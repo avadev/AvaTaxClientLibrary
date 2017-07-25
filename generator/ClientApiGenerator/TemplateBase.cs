@@ -22,6 +22,7 @@ namespace ClientApiGenerator
             UriPath = 1,
             QueryString = 2,
             Header = 3,
+            FormData = 4
         }
 
         [Browsable(false)]
