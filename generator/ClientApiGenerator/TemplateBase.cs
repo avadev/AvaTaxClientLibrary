@@ -207,6 +207,11 @@ namespace ClientApiGenerator
         /// <returns></returns>
         public string PhpTypeName(string typename)
         {
+            // Is this an enum?  If so, convert it to a plain object
+            if (IsModelType(typename)) {
+                return typename.Replace("?", "");
+            }
+
             // Is this an enum?  If so, convert it to a string - we'll add a comment later
             if (IsEnumType(typename)) {
                 return "string";
@@ -231,6 +236,43 @@ namespace ClientApiGenerator
             // Map the type as best as possible
             var mapped = GetTypeMap(typename);
             if (mapped == null) return "object";
+            return mapped.PHP;
+        }
+
+
+        /// <summary>
+        /// Convert a CSharp type name into a Javascript type name
+        /// </summary>
+        /// <param name="typename"></param>
+        /// <returns></returns>
+        public string JavascriptTypeName(string typename)
+        {
+            // Is this an enum?  If so, convert it to a string - we'll add a comment later
+            if (IsEnumType(typename)) {
+                return "string";
+            }
+
+            // Is this a JSON byte array, for example, for a file download or large blob?
+            if (typename == "Byte[]") {
+                return "string";
+            }
+
+            // Is this a fetch result of other objects?
+            if (typename.StartsWith("FetchResult<")) {
+                return "FetchResult";
+            }
+
+            // Is this an array?
+            if (typename.StartsWith("List<")) {
+                string innertype = typename.Substring(5, typename.Length - 6);
+                return JavascriptTypeName(innertype) + "[]";
+            }
+
+            // Map the type as best as possible
+            var mapped = GetTypeMap(typename);
+            if (mapped == null) return "object";
+
+            // Close enough
             return mapped.PHP;
         }
 
@@ -469,6 +511,21 @@ namespace ClientApiGenerator
             }
 
             return comment;
+        }
+
+        public string SanitizeVariableName(string rawName)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var c in rawName) {
+                if ((c >= 'a' && c <= 'z')
+                    || (c >= 'A' && c <= 'Z')
+                    || (c >= '0' && c <= '9')) {
+                    sb.Append(c);
+                } else {
+                    sb.Append("_");
+                }
+            }
+            return sb.ToString();
         }
 
         private string NoNewlines(string v)

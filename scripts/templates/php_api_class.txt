@@ -181,7 +181,7 @@ class @m.SchemaName
     /**
      * @@var @PhpTypeName(p.TypeName) @PhpTypeComment(SwaggerModel, p)
      */
-    public $@p.CleanParamName;</text>
+    public $@SanitizeVariableName(p.CleanParamName);</text>
     }
 <text>
 }</text>
