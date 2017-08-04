@@ -79,7 +79,8 @@ export default class AvaTaxClient {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: this.auth
+        Authorization: this.auth,
+        'X-Avalara-Client': this.clientId
       },
       body: JSON.stringify(payload)
     }).then(res => res.json())
