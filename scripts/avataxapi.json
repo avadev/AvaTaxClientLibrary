@@ -86,10 +86,20 @@
             "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-PHP-SDK",
             "templates": [
                 {
-                    "file": "templates\\php_api_class.txt",
+                    "file": "templates\\php_constants_class.php",
                     "type": "singleFile",
-                    "output": "src\\AvaTaxClient.php"
-                }
+                    "output": "src\\Constants.php"
+                },
+                {
+                    "file": "templates\\php_methods_class.php",
+                    "type": "singleFile",
+                    "output": "src\\Methods.php"
+                },
+                {
+                    "file": "templates\\php_models_class.php",
+                    "type": "singleFile",
+                    "output": "src\\Models.php"
+                },
             ],
             "fixups": [
                 {
