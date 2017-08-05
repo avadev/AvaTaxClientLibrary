@@ -1,0 +1,45 @@
+﻿<Page x:Class="AvaTaxDesktop.Pages.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AvaTaxDesktop.Pages"
+      mc:Ignorable="d" 
+      Title="Login">
+    <Grid>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Environment -->
+            <Label Grid.Row="0" HorizontalAlignment="Right">Environment</Label>
+            <ComboBox Grid.Row="0" Grid.Column="1" Margin="2" Name="cbxEnvironment" SelectionChanged="cbxEnvironment_SelectionChanged">
+                <ComboBoxItem IsSelected="True" Tag="https://rest.avatax.com">Production (rest.avatax.com)</ComboBoxItem>
+                <ComboBoxItem Tag="https://sandbox-rest.avatax.com">Sandbox (sandbox-rest.avatax.com)</ComboBoxItem>
+                <ComboBoxItem>Other</ComboBoxItem>
+            </ComboBox>
+
+            <!-- Username -->
+            <Label Grid.Row="1" HorizontalAlignment="Right">Username</Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="2" Name="txtUsername"/>
+
+            <!-- Password -->
+            <Label Grid.Row="2" HorizontalAlignment="Right">Password</Label>
+            <PasswordBox Grid.Row="2" Grid.Column="1" Margin="2" Name="txtPassword"/>
+
+            <!-- Remember Me -->
+            <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" IsChecked="true" Name="chkRemember">Remember Me</CheckBox>
+            <!-- Login -->
+            <Button Grid.Row="4" Grid.Column="1" Margin="2" Name="btnLogin" Click="btnLogin_Click">Login</Button>
+        </Grid>
+    </Grid>
+</Page>
