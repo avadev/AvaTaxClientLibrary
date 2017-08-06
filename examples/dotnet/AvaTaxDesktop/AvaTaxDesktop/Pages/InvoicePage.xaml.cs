@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Avalara.AvaTax.RestClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,19 @@ namespace AvaTaxDesktop.Pages
     /// </summary>
     public partial class InvoicePage : Page
     {
+        public CreateTransactionModel Model { get; set; }
         public InvoicePage()
         {
             InitializeComponent();
+            Model = new CreateTransactionModel();
+            Model.lines = new List<LineItemModel>();
+            Model.lines.Add(new LineItemModel()
+            {
+                taxCode = "P0000000",
+                amount = 100.0m,
+                quantity = 1
+            });
+            grdLines.ItemsSource = Model.lines;
         }
     }
 }

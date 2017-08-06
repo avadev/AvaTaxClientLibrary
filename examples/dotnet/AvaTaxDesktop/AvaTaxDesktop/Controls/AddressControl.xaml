@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="AvaTaxDesktop.Controls.AddressControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AvaTaxDesktop.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="46" />
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="72" />
+            <ColumnDefinition Width="81" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!-- Address -->
+        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Width="53">Address</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="2" Name="txtLine1" Grid.ColumnSpan="5"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="2" Name="txtLine2" Grid.ColumnSpan="5"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="2" Name="txtLine3" Grid.ColumnSpan="5"/>
+        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Width="30">City</Label>
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="2" Name="txtCity"/>
+        <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Width="47" Grid.ColumnSpan="2">Region</Label>
+        <ComboBox Margin="2" Grid.Row="3" Grid.Column="3" Name="cbxRegion" />
+        <Label Grid.Row="3" Grid.Column="3" HorizontalAlignment="Right" Width="73" Grid.ColumnSpan="2">Postal Code</Label>
+        <TextBox Grid.Row="3" Grid.Column="5" Margin="2" Name="txtPostalCode"/>
+        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Width="52">Country</Label>
+        <ComboBox Margin="2" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5" Name="cbxCountry" Loaded="cbxCountry_Loaded" SelectionChanged="cbxCountry_SelectionChanged" />
+
+    </Grid>
+</UserControl>

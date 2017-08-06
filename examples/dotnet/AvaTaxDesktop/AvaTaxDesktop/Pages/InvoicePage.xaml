@@ -4,32 +4,26 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AvaTaxDesktop.Pages"
+      xmlns:ctl="clr-namespace:AvaTaxDesktop.Controls"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="600"
+      d:DesignHeight="600" d:DesignWidth="700"
       Title="InvoicePage">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition />
-            <ColumnDefinition Width="75" />
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="200"/>
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
         <!-- Invoice Type -->
         <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">Invoice Type</Label>
-        <ComboBox Margin="2" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="5" Name="cbxDocumentType">
+        <ComboBox Margin="2" Grid.Row="0" Grid.Column="1" Name="cbxDocumentType">
             <ComboBoxItem Tag="SalesInvoice" IsSelected="True">Sales Invoice</ComboBoxItem>
             <ComboBoxItem Tag="ReturnInvoice">Return Invoice</ComboBoxItem>
             <ComboBoxItem Tag="PurchaseInvoice">Purchase Invoice</ComboBoxItem>
@@ -37,23 +31,41 @@
         </ComboBox>
 
         <!-- Address -->
-        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Address</Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="2" Name="txtLine1" Grid.ColumnSpan="5"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Margin="2" Name="txtLine2" Grid.ColumnSpan="5"/>
-        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">City</Label>
-        <TextBox Grid.Row="3" Grid.Column="1" Margin="2" Name="txtCity"/>
-        <Label Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right">Region</Label>
-        <ComboBox Margin="2" Grid.Row="3" Grid.Column="3" Name="cbxRegion" />
-        <Label Grid.Row="3" Grid.Column="4" HorizontalAlignment="Right">Postal Code</Label>
-        <TextBox Grid.Row="3" Grid.Column="5" Margin="2" Name="txtPostalCode"/>
-        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right">Country</Label>
-        <ComboBox Margin="2" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5" Name="cbxCountry" />
+        <TabControl Name="tabAddresses" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+            <TabItem Header="Single Location">
+                <ctl:AddressControl x:Name="addrSingleLocation" />
+            </TabItem>
+            <TabItem Header="Ship From">
+                <ctl:AddressControl x:Name="addrShipFrom" />
+            </TabItem>
+            <TabItem Header="Ship To">
+                <ctl:AddressControl x:Name="addrShipTo" />
+            </TabItem>
+            <TabItem Header="Order Acceptance">
+                <ctl:AddressControl x:Name="addrOrderAcceptance" />
+            </TabItem>
+            <TabItem Header="Order Origin">
+                <ctl:AddressControl x:Name="addrOrderOrigin" />
+            </TabItem>
+        </TabControl>
         
         <!-- Line Items -->
-        <DataGrid x:Name="dataGrid" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="6"/>
+        <DataGrid x:Name="grdLines" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" 
+                  AutoGenerateColumns="False" CanUserAddRows="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="1*" Header="#" Binding="{Binding number}"/>
+                <DataGridTextColumn Width="4*" Header="TaxCode" Binding="{Binding taxCode}"/>
+                <DataGridTextColumn Width="5*" Header="Description" Binding="{Binding description}"/>
+                <DataGridTextColumn Width="5*" Header="Ref1" Binding="{Binding ref1}"/>
+                <DataGridTextColumn Width="5*" Header="Ref2" Binding="{Binding ref2}"/>
+                <DataGridTextColumn Width="3*" Header="Qty" Binding="{Binding quantity}"/>
+                <DataGridTextColumn Width="3*" Header="Amount" Binding="{Binding amount}"/>
+                <DataGridTextColumn Width="3*" Header="Tax"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <!-- Actions -->
-        <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Name="btnSave" Margin="2" Width="75">Save</Button>
             <Button Name="btnCommit" Margin="2" Width="75">Commit</Button>
             <Button Name="btnCancel" Margin="2" Width="75">Cancel</Button>
