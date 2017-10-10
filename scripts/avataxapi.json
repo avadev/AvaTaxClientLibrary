@@ -68,12 +68,8 @@
                     "encoding": "UTF8",
                     "regex": "version := \".*\"",
                     "replacement": "version := \"{ApiVersionPeriodsOnly}\""
-                },{
-                    "file": "build.sbt",
-                    "encoding": "UTF8",
-                    "regex": "scalaVersion := \".*\"",
-                    "replacement": "scalaVersion := \"{ApiVersionPeriodsOnly}\""
-                },{
+                },
+                {
                     "file": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\RestCall.java",
                     "encoding": "UTF8",
                     "regex": "\"JavaRestClient\", \".*\",",
