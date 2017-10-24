@@ -21,11 +21,20 @@ namespace AvaTax_Connect
         [Option(shortName: 'e', DefaultValue = "https://sandbox-rest.avatax.com", Required = false, HelpText = "URL of the AvaTax environment to call.")]
         public string Environment { get; set; }
 
-        [Option(shortName: 't', DefaultValue = DocumentType.SalesOrder, Required = false, HelpText = "Type of document to create.")]
+        [Option(shortName: 'y', DefaultValue = DocumentType.SalesOrder, Required = false, HelpText = "Type of document to create.")]
         public DocumentType DocType { get; set; }
 
         [Option(shortName: 'l', DefaultValue = 1, Required = false, HelpText = "Number of lines to include in each tax transaction.")]
         public int Lines { get; set; }
+
+        [Option(shortName: 'x', DefaultValue = false, Required = false, HelpText = "Log only exceptional delays")]
+        public bool LogExceptionalDelays { get; set; }
+
+        [Option(shortName: 's', DefaultValue = 0, Required = false, HelpText = "Milliseconds to sleep between calls")]
+        public int SleepBetweenCalls { get; set; }
+
+        [Option(shortName: 't', DefaultValue = 1, Required = false, HelpText = "Number of threads to create")]
+        public int Threads { get; set; }
 
         /// <summary>
         /// Returns true if the options are valid
