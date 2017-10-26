@@ -1,7 +1,11 @@
 ﻿using Avalara.AvaTax.RestClient;
 using CommandLine;
 using CommandLine.Text;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AvaTax_Connect
 {
@@ -9,58 +13,102 @@ namespace AvaTax_Connect
     {
         static void Main(string[] args)
         {
+            MainAsync(args).Wait();
+        }
+
+        public static async Task MainAsync(string[] args)
+        {
             // Parse options and show helptext if insufficient
-            Options o = new Options();
-            Parser.Default.ParseArguments(args, o);
-            if (!o.IsValid()) {
-                var help = HelpText.AutoBuild(o);
+            g_Options = new Options();
+            Parser.Default.ParseArguments(args, g_Options);
+            if (!g_Options.IsValid()) {
+                var help = HelpText.AutoBuild(g_Options);
                 Console.WriteLine(help.ToString());
                 return;
             }
 
             // Parse server URI
-            if (String.IsNullOrEmpty(o.Environment) || !o.Environment.StartsWith("http")) {
-                Console.WriteLine($"Invalid URI: {o.Environment}");
+            if (String.IsNullOrEmpty(g_Options.Environment) || !g_Options.Environment.StartsWith("http")) {
+                Console.WriteLine($"Invalid URI: {g_Options.Environment}");
                 return;
             }
 
             // Set up AvaTax
-            var client = new AvaTaxClient("AvaTax-Connect", "1.0", Environment.MachineName, new Uri(o.Environment))
-                .WithSecurity(o.Username, o.Password);
+            g_Client = new AvaTaxClient("AvaTax-Connect", "1.0", Environment.MachineName, new Uri(g_Options.Environment))
+                .WithSecurity(g_Options.Username, g_Options.Password);
 
             // Print out information about our configuration
             Console.WriteLine($"AvaTax-Connect Performance Testing Tool");
             Console.WriteLine($"=======================================");
             Console.WriteLine($"          SDK: {AvaTaxClient.API_VERSION}");
-            Console.WriteLine($"  Environment: {o.Environment}");
-            Console.WriteLine($"         User: {o.Username}");
-            Console.WriteLine($"    Tax Lines: {o.Lines}");
-            Console.WriteLine($"         Type: {o.DocType}");
+            Console.WriteLine($"  Environment: {g_Options.Environment}");
+            Console.WriteLine($"         User: {g_Options.Username}");
+            Console.WriteLine($"    Tax Lines: {g_Options.Lines}");
+            Console.WriteLine($"         Type: {g_Options.DocType}");
+            Console.WriteLine($"      Threads: {g_Options.Threads}");
             Console.WriteLine();
-            Console.WriteLine("    Call    Server         Network        Client         Total");
+            Console.WriteLine("  Call   Server   DB       Svc      Net      Client    Total");
 
             // Use transaction builder
-            var tb = new TransactionBuilder(client, "DEFAULT", o.DocType, "ABC")
-                .WithAddress(TransactionAddressType.SingleLocation, "123 Main Street", null, null, "Irvine", "CA", "92615", "US");
+            var tb = new TransactionBuilder(g_Client, "DEFAULT", g_Options.DocType, "ABC");
 
             // Add lines
-            for (int i = 0; i < o.Lines; i++) {
-                tb.WithLine(100.0m);
+            for (int i = 0; i < g_Options.Lines; i++) {
+                tb.WithLine(100.0m)
+                    .WithLineAddress(TransactionAddressType.PointOfOrderAcceptance, "123 Main Street", null, null, "Irvine", "CA", "92615", "US")
+                    .WithLineAddress(TransactionAddressType.PointOfOrderOrigin, "123 Main Street", null, null, "Irvine", "CA", "92615", "US")
+                    .WithLineAddress(TransactionAddressType.ShipFrom, "123 Main Street", null, null, "Irvine", "CA", "92615", "US")
+                    .WithLineAddress(TransactionAddressType.ShipTo, "123 Main Street", null, null, "Irvine", "CA", "92615", "US");
             }
-            var ctm = tb.GetCreateTransactionModel();
+            g_Model = tb.GetCreateTransactionModel();
 
             // Discard the first call?
-            if (o.DiscardFirstCall.HasValue && o.DiscardFirstCall.Value) {
-                var t = client.CreateTransaction(null, ctm);
+            if (g_Options.DiscardFirstCall.HasValue && g_Options.DiscardFirstCall.Value) {
+                var t = g_Client.CreateTransaction(null, g_Model);
             }
 
             // Connect to AvaTax and print debug information
-            int count = 0;
-            CallDuration total = new CallDuration();
-            long totalms = 0;
+            g_TotalDuration = new CallDuration();
+            g_TotalMs = 0;
+            List<Task> threads = new List<Task>();
+            for (int i = 0; i < g_Options.Threads; i++) {
+                var task = Task.Run(ConnectThread);
+                threads.Add(task);
+            }
+            await Task.WhenAll(threads);
+
+            // Compute some averages
+            double avg = g_TotalMs * 1.0 / g_Count;
+            double total_overhead = (g_TotalDuration.SetupDuration.TotalMilliseconds + g_TotalDuration.ParseDuration.TotalMilliseconds);
+            double total_transit = g_TotalDuration.TransitDuration.TotalMilliseconds;
+            double total_server = g_TotalDuration.ServerDuration.TotalMilliseconds;
+            double avg_overhead = total_overhead / g_Count;
+            double avg_transit = total_transit / g_Count;
+            double avg_server = total_server / g_Count;
+            double pct_overhead = total_overhead / g_TotalMs;
+            double pct_transit = total_transit / g_TotalMs;
+            double pct_server = total_server / g_TotalMs;
+
+            // Print out the totals
+            Console.WriteLine();
+            Console.WriteLine($"Finished {g_Count} calls in {g_TotalMs} milliseconds.");
+            Console.WriteLine($"    Average: {avg.ToString("0.00")}ms; {avg_overhead.ToString("0.00")}ms overhead, {avg_transit.ToString("0.00")}ms transit, {avg_server.ToString("0.00")}ms server.");
+            Console.WriteLine($"    Percentage: {pct_overhead.ToString("P")} overhead, {pct_transit.ToString("P")} transit, {pct_server.ToString("P")} server.");
+            Console.WriteLine($"    Total: {total_overhead} overhead, {total_transit} transit, {total_server} server.");
+        }
+
+        public static int g_Count = 0;
+        public static AvaTaxClient g_Client = null;
+        public static Options g_Options = null;
+        public static CreateTransactionModel g_Model = null;
+        public static long g_TotalMs = 0;
+        public static CallDuration g_TotalDuration = null;
+
+        private static async Task ConnectThread()
+        {
             while (!Console.KeyAvailable) {
-                count++;
-                if (o.Calls.HasValue && count > o.Calls.Value) {
+                g_Count++;
+                if (g_Options.Calls.HasValue && g_Count > g_Options.Calls.Value) {
                     Console.WriteLine("Done.");
                     return;
                 }
@@ -68,37 +116,38 @@ namespace AvaTax_Connect
                 // Make one tax transaction
                 try {
                     DateTime start = DateTime.UtcNow;
-                    var t = client.CreateTransaction(null, ctm);
+                    var t = await g_Client.CreateTransactionAsync(null, g_Model);
                     TimeSpan ts = DateTime.UtcNow - start;
-                    total.Combine(client.LastCallTime);
-                    totalms += ts.Milliseconds;
+                    g_TotalDuration.Combine(g_Client.LastCallTime);
+                    g_TotalMs += (long)ts.TotalMilliseconds;
 
                     // Write some information
-                    var cd = client.LastCallTime;
-                    Console.WriteLine($"    {count.ToString("0000")}    {cd.ServerDuration.TotalMilliseconds.ToString("0000.0000")}ms    {cd.TransitDuration.TotalMilliseconds.ToString("0000.0000")}ms    {(cd.SetupDuration.TotalMilliseconds + cd.ParseDuration.TotalMilliseconds).ToString("0000.0000")}ms    {ts.TotalMilliseconds.ToString("0000.0000")}ms");
+                    var cd = g_Client.LastCallTime;
+
+                    // Check if user wants us to log everything, or only exceptional delays
+                    if ((!g_Options.LogExceptionalDelays) || (ts.TotalMilliseconds > 1000)) {
+                        Console.WriteLine($"  {g_Count.ToString("0000")}   {cd.ServerDuration.TotalMilliseconds.ToString("0000")}ms   {cd.DataDuration.TotalMilliseconds.ToString("0000")}ms   {cd.ServiceDuration.TotalMilliseconds.ToString("0000")}ms   {cd.TransitDuration.TotalMilliseconds.ToString("0000")}ms   {(cd.SetupDuration.TotalMilliseconds + cd.ParseDuration.TotalMilliseconds).ToString("0000")}ms    {ts.TotalMilliseconds.ToString("0000")}ms");
+                        //Console.WriteLine($"  {g_Count.ToString("0000")}   {cd.ServerDuration.TotalMilliseconds.ToString("0000")}----ms   ----ms   ----ms   {cd.TransitDuration.TotalMilliseconds.ToString("0000")}ms   {(cd.SetupDuration.TotalMilliseconds + cd.ParseDuration.TotalMilliseconds).ToString("0000")}ms    {ts.TotalMilliseconds.ToString("0000")}ms");
+                    }
+
+                // Did AvaTax report an error?
+                } catch (AvaTaxError err) {
+                    Console.WriteLine($"  {g_Count.ToString("0000")}    [ERROR {err.error.error.code}] {err.error.error.message}");
+                    foreach (var detail in err.error.error.details) {
+                        Console.WriteLine($"Help: {detail.helpLink}");
+                    }
+
+                    // Always log exceptions
                 } catch (Exception ex) {
-                    Console.WriteLine($"    {count.ToString("0000")}    FAILED: {ex.Message}");
+                    Console.WriteLine($"  {g_Count.ToString("0000")}    EXCEPTION: {ex.Message}");
+                    Console.WriteLine(ex.ToString());
+                }
+
+                // Sleep in between calls, if desired
+                if (g_Options.SleepBetweenCalls != 0) {
+                    await Task.Delay(g_Options.SleepBetweenCalls);
                 }
             }
-
-            // Compute some averages
-            double avg = totalms * 1.0 / count;
-            double total_overhead = (total.SetupDuration.TotalMilliseconds + total.ParseDuration.TotalMilliseconds);
-            double total_transit = total.TransitDuration.TotalMilliseconds;
-            double total_server = total.ServerDuration.TotalMilliseconds;
-            double avg_overhead = total_overhead / count;
-            double avg_transit = total_transit / count;
-            double avg_server = total_server / count;
-            double pct_overhead = total_overhead / totalms;
-            double pct_transit = total_transit / totalms;
-            double pct_server = total_server / totalms;
-
-            // Print out the totals
-            Console.WriteLine();
-            Console.WriteLine($"Finished {count} calls in {totalms} milliseconds.");
-            Console.WriteLine($"    Average: {avg.ToString("0.00")}ms; {avg_overhead.ToString("0.00")}ms overhead, {avg_transit.ToString("0.00")}ms transit, {avg_server.ToString("0.00")}ms server.");
-            Console.WriteLine($"    Percentage: {pct_overhead.ToString("P")} overhead, {pct_transit.ToString("P")} transit, {pct_server.ToString("P")} server.");
-            Console.WriteLine($"    Total: {total_overhead} overhead, {total_transit} transit, {total_server} server.");
-         }
+        }
     }
 }
