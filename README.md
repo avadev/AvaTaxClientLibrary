@@ -16,7 +16,6 @@ Avalara maintains and publishes SDKs for our current REST v2 API for the followi
 | JavaScript | [![npm](https://img.shields.io/npm/v/avatax.svg?style=plastic)](https://www.npmjs.com/package/avatax) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-JS-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-JS-SDK) | [AvaTax-REST-V2-JS-SDK](https://github.com/avadev/AvaTax-REST-V2-JS-SDK) |
 | PHP | [![Packagist](https://img.shields.io/packagist/v/avalara/avataxclient.svg?style=plastic)](https://packagist.org/packages/avalara/avataxclient) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-PHP-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-PHP-SDK) | [AvaTax-REST-V2-PHP-SDK](https://github.com/avadev/AvaTax-REST-V2-PHP-SDK) |
 | Ruby | [![Ruby Gem](https://img.shields.io/gem/v/avatax.svg?style=plastic)](https://rubygems.org/gems/avatax) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-Ruby-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-Ruby-SDK) | [AvaTax-REST-V2-Ruby-SDK](https://github.com/avadev/AvaTax-REST-V2-Ruby-SDK) |
-| IBMi RPG | [version 1.0 installer](https://github.com/avadev/AvaTax-REST-V2-RPGLE-SDK/raw/master/AvaTax%20REST%20V2%20SDK%20for%20IBM%20i_1.0.0.pdf) | | [AvaTax-REST-V2-RPGLE-SDK](https://github.com/avadev/AvaTax-REST-V2-RPGLE-SDK) |
 
 # SOAP v1 SDK Library Status
 
@@ -30,7 +29,6 @@ The AvaTax SOAP SDK exists for backward compatibility with older software.  User
 | PHP | n/a | [AvaTax-Calc-REST-PHP](https://github.com/avadev/AvaTax-Calc-REST-PHP) |
 | PHP | n/a | [AvaTax-SOAP-PHP-SDK](https://github.com/avadev/AvaTax-SOAP-PHP-SDK) |
 | Ruby | n/a | [AvaTax-Calc-REST-Ruby](https://github.com/avadev/AvaTax-Calc-REST-Ruby) |
-| IBMi RPG | n/a | [AvaTax-Calc-SOAP-IBMi](https://github.com/avadev/AvaTax-Calc-SOAP-IBMi) |
 | Salesforce Apex | n/a | [AvaTax-SOAP-SF-SDK](https://github.com/avadev/AvaTax-SOAP-SF-SDK) |
 | CURL | n/a | [AvaTax-Calc-REST-cURL](https://github.com/avadev/AvaTax-Calc-REST-cURL) |
 | JavaScript | n/a | [AvaTax-Calc-REST-JavaScript](https://github.com/avadev/AvaTax-Calc-REST-JavaScript) |
