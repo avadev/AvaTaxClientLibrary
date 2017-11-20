@@ -12,8 +12,8 @@ namespace AvaTax_Connect
         [Option(shortName: 'p', Required = true, HelpText = "Password for AvaTax.")]
         public string Password { get; set; }
 
-        [Option(shortName: 'c', Required = false, DefaultValue = null, HelpText = "Number of calls to make to AvaTax.  If null, will continue until cancelled.")]
-        public int? Calls { get; set; }
+        [Option(shortName: 'c', DefaultValue = "DEFAULT", Required = true, HelpText = "CompanyCode to use when contacting AvaTax.  If not specified, uses 'DEFAULT'.")]
+        public string CompanyCode { get; set; }
 
         [Option(shortName: 'd', Required = false, DefaultValue = true, HelpText = "Discard first API call.  The first API call includes lots of overhead.")]
         public bool? DiscardFirstCall { get; set; }
@@ -35,6 +35,9 @@ namespace AvaTax_Connect
 
         [Option(shortName: 't', DefaultValue = 1, Required = false, HelpText = "Number of threads to create")]
         public int Threads { get; set; }
+
+        [Option(Required = false, HelpText = "Number of API calls to execute before finishing.  Default is forever.")]
+        public int? Calls { get; set; }
 
         /// <summary>
         /// Returns true if the options are valid
