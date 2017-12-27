@@ -16,6 +16,7 @@ Avalara maintains and publishes SDKs for our current REST v2 API for the followi
 | JavaScript | [![npm](https://img.shields.io/npm/v/avatax.svg?style=plastic)](https://www.npmjs.com/package/avatax) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-JS-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-JS-SDK) | [AvaTax-REST-V2-JS-SDK](https://github.com/avadev/AvaTax-REST-V2-JS-SDK) |
 | PHP | [![Packagist](https://img.shields.io/packagist/v/avalara/avataxclient.svg?style=plastic)](https://packagist.org/packages/avalara/avataxclient) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-PHP-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-PHP-SDK) | [AvaTax-REST-V2-PHP-SDK](https://github.com/avadev/AvaTax-REST-V2-PHP-SDK) |
 | Ruby | [![Ruby Gem](https://img.shields.io/gem/v/avatax.svg?style=plastic)](https://rubygems.org/gems/avatax) | [![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-Ruby-SDK.svg?branch=master&style=plastic)](https://travis-ci.org/avadev/AvaTax-REST-V2-Ruby-SDK) | [AvaTax-REST-V2-Ruby-SDK](https://github.com/avadev/AvaTax-REST-V2-Ruby-SDK) |
+| Python | In Progress | In Progress | [AvaTax-REST-V2-Python-SDK](https://github.com/avadev/AvaTax-REST-V2-Python-SDK) |
 
 # SOAP v1 SDK Library Status
 
