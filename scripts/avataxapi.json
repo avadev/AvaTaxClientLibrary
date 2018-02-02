@@ -6,17 +6,22 @@
             "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-DotNet-SDK",
             "templates": [
                 {
-                    "file": "templates\\csharp_api_class.txt",
+                    "file": "templates\\csharp_api_class.cs",
                     "type": "singleFile",
                     "output": "src\\AvaTaxApi.cs"
                 },
                 {
-                    "file": "templates\\csharp_model_class.txt",
+                    "file": "templates\\csharp_compat_class.cs",
+                    "type": "singleFile",
+                    "output": "src\\AvaTaxCompatibleClient.cs"
+                },
+                {
+                    "file": "templates\\csharp_model_class.cs",
                     "type": "uniqueModels",
                     "output": "src\\models\\{SchemaName}.cs"
                 },
                 {
-                    "file": "templates\\csharp_enum_class.txt",
+                    "file": "templates\\csharp_enum_class.cs",
                     "type": "enums",
                     "output": "src\\enums\\{EnumDataType}.cs"
                 }
@@ -111,7 +116,7 @@
             "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-JS-SDK",
             "templates": [
                 {
-                    "file": "templates\\javascript_api_class.txt",
+                    "file": "templates\\javascript_api_class.js",
                     "type": "singleFile",
                     "output": "lib\\AvaTaxClient.js"
                 }
