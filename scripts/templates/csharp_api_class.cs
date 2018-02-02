@@ -22,13 +22,13 @@ using System.Threading.Tasks;
 
 namespace Avalara.AvaTax.RestClient
 {
-    public partial class AvaTaxAsyncClient : AvaTaxClient
+    /// <summary>
+    /// This client uses the `async` features of DotNet and structured error handling.
+    /// All API calls are fully asynchronous, and all methods throw AvaTaxError exceptions when the server
+    /// responds with a 400 or 500 error code.
+    /// </summary>
+    public class AvaTaxAsyncClient : AvaTaxClient
     {
-        /// <summary>
-        /// Returns the version number of the API used to generate this class
-        /// </summary>
-        public static string API_VERSION { get { return "@SwaggerModel.ApiVersion"; } }
-
 #region Methods
 @foreach(var m in SwaggerModel.Methods) {<text>
         /// <summary>

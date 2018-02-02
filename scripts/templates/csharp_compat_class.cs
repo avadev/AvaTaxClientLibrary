@@ -32,13 +32,8 @@ namespace Avalara.AvaTax.RestClient
     /// 
     /// This class may be useful for programmers who prefer to use synchronous code or to not use exceptions.
     /// </summary>
-    public partial class AvaTaxCompatibleClient : AvaTaxClient
+    public class AvaTaxCompatibleClient : AvaTaxClient
     {
-        /// <summary>
-        /// Returns the version number of the API used to generate this class
-        /// </summary>
-        public static string API_VERSION { get { return "@SwaggerModel.ApiVersion"; } }
-
 #region Methods
 @foreach(var m in SwaggerModel.Methods) {<text>
         /// <summary>

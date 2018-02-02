@@ -34,6 +34,12 @@
                     "replacement": "[assembly: AssemblyVersion(\"{ApiVersionPeriodsOnly}\")]"
                 },
                 {
+                    "file": "AvaTaxClient.cs",
+                    "encoding": "UTF8",
+                    "regex": "public static string API_VERSION { get { return \".*\"; } }",
+                    "replacement": "public static string API_VERSION { get { return \"{ApiVersionPeriodsOnly}\"; } }"
+                },
+                {
                     "file": "GlobalAssemblyInfo.cs",
                     "encoding": "UTF8",
                     "regex": "\\[assembly: AssemblyFileVersion\\(\".*\"\\)\\]",
