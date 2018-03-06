@@ -12,3 +12,4 @@ scripts/generated/
 scripts/Avalara.AvaTax.RestClient.json
 *.nupkg
 *.userprefs
+*.DS_Store
