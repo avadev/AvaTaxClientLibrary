@@ -310,6 +310,47 @@ namespace ClientApiGenerator
             return mapped.Ruby;
         }
 
+        public string PythonTypeName(string typename)
+        {
+            // Is this an enum?  If so, convert it to a string - we'll add a comment later
+            if (IsEnumType(typename) || IsModelType(typename))
+            {
+                return typename.Replace("?", "");
+            }
+
+            if (typename.StartsWith("FetchResult<"))
+            {
+                return "FetchResult";
+            }
+
+            // Handle arrays
+            if (typename.StartsWith("List<"))
+            {
+                string innertype = typename.Substring(5, typename.Length - 6);
+                return PythonTypeName(innertype);
+            }
+
+            // Blob arrays are considered strings in Java
+            if (typename == "Byte[]")
+            {
+                return "String";
+            }
+
+            // FileResults get returned
+            if (typename == "FileResult")
+            {
+                return "String";
+            }
+
+            // Map the type as best as possible
+            var mapped = GetTypeMap(typename);
+            if (mapped == null)
+            {
+                return "Python Dictionary";
+            }
+            return mapped.Python;
+        }
+
         private TypeMap GetTypeMap(string typename)
         {
             var fixedTypeName = typename;
@@ -483,6 +524,24 @@ namespace ClientApiGenerator
             foreach (var line in rubycomments) {
                 var trimmed = line.TrimEnd();
                 if (!String.IsNullOrEmpty(trimmed)) {
+                    sb.Append(trimmed);
+                    sb.Append("\r\n");
+                }
+            }
+            if (sb.Length > 0) sb.Length -= 2;
+            return sb.ToString();
+        }
+
+        public string PythonComment(string c, int indent)
+        {
+            StringBuilder sb = new StringBuilder();
+            var allcomments = CommentLine(c, "", indent);
+            var pycomments = allcomments.Split(new string[] { "\n" }, 999, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in pycomments)
+            {
+                var trimmed = line.TrimEnd();
+                if (!String.IsNullOrEmpty(trimmed))
+                {
                     sb.Append(trimmed);
                     sb.Append("\r\n");
                 }
