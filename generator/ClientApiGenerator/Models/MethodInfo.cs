@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace ClientApiGenerator.Models
 {
@@ -18,5 +19,14 @@ namespace ClientApiGenerator.Models
         public string HttpVerb { get; set; }
         public ParameterInfo BodyParam { get; set; }
         public List<ParameterInfo> Params { get; set; }
+
+        /// <summary>
+        /// remove content within curly braces in string, for python use only.
+        /// </summary>
+        public string parseURI(string sentence)
+        {
+            Regex rgx = new Regex("\\{.+?\\}");
+            return rgx.Replace(sentence, "{}");
+        }
     }
 }
