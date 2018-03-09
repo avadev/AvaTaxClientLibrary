@@ -13,6 +13,7 @@ class Mixin:
     string callwithquerystring = "";
     string payload = "None";
     paramlist.Append("self, ");
+    paramformat.Append("self.base_url, ");
     foreach (var p in m.Params) {
         string temp = p.CleanParamName;
         if (p.CleanParamName == "X-Avalara-Client") continue;
@@ -20,8 +21,10 @@ class Mixin:
             if (p.CleanParamName == "id") temp = "id_";
             paramlist.Append(temp);
             paramlist.Append(", ");
-            paramformat.Append(temp);
-            paramformat.Append(", ");
+            if (temp != "model"){
+                paramformat.Append(temp);
+                paramformat.Append(", ");
+            }
         }
         paramcomments.Add("      :param " + temp + " [" + PythonTypeName(p.TypeName) + "] " + PhpTypeComment(SwaggerModel, p) + "\r\n");
         if (p.ParameterLocation == ParameterLocationType.QueryString) {
@@ -52,7 +55,7 @@ class Mixin:
       :return @PythonTypeName(m.ResponseTypeName)
     """
     def @{Write(SnakeCase(m.Name) + "(" + paramlist.ToString() + "):");}
-        return requests.@{Write(m.HttpVerb.ToLower());}('{}@newuri'.format(self.base_url, @paramformat),
+        return requests.@{Write(m.HttpVerb.ToLower());}('{}@newuri'.format(@paramformat.ToString()),
 @{Write("                               auth=self.auth, headers=self.client_header, ");
 if(callwithquerystring.Length > 0 && payload != "None"){
 Write("params=" + callwithquerystring + ", json=" + payload + ")");
