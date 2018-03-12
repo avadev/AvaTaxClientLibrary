@@ -68,11 +68,11 @@ namespace Avalara.AvaTax.RestClient
     }
     
     if (m.ResponseTypeName == "String") {
-        WriteLine("            return RestCallString(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return RestCallString(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     } else if (m.ResponseTypeName == "FileResult") {
-        WriteLine("            return RestCallFile(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return RestCallFile(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     } else {
-        WriteLine("            return RestCall<" + m.ResponseTypeName + ">(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return RestCall<" + m.ResponseTypeName + ">(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     }
 
     WriteLine("        }");
@@ -116,9 +116,9 @@ namespace Avalara.AvaTax.RestClient
         }
     }
     if (m.ResponseTypeName == "String") {
-        WriteLine("            return await RestCallStringAsync(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
+        WriteLine("            return await RestCallStringAsync(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
     } else {
-        WriteLine("            return await RestCallAsync<" + m.ResponseTypeName + ">(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
+        WriteLine("            return await RestCallAsync<" + m.ResponseTypeName + ">(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
     }
     WriteLine("        }");
     WriteLine("");
