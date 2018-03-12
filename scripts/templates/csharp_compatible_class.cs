@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 /*
  * AvaTax Software Development Kit for C#
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2017 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * @@author     Ted Spence <ted.spence@@avalara.com>
  * @@author     Zhenya Frolov <zhenya.frolov@@avalara.com>
  * @@author     Greg Hester <greg.hester@@avalara.com>
- * @@copyright  2004-2017 Avalara, Inc.
+ * @@copyright  2004-2018 Avalara, Inc.
  * @@license    https://www.apache.org/licenses/LICENSE-2.0
  * @@version    @SwaggerModel.ApiVersion
  * @@link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
@@ -24,16 +24,13 @@ using System.Threading.Tasks;
 
 namespace Avalara.AvaTax.RestClient
 {
-    /// <summary>
-    /// The AvaTax compatible client always returns a predictable response object, the "AvaTaxCallResult".
-    /// The result object contains information about whether the call resulted in an error, and if so, what
-    /// data was in its response.  The caller is expected to use the object and determine how to handle
-    /// errors.
-    /// 
-    /// This class may be useful for programmers who prefer to use synchronous code or to not use exceptions.
-    /// </summary>
-    public class AvaTaxCompatibleClient : AvaTaxClient
+    public partial class AvaTaxCompatibleClient
     {
+        /// <summary>
+        /// Returns the version number of the API used to generate this class
+        /// </summary>
+        public static string API_VERSION { get { return "@SwaggerModel.ApiVersion"; } }
+
 #region Methods
 @foreach(var m in SwaggerModel.Methods) {<text>
         /// <summary>
@@ -70,7 +67,8 @@ namespace Avalara.AvaTax.RestClient
         }
     }
     
-	WriteLine("            return RestCall(\"" + FirstCharUpper(m.HttpVerb) + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+	WriteLine("            return _client.RestCall(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+
     WriteLine("        }");
     WriteLine("");
 }

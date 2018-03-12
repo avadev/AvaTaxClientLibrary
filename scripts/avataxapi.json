@@ -11,9 +11,9 @@
                     "output": "src\\AvaTaxApi.cs"
                 },
                 {
-                    "file": "templates\\csharp_compat_class.cs",
+                    "file": "templates\\csharp_compatible_class.cs",
                     "type": "singleFile",
-                    "output": "src\\AvaTaxCompatibleClient.cs"
+                    "output": "src\\AvaTaxCompatibleApi.cs"
                 },
                 {
                     "file": "templates\\csharp_model_class.cs",
