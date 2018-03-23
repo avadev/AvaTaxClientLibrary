@@ -143,6 +143,25 @@
                     "replacement": "VERSION = '{ApiVersionThreeSegmentsOnly}'"
                 }
             ]
+        },
+        {
+            "name": "Python",
+            "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-Python-SDK",
+            "templates": [
+                {
+                    "file": "templates\\python_methods_class.py",
+                    "type": "singleFile",
+                    "output": "src\\client_methods.py"
+                }
+            ],
+            "fixups": [
+                {
+                    "file": "setup.py",
+                    "encoding": "UTF8",
+                    "regex": "version='.*'",
+                    "replacement": "version='{ApiVersionThreeSegmentsOnly}'"
+                }
+            ]
         }
     ]
 }
