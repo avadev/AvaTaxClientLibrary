@@ -1,0 +1,21 @@
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2018 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ */
+
+/// @CSharpComment(EnumModel.Comment, 4)
+
+global enum @EnumModel.EnumDataType
+{
+
+	@foreach(var v in EnumModel.Items){
+		WriteLine("    /// " + CSharpComment(v.Comment, 8));
+		WriteLine("    {0},", v.Value);	
+		WriteLine("");
+	}
+}
