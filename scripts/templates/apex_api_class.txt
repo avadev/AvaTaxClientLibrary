@@ -14,17 +14,16 @@
 
 global class AvaTaxClient
 {
-        /// Returns the version number of the API used to generate this class
+        // Returns the version number of the API used to generate this class
         global static string API_VERSION { get { return "@SwaggerModel.ApiVersion"; } }
 
 @foreach(var m in SwaggerModel.Methods) {<text>
-        /// @CSharpComment(m.Summary, 8)
-        ///
-        /// @CSharpComment(m.Description, 8)
-        /// </text>
+        // @CSharpComment(m.Summary, 8)
+        //   @CSharpComment(m.Description, 8)
+        // </text>
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
-        WriteLine("        /// <param name=\"" + p.CleanParamName + "\">" + CSharpComment(p.Comment, 8) + "</param>");
+        WriteLine("        // <param name=\"" + p.CleanParamName + "\">" + CSharpComment(p.Comment, 8) + "</param>");
     }
 
     Write("        public " + m.ResponseTypeName + " " + m.Name + "(");
@@ -32,7 +31,7 @@ global class AvaTaxClient
     bool any = false;
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
-        Write(p.TypeName + " " + p.CleanParamName + ", ");
+        Write(p.ApexTypeName + " " + p.CleanParamName + ", ");
         any = true;
     }
     if (any) {
@@ -41,7 +40,7 @@ global class AvaTaxClient
 
     WriteLine(")");
     WriteLine("        {");
-    WriteLine("            var path = new AvaTaxPath(\"" + m.URI + "\");");
+    WriteLine("            AvaTaxPath path = new AvaTaxPath(\"" + m.URI + "\");");
     foreach (var p in m.Params) {
         if (p.ParameterLocation == ParameterLocationType.UriPath) {
             WriteLine("            path.ApplyField(\"{0}\", {1});", p.ParamName, p.CleanParamName);
@@ -50,14 +49,35 @@ global class AvaTaxClient
         }
     }
     
-    if (m.ResponseTypeName == "String") {
-        WriteLine("            return RestCallString(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
-    } else if (m.ResponseTypeName == "FileResult") {
-        WriteLine("            return RestCallFile(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+    if (m.ResponseType == "array"){
+        WriteLine("            httpResponse res = restCallForList(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            " + m.ResponseTypeName + " retVal = new " + m.ResponseTypeName + "()");
+        WriteLine("            if(res.getStatusCode() == 200 || res.getStatusCode() == 201)");
+        WriteLine("            {");
+        WriteLine("                retVal.result = restCallForList(" + m.ResponseTypeName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName + ".class);");
+        WriteLine("            }");
+        WriteLine("            else");
+        WriteLine("            {");
+        WriteLine("                retVal.error = ((ErrorResult)System.JSON.deserialize(res.getBody(), ErrorResult.class)).error;");
+        WriteLine("            }");
+        WriteLine("            return retVal");
+    } else if(m.ResponseTypeName == "FileResult"){
+        WriteLine("            responseFile = (\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            if(responseFile.getStatusCode() == 200 || responseFile.getStatusCode() == 201)");
+        WriteLine("            {");
+        WriteLine("                responseFile.result = restCallForFile(" + m.ResponseTypeName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName + ".class);");
+        WriteLine("            }");
+        WriteLine("            return responseFile");
     } else {
-        WriteLine("            return RestCall<" + m.ResponseTypeName + ">(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            " + m.ResponseTypeName + " responseModel = null;");
+        WriteLine("            responseModel = restCall(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", " + m.ResponseTypeName +".class.getName());");
+        WriteLine("            if(responseModel.getStatusCode() == 200 || responseModel.getStatusCode() == 201)");
+        WriteLine("            {");
+        WriteLine("                responseModel.result = (" + m.ResponseTypeName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName + ".class);");
+        WriteLine("            }");
+        WriteLine("            return responseModel");
     }
-
     WriteLine("        }");
     WriteLine("");
+}
 }
