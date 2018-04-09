@@ -33,9 +33,10 @@ namespace ClientApiGenerator.Models
         {
             get
             {
-                if(TypeName == "Int32" || TypeName == "Int32?")
+                string temp = TypeName;
+                if(temp.Contains("Int"))
                 {
-                    return TypeName.Replace("Int32", "Integer").Replace("?", "");
+                    return TypeName.Replace(temp, "Integer").Replace("?", "");
                 } else
                 {
                     return TypeName.Replace("?", "");
