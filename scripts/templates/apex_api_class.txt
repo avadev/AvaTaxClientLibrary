@@ -16,14 +16,17 @@ global class AvaTaxClient
 {
         // Returns the version number of the API used to generate this class
         global static string API_VERSION { get { return "@SwaggerModel.ApiVersion"; } }
+        private string credentials;
+        private string clientHeader;
+        private String envUri;
 
 @foreach(var m in SwaggerModel.Methods) {<text>
-        // @CSharpComment(m.Summary, 8)
-        //   @CSharpComment(m.Description, 8)
-        // </text>
+        /// @CSharpComment(m.Summary, 8)
+        /// @CSharpComment(m.Description, 8)
+        /// </text>
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
-        WriteLine("        // <param name=\"" + p.CleanParamName + "\">" + CSharpComment(p.Comment, 8) + "</param>");
+        WriteLine("        /// <param name=\"" + p.CleanParamName + "\">" + CSharpComment(p.Comment, 8) + "</param>");
     }
 
     Write("        public " + m.ResponseTypeName + " " + m.Name + "(");
@@ -51,7 +54,7 @@ global class AvaTaxClient
     
     if (m.ResponseType == "array"){
         WriteLine("            httpResponse res = restCallForList(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
-        WriteLine("            " + m.ResponseTypeName + " retVal = new " + m.ResponseTypeName + "()");
+        WriteLine("            " + m.ResponseTypeName + " retVal = new " + m.ResponseTypeName + "();");
         WriteLine("            if(res.getStatusCode() == 200 || res.getStatusCode() == 201)");
         WriteLine("            {");
         WriteLine("                retVal.result = restCallForList(" + m.ResponseTypeName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName + ".class);");
@@ -80,4 +83,129 @@ global class AvaTaxClient
     WriteLine("        }");
     WriteLine("");
 }
+    global AvaTaxClient(string appName, string appVersion, string machineName, AvaTaxEnvironment environment)
+    {
+        WithClientIdentifier(appName, appVersion, machineName);
+
+        if(environment==AvaTaxEnvironment.Sandbox) 
+        {
+            envUri = Constants.AVATAX_SANDBOX_URL;
+        } else if(environment==AvaTaxEnvironment.Production)
+        {
+            envUri = Constants.AVATAX_PRODUCTION_URL;
+        }         
+    }
+        
+    global AvaTaxClient WithClientIdentifier(string appName, string appVersion, string machineName)
+    {
+        String templateString = '{0}; {1}; {2}; {3}; {4}';
+        String[] arguments = new String[]{appName, appVersion, 'ApexRestClient', API_VERSION, machineName};
+        clientHeader = String.Format(templateString,arguments);
+        return this;
+    }
+    
+    global AvaTaxClient(string appName, string appVersion, string machineName, String customEnvironment)
+    {
+        WithClientIdentifier(appName, appVersion, machineName);
+        envUri = customEnvironment;
+    }
+    
+    global AvaTaxClient WithSecurity(string headerString)
+    {
+        credentials = headerString;
+        return this;
+    }
+
+    global AvaTaxClient WithSecurity(string username, string password)
+    {
+        String templateString = '{0}:{1}';
+        String[] arguments = new String[]{username, password};
+        String combined = String.Format(templateString,arguments);
+        
+        
+        Blob Integers = Blob.valueOf(combined);
+        String base64 = EncodingUtil.base64Encode(Integers);
+        return WithSecurity('Basic ' + base64);
+    }
+    
+    global AvaTaxClient WithSecurity(integer accountId, string licenseKey)
+    {
+        String templateString = '{0}:{1}';
+        String[] arguments = new String[]{String.valueOf(accountId), licenseKey};
+        String combined = String.Format(templateString,arguments);
+        Blob Integers = Blob.valueOf(combined);
+        String base64 = EncodingUtil.base64Encode(Integers);
+        return WithSecurity('Basic ' + base64);
+    }
+    
+    global AvaTaxClient WithBearerToken(string bearerToken)
+    {
+        WithSecurity('Bearer' + bearerToken);
+        return this;
+    }
+    global Object restCall(String method, String relativePath, Object model,String type)
+    {
+        Http http = new Http();
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setEndpoint(envUri+relativePath);
+        HttpRequest.setMethod(method);
+        httpRequest.setHeader('Authorization', credentials);
+        httpRequest.setHeader('X-Avalara-Client', clientHeader);
+        httpRequest.setHeader('Accept', 'application/json');
+        httpRequest.setHeader('Content-Type', 'application/json');
+                
+        string finalRequest = JSON.serialize(model);
+        finalRequest = finalRequest.replace('documentDate', 'date');
+        finalRequest =  finalRequest.replace('commitDocument', 'commit');
+        finalRequest =  finalRequest.replace('commitTransaction', 'commit');
+        finalRequest =  finalRequest.replace('lineNumber', 'number');
+            
+        
+        if (model != null) 
+        {
+            httpRequest.setBody(finalRequest);
+        }
+            
+        HttpResponse httpResponse = http.send(httpRequest);
+        System.Type sType = System.Type.forName(type); 
+        String finalHttpResponse = httpResponse.getBody();
+        finalHttpResponse = finalHttpResponse.replace('AvaTax.Communications.TransactionType', 'TransactionType');
+        finalHttpResponse = finalHttpResponse.replace('AvaTax.Communications.ServiceType', 'ServiceType');
+        finalHttpResponse = finalHttpResponse.replace('@@recordsetCount', 'count');
+        finalHttpResponse = finalHttpResponse.replace('@@nextLink', 'nextLink');
+        finalHttpResponse = finalHttpResponse.replace('@@transactionDate', 'date');
+           
+        Object obj;
+        if (finalHttpResponse != '')
+        {
+            obj = System.JSON.deserialize(finalHttpResponse, sType);
+            ((ErrorResult)obj).statusCode=httpResponse.getStatusCode();
+        }
+            
+        return obj;
+    }
+    
+    global HttpResponse restCallForList(String method, String relativePath, Object model)
+    {
+
+        Http http = new Http();
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setEndpoint(envUri+relativePath);
+        HttpRequest.setMethod(method);
+        httpRequest.setHeader('Authorization', credentials);
+        httpRequest.setHeader('X-Avalara-Client', clientHeader);
+        httpRequest.setHeader('Accept', 'application/json');
+        httpRequest.setHeader('Content-Type', 'application/json');
+        if (model != null) 
+        {
+            httpRequest.setBody(JSON.serialize(model));
+        }
+            
+        HttpResponse httpResponse = http.send(httpRequest);
+        httpResponse.getBody().replace('AvaTax.Communications.TransactionType', 'TransactionType');
+        httpResponse.getBody().replace('AvaTax.Communications.ServiceType', 'ServiceType');
+            
+        return httpResponse;
+    }
+
 }
