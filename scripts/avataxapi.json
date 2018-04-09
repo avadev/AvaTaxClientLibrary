@@ -162,6 +162,37 @@
                     "replacement": "version='{ApiVersionThreeSegmentsOnly}'"
                 }
             ]
+        },
+        {
+            "name": "Apex",
+            "rootFolder": "c:\\git\\develop\\vaTax-REST-V2-Apex-SDK",
+            "templates": [
+                {
+                    "file": "templates\\apex_api_class.txt",
+                    "type": "singleFile",
+                    "output": "src\\classes\\AvaTaxClient.cls"
+                },
+                {
+                    "file": "templates\\apex_model_class.txt",
+                    "type": "uniqueModels",
+                    "output": "src\\classes\\{SchemaName}.cls"
+                },
+                {
+                    "file": "templates\\apex_enum_class.txt",
+                    "type": "enums",
+                    "output": "src\\classes\\{EnumDataType}.cls"
+                },
+                {
+                    "file": "templates\\apex_meta.txt",
+                    "type": "enums",
+                    "output": "src\\classes\\{EnumDataType}.cls-meta.xml"
+                },
+                {
+                    "file": "templates\\apex_meta.txt",
+                    "type": "uniqueModels",
+                    "output": "src\\classes\\{SchemaName}.cls-meta.xml"
+                }
+            ]
         }
     ]
 }
