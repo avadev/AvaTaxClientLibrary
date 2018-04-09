@@ -29,9 +29,21 @@ namespace ClientApiGenerator.Models
         }
         public string Type { get; set; }
         public string TypeName { get; set; }
+        public string ApexTypeName
+        {
+            get
+            {
+                if(TypeName == "Int32" || TypeName == "Int32?")
+                {
+                    return TypeName.Replace("Int32", "Integer");
+                } else
+                {
+                    return TypeName;
+                }
+            }
+        }
         public string Comment { get; set; }
         public ParameterLocationType ParameterLocation { get; set; }
-
         public bool IsArrayType { get; set; }
         public string ArrayElementType { get; set; }
         public bool Required { get; set; }
