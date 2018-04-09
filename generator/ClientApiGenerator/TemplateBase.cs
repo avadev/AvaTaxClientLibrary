@@ -128,6 +128,11 @@ namespace ClientApiGenerator
             return CommentLine(c, "/// ", indent);
         }
 
+        public string ApexComment(string c, int indent)
+        {
+            return CommentLine(c, "// ", indent);
+        }
+
         private string CommentLine(string originalComment, string commentPrefix, int indent)
         {
             if (String.IsNullOrEmpty(originalComment)) return "";
