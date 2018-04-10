@@ -67,7 +67,7 @@ namespace ClientApiGenerator
             new TypeMap() { Csharp = "Decimal?",    Java = "BigDecimal",PHP = "float",      Ruby = "BigDecimal",    Python="decimal",   Apex="Double" },  // nullable fixed precision decimal
             new TypeMap() { Csharp = "Single?",     Java = "Float",     PHP = "float",      Ruby = "Float",         Python="float",     Apex="Double" },       // nullable single precision (32-bit) IEEE floating point
             new TypeMap() { Csharp = "Double?",     Java = "Double",    PHP = "float",      Ruby = "Float",         Python="float",     Apex="Double" },       // nullable double precision (64-bit) IEEE floating point
-            new TypeMap() { Csharp = "Boolean?",    Java = "Boolean",   PHP = "boolean",    Ruby = "boolean",       Python="boolean",   Apex="Boolean" },      // nullable true/false
+            new TypeMap() { Csharp = "Boolean?",    Java = "Boolean",   PHP = "boolean",    Ruby = "Boolean",       Python="boolean",   Apex="Boolean" },      // nullable true/false
             new TypeMap() { Csharp = "Char",        Java = "Character", PHP = "string",     Ruby = "String",        Python="string",    Apex="String" },      // single unicode character
             new TypeMap() { Csharp = "Char?",       Java = "Character", PHP = "string",     Ruby = "String",        Python="string",    Apex="String" },      // single unicode character
             new TypeMap() { Csharp = "String",      Java = "String",    PHP = "string",     Ruby = "String",        Python="string",    Apex="String" },      // string of unicode characters
