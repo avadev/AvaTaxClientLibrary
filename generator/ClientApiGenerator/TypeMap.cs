@@ -54,7 +54,7 @@ namespace ClientApiGenerator
             new TypeMap() { Csharp = "Decimal",     Java = "BigDecimal",PHP = "float",      Ruby = "BigDecimal",    Python="decimal",   Apex="Decimal" },  // fixed precision decimal
             new TypeMap() { Csharp = "Single",      Java = "Float",     PHP = "float",      Ruby = "Float",         Python="float",     Apex="Double" },       // single precision (32-bit) IEEE floating point
             new TypeMap() { Csharp = "Double",      Java = "Double",    PHP = "float",      Ruby = "Float",         Python="float",     Apex="Double" },       // double precision (64-bit) IEEE floating point
-            new TypeMap() { Csharp = "Boolean",     Java = "Boolean",   PHP = "boolean",    Ruby = "Float",         Python="float",     Apex="Double" },       // true/false
+            new TypeMap() { Csharp = "Boolean",     Java = "Boolean",   PHP = "boolean",    Ruby = "Boolean",       Python="boolean",   Apex="Boolean" },       // true/false
             new TypeMap() { Csharp = "SByte?",      Java = "Byte",      PHP = "int",        Ruby = "Integer",       Python="int" ,      Apex="Integer" },     // nullable signed byte
             new TypeMap() { Csharp = "Byte?",       Java = "Byte",      PHP = "int",        Ruby = "Integer",       Python="int",       Apex="Integer" },     // nullable unsigned byte
             new TypeMap() { Csharp = "Int16?",      Java = "Short",     PHP = "int",        Ruby = "Integer",       Python="int",       Apex="Integer" },     // nullable signed 16-bit integer
@@ -67,7 +67,7 @@ namespace ClientApiGenerator
             new TypeMap() { Csharp = "Decimal?",    Java = "BigDecimal",PHP = "float",      Ruby = "BigDecimal",    Python="decimal",   Apex="Double" },  // nullable fixed precision decimal
             new TypeMap() { Csharp = "Single?",     Java = "Float",     PHP = "float",      Ruby = "Float",         Python="float",     Apex="Double" },       // nullable single precision (32-bit) IEEE floating point
             new TypeMap() { Csharp = "Double?",     Java = "Double",    PHP = "float",      Ruby = "Float",         Python="float",     Apex="Double" },       // nullable double precision (64-bit) IEEE floating point
-            new TypeMap() { Csharp = "Boolean?",    Java = "Boolean",   PHP = "boolean",    Ruby = "object",        Python="boolean",   Apex="Boolean" },      // nullable true/false
+            new TypeMap() { Csharp = "Boolean?",    Java = "Boolean",   PHP = "boolean",    Ruby = "boolean",       Python="boolean",   Apex="Boolean" },      // nullable true/false
             new TypeMap() { Csharp = "Char",        Java = "Character", PHP = "string",     Ruby = "String",        Python="string",    Apex="String" },      // single unicode character
             new TypeMap() { Csharp = "Char?",       Java = "Character", PHP = "string",     Ruby = "String",        Python="string",    Apex="String" },      // single unicode character
             new TypeMap() { Csharp = "String",      Java = "String",    PHP = "string",     Ruby = "String",        Python="string",    Apex="String" },      // string of unicode characters
