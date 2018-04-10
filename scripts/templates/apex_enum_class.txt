@@ -14,7 +14,7 @@ global enum @EnumModel.EnumDataType
 {
 
 	@foreach(var v in EnumModel.Items){
-		WriteLine("    /// " + CSharpComment(v.Comment, 8));
+		WriteLine("    // " + ApexComment(v.Comment, 8));
 		WriteLine("    {0},", v.Value);	
 		WriteLine("");
 	}

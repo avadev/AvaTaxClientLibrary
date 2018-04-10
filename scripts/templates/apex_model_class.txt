@@ -20,7 +20,7 @@
 
 	foreach(var p in ClassModel.Properties) {
 		WriteLine("");
-		WriteLine("    /// " + ApexComment(p.Comment, 4));
+		WriteLine("    // " + ApexComment(p.Comment, 4));
 		if(p.CleanParamName.Contains(".")) {
 		  WriteLine("    [JsonProperty(PropertyName = \"" + p.CleanParamName + "\")]");
 		  WriteLine("    global " + p.ApexTypeName + " " + p.StrippedPackageParamName + " { get; set; }");
