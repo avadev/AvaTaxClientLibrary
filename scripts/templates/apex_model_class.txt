@@ -8,7 +8,7 @@
  *
  */
 
-/// @CSharpComment(ClassModel.Comment, 4)
+/* @ApexComment(ClassModel.Comment, 4) */
 
 @if(true) {
 	if(ClassModel.SchemaName.Contains("Model")) {
@@ -20,12 +20,12 @@
 
 	foreach(var p in ClassModel.Properties) {
 		WriteLine("");
-		WriteLine("    /// " + CSharpComment(p.Comment, 4));
+		WriteLine("    /// " + ApexComment(p.Comment, 4));
 		if(p.CleanParamName.Contains(".")) {
 		  WriteLine("    [JsonProperty(PropertyName = \"" + p.CleanParamName + "\")]");
-		  WriteLine("    global " + p.TypeName + " " + p.StrippedPackageParamName + " { get; set; }");
+		  WriteLine("    global " + p.ApexTypeName + " " + p.StrippedPackageParamName + " { get; set; }");
 		} else {
-		  WriteLine("    global " + p.TypeName + " " + p.CleanParamName + " { get; set; }");
+		  WriteLine("    global " + p.ApexTypeName + " " + p.CleanParamName + " { get; set; }");
 		}
 	}
 	WriteLine("}");

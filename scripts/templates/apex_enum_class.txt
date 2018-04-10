@@ -8,7 +8,7 @@
  *
  */
 
-/// @CSharpComment(EnumModel.Comment, 4)
+/* @ApexComment(EnumModel.Comment, 4) */
 
 global enum @EnumModel.EnumDataType
 {

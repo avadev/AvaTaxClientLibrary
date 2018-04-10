@@ -21,12 +21,12 @@ global class AvaTaxClient
         private String envUri;
 
 @foreach(var m in SwaggerModel.Methods) {<text>
-        /// @CSharpComment(m.Summary, 8)
-        /// @CSharpComment(m.Description, 8)
-        /// </text>
+        // @ApexComment(m.Summary, 8)
+        // @ApexComment(m.Description, 8)
+        // </text>
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
-        WriteLine("        /// <param name=\"" + p.CleanParamName + "\">" + CSharpComment(p.Comment, 8) + "</param>");
+        WriteLine("        // <param name=\"" + p.CleanParamName + "\">" + ApexComment(p.Comment, 8) + "</param>");
     }
 
     Write("        public " + m.ResponseTypeName + " " + m.Name + "(");
