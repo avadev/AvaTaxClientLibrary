@@ -26,7 +26,7 @@ global class AvaTaxClient
         // </text>
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
-        WriteLine("        // <param name=\"" + p.CleanParamName + "\">" + ApexComment(p.Comment, 8) + "</param>");
+        WriteLine("        // <param name=\'" + p.CleanParamName + "\'>" + ApexComment(p.Comment, 8) + "</param>");
     }
 
     Write("        public " + m.ResponseTypeName + " " + m.Name + "(");
@@ -43,17 +43,17 @@ global class AvaTaxClient
 
     WriteLine(")");
     WriteLine("        {");
-    WriteLine("            AvaTaxPath path = new AvaTaxPath(\"" + m.URI + "\");");
+    WriteLine("            AvaTaxPath path = new AvaTaxPath(\'" + m.URI + "\');");
     foreach (var p in m.Params) {
         if (p.ParameterLocation == ParameterLocationType.UriPath) {
-            WriteLine("            path.ApplyField(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+            WriteLine("            path.ApplyField(\'{0}\', {1});", p.ParamName, p.CleanParamName);
         } else if (p.ParameterLocation == ParameterLocationType.QueryString) {
-            WriteLine("            path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+            WriteLine("            path.AddQuery(\'{0}\', {1});", p.ParamName, p.CleanParamName);
         }
     }
     
     if (m.ResponseType == "array"){
-        WriteLine("            httpResponse res = restCallForList(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            httpResponse res = restCallForList(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ");");
         WriteLine("            " + m.ResponseTypeName + " retVal = new " + m.ResponseTypeName + "();");
         WriteLine("            if(res.getStatusCode() == 200 || res.getStatusCode() == 201)");
         WriteLine("            {");
@@ -65,15 +65,12 @@ global class AvaTaxClient
         WriteLine("            }");
         WriteLine("            return retVal");
     } else if(m.ResponseTypeName == "FileResult"){
-        WriteLine("            responseFile = (\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
-        WriteLine("            if(responseFile.getStatusCode() == 200 || responseFile.getStatusCode() == 201)");
-        WriteLine("            {");
-        WriteLine("                responseFile.result = restCallForFile(" + m.ResponseTypeName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName + ".class);");
-        WriteLine("            }");
-        WriteLine("            return responseFile");
+        WriteLine("            FileResultModel responseModel = null;");
+        WriteLine("            responseModel = (FileResultModel) restCallForFile(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            return responseModel");
     } else {
         WriteLine("            " + m.ResponseTypeName + " responseModel = null;");
-        WriteLine("            responseModel = restCall(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ", " + m.ResponseTypeName +".class.getName());");
+        WriteLine("            responseModel = restCall(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ", " + m.ResponseTypeName +".class.getName());");
         WriteLine("            if(responseModel.getStatusCode() == 200 || responseModel.getStatusCode() == 201)");
         WriteLine("            {");
         WriteLine("                responseModel.result = (" + m.ResponseTypeName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName + ".class);");
@@ -206,6 +203,51 @@ global class AvaTaxClient
         httpResponse.getBody().replace('AvaTax.Communications.ServiceType', 'ServiceType');
             
         return httpResponse;
+    }
+
+    global FileResultModel restCallForFile(String method, String relativePath, Object model)
+    {
+        Http http = new Http();
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setEndpoint(envUri+relativePath);
+        HttpRequest.setMethod(method);
+        httpRequest.setHeader('Authorization', credentials);
+        httpRequest.setHeader('X-Avalara-Client', clientHeader);
+        httpRequest.setHeader('Accept', 'application/json');
+        httpRequest.setHeader('Content-Type', 'application/json');
+        
+        string finalRequest = JSON.serialize(model);
+        finalRequest = finalRequest.replace('documentDate', 'date');
+        finalRequest =  finalRequest.replace('commitDocument', 'commit');
+        finalRequest =  finalRequest.replace('commitTransaction', 'commit');
+        finalRequest =  finalRequest.replace('lineNumber', 'number');
+        
+        if (model != null) {
+            httpRequest.setBody(JSON.serialize(finalRequest));
+        }
+        
+        HttpResponse httpResponse = http.send(httpRequest);
+        
+        FileResultModel frmodel = new FileResultModel();
+        
+        if(httpResponse.getStatusCode() == 200 || httpResponse.getStatusCode() == 201) {
+            frmodel.Filename = GetDispositionFilename(httpResponse.getHeader('Content-Disposition'));
+            frmodel.Data = httpResponse.getBodyasBlob();
+            frmodel.ContentType = httpResponse.getHeader('Content-Type');
+        }
+        
+        frmodel.statusCode = httpResponse.getStatusCode();
+        return frmodel;
+    }    
+    
+    private string GetDispositionFilename(string contentDisposition)
+    {
+        string filename = 'filename=';
+        Integer index = contentDisposition.lastIndexOfIgnoreCase(filename);
+        if (index > -1) {
+            return contentDisposition.right(index+contentDisposition.length());
+        }
+        return contentDisposition;
     }
 
 }
