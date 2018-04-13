@@ -63,11 +63,11 @@ global class AvaTaxClient
         WriteLine("            {");
         WriteLine("                retVal.error = ((ErrorResult)System.JSON.deserialize(res.getBody(), ErrorResult.class)).error;");
         WriteLine("            }");
-        WriteLine("            return retVal");
+        WriteLine("            return retVal;");
     } else if(m.ResponseTypeName == "FileResult"){
         WriteLine("            FileResultModel responseModel = null;");
         WriteLine("            responseModel = (FileResultModel) restCallForFile(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ");");
-        WriteLine("            return responseModel");
+        WriteLine("            return responseModel;");
     } else {
         WriteLine("            " + m.ResponseTypeName + " responseModel = null;");
         WriteLine("            responseModel = restCall(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ", " + m.ResponseTypeName +".class.getName());");
@@ -75,7 +75,7 @@ global class AvaTaxClient
         WriteLine("            {");
         WriteLine("                responseModel.result = (" + m.ResponseTypeName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName + ".class);");
         WriteLine("            }");
-        WriteLine("            return responseModel");
+        WriteLine("            return responseModel;");
     }
     WriteLine("        }");
     WriteLine("");
