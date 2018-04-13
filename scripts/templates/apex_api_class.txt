@@ -15,10 +15,10 @@
 global class AvaTaxClient
 {
         // Returns the version number of the API used to generate this class
-        global static string API_VERSION { get { return '@SwaggerModel.ApiVersion'; } }
-        private string credentials;
-        private string clientHeader;
-        private String envUri;
+        global static string API_VERSION { get { return '@SwaggerModel.ApiVersion' } }
+    private string credentials;
+    private string clientHeader;
+    private String envUri;
 
 @foreach(var m in SwaggerModel.Methods) {<text>
         // @ApexComment(m.Summary, 8)
