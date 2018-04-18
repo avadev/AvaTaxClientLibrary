@@ -30,9 +30,9 @@ global class AvaTaxClient
     }
 
     if (m.ResponseType == "array"){
-        Write("    global " + m.parseBracket(m.ResponseTypeName) + " " + m.Name + "(");
+        Write("        global " + m.parseBracket(m.ResponseTypeName) + " " + m.Name + "(");
     } else {
-        Write("    global " + m.ResponseTypeName + " " + m.Name + "(");
+        Write("        global " + m.ResponseTypeName + " " + m.Name + "(");
     }
 
     bool any = false;
