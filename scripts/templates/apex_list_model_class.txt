@@ -11,8 +11,8 @@
 /* @ApexComment(ClassModel.Comment, 4) */
 
 @if(true) {
-		WriteLine("global class List" + ClassModel.SchemaName + " extends ErrorResult");
+	WriteLine("global class List" + ClassModel.SchemaName + " extends ErrorResult");
 	WriteLine("{");
-		  WriteLine("    global List<" + ClassModel.SchemaName + "> result { get; set; }");
+	WriteLine("    global List<" + ClassModel.SchemaName + "> result { get; set; }");
 	WriteLine("}");
 }
