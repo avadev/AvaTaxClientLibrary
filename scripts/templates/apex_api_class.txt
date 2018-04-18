@@ -29,7 +29,11 @@ global class AvaTaxClient
         WriteLine("        // <param name=\'" + p.CleanParamName + "\'>" + ApexComment(p.Comment, 8) + "</param>");
     }
 
-    Write("        public " + m.ResponseTypeName + " " + m.Name + "(");
+    if (m.ResponseType == "array"){
+        Write("    global " + m.parseBracket(m.ResponseTypeName) + " " + m.Name + "(");
+    } else {
+        Write("    global " + m.ResponseTypeName + " " + m.Name + "(");
+    }
 
     bool any = false;
     foreach (var p in m.Params) {
@@ -54,7 +58,7 @@ global class AvaTaxClient
     
     if (m.ResponseType == "array"){
         WriteLine("            httpResponse res = restCallForList(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ");");
-        WriteLine("            " + m.ResponseTypeName + " retVal = new " + m.ResponseTypeName + "();");
+        WriteLine("            " + m.parseBracket(m.ResponseTypeName) + " retVal = new " + m.ResponseTypeName + "();");
         WriteLine("            if(res.getStatusCode() == 200 || res.getStatusCode() == 201)");
         WriteLine("            {");
         WriteLine("                retVal.result = restCallForList(" + m.ResponseTypeName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName + ".class);");
