@@ -178,6 +178,11 @@
                     "output": "src\\classes\\{SchemaName}.cls"
                 },
                 {
+                    "file": "templates\\apex_list_model_class.txt",
+                    "type": "listModels",
+                    "output": "src\\classes\\List{SchemaName}.cls"
+                },
+                {
                     "file": "templates\\apex_enum_class.txt",
                     "type": "enums",
                     "output": "src\\classes\\{EnumDataType}.cls"
@@ -191,6 +196,11 @@
                     "file": "templates\\apex_meta.txt",
                     "type": "uniqueModels",
                     "output": "src\\classes\\{SchemaName}.cls-meta.xml"
+                },
+                {
+                    "file": "templates\\apex_meta.txt",
+                    "type": "listModels",
+                    "output": "src\\classes\\List{SchemaName}.cls-meta.xml"
                 }
             ]
         }

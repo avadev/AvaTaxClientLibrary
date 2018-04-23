@@ -28,5 +28,14 @@ namespace ClientApiGenerator.Models
             Regex rgx = new Regex("\\{.+?\\}");
             return rgx.Replace(sentence, "{}");
         }
+
+        /// <summary>
+        /// remove bracket for array type ResponseTypeName, for Apex use only.
+        /// </summary>
+        public string parseBracket(string input)
+        {
+            Regex rgx = new Regex(@"\s|[<>]");
+            return rgx.Replace(input, "");
+        }
     }
 }

@@ -81,6 +81,11 @@ namespace ClientApiGenerator.Render
                         case TemplateType.enums:
                             RenderEnums(api, template);
                             break;
+
+                        // One file per model that is used by a CRUD method that returns a list (for Apex use)
+                        case TemplateType.listModels:
+                            RenderListModels(api, template);
+                            break;
                     }
                 }
             }
@@ -146,6 +151,28 @@ namespace ClientApiGenerator.Render
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
                 var output = template.razor.ExecuteTemplate(api, null, model, null);
                 File.WriteAllText(outputPath, output);
+            }
+        }
+
+        private void RenderListModels(SwaggerInfo api, RenderTemplateTask template)
+        {
+            foreach (var method in api.Methods)
+            {
+                if (method.ResponseType == "array")
+                {
+                    string modelName = method.parseBracket(method.ResponseTypeName).Substring(4);
+                    foreach (var model in api.Models)
+                    {
+                        if (model.SchemaName.Contains(modelName))
+                        {
+                            var outputPath = Path.Combine(rootFolder, QuickStringMerge(template.output, model));
+                            Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+                            var output = template.razor.ExecuteTemplate(api, null, model, null);
+                            File.WriteAllText(outputPath, output);
+                            break;
+                        }
+                    }
+                }
             }
         }
 
