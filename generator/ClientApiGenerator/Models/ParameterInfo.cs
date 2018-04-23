@@ -34,7 +34,7 @@ namespace ClientApiGenerator.Models
             get
             {
                 string temp = TypeName;
-                if(temp.Contains("Int"))
+                if(temp.Contains("Int") || temp == "Byte" || temp == "Byte?")
                 {
                     return TypeName.Replace(temp, "Integer");
                 } else if(temp.Contains("Dictionary"))
@@ -43,6 +43,9 @@ namespace ClientApiGenerator.Models
                 } else if(temp.Contains("ErrorCodeId"))
                 {
                     return TypeName.Replace(temp, "String");
+                } else if (temp.Contains("Byte[]"))
+                {
+                    return TypeName.Replace(temp, "Blob");
                 } else
                 {
                     return TypeName.Replace("?", "");
