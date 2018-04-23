@@ -36,10 +36,13 @@ namespace ClientApiGenerator.Models
                 string temp = TypeName;
                 if(temp.Contains("Int"))
                 {
-                    return TypeName.Replace(temp, "Integer").Replace("?", "");
+                    return TypeName.Replace(temp, "Integer");
                 } else if(temp.Contains("Dictionary"))
                 {
-                    return TypeName.Replace(temp, "Map").Replace("?", "");
+                    return TypeName.Replace(temp, "Map");
+                } else if(temp.Contains("ErrorCodeId"))
+                {
+                    return TypeName.Replace(temp, "String");
                 } else
                 {
                     return TypeName.Replace("?", "");
