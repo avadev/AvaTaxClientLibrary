@@ -37,6 +37,9 @@ namespace ClientApiGenerator.Models
                 if(temp.Contains("Int"))
                 {
                     return TypeName.Replace(temp, "Integer").Replace("?", "");
+                } else if(temp.Contains("Dictionary"))
+                {
+                    return TypeName.Replace(temp, "Map").Replace("?", "");
                 } else
                 {
                     return TypeName.Replace("?", "");
