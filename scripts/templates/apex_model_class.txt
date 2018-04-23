@@ -22,7 +22,6 @@
 		WriteLine("");
 		WriteLine("    // " + ApexComment(p.Comment, 4));
 		if(p.CleanParamName.Contains(".")) {
-		  WriteLine("    [JsonProperty(PropertyName = \"" + p.CleanParamName + "\")]");
 		  WriteLine("    global " + p.ApexTypeName + " " + p.StrippedPackageParamName + " { get; set; }");
 		} else {
 		  WriteLine("    global " + p.ApexTypeName + " " + p.CleanParamName + " { get; set; }");
