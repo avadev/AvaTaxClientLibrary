@@ -80,18 +80,18 @@ namespace ClientApiGenerator
                 var contents = File.ReadAllText(o.SwaggerRenderPath);
                 task = JsonConvert.DeserializeObject<SwaggerRenderTask>(contents);
 
-                // Create all razor templates
-                string baseFolder = Path.GetDirectoryName(o.SwaggerRenderPath);
-                foreach (var target in task.targets) {
-                    target.ParseRazorTemplates(baseFolder);
-                }
-                return task;
-
             // If anything blew up, refuse to continue
             } catch (Exception ex) {
-                Console.WriteLine($"Exception parsing render task: {ex.Message}");
+                Console.WriteLine($"Exception loading your ApiGenerator file {o.SwaggerRenderPath}: {ex.Message}");
                 return null;
             }
+
+            // Create all razor templates
+            string baseFolder = Path.GetDirectoryName(o.SwaggerRenderPath);
+            foreach (var target in task.targets) {
+                target.ParseRazorTemplates(baseFolder);
+            }
+            return task;
         }
 
         #region Render targets
@@ -130,18 +130,22 @@ namespace ClientApiGenerator
             SwaggerInfo result = new SwaggerInfo();
             result.ApiVersion = obj.ApiVersion;
 
-            // Set up alternative version numbers: This one does not permit dashes
-            result.ApiVersionPeriodsOnly = result.ApiVersion.Replace("-", ".");
+            // Parse API version if information is available
+            if (result.ApiVersion != null) {
 
-            // Set up alternative version numbers: This one permits only three segments
-            var sb = new StringBuilder();
-            int numPeriods = 0;
-            foreach (char c in obj.ApiVersion) {
-                if (c == '.') numPeriods++;
-                if (numPeriods > 3 || c == '-') break;
-                sb.Append(c);
+                // Set up alternative version numbers: This one does not permit dashes
+                result.ApiVersionPeriodsOnly = result.ApiVersion.Replace("-", ".");
+
+                // Set up alternative version numbers: This one permits only three segments
+                var sb = new StringBuilder();
+                int numPeriods = 0;
+                foreach (char c in obj.ApiVersion) {
+                    if (c == '.') numPeriods++;
+                    if (numPeriods > 3 || c == '-') break;
+                    sb.Append(c);
+                }
+                result.ApiVersionThreeSegmentsOnly = sb.ToString();
             }
-            result.ApiVersionThreeSegmentsOnly = sb.ToString();
 
             // Loop through all paths and spit them out to the console
             foreach (var path in (from p in obj.paths orderby p.Key select p)) {

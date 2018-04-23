@@ -220,15 +220,10 @@ namespace ClientApiGenerator.Render
             // Parse all razor templates
             string templatePath, contents;
             foreach (var template in templates) {
-                try {
-                    templatePath = Path.Combine(renderFilePath, template.file);
-                    Console.WriteLine($"     Parsing template {templatePath}...");
-                    contents = File.ReadAllText(templatePath);
-                    template.razor = MakeRazorTemplate(contents);
-                } catch (Exception ex) {
-                    Console.WriteLine($"Exception parsing {template.file}: {ex.Message}");
-                    throw ex;
-                }
+                templatePath = Path.Combine(renderFilePath, template.file);
+                Console.WriteLine($"     Parsing template {templatePath}...");
+                contents = File.ReadAllText(templatePath);
+                template.razor = MakeRazorTemplate(contents);
             }
         }
         #endregion
@@ -291,7 +286,16 @@ namespace ClientApiGenerator.Render
             // Did the compiler produce an error?
             if (compiled.Errors.HasErrors) {
                 CompilerError err = compiled.Errors.OfType<CompilerError>().Where(ce => !ce.IsWarning).First();
-                throw new Exception(String.Format("Error Compiling Template (Line {0} Col {1}) Err {2}", err.Line, err.Column, err.ErrorText));
+
+                // Print out debug information
+                var msg = $"Error Compiling Template (Line {err.Line} Col {err.Column}) Err {err.ErrorText}";
+                Console.WriteLine(msg);
+                Console.WriteLine("=======================================");
+                var codelines = code.Split('\n');
+                for (int i = Math.Max(0, err.Line - 5); i < Math.Min(codelines.Length, err.Line + 5); i++) {
+                    Console.WriteLine(codelines[i]);
+                }
+                throw new Exception(msg);
 
             // Load this assembly into the project
             } else {
