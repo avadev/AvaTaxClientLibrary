@@ -166,7 +166,7 @@ namespace ClientApiGenerator.Render
                     string modelName = method.parseBracket(method.ResponseTypeName).Substring(4);
                     foreach (var model in api.Models)
                     {
-                        if (model.SchemaName.Contains(modelName))
+                        if (model.SchemaName.Contains(modelName) && !model.SchemaName.Contains("FetchResult"))
                         {
                             var outputPath = Path.Combine(rootFolder, QuickStringMerge(template.output, model));
                             Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
