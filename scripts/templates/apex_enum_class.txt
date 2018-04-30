@@ -12,10 +12,13 @@
 
 global enum @EnumModel.EnumDataType
 {
-
 	@foreach(var v in EnumModel.Items){
 		WriteLine("    // " + ApexComment(v.Comment, 8));
-		WriteLine("    {0},", v.Value);	
+		if (EnumModel.Items.IndexOf(v) == EnumModel.Items.Count - 1){
+		  WriteLine("    {0}", v.Value);
+		} else {
+		  WriteLine("    {0},", v.Value);
+		}	
 		WriteLine("");
 	}
 }
