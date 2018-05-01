@@ -10,7 +10,7 @@ namespace ClientApiGenerator.Render
     /// <summary>
     /// Define the types of templates recognized
     /// </summary>
-    public enum TemplateType { singleFile, methods, methodCategories, models, uniqueModels, enums, listModels };
+    public enum TemplateType { singleFile, methods, methodCategories, models, uniqueModels, enums, listModels, fetchModels };
 
     /// <summary>
     /// An execution of a render template
