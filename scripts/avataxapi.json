@@ -1,56 +1,218 @@
 {
-  "swaggerUri": "https://sandbox-rest.avatax.com/swagger/v2/swagger.json",
-  "targets": [
-    {
-      "name": "Apex",
-      "rootFolder": "c:\\users\\han.bao\\source\\repos\\AvaTax-REST-V2-Apex-SDK",
-      "templates": [
+    "swaggerUri": "https://sandbox-rest.avatax.com/swagger/v2/swagger.json",
+    "targets": [
         {
-          "file": "templates\\apex_api_class.txt",
-          "type": "singleFile",
-          "output": "src\\classes\\AvaTaxClient.cls"
+            "name": "CSharp",
+            "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-DotNet-SDK",
+            "templates": [
+                {
+                    "file": "templates\\csharp_api_class.txt",
+                    "type": "singleFile",
+                    "output": "src\\AvaTaxApi.cs"
+                },
+                {
+                    "file": "templates\\csharp_model_class.txt",
+                    "type": "uniqueModels",
+                    "output": "src\\models\\{SchemaName}.cs"
+                },
+                {
+                    "file": "templates\\csharp_enum_class.txt",
+                    "type": "enums",
+                    "output": "src\\enums\\{EnumDataType}.cs"
+                }
+            ],
+            "fixups": [
+                {
+                    "file": "GlobalAssemblyInfo.cs",
+                    "encoding": "UTF8",
+                    "regex": "\\[assembly: AssemblyVersion\\(\".*\"\\)\\]",
+                    "replacement": "[assembly: AssemblyVersion(\"{ApiVersionPeriodsOnly}\")]"
+                },
+                {
+                    "file": "GlobalAssemblyInfo.cs",
+                    "encoding": "UTF8",
+                    "regex": "\\[assembly: AssemblyFileVersion\\(\".*\"\\)\\]",
+                    "replacement": "[assembly: AssemblyFileVersion(\"{ApiVersionPeriodsOnly}\")]"
+                },
+                {
+                    "file": "src\\Avalara.AvaTax.nuspec",
+                    "encoding": "UTF8",
+                    "regex": "<version>(.*)</version>",
+                    "replacement": "<version>{ApiVersionPeriodsOnly}</version>"
+                }
+            ]
         },
         {
-          "file": "templates\\apex_model_class.txt",
-          "type": "uniqueModels",
-          "output": "src\\classes\\{SchemaName}.cls"
+            "name": "JRE",
+            "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-JRE-SDK",
+            "templates": [
+                {
+                    "file": "templates\\java_api_class.java",
+                    "type": "singleFile",
+                    "output": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\AvaTaxClient.java"
+                },
+                {
+                    "file": "templates\\java_model_class.java",
+                    "type": "uniqueModels",
+                    "output": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\models\\{SchemaName}.java"
+                },
+                {
+                    "file": "templates\\java_enum_class.java",
+                    "type": "enums",
+                    "output": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\enums\\{EnumDataType}.java"
+                }
+            ],
+            "fixups": [
+                {
+                    "file": "build.sbt",
+                    "encoding": "ASCII",
+                    "regex": "version := \".*\"",
+                    "replacement": "version := \"{ApiVersionPeriodsOnly}\""
+                },
+                {
+                    "file": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\RestCall.java",
+                    "encoding": "ASCII",
+                    "regex": "\"JavaRestClient\", \".*\",",
+                    "replacement": "\"JavaRestClient\", \"{ApiVersionPeriodsOnly}\","
+                }
+            ]
         },
         {
-          "file": "templates\\apex_enum_class.txt",
-          "type": "enums",
-          "output": "src\\classes\\{EnumDataType}.cls"
+            "name": "PHP",
+            "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-PHP-SDK",
+            "templates": [
+                {
+                    "file": "templates\\php_constants_class.php",
+                    "type": "singleFile",
+                    "output": "src\\Constants.php"
+                },
+                {
+                    "file": "templates\\php_methods_class.php",
+                    "type": "singleFile",
+                    "output": "src\\Methods.php"
+                },
+                {
+                    "file": "templates\\php_models_class.php",
+                    "type": "singleFile",
+                    "output": "src\\Models.php"
+                },
+            ],
+            "fixups": [
+                {
+                    "file": "composer.json",
+                    "encoding": "ASCII",
+                    "regex": "\"version\": \".*\",",
+                    "replacement": "\"version\": \"{ApiVersionPeriodsOnly}\","
+                }
+            ]
         },
         {
-          "file": "templates\\apex_meta.txt",
-          "type": "enums",
-          "output": "src\\classes\\{EnumDataType}.cls-meta.xml"
+            "name": "JavaScript",
+            "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-JS-SDK",
+            "templates": [
+                {
+                    "file": "templates\\javascript_api_class.txt",
+                    "type": "singleFile",
+                    "output": "lib\\AvaTaxClient.js"
+                }
+            ],
+            "fixups": [
+                {
+                    "file": "package.json",
+                    "encoding": "ASCII",
+                    "regex": "\"version\": \".*\",",
+                    "replacement": "\"version\": \"{ApiVersionThreeSegmentsOnly}\","
+                }
+            ]
         },
         {
-          "file": "templates\\apex_meta.txt",
-          "type": "uniqueModels",
-          "output": "src\\classes\\{SchemaName}.cls-meta.xml"
+            "name": "Ruby",
+            "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-Ruby-SDK",
+            "templates": [
+                {
+                    "file": "templates\\ruby_category_class.rb",
+                    "type": "methodCategories",
+                    "output": "lib\\avatax\\client\\{category.lower}.rb"
+                }
+            ],
+            "fixups": [
+                {
+                    "file": "lib\\avatax\\version.rb",
+                    "encoding": "UTF8",
+                    "regex": "VERSION = '.*'",
+                    "replacement": "VERSION = '{ApiVersionThreeSegmentsOnly}'"
+                }
+            ]
         },
         {
-          "file": "templates\\apex_list_model_class.txt",
-          "type": "listModels",
-          "output": "src\\classes\\List{SchemaName}.cls"
+            "name": "Python",
+            "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-Python-SDK",
+            "templates": [
+                {
+                    "file": "templates\\python_methods_class.py",
+                    "type": "singleFile",
+                    "output": "src\\client_methods.py"
+                }
+            ],
+            "fixups": [
+                {
+                    "file": "setup.py",
+                    "encoding": "UTF8",
+                    "regex": "version='.*'",
+                    "replacement": "version='{ApiVersionThreeSegmentsOnly}'"
+                }
+            ]
         },
         {
-          "file": "templates\\apex_meta.txt",
-          "type": "listModels",
-          "output": "src\\classes\\List{SchemaName}.cls-meta.xml"
-        },
-        {
-          "file": "templates\\apex_fetch_model_class.txt",
-          "type": "fetchModels",
-          "output": "src\\classes\\{CleanFetchName}.cls"
-        },
-        {
-          "file": "templates\\apex_meta.txt",
-          "type": "fetchModels",
-          "output": "src\\classes\\{CleanFetchName}.cls-meta.xml"
+            "name": "Apex",
+            "rootFolder": "c:\\git\\develop\\vaTax-REST-V2-Apex-SDK",
+            "templates": [
+                {
+                    "file": "templates\\apex_api_class.txt",
+                    "type": "singleFile",
+                    "output": "src\\classes\\AvaTaxClient.cls"
+                },
+                {
+                    "file": "templates\\apex_model_class.txt",
+                    "type": "uniqueModels",
+                    "output": "src\\classes\\{SchemaName}.cls"
+                },
+                {
+                    "file": "templates\\apex_list_model_class.txt",
+                    "type": "listModels",
+                    "output": "src\\classes\\List{SchemaName}.cls"
+                },
+                {
+                    "file": "templates\\apex_enum_class.txt",
+                    "type": "enums",
+                    "output": "src\\classes\\{EnumDataType}.cls"
+                },
+                {
+                    "file": "templates\\apex_meta.txt",
+                    "type": "enums",
+                    "output": "src\\classes\\{EnumDataType}.cls-meta.xml"
+                },
+                {
+                    "file": "templates\\apex_meta.txt",
+                    "type": "uniqueModels",
+                    "output": "src\\classes\\{SchemaName}.cls-meta.xml"
+                },
+                {
+                    "file": "templates\\apex_meta.txt",
+                    "type": "listModels",
+                    "output": "src\\classes\\List{SchemaName}.cls-meta.xml"
+                }
+                {
+                    "file": "templates\\apex_fetch_model_class.txt",
+                    "type": "fetchModels",
+                    "output": "src\\classes\\{CleanFetchName}.cls"
+                },
+                {
+                    "file": "templates\\apex_meta.txt",
+                    "type": "fetchModels",
+                    "output": "src\\classes\\{CleanFetchName}.cls-meta.xml"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }
