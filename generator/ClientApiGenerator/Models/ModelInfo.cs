@@ -17,4 +17,3 @@ namespace ClientApiGenerator.Models
         public List<ParameterInfo> Properties { get; set; }
     }
 }
-
