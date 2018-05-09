@@ -16,9 +16,9 @@ global class AvaTaxClient
 {
         // Returns the version number of the API used to generate this class
         global static string API_VERSION { get { return '@SwaggerModel.ApiVersion' } }
-    private string credentials;
-    private string clientHeader;
-    private String envUri;
+    	private string credentials;
+    	private string clientHeader;
+    	private String envUri;
 
 @foreach(var m in SwaggerModel.Methods) {<text>
         // @ApexComment(m.Summary, 8)
@@ -61,7 +61,7 @@ global class AvaTaxClient
         WriteLine("            " + fetchCleanName + " retVal = new " + fetchCleanName + "();");
         WriteLine("            if(res.getStatusCode() == 200 || res.getStatusCode() == 201)");
         WriteLine("            {");
-        WriteLine("                retVal.result = restCallForList(" + fetchCleanName + ")System.JSON.deserialize(res.getBody(), " + fetchCleanName + ".class);");
+        WriteLine("                retVal.result = (" + fetchCleanName + ")System.JSON.deserialize(res.getBody(), " + fetchCleanName + ".class);");
         WriteLine("            }");
         WriteLine("            else");
         WriteLine("            {");

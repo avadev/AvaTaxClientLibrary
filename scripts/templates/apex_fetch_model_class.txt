@@ -11,7 +11,7 @@
 /* @ApexComment(ClassModel.Comment, 4) */
 
 @if(true) {
-	WriteLine("global virtualList " + ClassModel.CleanFetchName + " extends FetchResultBase");
+	WriteLine("global " + ClassModel.CleanFetchName + " extends FetchResultBase");
 	WriteLine("{");
 	WriteLine("    global List<" + ClassModel.CleanFetchName.Replace("FetchResult", "") + "> value{ get; set; }");
 	WriteLine("}");
