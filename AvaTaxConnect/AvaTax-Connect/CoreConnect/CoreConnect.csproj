@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalara.AvaTax" Version="18.1.2.161" />
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
+    <PackageReference Include="Avalara.AvaTax" Version="18.4.3.191" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
