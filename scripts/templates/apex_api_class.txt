@@ -16,9 +16,9 @@ global class AvaTaxClient
 {
         // Returns the version number of the API used to generate this class
         global static string API_VERSION { get { return '@SwaggerModel.ApiVersion' } }
-    private string credentials;
-    private string clientHeader;
-    private String envUri;
+    	private string credentials;
+    	private string clientHeader;
+    	private String envUri;
 
 @foreach(var m in SwaggerModel.Methods) {<text>
         // @ApexComment(m.Summary, 8)
@@ -29,16 +29,15 @@ global class AvaTaxClient
         WriteLine("        // <param name=\'" + p.CleanParamName + "\'>" + ApexComment(p.Comment, 8) + "</param>");
     }
 
-    if (m.ResponseType == "array"){
-        Write("        global " + m.parseBracket(m.ResponseTypeName) + " " + m.Name + "(");
-    } else {
-        Write("        global " + m.ResponseTypeName + " " + m.Name + "(");
-    }
-
+    Write("        global " + m.parseBracket(m.ResponseTypeName) + " " + m.Name + "(");
+    
+    string fetchCleanName = m.parseBracket(m.ResponseTypeName);
     bool any = false;
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
-        Write(p.ApexTypeName + " " + p.CleanParamName + ", ");
+	string typeName = p.ApexTypeName.Contains("<") ? fetchCleanName : p.ApexTypeName;
+
+        Write(typeName + " " + p.CleanParamName + ", ");
         any = true;
     }
     if (any) {
@@ -48,6 +47,7 @@ global class AvaTaxClient
     WriteLine(")");
     WriteLine("        {");
     WriteLine("            AvaTaxPath path = new AvaTaxPath(\'" + m.URI + "\');");
+
     foreach (var p in m.Params) {
         if (p.ParameterLocation == ParameterLocationType.UriPath) {
             WriteLine("            path.ApplyField(\'{0}\', {1});", p.ParamName, p.CleanParamName);
@@ -58,10 +58,10 @@ global class AvaTaxClient
     
     if (m.ResponseType == "array"){
         WriteLine("            httpResponse res = restCallForList(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ");");
-        WriteLine("            " + m.parseBracket(m.ResponseTypeName) + " retVal = new " + m.ResponseTypeName + "();");
+        WriteLine("            " + fetchCleanName + " retVal = new " + fetchCleanName + "();");
         WriteLine("            if(res.getStatusCode() == 200 || res.getStatusCode() == 201)");
         WriteLine("            {");
-        WriteLine("                retVal.result = restCallForList(" + m.ResponseTypeName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName + ".class);");
+        WriteLine("                retVal.result = (" + fetchCleanName + ")System.JSON.deserialize(res.getBody(), " + fetchCleanName + ".class);");
         WriteLine("            }");
         WriteLine("            else");
         WriteLine("            {");
@@ -73,11 +73,11 @@ global class AvaTaxClient
         WriteLine("            responseModel = (FileResultModel) restCallForFile(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ");");
         WriteLine("            return responseModel;");
     } else {
-        WriteLine("            " + m.ResponseTypeName + " responseModel = null;");
-        WriteLine("            responseModel = restCall(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ", " + m.ResponseTypeName +".class.getName());");
+        WriteLine("            " + fetchCleanName + " responseModel = null;");
+        WriteLine("            responseModel = restCall(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ", " + fetchCleanName +".class.getName());");
         WriteLine("            if(responseModel.getStatusCode() == 200 || responseModel.getStatusCode() == 201)");
         WriteLine("            {");
-        WriteLine("                responseModel.result = (" + m.ResponseTypeName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName + ".class);");
+        WriteLine("                responseModel.result = (" + fetchCleanName + ")System.JSON.deserialize(res.getBody(), " + fetchCleanName + ".class);");
         WriteLine("            }");
         WriteLine("            return responseModel;");
     }

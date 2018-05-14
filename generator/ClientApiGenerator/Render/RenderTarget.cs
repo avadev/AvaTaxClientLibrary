@@ -86,6 +86,11 @@ namespace ClientApiGenerator.Render
                         case TemplateType.listModels:
                             RenderListModels(api, template);
                             break;
+
+                        // One file per model that is used by a CRUD method to fetch a collection of data. i.e FetchResult<SubscriptionModel> ListMySubscriptions() needs be an unique model (for Apex use)
+                        case TemplateType.fetchModels:
+                            RenderFetchModel(api, template);
+                            break;
                     }
                 }
             }
@@ -176,6 +181,18 @@ namespace ClientApiGenerator.Render
                         }
                     }
                 }
+            }
+        }
+
+        private void RenderFetchModel(SwaggerInfo api, RenderTemplateTask template)
+        {
+            var oldModels = api.Models;
+            api.Models = (from m in api.Models where m.SchemaName.StartsWith("FetchResult") select m).ToList();
+            foreach (var model in api.Models) {
+                var outputPath = Path.Combine(rootFolder, QuickStringMerge(template.output, model));
+                Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+                var output = template.razor.ExecuteTemplate(api, null, model, null);
+                File.WriteAllText(outputPath, output);
             }
         }
 

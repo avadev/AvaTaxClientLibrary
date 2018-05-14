@@ -202,6 +202,16 @@
                     "type": "listModels",
                     "output": "src\\classes\\List{SchemaName}.cls-meta.xml"
                 }
+                {
+                    "file": "templates\\apex_fetch_model_class.txt",
+                    "type": "fetchModels",
+                    "output": "src\\classes\\{CleanFetchName}.cls"
+                },
+                {
+                    "file": "templates\\apex_meta.txt",
+                    "type": "fetchModels",
+                    "output": "src\\classes\\{CleanFetchName}.cls-meta.xml"
+                }
             ]
         }
     ]

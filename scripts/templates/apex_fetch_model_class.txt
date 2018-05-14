@@ -1,0 +1,19 @@
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2018 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ */
+
+/* @ApexComment(ClassModel.Comment, 4) */
+
+@if(true) {
+	string cleanFetchName = ClassModel.SchemaName.Replace("[", "").Replace("]", "");
+	WriteLine("global " + cleanFetchName+ " extends FetchResultBase");
+	WriteLine("{");
+	WriteLine("    global List<" + cleanFetchName.Replace("FetchResult", "") + "> value{ get; set; }");
+	WriteLine("}");
+}
