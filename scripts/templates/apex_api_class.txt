@@ -75,9 +75,9 @@ global class AvaTaxClient
     } else {
         WriteLine("            " + fetchCleanName + " responseModel = null;");
         WriteLine("            responseModel = restCall(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ", " + fetchCleanName +".class.getName());");
-        WriteLine("            if(responseModel.getStatusCode() == 200 || responseModel.getStatusCode() == 201)");
+        WriteLine("            if(responseModel.getStatusCode() != 200 && responseModel.getStatusCode() != 201)");
         WriteLine("            {");
-        WriteLine("                responseModel.result = (" + fetchCleanName + ")System.JSON.deserialize(res.getBody(), " + fetchCleanName + ".class);");
+        WriteLine("                responseModel.error = (ErrorResult)System.JSON.deserialize(JSON.serialize(responseModel), ErrorResult.class)).error;");
         WriteLine("            }");
         WriteLine("            return responseModel;");
     }
