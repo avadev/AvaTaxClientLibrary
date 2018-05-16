@@ -61,7 +61,7 @@ global class AvaTaxClient
         WriteLine("            " + fetchCleanName + " retVal = new " + fetchCleanName + "();");
         WriteLine("            if(res.getStatusCode() == 200 || res.getStatusCode() == 201)");
         WriteLine("            {");
-        WriteLine("                retVal.result = (" + fetchCleanName + ")System.JSON.deserialize(res.getBody(), " + fetchCleanName + ".class);");
+        WriteLine("                retVal.result = (" + fetchCleanName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName+ ".class);");
         WriteLine("            }");
         WriteLine("            else");
         WriteLine("            {");
