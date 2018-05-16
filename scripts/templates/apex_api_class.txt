@@ -35,7 +35,7 @@ global class AvaTaxClient
     bool any = false;
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
-	string typeName = p.ApexTypeName.Contains("<") ? fetchCleanName : p.ApexTypeName;
+	string typeName = p.ApexTypeName;
 
         Write(typeName + " " + p.CleanParamName + ", ");
         any = true;
@@ -67,6 +67,7 @@ global class AvaTaxClient
         WriteLine("            {");
         WriteLine("                retVal.error = ((ErrorResult)System.JSON.deserialize(res.getBody(), ErrorResult.class)).error;");
         WriteLine("            }");
+	WriteLine("            retVal.statusCode = res.getStatusCode();");
         WriteLine("            return retVal;");
     } else if(m.ResponseTypeName == "FileResult"){
         WriteLine("            FileResultModel responseModel = null;");
