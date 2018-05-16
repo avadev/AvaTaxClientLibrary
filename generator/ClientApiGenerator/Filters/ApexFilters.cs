@@ -17,7 +17,6 @@ namespace ClientApiGenerator.Filters
 
         public SwaggerInfo KeyWordFilter(SwaggerInfo api, string templateType)
         {
-            // prevent api file from being overrided 
 
             // populate set
             if (KeyWordSet.Count == 0)
