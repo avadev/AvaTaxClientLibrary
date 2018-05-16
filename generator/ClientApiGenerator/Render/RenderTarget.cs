@@ -1,4 +1,5 @@
 ﻿using ClientApiGenerator.Models;
+using ClientApiGenerator.Filters;
 using Microsoft.CSharp;
 using System;
 using System.CodeDom.Compiler;
@@ -74,12 +75,14 @@ namespace ClientApiGenerator.Render
 
                         // One file per model
                         case TemplateType.uniqueModels:
-                            RenderUniqueModels(api, template);
+                            SwaggerInfo tempApiForModel = HandleFilter(api, template);
+                            RenderUniqueModels(tempApiForModel, template);
                             break;
 
                         // One file per enum
                         case TemplateType.enums:
-                            RenderEnums(api, template);
+                            SwaggerInfo tempApiForEnum = HandleFilter(api, template);
+                            RenderEnums(tempApiForEnum, template);
                             break;
 
                         // One file per model that is used by a CRUD method that returns a list (for Apex use)
@@ -194,6 +197,7 @@ namespace ClientApiGenerator.Render
                 var output = template.razor.ExecuteTemplate(api, null, model, null);
                 File.WriteAllText(outputPath, output);
             }
+            api.Models = oldModels;
         }
 
         private void RenderMethods(SwaggerInfo api, RenderTemplateTask template)
@@ -229,6 +233,28 @@ namespace ClientApiGenerator.Render
             var output = template.razor.ExecuteTemplate(api, null, null, null);
             File.WriteAllText(outputPath, output);
         }
+
+        private SwaggerInfo HandleFilter(SwaggerInfo api, RenderTemplateTask template)
+        {
+            string templateName = template.file;
+
+            // handle all Apex related filtering
+            if (templateName.Contains("apex")) {
+                ApexFilters filter = new ApexFilters();
+                
+                // filtering for Apex enum & model classes
+                if (templateName.Contains("apex_enum_class")) {
+                    return filter.KeyWordFilter(api, "enum");
+                } else if (templateName.Contains("apex_model_class")) {
+                    return filter.KeyWordFilter(api, "model");
+                }
+            }
+
+            // echo back the original api file if no changes is required
+            return api;
+        }
+
+
         #endregion
 
         #region Parsing

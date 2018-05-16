@@ -15,5 +15,12 @@ namespace ClientApiGenerator.Models
         public string Comment { get; set; }
         public string SchemaName { get; set; }
         public List<ParameterInfo> Properties { get; set; }
+        public string CleanFetchName
+        {
+            get
+            {
+                return SchemaName.Replace("[", "").Replace("]", "");
+            }
+        }
     }
 }
