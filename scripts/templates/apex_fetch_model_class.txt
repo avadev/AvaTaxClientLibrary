@@ -12,7 +12,7 @@
 
 @if(true) {
 	string cleanFetchName = ClassModel.SchemaName.Replace("[", "").Replace("]", "");
-	WriteLine("global " + cleanFetchName+ " extends FetchResultBase");
+	WriteLine("global class " + cleanFetchName+ " extends FetchResultBase");
 	WriteLine("{");
 	WriteLine("    global List<" + cleanFetchName.Replace("FetchResult", "") + "> value{ get; set; }");
 	WriteLine("}");
