@@ -15,7 +15,7 @@
 global class AvaTaxClient
 {
         // Returns the version number of the API used to generate this class
-        global static string API_VERSION { get { return '@SwaggerModel.ApiVersion' } }
+        global static string API_VERSION { get { return '@SwaggerModel.ApiVersion'; } }
     	private string credentials;
     	private string clientHeader;
     	private String envUri;
@@ -57,11 +57,11 @@ global class AvaTaxClient
     }
     
     if (m.ResponseType == "array"){
-        WriteLine("            httpResponse res = restCallForList(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ");");
+        WriteLine("            httpResponse res = (" + m.ResponseTypeName + ") restCallForList(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ");");
         WriteLine("            " + fetchCleanName + " retVal = new " + fetchCleanName + "();");
         WriteLine("            if(res.getStatusCode() == 200 || res.getStatusCode() == 201)");
         WriteLine("            {");
-        WriteLine("                retVal.result = (" + fetchCleanName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName+ ".class);");
+        WriteLine("                retVal.result = (" + m.ResponseTypeName + ")System.JSON.deserialize(res.getBody(), " + m.ResponseTypeName+ ".class);");
         WriteLine("            }");
         WriteLine("            else");
         WriteLine("            {");
@@ -75,11 +75,19 @@ global class AvaTaxClient
         WriteLine("            return responseModel;");
     } else {
         WriteLine("            " + fetchCleanName + " responseModel = null;");
-        WriteLine("            responseModel = restCall(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ", " + fetchCleanName +".class.getName());");
-        WriteLine("            if(responseModel.getStatusCode() != 200 && responseModel.getStatusCode() != 201)");
-        WriteLine("            {");
-        WriteLine("                responseModel.error = (ErrorResult)System.JSON.deserialize(JSON.serialize(responseModel), ErrorResult.class)).error;");
-        WriteLine("            }");
+        WriteLine("            responseModel = (" + fetchCleanName + ") restCall(\'" + m.HttpVerb.ToUpper() + "\', path.relativePath, " + (m.BodyParam == null ? "null" : "model") + ", " + fetchCleanName +".class.getName());");
+        
+	if (m.ResponseTypeName.Contains("Address")){
+	    WriteLine("            if((responseModel.getStatusCode() == 200 || responseModel.getStatusCode() == 201) && responseModel.messages != null)");
+	    WriteLine("            {");
+	    WriteLine("                responseModel.statusCode = 500;");
+	    WriteLine("            }");
+	} else {
+	    WriteLine("            if(responseModel.getStatusCode() != 200 && responseModel.getStatusCode() != 201)");
+            WriteLine("            {");
+            WriteLine("                responseModel.error = (ErrorResult)System.JSON.deserialize(JSON.serialize(responseModel), ErrorResult.class)).error;");
+            WriteLine("            }");
+	}
         WriteLine("            return responseModel;");
     }
     WriteLine("        }");
