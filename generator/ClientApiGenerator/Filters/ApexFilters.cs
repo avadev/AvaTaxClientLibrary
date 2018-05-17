@@ -13,7 +13,11 @@ namespace ClientApiGenerator.Filters
         HashSet<String> KeyWordSet = new HashSet<string>();
   
         // List of Apex keywords that has present in either model or enum name
-        string[] KeyWordList = { "number", "set", "new", "exception", "currency", "boolean", "string", "blob", "set", "desc", "default", "type", "char", "extends", "virtual", "today", "transaction", "search", "retrieve", "class", "const", "decimal", "global" };
+        string[] KeyWordList = { "number", "set", "new", "exception", "currency", "boolean",
+            "string", "blob", "set", "desc", "default", "type", "char", "extends", "virtual",
+            "today", "transaction", "search", "retrieve", "class", "const", "decimal", "global",
+            "Any", "New", "Exception", "Set", "Char", "Type", "Global", "Blob", "Number", "Set",
+            "Boolean", "String"};
 
         public SwaggerInfo KeyWordFilter(SwaggerInfo api, string templateType)
         {
@@ -66,5 +70,15 @@ namespace ClientApiGenerator.Filters
             // return new api file
             return api;
         }
+
+        private string UppercaseFirst(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            return char.ToUpper(s[0]) + s.Substring(1);
+        }
+
     }
 }
