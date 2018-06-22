@@ -28,6 +28,9 @@ class AvaTaxClient extends AvaTaxClientBase
         if (p.CleanParamName != "X-Avalara-Client") {
             paramlist.Append("$");
             paramlist.Append(p.CleanParamName);
+	    if (p.CleanParamName == "include" || p.CleanParamName == "filter" || p.CleanParamName == "top" || p.CleanParamName == "skip" || p.CleanParamName == "orderBy"){
+		paramlist.Append("=null");
+	    }
             paramlist.Append(", ");
             paramcomments.Add("\r\n     * @param " + PhpTypeName(p.TypeName) + " $" + p.CleanParamName + " " + PhpTypeComment(SwaggerModel, p));
             if (p.ParameterLocation == ParameterLocationType.QueryString) {
