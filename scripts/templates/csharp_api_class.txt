@@ -41,6 +41,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks></text>
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
+		if (p.CleanParamName == "X-Avalara-Extractor") continue;
         WriteLine("        /// <param name=\"" + p.CleanParamName + "\">" + CSharpComment(p.Comment, 8) + "</param>");
     }
 
@@ -49,6 +50,7 @@ namespace Avalara.AvaTax.RestClient
     bool any = false;
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
+		if (p.CleanParamName == "X-Avalara-Extractor") continue;
         Write(p.TypeName + " " + p.CleanParamName + ", ");
         any = true;
     }
@@ -91,6 +93,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks></text>
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
+		if (p.CleanParamName == "X-Avalara-Extractor") continue;
         WriteLine("        /// <param name=\"" + p.CleanParamName + "\">" + CSharpComment(p.Comment, 8) + "</param>");
     }
     Write("        public async Task<" + m.ResponseTypeName + "> " + m.Name + "Async(");
@@ -98,6 +101,7 @@ namespace Avalara.AvaTax.RestClient
     bool any = false;
     foreach (var p in m.Params) {
         if (p.CleanParamName == "X-Avalara-Client") continue;
+		if (p.CleanParamName == "X-Avalara-Extractor") continue;
         Write(p.TypeName + " " + p.CleanParamName + ", ");
         any = true;
     }
