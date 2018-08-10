@@ -13,3 +13,4 @@ scripts/Avalara.AvaTax.RestClient.json
 *.nupkg
 *.userprefs
 *.DS_Store
+AvaTaxConnect/AvaTax-Connect/CoreConnect/Properties/launchSettings.json
