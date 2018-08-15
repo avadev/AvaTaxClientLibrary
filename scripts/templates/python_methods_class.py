@@ -44,6 +44,9 @@ class Mixin:
     if (paramlist.Length > 0) paramlist.Length -= 2;
     if (paramformat.Length > 0) paramformat.Length -= 2;
     
+    if (m.Name.Contains("User") && paramformat.ToString().Contains("id_")) { 
+	paramformat.Replace("id_", "holder").Replace("accountId", "id_").Replace("holder", "accountId"); 
+    }
 
 <text>
     r"""
@@ -58,13 +61,16 @@ class Mixin:
         return requests.@{Write(m.HttpVerb.ToLower());}('{}@newuri'.format(@paramformat.ToString()),
 @{Write("                               auth=self.auth, headers=self.client_header, ");
 if(callwithquerystring.Length > 0 && payload != "None"){
-Write("params=" + callwithquerystring + ", json=" + payload + ")");
+Write("params=" + callwithquerystring + ", json=" + payload + ", ");
 }else if(callwithquerystring.Length > 0){
-Write("params=" + callwithquerystring + ")");
+Write("params=" + callwithquerystring + ", ");
 } else if(payload != "None") {
-Write("json=" + payload + ")");
+Write("json=" + payload + ", ");
 } else{
-Write("params=None)");  
-}}
+Write("params=None, ");  
+}
+WriteLine("");
+Write("                               timeout=self.timeout_limit if self.timeout_limit else 10)");
+}
 </text>}
  
