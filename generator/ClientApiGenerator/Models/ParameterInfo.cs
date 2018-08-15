@@ -10,21 +10,36 @@ namespace ClientApiGenerator.Models
     public class ParameterInfo
     {
         public string ParamName { get; set; }
+        public string _CleanParamName { get; set; }
         public string CleanParamName
         {
             get
             {
-                return ParamName.Replace("$", "");
+                // if this word is being filtered, _CleanParamName will hold the new/replcaed value
+                if (String.IsNullOrEmpty(_CleanParamName))
+                {
+                    return ParamName.Replace("$", "");
+                } else
+                {
+                    return _CleanParamName;
+                }
             }
         }
-
+        public string  _StrippedPackageParamName { get; set; }
         public string StrippedPackageParamName
         {
             get
             {
-                var cleanedParam = CleanParamName;
-                var index = cleanedParam.LastIndexOf(".") + 1;
-                return cleanedParam.Substring(index, cleanedParam.Length - index);
+                if (String.IsNullOrEmpty(_StrippedPackageParamName))
+                {
+                    var cleanedParam = CleanParamName;
+                    var index = cleanedParam.LastIndexOf(".") + 1;
+                    return cleanedParam.Substring(index, cleanedParam.Length - index);
+                } else
+                {
+                    return _StrippedPackageParamName;
+                }
+
             }
         }
         public string Type { get; set; }

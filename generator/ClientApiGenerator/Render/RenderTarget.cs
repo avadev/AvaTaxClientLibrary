@@ -1,4 +1,5 @@
 ﻿using ClientApiGenerator.Models;
+using ClientApiGenerator.Filters;
 using Microsoft.CSharp;
 using System;
 using System.CodeDom.Compiler;
@@ -74,17 +75,24 @@ namespace ClientApiGenerator.Render
 
                         // One file per model
                         case TemplateType.uniqueModels:
-                            RenderUniqueModels(api, template);
+                            SwaggerInfo tempApiForModel = HandleFilter(api, template);
+                            RenderUniqueModels(tempApiForModel, template);
                             break;
 
                         // One file per enum
                         case TemplateType.enums:
-                            RenderEnums(api, template);
+                            SwaggerInfo tempApiForEnum = HandleFilter(api, template);
+                            RenderEnums(tempApiForEnum, template);
                             break;
 
                         // One file per model that is used by a CRUD method that returns a list (for Apex use)
                         case TemplateType.listModels:
                             RenderListModels(api, template);
+                            break;
+
+                        // One file per model that is used by a CRUD method to fetch a collection of data. i.e FetchResult<SubscriptionModel> ListMySubscriptions() needs be an unique model (for Apex use)
+                        case TemplateType.fetchModels:
+                            RenderFetchModel(api, template);
                             break;
                     }
                 }
@@ -179,6 +187,19 @@ namespace ClientApiGenerator.Render
             }
         }
 
+        private void RenderFetchModel(SwaggerInfo api, RenderTemplateTask template)
+        {
+            var oldModels = api.Models;
+            api.Models = (from m in api.Models where m.SchemaName.StartsWith("FetchResult") select m).ToList();
+            foreach (var model in api.Models) {
+                var outputPath = Path.Combine(rootFolder, QuickStringMerge(template.output, model));
+                Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+                var output = template.razor.ExecuteTemplate(api, null, model, null);
+                File.WriteAllText(outputPath, output);
+            }
+            api.Models = oldModels;
+        }
+
         private void RenderMethods(SwaggerInfo api, RenderTemplateTask template)
         {
             foreach (var method in api.Methods) {
@@ -212,6 +233,28 @@ namespace ClientApiGenerator.Render
             var output = template.razor.ExecuteTemplate(api, null, null, null);
             File.WriteAllText(outputPath, output);
         }
+
+        private SwaggerInfo HandleFilter(SwaggerInfo api, RenderTemplateTask template)
+        {
+            string templateName = template.file;
+
+            // handle all Apex related filtering
+            if (templateName.Contains("apex")) {
+                ApexFilters filter = new ApexFilters();
+                
+                // filtering for Apex enum & model classes
+                if (templateName.Contains("apex_enum_class")) {
+                    return filter.KeyWordFilter(api, "enum");
+                } else if (templateName.Contains("apex_model_class")) {
+                    return filter.KeyWordFilter(api, "model");
+                }
+            }
+
+            // echo back the original api file if no changes is required
+            return api;
+        }
+
+
         #endregion
 
         #region Parsing
