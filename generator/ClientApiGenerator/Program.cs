@@ -380,7 +380,14 @@ namespace ClientApiGenerator
 
                 // Base64 encoded bytes
                 if (String.Equals(prop.format, "byte", StringComparison.CurrentCultureIgnoreCase)) {
-                    typename.Append("Byte[]");
+                    if(prop.description == "Content of the batch file.")
+                    {
+                        typename.Append("Byte[]");
+                    }
+                    else
+                    {
+                        typename.Append("Byte");
+                    }
                 } else if (prop.EnumDataType == null) {
                     return "String";
                 } else {
