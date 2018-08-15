@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filters\ApexFilters.cs" />
+    <Compile Include="Filters\Filter.cs" />
     <Compile Include="Models\MethodInfo.cs" />
     <Compile Include="Models\SwaggerInfo.cs" />
     <Compile Include="Models\EnumInfo.cs" />
