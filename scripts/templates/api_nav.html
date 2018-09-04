@@ -1,0 +1,43 @@
+<div id="the-nav" class="nav-wrapper hidden-xs hidden-sm api-ref-nav" style="height: 100%; overflow-y: auto;">
+    <ul class="api-ref-side-nav nav nav-pills nav-stacked">
+        <li>
+            <a href="/api-reference/avatax/rest/v2">Avatax REST API</a>
+            <!-- not quite sure how to do boolean algebra in liquid syntax -->
+            <div style="padding-left:10px;">
+                <ul class="api-ref-side-nav-active nav nav-pills nav-stacked sub-nav">
+@{
+    foreach (var c in SwaggerModel.Categories) {
+        WriteLine("<li><a style=\"overflow: hidden\" href=\"/api/" + c + "\">" + c + "</a></li>");
+    }
+}
+                    <li>
+                        <a style="color:#ff6600; overflow: hidden;" href="/api-reference/avatax/rest/v2/models">Models</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a href="/api-reference/avatax/soap">Avatax SOAP API</a>
+            <!-- not quite sure how to do boolean algebra in liquid syntax -->
+        </li>
+        <li class="older-api">
+            Older APIs
+            <div style="padding-left:10px;">
+                <ul class="api-ref-side-nav-active nav nav-pills nav-stacked sub-nav">
+                    <li>
+                        <a href="/api-reference/avatax/account/soap">Avatax AccountSvc SOAP API</a>
+                        <!-- not quite sure how to do boolean algebra in liquid syntax -->
+                    </li>
+                    <li>
+                        <a href="/api-reference/avatax/rest/v1">Legacy REST API</a>
+                        <!-- not quite sure how to do boolean algebra in liquid syntax -->
+                    </li>
+                    <li>
+                        <a href="/api-reference/avatax/batch/soap">Avatax BatchSvc SOAP API</a>
+                        <!-- not quite sure how to do boolean algebra in liquid syntax -->
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>

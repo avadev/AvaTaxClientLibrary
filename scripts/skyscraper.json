@@ -1,0 +1,16 @@
+{
+    "swaggerUri": "https://skyscraper-dev.returns.avalara.net:443/swagger/docs/v1",
+    "targets": [
+        {
+            "name": "Documentation",
+            "rootFolder": "c:\\git\\develop\\SkyscraperDocumentation",
+            "templates": [
+                {
+                    "file": "templates\\api_method.html",
+                    "type": "methods",
+                    "output": "methods\\{Name}.html"
+                }
+            ]
+        }
+    ]
+}

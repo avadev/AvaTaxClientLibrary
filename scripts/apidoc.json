@@ -1,0 +1,20 @@
+{
+    "swaggerUri": "https://sandbox-rest.avatax.com/swagger/v2/swagger.json",
+    "targets": [
+        {
+            "name": "ApiDoc",
+            "rootFolder": "c:\\git\\develop\\developer-dot",
+            "templates": [
+                {
+                    "file": "templates\\api_method.md",
+                    "type": "methods",
+                    "output": "api\\{Category}\\{Name}.md"
+                },{
+                    "file": "templates\\api_nav.html",
+                    "type": "singleFile",
+                    "output": "_includes\\avatax-rest-api.html"
+                }
+            ]
+        }
+    ]
+}

@@ -206,6 +206,16 @@ namespace ClientApiGenerator
         }
 
         /// <summary>
+        /// Convert markdown to HTML
+        /// </summary>
+        /// <param name="markdown"></param>
+        /// <returns></returns>
+        public string MarkdownToHtml(string markdown)
+        {
+            return CommonMark.CommonMarkConverter.Convert(markdown);
+        }
+
+        /// <summary>
         /// Convert a CSharp type name into a PHP type name
         /// </summary>
         /// <param name="typename"></param>
