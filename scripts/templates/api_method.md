@@ -38,9 +38,7 @@ WriteLine("        <td>https://rest.avatax.com" + MethodModel.URI + "</td>");
     </tr>
     <tr>
         <th>RESPONSE BODY</th>
-@{
-WriteLine("<td><a href=\"https://developer.avalara.com/api-reference/avatax/rest/v2/models/" + MethodModel.ResponseTypeName + "\">" + MethodModel.ResponseTypeName + "</a></td>");
-}
+        <td>@FriendlyModelLink("https://developer.avalara.com/api-reference/avatax/rest/v2/models/", MethodModel.ResponseTypeName)</td>
     </tr>
 </table>
 
@@ -115,78 +113,45 @@ WriteLine("<td><a href=\"https://developer.avalara.com/api-reference/avatax/rest
     </div>
     <div class="collapse" id="try-it-now">
 
-        <div>
+        <div class="api-console-output">
+            <h5 class="console-output-header">API Endpoint</h5>
+            <div class="row" style="margin: 10px;">
+                <div class="code-snippet-plaintext" style="display: inline;" id="console-method">@MethodModel.HttpVerb.ToUpper()</div>
+                <div class="code-snippet-plaintext" style="display: inline;" id="console-server">https://sandbox-rest.avatax.com</div>
+                <div class="code-snippet-plaintext" style="display: inline;" id="console-path">@MethodModel.URI</div>
+            </div>
             <h5 class="console-output-header">
-                <span>API Endpoint</span>
+                Headers
+                <i class="glyphicon glyphicon-pencil"></i>
             </h5>
-            <div class="code-snippet-plaintext">https://sandbox-rest.avatax.com@MethodModel.URI</div>
-            <h5 class="console-output-header">Method</h5>
-            <div class="code-snippet-plaintext">@MethodModel.HttpVerb.ToUpper()</div>
+            <div class="code-snippet reqScroll">
+                <textarea style="height: 50px;" id="console-headers" >Authorization: (use Developer website demo credentials)
+X-Avalara-Client: Avalara Developer Website; @SwaggerModel.ApiVersionThreeSegmentsOnly; AvaTax SDK; @SwaggerModel.ApiVersionThreeSegmentsOnly; developer-console</textarea>
+            </div>
             <div class="row" style="margin-bottom: 8px;">
                 <div class="col-md-6 console-req-container">
                     <h5 class="console-output-header">
-                        <!-- react-text: 1205 -->Request <!-- /react-text -->
-                        <i class="glyphicon glyphicon-pencil"/>
+                        Request
+                        <i class="glyphicon glyphicon-pencil"></i>
                     </h5>
+                    <textarea id="console-input-sample" style="display: none;">@{ if (MethodModel.BodyParam != null) { Write(GetExample(MethodModel.BodyParam.TypeName)); } }</textarea>
                     <div class="code-snippet reqScroll">
-                        <textarea id="console_input">
-@{
-    if (MethodModel.BodyParam != null) {
-        WriteLine(GetExample(MethodModel.BodyParam.TypeName));
-    }
-}
-                        </textarea>
+                        <textarea id="console-input">{ }</textarea>
                     </div>
                 </div>
                 <div class="col-md-6 console-res-container">
-                    <h5 class="console-output-header">Response</h5>
-                    <div class="code-snippet respScroll">
-                        <pre> </pre>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <button class="btn submit"> Fill with Sample Data</span>
-                <button class="btn submit" type="button">Reset</button>
-                <button class="btn btn-primary submit" type="button">Submit</button>
-            </div>
-        </div>
-
-        <div class="api-console-output">
-             <h5 class="console-output-header">
-                 <span>API Endpoint</span>
-             </h5>
-             <div class="code-snippet-plaintext">https://sandbox-rest.avatax.com/api/v2/transactions/create</div>
-             <h5 class="console-output-header">Method</h5>
-             <div class="code-snippet-plaintext">GET</div>
-             <div class="row" style="margin-bottom: 8px;">
-                 <div class="col-md-6 console-req-container">
-                     <h5 class="console-output-header">
-                         <!-- react-text: 1205 -->Request <!-- /react-text -->
-                         <i class="glyphicon glyphicon-pencil"></i>
-                     </h5>
-                     <div class="code-snippet reqScroll">
-                         <textarea id="console_input">@{
-    if (MethodModel.BodyParam != null) {
-        Write(GetExample(MethodModel.BodyParam.TypeName));
-    }
-}</textarea>
-                     </div>
-                 </div>
-                 <div class="col-md-6 console-res-container">
                      <h5 class="console-output-header">Response</h5>
                      <div class="code-snippet respScroll">
-                         <pre> </pre>
+                         <pre id="console-output"> </pre>
                      </div>
                  </div>
              </div>
              <div>
-                 <button class="btn btn-secondary" style="color: #000000;" type="button">Fill with Sample Data</button>
-                 <button class="btn btn-secondary" style="color: #000000;" type="button" OnClick="$('#console-input').empty();">Reset</button>
-                 <button class="btn btn-primary" type="button">Submit</button>
+                 <button class="btn btn-secondary" style="color: #000000;" type="button" onClick="$('#console-input').empty().val($('#console-input-sample').val());">Fill with Sample Data</button>
+                 <button class="btn btn-secondary" style="color: #000000;" type="button" onClick="$('#console-input').empty().val('{ }');">Reset</button>
+                 <button class="btn btn-primary" type="button" onClick="ApiRequest();">Submit</button>
              </div>
         </div>
-        
     </div>
 </div>
 
@@ -208,7 +173,7 @@ WriteLine("<td><a href=\"https://developer.avalara.com/api-reference/avatax/rest
 
     if (MethodModel.BodyParam != null) {
         WriteLine("<h4>Request Body</h4>");
-        WriteLine("<p>Documentation: <a href=\"https://developer.avalara.com/api-reference/avatax/rest/v2/models/" + MethodModel.BodyParam.TypeName + "\">" + MethodModel.BodyParam.TypeName + "</a></p>");
+        WriteLine("<p>Complete documentation: " + FriendlyModelLink("https://developer.avalara.com/api-reference/avatax/rest/v2/models/", MethodModel.BodyParam.TypeName) + "</p>");
         WriteLine("{% highlight json %}");
         WriteLine(GetExample(MethodModel.BodyParam.TypeName));
         WriteLine("{% endhighlight %}");
@@ -228,7 +193,7 @@ WriteLine("<td><a href=\"https://developer.avalara.com/api-reference/avatax/rest
     <div class="collapse" id="example-response">
     <h4>Response Body</h4>
 @{
-WriteLine("<p>Documentation: <a href=\"https://developer.avalara.com/api-reference/avatax/rest/v2/models/" + MethodModel.ResponseTypeName + "\">" + MethodModel.ResponseTypeName + "</a></p>");
+WriteLine("<p>Complete documentation: " + FriendlyModelLink("https://developer.avalara.com/api-reference/avatax/rest/v2/models/", MethodModel.ResponseTypeName) + "</p>");
 }
 
 {% highlight json %}

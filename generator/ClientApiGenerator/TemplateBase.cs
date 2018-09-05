@@ -372,6 +372,32 @@ namespace ClientApiGenerator
             return (from tm in TypeMap.ALL_TYPES where String.Equals(tm.Csharp, fixedTypeName) select tm).FirstOrDefault();
         }
 
+        public bool IsGenericType(string typename)
+        {
+            if (String.IsNullOrEmpty(typename)) return false;
+            return (typename.Contains("<") && typename.Contains(">"));
+        }
+
+        public string GetGenericTypeName(string typename)
+        {
+            if (IsGenericType(typename)) {
+                var p = typename.LastIndexOf('<');
+                var p2 = typename.IndexOf('>');
+                return typename.Substring(p + 1, p2 - p);
+            }
+            return typename;
+        }
+
+        public string FriendlyModelLink(string servername, string typename)
+        {
+            if (!servername.EndsWith("/")) servername = servername + "/";
+            if (IsGenericType(MethodModel.ResponseTypeName)) {
+                return $"<a href=\"{servername}{GetGenericTypeName(typename)}\">{typename.Replace("<", "[").Replace(">", "]").Replace("List", "Array")}</a>";
+            } else {
+                return $"<a href=\"{servername}{typename}\">{typename}</a>";
+            }
+        }
+
         public string JavaTypeName(string typename)
         {
             // Is this an enum?  If so, convert it to a string - we'll add a comment later
