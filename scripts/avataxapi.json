@@ -103,6 +103,12 @@
                     "encoding": "ASCII",
                     "regex": "\"version\": \".*\",",
                     "replacement": "\"version\": \"{ApiVersionPeriodsOnly}\","
+                },
+                {
+                    "file": "src\\Client.php",
+                    "encoding": "ASCII",
+                    "regex": "; PhpRestClient; .*; ",
+                    "replacement": "; PhpRestClient; {ApiVersion}; "
                 }
             ]
         },
