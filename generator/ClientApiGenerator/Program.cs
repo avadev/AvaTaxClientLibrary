@@ -197,11 +197,11 @@ namespace ClientApiGenerator
 
                     // Now figure out the response type
                     SwaggerResult ok = null;
-                    if (verb.Value.responses.TryGetValue("200", out ok)) {
-                        api.ResponseType = ok.schema == null ? null : ok.schema.type;
-                        api.ResponseTypeName = ResolveTypeName(ok.schema);
-                    } else if (verb.Value.responses.TryGetValue("201", out ok)) {
-                        api.ResponseType = ok.schema == null ? null : ok.schema.type;
+                    if (verb.Value.responses.TryGetValue("200", out ok)
+                        || verb.Value.responses.TryGetValue("201", out ok)
+                        || verb.Value.responses.TryGetValue("202", out ok)) {
+
+                        api.ResponseType = ok.schema?.type;
                         api.ResponseTypeName = ResolveTypeName(ok.schema);
                     }
 
