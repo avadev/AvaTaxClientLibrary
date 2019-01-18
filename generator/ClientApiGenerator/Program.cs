@@ -371,7 +371,7 @@ namespace ClientApiGenerator
                 isValueType = true;
 
                 // Handle date-times formatted as strings
-            } else if (prop.format == "date-time" && prop.type == "string") {
+            } else if ((prop.format == "date-time" || prop.format == "date") && prop.type == "string") {
                 typename.Append("DateTime");
                 isValueType = true;
 
