@@ -39,7 +39,7 @@ class @i.Name
             WriteLine("     * " + PhpComment(v.Summary, 5));
             WriteLine("     */");
         }
-        WriteLine("    const C_" + v.Name.ToUpper() + " = \"" + v.Value + "\";");
+        WriteLine("    const C_" + v.Name.ToUpper() + " = " + v.Value + ";");
     }
 <text>
 }
