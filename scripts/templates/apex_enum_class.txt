@@ -8,16 +8,16 @@
  *
  */
 
-/* @ApexComment(EnumModel.Comment, 4) */
+/* @ApexComment(EnumModel.Summary, 4) */
 
-global enum @EnumModel.EnumDataType
+global enum @EnumModel.Name
 {
-	@foreach(var v in EnumModel.Items){
-		WriteLine("    // " + ApexComment(v.Comment, 8));
-		if (EnumModel.Items.IndexOf(v) == EnumModel.Items.Count - 1){
-		  WriteLine("    {0}", v.Value);
+	@foreach(var v in EnumModel.Values){
+		WriteLine("    // " + ApexComment(v.Summary, 8));
+		if (EnumModel.Values.IndexOf(v) == EnumModel.Values.Count - 1){
+		  WriteLine("    {0} = {1}", v.Name, v.Value);
 		} else {
-		  WriteLine("    {0},", v.Value);
+		  WriteLine("    {0} = {1},", v.Name, v.Value);
 		}	
 		WriteLine("");
 	}

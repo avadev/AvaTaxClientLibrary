@@ -28,18 +28,18 @@ class TransactionAddressType
 @foreach(var i in SwaggerModel.Enums) {
 <text>
 /**
- * @PhpComment(i.Comment, 1)
+ * @PhpComment(i.Summary, 1)
  */
-class @i.EnumDataType
+class @i.Name
 {</text>
-    foreach (var v in i.Items) {
-        if (!String.IsNullOrEmpty(v.Comment)) {
+    foreach (var v in i.Values) {
+        if (!String.IsNullOrEmpty(v.Summary)) {
             WriteLine("");
             WriteLine("    /**");
-            WriteLine("     * " + PhpComment(v.Comment, 5));
+            WriteLine("     * " + PhpComment(v.Summary, 5));
             WriteLine("     */");
         }
-        WriteLine("    const C_" + v.Value.ToUpper() + " = \"" + v.Value + "\";");
+        WriteLine("    const C_" + v.Name.ToUpper() + " = " + v.Value + ";");
     }
 <text>
 }

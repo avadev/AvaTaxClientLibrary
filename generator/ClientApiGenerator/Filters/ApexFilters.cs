@@ -36,12 +36,12 @@ namespace ClientApiGenerator.Filters
             {
                 foreach (var enumType in api.Enums)
                 {
-                    foreach (var e in enumType.Items)
+                    foreach (var e in enumType.Values)
                     {
                         // add "Field" to each conflicted enum name to prevent compile error in Apex
-                        if (KeyWordSet.Contains(e.Value))
+                        if (KeyWordSet.Contains(e.Name))
                         {
-                            e.Value = e.Value + "Field";
+                            e.Name = e.Name + "Field";
                         }
                     }
                 }

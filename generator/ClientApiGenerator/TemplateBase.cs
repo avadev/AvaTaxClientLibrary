@@ -110,13 +110,13 @@ namespace ClientApiGenerator
         /// <param name="m"></param>
         /// <param name="e"></param>
         /// <returns></returns>
-        public virtual string ExecuteTemplate(SwaggerInfo api, MethodInfo method, ModelInfo model, EnumInfo enumDataType)
+        public virtual string ExecuteTemplate(SwaggerInfo api, MethodInfo method, ModelInfo model, EnumInfo enumInfo)
         {
             Buffer.Clear();
             SwaggerModel = api;
             MethodModel = method;
             ClassModel = model;
-            EnumModel = enumDataType;
+            EnumModel = enumInfo;
             Execute();
             return Buffer.ToString();
         }
@@ -404,7 +404,7 @@ namespace ClientApiGenerator
             if (typename.EndsWith("?")) {
                 typename = typename.Substring(0, typename.Length - 1);
             }
-            return (SwaggerModel.Enums.Any(e => e.EnumDataType == typename));
+            return (SwaggerModel.Enums.Any(e => e.Name == typename));
         }
 
         public bool IsModelType(string typename)

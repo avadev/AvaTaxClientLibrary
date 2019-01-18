@@ -189,9 +189,12 @@ namespace ClientApiGenerator
                         }
                         api.Params.Add(pi);
 
-                        // Is this property an enum?
-                        if (parameter.EnumDataType != null) {
-                            ExtractEnum(result.Enums, parameter);
+                        if (parameter.enumMetadata != null)
+                        {
+                            if (!result.Enums.Any(e => e.Name == parameter.enumMetadata.Name))
+                            {
+                                result.Enums.Add(parameter.enumMetadata);
+                            }
                         }
                     }
 
@@ -238,9 +241,12 @@ namespace ClientApiGenerator
                     pi.ParamName = prop.Key;
                     m.Properties.Add(pi);
 
-                    // Is this property an enum?
-                    if (prop.Value.EnumDataType != null) {
-                        ExtractEnum(result.Enums, prop.Value);
+                    if (prop.Value.enumMetadata != null)
+                    {
+                        if (!result.Enums.Any(e => e.Name == prop.Value.enumMetadata.Name))
+                        {
+                            result.Enums.Add(prop.Value.enumMetadata);
+                        }
                     }
                 }
 
@@ -249,12 +255,12 @@ namespace ClientApiGenerator
 
             //// Now add the enums we know we need.
             //// Because of the complex way this Dictionary<> is rendered in Swagger, it's hard to pick up the correct values.
-            //var tat = (from e in result.Enums where e.EnumDataType == "TransactionAddressType" select e).FirstOrDefault();
+            //var tat = (from e in result.Enums where e.Name == "TransactionAddressType" select e).FirstOrDefault();
             //if (tat == null) {
             //    tat = new EnumInfo()
             //    {
-            //        EnumDataType = "TransactionAddressType",
-            //        Items = new List<EnumItem>()
+            //        Name = "TransactionAddressType",
+            //        Values = new List<EnumItem>()
             //    };
             //    result.Enums.Add(tat);
             //}
@@ -266,47 +272,6 @@ namespace ClientApiGenerator
 
             // Here's your processed API
             return result;
-        }
-
-        private static void ExtractEnum(List<EnumInfo> enums, SwaggerProperty prop)
-        {
-            // Determine enum value comments and description, if any
-            string xEnumDescription = null;
-            Dictionary<string, string> xEnumValueComments = null;
-            if (prop != null && prop.Extended != null) {
-                xEnumDescription = prop.Extended["x-enum-description"] as string;
-                JObject j = prop.Extended["x-enum-value-comments"] as JObject;
-                if (j != null) {
-                    xEnumValueComments = j.ToObject<Dictionary<string, string>>();
-                }
-            }
-
-            // Load up the enum
-            var enumType = (from e in enums where e.EnumDataType == prop.EnumDataType select e).FirstOrDefault();
-            if (enumType == null) {
-                enumType = new EnumInfo()
-                {
-                    EnumDataType = prop.EnumDataType,
-                    Comment = xEnumDescription,
-                    Items = new List<EnumItem>()
-                };
-                enums.Add(enumType);
-            }
-
-            // Add values if they are known
-            if (prop.enumValues != null) {
-                foreach (var s in prop.enumValues) {
-                    if (!enumType.Items.Any(i => i.Value == s)) {
-
-                        // Figure out the comment for the enum, if one is available
-                        string comment = null;
-                        if (xEnumValueComments != null) {
-                            xEnumValueComments.TryGetValue(s, out comment);
-                        }
-                        enumType.Items.Add(new EnumItem() { Value = s, Comment = comment });
-                    }
-                }
-            }
         }
 
         private static ParameterInfo ResolveType(SwaggerProperty prop)
@@ -371,7 +336,7 @@ namespace ClientApiGenerator
                 isValueType = true;
 
                 // Handle date-times formatted as strings
-            } else if (prop.format == "date-time" && prop.type == "string") {
+            } else if ((prop.format == "date-time" || prop.format == "date") && prop.type == "string") {
                 typename.Append("DateTime");
                 isValueType = true;
 
@@ -388,10 +353,10 @@ namespace ClientApiGenerator
                     {
                         typename.Append("Byte");
                     }
-                } else if (prop.EnumDataType == null) {
+                } else if (prop.enumMetadata == null) {
                     return "String";
                 } else {
-                    typename.Append(prop.EnumDataType);
+                    typename.Append(prop.enumMetadata.Name);
                     isValueType = true;
                 }
 
