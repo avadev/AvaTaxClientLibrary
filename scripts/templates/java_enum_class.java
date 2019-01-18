@@ -15,14 +15,14 @@ package net.avalara.avatax.rest.client.enums;
  */
 
 /**
- * @PhpComment(EnumModel.Comment, 1)
+ * @PhpComment(EnumModel.Summary, 1)
  */
-public enum @EnumModel.EnumDataType {
-@foreach(var v in EnumModel.Items) {
+public enum @EnumModel.Name {
+@foreach(var v in EnumModel.Values) {
 WriteLine("    /** ");
-WriteLine("     * " + PhpComment(v.Comment, 5));
+WriteLine("     * " + PhpComment(v.Summary, 5));
 WriteLine("     */");
-WriteLine("    {0},", v.Value);
+WriteLine("    {0} = {1},", v.Name, v.Value);
 WriteLine("");
 }
 }

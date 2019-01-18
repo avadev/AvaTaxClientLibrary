@@ -1,15 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ClientApiGenerator.Models
 {
+    /// <summary>
+    /// Enum documentation
+    /// </summary>
     public class EnumInfo
     {
-        public string EnumDataType { get; set; }
-        public string Comment { get; set; }
-        public List<EnumItem> Items { get; set; }
+        /// <summary>
+        /// The enum name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The enum summary.
+        /// </summary>
+        public string Summary { get; set; }
+
+        /// <summary>
+        /// A list of documentation for this enum's values.
+        /// </summary>
+        public List<EnumItem> Values { get; set; }
     }
 }

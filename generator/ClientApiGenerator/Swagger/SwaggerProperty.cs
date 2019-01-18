@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ClientApiGenerator.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,8 @@ namespace ClientApiGenerator.Swagger
         public SwaggerProperty schema { get; set; }
         public SwaggerProperty items { get; set; }
 
-        [JsonProperty("x-enum-type")]
-        public string EnumDataType { get; set; }
+        [JsonProperty("x-enum-metadata")]
+        public EnumInfo enumMetadata { get; set; }
 
         [JsonProperty("$ref")]
         public string schemaref { get; set; }

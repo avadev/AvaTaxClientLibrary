@@ -16,15 +16,15 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// @CSharpComment(EnumModel.Comment, 4)
+    /// @CSharpComment(EnumModel.Summary, 4)
     /// </summary>
-    public enum @EnumModel.EnumDataType
+    public enum @EnumModel.Name
     {
-@foreach(var v in EnumModel.Items) {
+@foreach(var v in EnumModel.Values) {
 WriteLine("        /// <summary>");
-WriteLine("        /// " + CSharpComment(v.Comment, 8));
+WriteLine("        /// " + CSharpComment(v.Summary, 8));
 WriteLine("        /// </summary>");
-WriteLine("        {0},", v.Value);
+WriteLine("        {0} = {1},", v.Name, v.Value);
 WriteLine("");
 }
     }

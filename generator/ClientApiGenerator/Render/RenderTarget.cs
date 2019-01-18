@@ -131,13 +131,13 @@ namespace ClientApiGenerator.Render
 
         private void RenderEnums(SwaggerInfo api, RenderTemplateTask template)
         {
-            foreach (var enumDataType in api.Enums) {
+            foreach (var enumInfo in api.Enums) {
                 // ErrorCodeId is not needed in Apex, all error codes are handled as String
-                if ((template.file.Contains("apex_enum_class") || template.file.Contains("apex_meta")) && enumDataType.EnumDataType == "ErrorCodeId") continue;
+                if ((template.file.Contains("apex_enum_class") || template.file.Contains("apex_meta")) && enumInfo.Name == "ErrorCodeId") continue;
 
-                var outputPath = Path.Combine(rootFolder, QuickStringMerge(template.output, enumDataType));
+                var outputPath = Path.Combine(rootFolder, QuickStringMerge(template.output, enumInfo));
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
-                var output = template.razor.ExecuteTemplate(api, null, null, enumDataType);
+                var output = template.razor.ExecuteTemplate(api, null, null, enumInfo);
                 File.WriteAllText(outputPath, output);
             }
         }
