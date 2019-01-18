@@ -356,7 +356,7 @@ namespace ClientApiGenerator
                 } else if (prop.enumMetadata == null) {
                     return "String";
                 } else {
-                    typename.Append(prop.enumMetadata);
+                    typename.Append(prop.enumMetadata.Name);
                     isValueType = true;
                 }
 
