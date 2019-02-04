@@ -1,0 +1,7 @@
+{
+	"title": "RELEAse v##.##.##",
+	"head": "contygm:autoTest-v0",
+	"base": "master",
+	"maintainer_can_modify": true,
+	"body": "huh zah"
+}
