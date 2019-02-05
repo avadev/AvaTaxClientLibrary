@@ -1,5 +1,5 @@
-SET VERSION=NEXT-v
-SET JSON="{\"title\": \"RELEAse v##.##.##\", \"head\": \"contygm:%VERSION%\", \"base\": \"master\", \"maintainer_can_modify\": true, \"body\": \"huh zah\"}"
+SET VERSION=v19.1.0-test
+SET JSON="{\"title\": \"RELEAse %VERSION%\", \"head\": \"contygm:%VERSION%\", \"base\": \"master\", \"maintainer_can_modify\": true, \"body\": \"testing automation script\"}"
 
 START /WAIT "" "%PROGRAMFILES%\Git\bin\sh.exe" -c "sh git-branch.sh %VERSION%"
 

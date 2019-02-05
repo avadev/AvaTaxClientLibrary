@@ -8,4 +8,4 @@ for i in "${sdks[@]}"; do
      # $1 is the version pass in and name of new branch
      git checkout -b $1    
 done
-$SHELL
+
