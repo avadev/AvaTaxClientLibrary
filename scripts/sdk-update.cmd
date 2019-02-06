@@ -1,5 +1,5 @@
 SET VERSION=v19.1.0-test
-SET JSON="{\"title\": \"RELEAse %VERSION%\", \"head\": \"avaDev:%VERSION%\", \"base\": \"master\", \"maintainer_can_modify\": true, \"body\": \"testing automation script\"}"
+SET JSON="{\"title\": \"RELEAse %VERSION%\", \"head\": \"avaDev:%VERSION%\", \"base\": \"master\", \"maintainer_can_modify\": true, \"body\": \"Update for %VERSION%\"}"
 
 START /WAIT "" "%PROGRAMFILES%\Git\bin\sh.exe" -c "sh git-branch.sh %VERSION%"
 
