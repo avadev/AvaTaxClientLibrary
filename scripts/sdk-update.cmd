@@ -1,6 +1,7 @@
 SET VERSION=v19.1.1
 SET JSON="{\"title\": \"Update for %VERSION%\", \"head\": \"avaDev:%VERSION%\", \"base\": \"master\", \"maintainer_can_modify\": true, \"body\": \"Update for %VERSION%\"}"
 
+
 START /WAIT "" "%PROGRAMFILES%\Git\bin\sh.exe" -c "sh git-branch.sh %VERSION%"
 
 cd ..\generator\ClientApiGenerator\bin\Debug\
