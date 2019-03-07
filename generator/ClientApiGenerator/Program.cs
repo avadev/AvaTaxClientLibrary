@@ -345,7 +345,7 @@ namespace ClientApiGenerator
 
                 // Base64 encoded bytes
                 if (String.Equals(prop.format, "byte", StringComparison.CurrentCultureIgnoreCase)) {
-                    if(prop.description == "Content of the batch file.")
+                    if (prop.description == "Content of the batch file." || prop.description == "This stream contains the bytes of the file being uploaded.")
                     {
                         typename.Append("Byte[]");
                     }
