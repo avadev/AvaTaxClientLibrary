@@ -71,9 +71,26 @@ namespace Avalara.AvaTax.RestClient
         }
     }
     
-    if (m.ResponseTypeName == "String") {
+    var pfr = m.Params;
+	bool hasFileResultParam = false;
+	string paramName = "";
+	
+	for(int i = 0; i < pfr.Count; i++)
+	{
+		var pfrs = pfr[i];
+		hasFileResultParam = pfrs.TypeName == "FileResult";
+		
+		if(hasFileResultParam) { 
+			paramName = pfrs.ParamName;
+			break;
+		}
+	}
+	
+	if (m.ResponseTypeName == "String" && hasFileResultParam) {
+		WriteLine("            return RestCallString(\"" + m.HttpVerb.ToUpper() + "\", path, " + (string.IsNullOrEmpty(paramName) ? "null" : paramName) + ");");
+    } else if (m.ResponseTypeName == "String") {
         WriteLine("            return RestCallString(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
-    } else if (m.ResponseTypeName == "FileResult") {
+	} else if (m.ResponseTypeName == "FileResult") {
         WriteLine("            return RestCallFile(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     } else {
         WriteLine("            return RestCall<" + m.ResponseTypeName + ">(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
@@ -113,13 +130,37 @@ namespace Avalara.AvaTax.RestClient
     WriteLine("        {");
     WriteLine("            var path = new AvaTaxPath(\"" + m.URI + "\");");
     foreach (var p in m.Params) {
+		var cleanParamName = p.CleanParamName;
+		
+		if (p.TypeName == "DateTime") {
+            cleanParamName = p.CleanParamName + ".ToString(\"o\")";
+        }
+		
         if (p.ParameterLocation == ParameterLocationType.UriPath) {
-            WriteLine("            path.ApplyField(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+            WriteLine("            path.ApplyField(\"{0}\", {1});", p.ParamName, cleanParamName);
         } else if (p.ParameterLocation == ParameterLocationType.QueryString) {
-            WriteLine("            path.AddQuery(\"{0}\", {1});", p.ParamName, p.CleanParamName);
+            WriteLine("            path.AddQuery(\"{0}\", {1});", p.ParamName, cleanParamName);
         }
     }
-    if (m.ResponseTypeName == "String") {
+	
+	var pfr = m.Params;
+	bool hasFileResultParam = false;
+	string paramName = "";
+	
+	for(int i = 0; i < pfr.Count; i++)
+	{
+		var pfrs = pfr[i];
+		hasFileResultParam = pfrs.TypeName == "FileResult";
+		
+		if(hasFileResultParam) { 
+			paramName = pfrs.ParamName;
+			break;
+		}
+	}
+	
+	if (m.ResponseTypeName == "String" && hasFileResultParam) {
+		WriteLine("            return await RestCallStringAsync(\"" + m.HttpVerb.ToUpper() + "\", path, " + (string.IsNullOrEmpty(paramName) ? "null" : paramName) + ").ConfigureAwait(false);");
+	} else if (m.ResponseTypeName == "String") {
         WriteLine("            return await RestCallStringAsync(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
     } else {
         WriteLine("            return await RestCallAsync<" + m.ResponseTypeName + ">(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
