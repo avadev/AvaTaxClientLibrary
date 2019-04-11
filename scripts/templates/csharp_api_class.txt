@@ -71,17 +71,17 @@ namespace Avalara.AvaTax.RestClient
         }
     }
     
-    var pfr = m.Params;
+    var pfrs = m.Params;
 	bool hasFileResultParam = false;
 	string paramName = "";
 	
-	for(int i = 0; i < pfr.Count; i++)
+	for(int i = 0; i < pfrs.Count; i++)
 	{
-		var pfrs = pfr[i];
-		hasFileResultParam = pfrs.TypeName == "FileResult";
+		var pfr = pfrs[i];
+		hasFileResultParam = pfr.TypeName == "FileResult";
 		
 		if(hasFileResultParam) { 
-			paramName = pfrs.ParamName;
+			paramName = pfr.ParamName;
 			break;
 		}
 	}
