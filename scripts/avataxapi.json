@@ -19,6 +19,11 @@
           "file": "templates\\csharp_enum_class.txt",
           "type": "enums",
           "output": "src\\enums\\{Name}.cs"
+        }, 
+		{
+          "file": "templates\\csharp_taxContent_folder.txt",
+          "type": "singleFile",
+          "output": "src\\taxContent\\README.txt"
         }
       ],
       "fixups": [
