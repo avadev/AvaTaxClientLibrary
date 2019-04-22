@@ -105,6 +105,11 @@
           "file": "templates\\php_models_class.php",
           "type": "singleFile",
           "output": "src\\Models.php"
+        }, 
+		{
+          "file": "templates\\php_taxContent_folder.txt",
+          "type": "singleFile",
+          "output": "src\\taxContent\\README.txt"
         }
       ],
       "fixups": [
