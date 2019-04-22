@@ -135,6 +135,11 @@
           "file": "templates\\javascript_api_class.txt",
           "type": "singleFile",
           "output": "lib\\AvaTaxClient.js"
+        }, 
+		{
+          "file": "templates\\javascript_taxContent_folder.txt",
+          "type": "singleFile",
+          "output": "lib\\taxContent\\README.txt"
         }
       ],
       "fixups": [
