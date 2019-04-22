@@ -24,6 +24,11 @@
           "file": "templates\\csharp_taxContent_folder.txt",
           "type": "singleFile",
           "output": "src\\taxContent\\README.txt"
+        }, 
+		{
+          "file": "templates\\csharp_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "src\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
@@ -70,6 +75,11 @@
           "file": "templates\\java_taxContent_folder.txt",
           "type": "singleFile",
           "output": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\taxContent\\README.txt"
+        }, 
+		{
+          "file": "templates\\java_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
@@ -110,6 +120,11 @@
           "file": "templates\\php_taxContent_folder.txt",
           "type": "singleFile",
           "output": "src\\taxContent\\README.txt"
+        }, 
+		{
+          "file": "templates\\php_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "src\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
@@ -140,6 +155,11 @@
           "file": "templates\\javascript_taxContent_folder.txt",
           "type": "singleFile",
           "output": "lib\\taxContent\\README.txt"
+        }, 
+		{
+          "file": "templates\\javascript_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "lib\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
@@ -164,6 +184,11 @@
           "file": "templates\\ruby_taxContent_folder.txt",
           "type": "singleFile",
           "output": "lib\\avatax\\client\\taxContent\\README.txt"
+        },
+		{
+          "file": "templates\\ruby_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "lib\\avatax\\client\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
@@ -188,6 +213,11 @@
           "file": "templates\\python_taxContent_folder.txt",
           "type": "singleFile",
           "output": "src\\taxContent\\README.txt"
+        },
+		{
+          "file": "templates\\python_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "src\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
