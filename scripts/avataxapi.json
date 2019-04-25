@@ -19,6 +19,16 @@
           "file": "templates\\csharp_enum_class.txt",
           "type": "enums",
           "output": "src\\enums\\{Name}.cs"
+        }, 
+		{
+          "file": "templates\\csharp_taxContent_folder.txt",
+          "type": "singleFile",
+          "output": "src\\taxContent\\README.txt"
+        }, 
+		{
+          "file": "templates\\csharp_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "src\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
@@ -60,6 +70,16 @@
           "file": "templates\\java_enum_class.java",
           "type": "enums",
           "output": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\enums\\{Name}.java"
+        }, 
+		{
+          "file": "templates\\java_taxContent_folder.txt",
+          "type": "singleFile",
+          "output": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\taxContent\\README.txt"
+        }, 
+		{
+          "file": "templates\\java_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "src\\main\\java\\net\\avalara\\avatax\\rest\\client\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
@@ -95,6 +115,16 @@
           "file": "templates\\php_models_class.php",
           "type": "singleFile",
           "output": "src\\Models.php"
+        }, 
+		{
+          "file": "templates\\php_taxContent_folder.txt",
+          "type": "singleFile",
+          "output": "src\\taxContent\\README.txt"
+        }, 
+		{
+          "file": "templates\\php_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "src\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
@@ -120,6 +150,16 @@
           "file": "templates\\javascript_api_class.txt",
           "type": "singleFile",
           "output": "lib\\AvaTaxClient.js"
+        }, 
+		{
+          "file": "templates\\javascript_taxContent_folder.txt",
+          "type": "singleFile",
+          "output": "lib\\taxContent\\README.txt"
+        }, 
+		{
+          "file": "templates\\javascript_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "lib\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
@@ -139,6 +179,16 @@
           "file": "templates\\ruby_category_class.rb",
           "type": "methodCategories",
           "output": "lib\\avatax\\client\\{category.lower}.rb"
+        },
+		{
+          "file": "templates\\ruby_taxContent_folder.txt",
+          "type": "singleFile",
+          "output": "lib\\avatax\\client\\taxContent\\README.txt"
+        },
+		{
+          "file": "templates\\ruby_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "lib\\avatax\\client\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
@@ -158,6 +208,16 @@
           "file": "templates\\python_methods_class.py",
           "type": "singleFile",
           "output": "src\\client_methods.py"
+        },
+		{
+          "file": "templates\\python_taxContent_folder.txt",
+          "type": "singleFile",
+          "output": "src\\taxContent\\README.txt"
+        },
+		{
+          "file": "templates\\python_taxRatesByZip_folder.txt",
+          "type": "singleFile",
+          "output": "src\\taxRatesByZip\\README.txt"
         }
       ],
       "fixups": [
