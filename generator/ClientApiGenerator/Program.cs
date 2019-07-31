@@ -202,7 +202,8 @@ namespace ClientApiGenerator
                     SwaggerResult ok = null;
                     if (verb.Value.responses.TryGetValue("200", out ok)
                         || verb.Value.responses.TryGetValue("201", out ok)
-                        || verb.Value.responses.TryGetValue("202", out ok)) {
+                        || verb.Value.responses.TryGetValue("202", out ok)
+                        || verb.Value.responses.TryGetValue("204", out ok)) {
 
                         api.ResponseType = ok.schema?.type;
                         api.ResponseTypeName = ResolveTypeName(ok.schema);
@@ -380,16 +381,13 @@ namespace ClientApiGenerator
                 typename.Append(ResolveTypeName(prop.schema));
 
                 // Custom hack for objects that aren't represented correctly in swagger at the moment - still have to fix this in REST v2
-            } else if (prop.description == "Default addresses for all lines in this document") {
-                typename.Append("Dictionary<TransactionAddressType, AddressInfo>");
+            } else if (prop.description == "The list of Avalara-defined tax code types.")
+            {
+                typename.Append("Dictionary<string, string>");
 
                 // Custom hack for objects that aren't represented correctly in swagger at the moment - still have to fix this in REST v2
-            } else if (prop.description == "Specify any differences for addresses between this line and the rest of the document") {
-                typename.Append("Dictionary<TransactionAddressType, AddressInfo>");
-
-                // All else is just a generic object
             } else if (prop.type == "object") {
-                typename.Append("Dictionary<string, string>");
+                typename.Append("object");
 
             // Catch severe problems or weird/unknown types
             } else {
