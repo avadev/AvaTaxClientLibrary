@@ -162,6 +162,8 @@ namespace Avalara.AvaTax.RestClient
 		WriteLine("            return await RestCallStringAsync(\"" + m.HttpVerb.ToUpper() + "\", path, " + (string.IsNullOrEmpty(paramName) ? "null" : paramName) + ").ConfigureAwait(false);");
 	} else if (m.ResponseTypeName == "String") {
         WriteLine("            return await RestCallStringAsync(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
+    } else if (m.ResponseTypeName == "FileResult") {
+        WriteLine("            return RestCallFileAsync + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
     } else {
         WriteLine("            return await RestCallAsync<" + m.ResponseTypeName + ">(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
     }
