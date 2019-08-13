@@ -55,6 +55,13 @@ namespace Avalara.AvaTax.RestClient
         Backtrack(2);
     }
 
+	if(m.Name == "AuditAccount") {
+		WriteLine("            string startDate = null;");
+		WriteLine("            string endDate = null; ");
+		WriteLine("            if (start != null)");
+		WriteLine("            {");
+	}
+
     WriteLine(")");
     WriteLine("        {");
     WriteLine("            var path = new AvaTaxPath(\"" + m.URI + "\");");
