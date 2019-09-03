@@ -231,7 +231,7 @@
     },
     {
       "name": "Apex",
-      "rootFolder": "c:\\git\\develop\\vaTax-REST-V2-Apex-SDK",
+      "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-Apex-SDK",
       "templates": [
         {
           "file": "templates\\apex_api_class.txt",

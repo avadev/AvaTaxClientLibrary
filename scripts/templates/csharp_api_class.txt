@@ -60,6 +60,13 @@ namespace Avalara.AvaTax.RestClient
 		WriteLine("            string endDate = null; ");
 		WriteLine("            if (start != null)");
 		WriteLine("            {");
+		WriteLine("			      startDate = string.Format(\"{0}{1}\", start.Value.ToString(\"s\"), \"Z\");");
+		WriteLine("            }");
+		
+		WriteLine("            if (end != null)");
+		WriteLine("            {");
+		WriteLine("			      endDate = string.Format(\"{0}{1}\", end.Value.ToString(\"s\"), \"Z\");");
+		WriteLine("            }");
 	}
 
     WriteLine(")");
@@ -71,7 +78,12 @@ namespace Avalara.AvaTax.RestClient
         if (p.TypeName == "DateTime") {
             cleanParamName = p.CleanParamName + ".ToString(\"o\")";
         }
-        if (p.ParameterLocation == ParameterLocationType.UriPath) {
+
+		if (m.Name == "AuditAccount" && cleanParamName == "start") {
+			WriteLine("            path.AddQuery(\"start\", startDate);");
+		} else if (m.Name == "AuditAccount" && cleanParamName == "end") {
+			WriteLine("            path.AddQuery(\"end\", endDate);");
+		} else if (p.ParameterLocation == ParameterLocationType.UriPath) {
             WriteLine("            path.ApplyField(\"{0}\", {1});", p.ParamName, cleanParamName);
         } else if (p.ParameterLocation == ParameterLocationType.QueryString) {
             WriteLine("            path.AddQuery(\"{0}\", {1});", p.ParamName, cleanParamName);
