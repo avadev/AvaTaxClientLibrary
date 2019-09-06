@@ -55,6 +55,8 @@ namespace Avalara.AvaTax.RestClient
         Backtrack(2);
     }
 
+    WriteLine(")");
+    WriteLine("        {");
 	if(m.Name == "AuditAccount") {
 		WriteLine("            string startDate = null;");
 		WriteLine("            string endDate = null; ");
@@ -68,9 +70,6 @@ namespace Avalara.AvaTax.RestClient
 		WriteLine("			      endDate = string.Format(\"{0}{1}\", end.Value.ToString(\"s\"), \"Z\");");
 		WriteLine("            }");
 	}
-
-    WriteLine(")");
-    WriteLine("        {");
     WriteLine("            var path = new AvaTaxPath(\"" + m.URI + "\");");
     foreach (var p in m.Params) {
         // Identify clean parameter name - 
@@ -181,8 +180,8 @@ namespace Avalara.AvaTax.RestClient
 		WriteLine("            return await RestCallStringAsync(\"" + m.HttpVerb.ToUpper() + "\", path, " + (string.IsNullOrEmpty(paramName) ? "null" : paramName) + ").ConfigureAwait(false);");
 	} else if (m.ResponseTypeName == "String") {
         WriteLine("            return await RestCallStringAsync(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
-    } else if (m.ResponseTypeName == "FileResult") {
-        WriteLine("            return RestCallFileAsync + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ");");
+    } else if (m.ResponseTypeName == "FileResult" && m.Name == "DownloadReport") {
+        WriteLine("            return await RestCallFileAsync(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
     } else {
         WriteLine("            return await RestCallAsync<" + m.ResponseTypeName + ">(\"" + m.HttpVerb.ToUpper() + "\", path, " + (m.BodyParam == null ? "null" : "model") + ").ConfigureAwait(false);");
     }
