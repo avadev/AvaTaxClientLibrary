@@ -127,14 +127,20 @@
           "output": "src\\taxRatesByZip\\README.txt"
         }
       ],
-      "fixups": [
-        {
-          "file": "src\\Client.php",
-          "encoding": "ASCII",
-          "regex": "; PhpRestClient; .*; ",
-          "replacement": "; PhpRestClient; {ApiVersion}; "
-        }
-      ]
+			"fixups": [
+				{
+					"file": "composer.json",
+					"encoding": "ASCII",
+					"regex": "\"version\": \".*\",",
+					"replacement": "\"version\": \"{ApiVersionPeriodsOnly}\","
+				},
+				{
+					"file": "src\\Client.php",
+					"encoding": "ASCII",
+					"regex": "; PhpRestClient; .*; ",
+					"replacement": "; PhpRestClient; {ApiVersion}; "
+				}
+			]
     },
     {
       "name": "JavaScript",
