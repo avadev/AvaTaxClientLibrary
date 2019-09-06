@@ -127,20 +127,20 @@
           "output": "src\\taxRatesByZip\\README.txt"
         }
       ],
-      "fixups": [
-        {
-          "file": "composer.json",
-          "encoding": "ASCII",
-          "regex": "\"version\": \".*\",",
-          "replacement": "\"version\": \"{ApiVersionPeriodsOnly}\","
-        },
-        {
-          "file": "src\\Client.php",
-          "encoding": "ASCII",
-          "regex": "; PhpRestClient; .*; ",
-          "replacement": "; PhpRestClient; {ApiVersion}; "
-        }
-      ]
+			"fixups": [
+				{
+					"file": "composer.json",
+					"encoding": "ASCII",
+					"regex": "\"version\": \".*\",",
+					"replacement": "\"version\": \"{ApiVersionPeriodsOnly}\","
+				},
+				{
+					"file": "src\\Client.php",
+					"encoding": "ASCII",
+					"regex": "; PhpRestClient; .*; ",
+					"replacement": "; PhpRestClient; {ApiVersion}; "
+				}
+			]
     },
     {
       "name": "JavaScript",
@@ -231,7 +231,7 @@
     },
     {
       "name": "Apex",
-      "rootFolder": "c:\\git\\develop\\vaTax-REST-V2-Apex-SDK",
+      "rootFolder": "c:\\git\\develop\\AvaTax-REST-V2-Apex-SDK",
       "templates": [
         {
           "file": "templates\\apex_api_class.txt",
